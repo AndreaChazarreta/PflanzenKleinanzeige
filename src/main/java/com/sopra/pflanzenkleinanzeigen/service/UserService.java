@@ -76,7 +76,7 @@ public class UserService implements UserDetailsService {
             throw new UsernameNotFoundException("Could not find the user for username " + username);
         }
         return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(),
-                user.isEnabled(), true, true, user.isEnabled(), grantedAuthorities);
+                true, true, true, true, null);
     }
 
     //TODO: nochmal nachschauen was in diesen constructor rein gehört (also müssen wir "accountNonExpired" und "credentialsNonExpired"
