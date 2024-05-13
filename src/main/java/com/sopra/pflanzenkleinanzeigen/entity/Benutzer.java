@@ -1,10 +1,7 @@
 package com.sopra.pflanzenkleinanzeigen.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
+import jakarta.persistence.*;
+
 import java.util.Set;
 
 @Entity
@@ -14,6 +11,7 @@ public class Benutzer {
     @GeneratedValue
     private Integer userId;
 
+    @Column(unique = true)
     private String username;
 
     private String password;

@@ -24,7 +24,11 @@ public class UserService implements UserDetailsService {
     private UserRepository userRepository;
 
     public Benutzer saveUser(Benutzer user) {
-        return userRepository.save(user);
+        if (userRepository.findByUsername(user.getUsername()) == null) {
+            return userRepository.save(user);
+        } else {
+            throw new IllegalArgumentException("Benutzername bereits vergeben");
+        }
     }
 
     public List<Benutzer> findAllUsers() {
