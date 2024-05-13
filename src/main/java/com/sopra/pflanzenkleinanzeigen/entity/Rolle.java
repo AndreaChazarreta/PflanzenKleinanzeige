@@ -5,7 +5,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 
 @Entity
-public class Role {
+public class Rolle {
 
     @Id
     @GeneratedValue
@@ -13,11 +13,11 @@ public class Role {
 
     private String rolename;
 
-    public Role() {
+    public Rolle() {
         //empty constructor for Hibernate
     }
 
-    public Role(String rolename) {
+    public Rolle(String rolename) {
         this.rolename = rolename;
     }
 

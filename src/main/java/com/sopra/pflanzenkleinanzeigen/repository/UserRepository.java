@@ -1,9 +1,9 @@
 package com.sopra.pflanzenkleinanzeigen.repository;
 
-import com.sopra.pflanzenkleinanzeigen.entity.User;
+import com.sopra.pflanzenkleinanzeigen.entity.Benutzer;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface UserRepository extends JpaRepository<User, Integer> {
+public interface UserRepository extends JpaRepository<Benutzer, Integer> {
 
-    User findByUsername(String username);
+    Benutzer findByUsername(String username);
 }

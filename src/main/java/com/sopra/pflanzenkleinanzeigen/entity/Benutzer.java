@@ -8,7 +8,7 @@ import jakarta.persistence.ManyToMany;
 import java.util.Set;
 
 @Entity
-public class User {
+public class Benutzer {
 
     @Id
     @GeneratedValue
@@ -21,10 +21,10 @@ public class User {
     private boolean enabled = true;
 
     @ManyToMany(fetch = FetchType.EAGER)
-    private Set<Role> roles;
+    private Set<Rolle> roles;
 
 
-    public User() {
+    public Benutzer() {
         // empty constructor for Hibernate
     }
 
@@ -60,13 +60,13 @@ public class User {
         this.enabled = enabled;
     }
 
-    public Set<Role> getRoles() {
+    public Set<Rolle> getRoles() {
         return roles;
     }
 
     //TODO: FRAGEN!! Hier stand "return rollen" --> public Set<Role> getRoles() { return roles; }
 
-    public void setRoles(Set<Role> roles) {
+    public void setRoles(Set<Rolle> roles) {
         this.roles = roles;
     }
 }
