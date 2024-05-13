@@ -1,8 +1,11 @@
 package com.sopra.pflanzenkleinanzeigen.service;
 
-import com.sopra.pflanzenkleinanzeigen.entity.User;
+import com.sopra.pflanzenkleinanzeigen.entity.Rolle;
+import com.sopra.pflanzenkleinanzeigen.entity.Benutzer;
 import com.sopra.pflanzenkleinanzeigen.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -20,11 +23,11 @@ public class UserService implements UserDetailsService {
     @Autowired
     private UserRepository userRepository;
 
-    public User saveUser(User user) {
+    public Benutzer saveUser(Benutzer user) {
         return userRepository.save(user);
     }
 
-    public List<User> findAllUsers() {
+    public List<Benutzer> findAllUsers() {
         return userRepository.findAll();
     }
 
@@ -34,7 +37,7 @@ public class UserService implements UserDetailsService {
      * @param username der username.
      * @return User-Objekt.
      */
-    public User getUserByUsername(String username) {
+    public Benutzer getUserByUsername(String username) {
         return userRepository.findByUsername(username);
     }
 
@@ -47,13 +50,14 @@ public class UserService implements UserDetailsService {
      *
      * @return User.
      */
-    public User getCurrentUser() {
+    public Benutzer getCurrentUser() {
         return getUserByUsername(((org.springframework.security.core.userdetails.User) SecurityContextHolder.getContext()
                 .getAuthentication().getPrincipal()).getUsername());
     }
 
     /**
-     * Gibt das UserDetails Objekt des aktuell eingeloggten Users zurück.
+     * Gibt das UserDetails Objekt des aktuell eingeloggten Users zurück. Wird u.U. benötigt um
+     * Rollen-Authentifizierungschecks durchzuführen.
      *
      * @return UserDetails Objekt der Spring Security.
      */
@@ -71,17 +75,21 @@ public class UserService implements UserDetailsService {
      */
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findByUsername(username);
+        Benutzer user = userRepository.findByUsername(username);
         if (Objects.isNull(user)) {
             throw new UsernameNotFoundException("Could not find the user for username " + username);
         }
+        List<GrantedAuthority> grantedAuthorities = getUserAuthorities(user.getRoles());
         return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(),
-                true, true, true, true, null);
+                user.isEnabled(), true, true, user.isEnabled(), grantedAuthorities);
     }
 
-    //TODO: nochmal nachschauen was in diesen constructor rein gehört (also müssen wir "accountNonExpired" und "credentialsNonExpired"
-    // drin lassen??
-
+    private List<GrantedAuthority> getUserAuthorities(Set<Rolle> roleSet) {
+        List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
+        for (Rolle role : roleSet) {
+            grantedAuthorities.add(new SimpleGrantedAuthority(role.getRolename()));
+        }
+        return grantedAuthorities;
+    }
 }
-
 
