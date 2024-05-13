@@ -1,6 +1,8 @@
 package com.sopra.pflanzenkleinanzeigen.config;
 
+import com.sopra.pflanzenkleinanzeigen.entity.Role;
 import com.sopra.pflanzenkleinanzeigen.entity.User;
+import com.sopra.pflanzenkleinanzeigen.service.RoleService;
 import com.sopra.pflanzenkleinanzeigen.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,6 +24,9 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
     private BCryptPasswordEncoder passwordEncoder;
 
     @Autowired
+    private RoleService roleService;
+
+    @Autowired
     private UserService userService;
 
     /**
@@ -33,11 +38,27 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         logger.info("Initialisiere Datenbank mit Testdaten...");
 
         // Initialisieren Sie Beispielobjekte und speichern Sie diese über Ihre Services
+        Role userRole = new Role("ROLE_USER");
+        Role adminRole = new Role("ROLE_ADMIN");
+        roleService.saveRole(userRole);
+        roleService.saveRole(adminRole);
+
+        Set<Role> userRoles = new HashSet<>();
+        userRoles.add(userRole);
+
+        Set<Role> adminRoles = new HashSet<>();
+        adminRoles.add(adminRole);
 
         User normalUser = new User();
         normalUser.setUsername("user");
         normalUser.setPassword(passwordEncoder.encode("1234"));
+        normalUser.setRoles(userRoles);
         userService.saveUser(normalUser);
 
+        User admin = new User();
+        admin.setUsername("admin");
+        admin.setPassword(passwordEncoder.encode("admin"));
+        admin.setRoles(adminRoles);
+        userService.saveUser(admin);
     }
 }

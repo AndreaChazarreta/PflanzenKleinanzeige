@@ -22,6 +22,10 @@ public class SecurityConfiguration {
                         // define all URLs which should be accessible without login
                         auth -> auth
                                 .requestMatchers("/register", "/login").permitAll()
+                                // define all URLs which require an authenticated user with a certain role
+                                // NOTE: Spring Security automatically adds "ROLE_" while performing this check. For this reason we do not
+                                // have to use "ROLE_ADMIN" here, which we define in the TestDatabaseLoader.
+                                .requestMatchers("/admin/**").hasRole("ADMIN")
                                 // all other URLs (except the ones above) require authentication too
                                 .anyRequest().authenticated())
                 // include CSRF token, which may be required while performing AJAX-requests

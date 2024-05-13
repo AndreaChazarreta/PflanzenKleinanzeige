@@ -1,11 +1,15 @@
 package com.sopra.pflanzenkleinanzeigen.entity;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
+import java.util.Set;
 
 @Entity
 public class User {
+
     @Id
     @GeneratedValue
     private Integer userId;
@@ -14,7 +18,13 @@ public class User {
 
     private String password;
 
-    public User () {
+    private boolean enabled = true;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    private Set<Role> roles;
+
+
+    public User() {
         // empty constructor for Hibernate
     }
 
@@ -41,5 +51,22 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
     }
-}
 
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
+
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    //TODO: FRAGEN!! Hier stand "return rollen" --> public Set<Role> getRoles() { return roles; }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
+    }
+}

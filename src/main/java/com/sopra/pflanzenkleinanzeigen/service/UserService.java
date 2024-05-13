@@ -1,8 +1,11 @@
 package com.sopra.pflanzenkleinanzeigen.service;
 
+import com.sopra.pflanzenkleinanzeigen.entity.Role;
 import com.sopra.pflanzenkleinanzeigen.entity.User;
 import com.sopra.pflanzenkleinanzeigen.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -53,7 +56,8 @@ public class UserService implements UserDetailsService {
     }
 
     /**
-     * Gibt das UserDetails Objekt des aktuell eingeloggten Users zurück.
+     * Gibt das UserDetails Objekt des aktuell eingeloggten Users zurück. Wird u.U. benötigt um
+     * Rollen-Authentifizierungschecks durchzuführen.
      *
      * @return UserDetails Objekt der Spring Security.
      */
@@ -75,13 +79,17 @@ public class UserService implements UserDetailsService {
         if (Objects.isNull(user)) {
             throw new UsernameNotFoundException("Could not find the user for username " + username);
         }
+        List<GrantedAuthority> grantedAuthorities = getUserAuthorities(user.getRoles());
         return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(),
-                true, true, true, true, null);
+                user.isEnabled(), true, true, user.isEnabled(), grantedAuthorities);
     }
 
-    //TODO: nochmal nachschauen was in diesen constructor rein gehört (also müssen wir "accountNonExpired" und "credentialsNonExpired"
-    // drin lassen??
-
+    private List<GrantedAuthority> getUserAuthorities(Set<Role> roleSet) {
+        List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
+        for (Role role : roleSet) {
+            grantedAuthorities.add(new SimpleGrantedAuthority(role.getRolename()));
+        }
+        return grantedAuthorities;
+    }
 }
-
 
