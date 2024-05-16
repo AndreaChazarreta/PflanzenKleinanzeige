@@ -34,6 +34,10 @@ Das Konzept orientiert sich an Kleinanzeigenportalen, fokussiert sich jedoch aus
     - Öffne [http://localhost:8080](http://localhost:8080/) in deinem Webbrowser, um auf die Anwendung zuzugreifen.
     - Öffne [http://localhost:8080/console](http://localhost:8080/console) um auf die Datenbank zuzugreifen.
 
+5. **Einloggen**
+   Da in dieser Anwendung keine Registrierung ermöglicht wird, müssen die Benutzerdaten manuell eingetragen werden. 
+Füge die benötigten Benutzerdaten in die Datei: 
+`PflanzenKleinanzeige/src/main/java/com/sopra/pflanzenkleinanzeigen/config/TestDataLoader.java` ein.
 
 ## Autoren 
 - **Andrea Chazarreta** - [AndreaChazarreta](https://github.com/AndreaChazarreta)
