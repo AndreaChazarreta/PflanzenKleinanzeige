@@ -11,9 +11,9 @@ Das Konzept orientiert sich an Kleinanzeigenportalen, fokussiert sich jedoch aus
 
 ### Verwendung
 - **Einloggen**: Logge dich ein, um Pflanzen zu verkaufen oder zu kaufen.
-- **Suchen und Filtern**: Verwende das Suchfeld und die Filteroptionen, um Pflanzen zu finden.
-- **Merkzettel**: Markiere interessante Pflanzen, um sie zu deinem Merkzettel hinzuzufügen.
-- **Pflanzen verwalten**: Lade Pflanzen hoch, bearbeite sie oder markiere sie als verkauft.
+- _(In Bearbeitung)_ **Suchen und Filtern**: Verwende das Suchfeld und die Filteroptionen, um Pflanzen zu finden.
+- _(In Bearbeitung)_ **Merkzettel**: Markiere interessante Pflanzen, um sie zu deinem Merkzettel hinzuzufügen.
+- _(In Bearbeitung)_ **Pflanzen verwalten**: Lade Pflanzen hoch, bearbeite sie oder markiere sie als verkauft.
 
 ## Installation 
 1. **Repository klonen**
@@ -35,8 +35,8 @@ Das Konzept orientiert sich an Kleinanzeigenportalen, fokussiert sich jedoch aus
     - Öffne [http://localhost:8080/console](http://localhost:8080/console) um auf die Datenbank zuzugreifen.
 
 5. **Einloggen**
-   Da in dieser Anwendung keine Registrierung ermöglicht wird, müssen die Benutzerdaten manuell eingetragen werden. 
-Füge die benötigten Benutzerdaten in die Datei: 
+   Da in dieser Anwendung keine Registrierung ermöglicht wird, müssen die Benutzerdaten manuell eingetragen werden.
+Teste die Anwendung gerne mit den Daten: Username: "user" und Password: "1234" oder füge die benötigten Benutzerdaten in die Datei: 
 `PflanzenKleinanzeige/src/main/java/com/sopra/pflanzenkleinanzeigen/config/TestDataLoader.java` ein.
 
 ## Autoren 
