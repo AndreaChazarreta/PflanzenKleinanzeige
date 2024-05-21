@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -30,6 +32,18 @@ public class Benutzer {
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<Rolle> roles;
 
+    @OneToMany(mappedBy = "seller")
+    private List<Plant> uploadedPlants = new ArrayList<>();
+
+    @OneToMany(mappedBy = "buyer")
+    private List<Plant> purchasedPlants = new ArrayList<>();
+
+    @ManyToOne
+    @JoinColumn (name = "selectedIcon")
+    private ProfileIcon profileIcon;
+
+    @OneToMany(mappedBy = "benutzer")
+    private List<Chat> startedChats = new ArrayList<>();
 
     public Benutzer() {
         // empty constructor for Hibernate
