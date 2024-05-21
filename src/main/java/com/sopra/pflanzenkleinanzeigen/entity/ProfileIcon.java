@@ -18,7 +18,7 @@ public class ProfileIcon {
     private String iconImage;
 
     @OneToMany(mappedBy = "profileIcon")
-    private List<Benutzer> selectedIcon = new ArrayList<>();
+    private List<Benutzer> iconSelectedBy = new ArrayList<>();
 
 
     public ProfileIcon() {
@@ -41,11 +41,11 @@ public class ProfileIcon {
         this.iconImage = iconImage;
     }
 
-    public List<Benutzer> getSelectedIcon() {
-        return selectedIcon;
+    public List<Benutzer> getIconSelectedBy() {
+        return iconSelectedBy;
     }
 
-    public void setSelectedIcon(List<Benutzer> selectedIcon) {
-        this.selectedIcon = selectedIcon;
+    public void setIconSelectedBy(List<Benutzer> iconSelectedBy) {
+        this.iconSelectedBy = iconSelectedBy;
     }
 }

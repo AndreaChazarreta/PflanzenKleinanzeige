@@ -13,8 +13,8 @@ public class Chat {
     private Integer chatId;
 
     @ManyToOne
-    @JoinColumn (name = "benutzerId")
-    private Benutzer benutzer;
+    @JoinColumn (name = "possibleBuyerId")
+    private Benutzer possibleBuyer;
 
     @ManyToOne
     @JoinColumn (name = "plantId")
@@ -28,4 +28,35 @@ public class Chat {
         // empty constructor for Hibernate
     }
 
+    public Integer getChatId() {
+        return chatId;
+    }
+
+    public void setChatId(Integer chatId) {
+        this.chatId = chatId;
+    }
+
+    public Benutzer getPossibleBuyer() {
+        return possibleBuyer;
+    }
+
+    public void setPossibleBuyer(Benutzer possibleBuyer) {
+        this.possibleBuyer = possibleBuyer;
+    }
+
+    public Plant getPlant() {
+        return plant;
+    }
+
+    public void setPlant(Plant plant) {
+        this.plant = plant;
+    }
+
+    public List<Message> getMessages() {
+        return messages;
+    }
+
+    public void setMessages(List<Message> messages) {
+        this.messages = messages;
+    }
 }

@@ -39,10 +39,10 @@ public class Benutzer {
     private List<Plant> purchasedPlants = new ArrayList<>();
 
     @ManyToOne
-    @JoinColumn (name = "selectedIcon")
+    @JoinColumn (name = "selectedIconId")
     private ProfileIcon profileIcon;
 
-    @OneToMany(mappedBy = "benutzer")
+    @OneToMany(mappedBy = "possibleBuyer")
     private List<Chat> startedChats = new ArrayList<>();
 
     public Benutzer() {
@@ -111,5 +111,37 @@ public class Benutzer {
 
     public void setEmail(@Email String email) {
         this.email = email;
+    }
+
+    public List<Plant> getUploadedPlants() {
+        return uploadedPlants;
+    }
+
+    public void setUploadedPlants(List<Plant> uploadedPlants) {
+        this.uploadedPlants = uploadedPlants;
+    }
+
+    public List<Plant> getPurchasedPlants() {
+        return purchasedPlants;
+    }
+
+    public void setPurchasedPlants(List<Plant> purchasedPlants) {
+        this.purchasedPlants = purchasedPlants;
+    }
+
+    public ProfileIcon getProfileIcon() {
+        return profileIcon;
+    }
+
+    public void setProfileIcon(ProfileIcon profileIcon) {
+        this.profileIcon = profileIcon;
+    }
+
+    public List<Chat> getStartedChats() {
+        return startedChats;
+    }
+
+    public void setStartedChats(List<Chat> startedChats) {
+        this.startedChats = startedChats;
     }
 }
