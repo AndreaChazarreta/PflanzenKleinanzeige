@@ -1,6 +1,8 @@
 package com.sopra.pflanzenkleinanzeigen.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+
 
 import java.util.Set;
 
@@ -17,6 +19,13 @@ public class Benutzer {
     private String password;
 
     private boolean enabled = true;
+
+    private String firstname;
+
+    private String lastname;
+
+    @Email
+    private String email;
 
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<Rolle> roles;
@@ -62,9 +71,31 @@ public class Benutzer {
         return roles;
     }
 
-    //TODO: FRAGEN!! Hier stand "return rollen" --> public Set<Role> getRoles() { return roles; }
-
     public void setRoles(Set<Rolle> roles) {
         this.roles = roles;
+    }
+
+    public String getFirstname() {
+        return firstname;
+    }
+
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
+    }
+
+    public String getLastname() {
+        return lastname;
+    }
+
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
+    }
+
+    public @Email String getEmail() {
+        return email;
+    }
+
+    public void setEmail(@Email String email) {
+        this.email = email;
     }
 }
