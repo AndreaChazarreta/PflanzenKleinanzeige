@@ -1,7 +1,11 @@
 package com.sopra.pflanzenkleinanzeigen.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
 
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -18,9 +22,31 @@ public class Benutzer {
 
     private boolean enabled = true;
 
+    private String firstname;
+
+    private String lastname;
+
+    @Email
+    private String email;
+
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<Rolle> roles;
 
+    @OneToMany(mappedBy = "seller")
+    private List<Plant> uploadedPlants = new ArrayList<>();
+
+    @OneToMany(mappedBy = "buyer")
+    private List<Plant> purchasedPlants = new ArrayList<>();
+
+    @ManyToOne
+    @JoinColumn (name = "selectedIconId")
+    private ProfileIcon profileIcon;
+
+    @OneToMany(mappedBy = "possibleBuyer")
+    private List<Chat> startedChats = new ArrayList<>();
+
+    @OneToMany(mappedBy = "sender")
+    private List<Message> sendedMessages = new ArrayList<>();
 
     public Benutzer() {
         // empty constructor for Hibernate
@@ -62,9 +88,63 @@ public class Benutzer {
         return roles;
     }
 
-    //TODO: FRAGEN!! Hier stand "return rollen" --> public Set<Role> getRoles() { return roles; }
-
     public void setRoles(Set<Rolle> roles) {
         this.roles = roles;
+    }
+
+    public String getFirstname() {
+        return firstname;
+    }
+
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
+    }
+
+    public String getLastname() {
+        return lastname;
+    }
+
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
+    }
+
+    public @Email String getEmail() {
+        return email;
+    }
+
+    public void setEmail(@Email String email) {
+        this.email = email;
+    }
+
+    public List<Plant> getUploadedPlants() {
+        return uploadedPlants;
+    }
+
+    public void setUploadedPlants(List<Plant> uploadedPlants) {
+        this.uploadedPlants = uploadedPlants;
+    }
+
+    public List<Plant> getPurchasedPlants() {
+        return purchasedPlants;
+    }
+
+    public void setPurchasedPlants(List<Plant> purchasedPlants) {
+        this.purchasedPlants = purchasedPlants;
+    }
+
+    public ProfileIcon getProfileIcon() {
+        return profileIcon;
+    }
+
+    public void setProfileIcon(ProfileIcon profileIcon) {
+        this.profileIcon = profileIcon;
+    }
+
+    public List<Chat> getStartedChats() {
+        return startedChats;
+    }
+
+    public void setStartedChats(List<Chat> startedChats) {
+        this.startedChats = startedChats;
     }
 }
