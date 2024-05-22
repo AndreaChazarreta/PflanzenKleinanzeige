@@ -46,6 +46,12 @@ public class Plant {
     public Plant() {
         // empty constructor for Hibernate
     }
+    public Plant(String name, float price, float height, String description){
+        this.name = name;
+        this.price = price;
+        this.height = height;
+        this.description = description;
+    }
 
     public Integer getPlantId() {
         return plantId;
