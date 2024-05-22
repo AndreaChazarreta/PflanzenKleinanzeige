@@ -1,15 +1,16 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Plants</title>
 </head>
 <body>
-<h1>Plants</h1>
-<ul>
-    <li th:each="plant : ${plants}">
-        <p th:text="${plants.getName()}"></p>
-    </li>
-</ul>
+    <h1>Plants</h1>
+    <ul>
+        <li th:each="plant : ${allPlants}">
+            <p th:text="${plant.getName()}"></p>
+        </li>
+    </ul>
+    <a th:href="@{/plants/new}" class="btn btn-primary">Neue Pflanze hinzufügen</a>
 </body>
 </html>
