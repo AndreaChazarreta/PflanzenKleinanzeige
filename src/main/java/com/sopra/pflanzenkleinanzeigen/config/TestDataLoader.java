@@ -1,7 +1,9 @@
 package com.sopra.pflanzenkleinanzeigen.config;
 
+import com.sopra.pflanzenkleinanzeigen.entity.Plant;
 import com.sopra.pflanzenkleinanzeigen.entity.Rolle;
 import com.sopra.pflanzenkleinanzeigen.entity.Benutzer;
+import com.sopra.pflanzenkleinanzeigen.service.PlantService;
 import com.sopra.pflanzenkleinanzeigen.service.RoleService;
 import com.sopra.pflanzenkleinanzeigen.service.UserService;
 import org.slf4j.Logger;
@@ -28,6 +30,9 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private PlantService plantService;
 
     /**
      * Diese Methode wird zum Aufsetzen von Testdaten für die Datenbank verwendet werden. Die Methode wird immer dann
@@ -84,5 +89,13 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         sharon.setPassword(passwordEncoder.encode("admin"));
         sharon.setRoles(adminRoles);
         userService.saveUser(sharon);
+
+        Plant kaktus = new Plant();
+        kaktus.setName("Kaktus");
+        kaktus.setPrice(12.45);
+        kaktus.setHeight(34.09);
+        kaktus.setDescription("sehr schön");
+        plantService.savePlant(kaktus);
+
     }
 }
