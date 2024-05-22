@@ -15,9 +15,9 @@ public class Plant {
 
     private String name;
 
-    private float price;
+    private double price;
 
-    private float height;
+    private double height;
 
     private String description;
 
@@ -46,7 +46,8 @@ public class Plant {
     public Plant() {
         // empty constructor for Hibernate
     }
-    public Plant(String name, float price, float height, String description){
+
+    public Plant(String name, double price, double height, String description){
         this.name = name;
         this.price = price;
         this.height = height;
@@ -69,19 +70,19 @@ public class Plant {
         this.name = name;
     }
 
-    public float getPrice() {
+    public double getPrice() {
         return price;
     }
 
-    public void setPrice(float price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 
-    public float getHeight() {
+    public double getHeight() {
         return height;
     }
 
-    public void setHeight(float height) {
+    public void setHeight(double height) {
         this.height = height;
     }
 
