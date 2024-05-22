@@ -4,9 +4,9 @@ import com.sopra.pflanzenkleinanzeigen.entity.Plant;
 import com.sopra.pflanzenkleinanzeigen.service.PlantService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -35,6 +35,17 @@ public class PlantController {
         return "plants";
     }
 
+    @GetMapping("/plants/{id}")
+    public String getPlantDetails(@PathVariable int id, Model model) {
+        Plant plant = plantService.findPlantById(id);
+        if (plant == null) {
+            // Handle case where plant is not found, maybe redirect to an error page or back to the plants list
+            return "redirect:/plants";
+        }
+        model.addAttribute("plant", plant);
+        return "detailsPlant";
+    }
+
     @GetMapping("/plants/new")
     public String createPlantForm(Model model) {
         model.addAttribute("newPlant", new Plant());
@@ -42,7 +53,11 @@ public class PlantController {
     }
 
     @PostMapping("/plants")
-    public String addPlant(@Valid @ModelAttribute("newPlant") Plant newPlant) {
+    public String addPlant(@Valid @ModelAttribute("newPlant") Plant newPlant, BindingResult result, Model model) {
+        if (result.hasErrors()) {
+            model.addAttribute("newPlant", newPlant);
+            return "createPlant";
+        }
         plantService.savePlant(newPlant);
         return "redirect:/plants";
     }

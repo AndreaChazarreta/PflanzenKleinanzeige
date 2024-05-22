@@ -8,7 +8,7 @@
     <h1>Plants</h1>
     <ul>
         <li th:each="plant : ${allPlants}">
-            <p th:text="${plant.getName()}"></p>
+            <a th:href="@{/plants/{id}(id=${plant.plantId})}" th:text="${plant.getName()}"></a>
         </li>
     </ul>
     <a th:href="@{/plants/new}" class="btn btn-primary">Neue Pflanze hinzufügen</a>
