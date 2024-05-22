@@ -45,6 +45,9 @@ public class Benutzer {
     @OneToMany(mappedBy = "possibleBuyer")
     private List<Chat> startedChats = new ArrayList<>();
 
+    @OneToMany(mappedBy = "sender")
+    private List<Message> sendedMessages = new ArrayList<>();
+
     public Benutzer() {
         // empty constructor for Hibernate
     }

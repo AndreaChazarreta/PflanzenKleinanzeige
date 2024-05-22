@@ -11,15 +11,17 @@ public class Message {
     @GeneratedValue
     private Integer messageId;
 
-    private int senderId;
-//TODO: gucken ob das so passt
+    @ManyToOne
+    @JoinColumn (name = "senderId")
+    private Benutzer sender;
+
 
     private String messageContent;
 
     private Instant sentAt;
 
     @ManyToOne
-    @JoinColumn (name = "chat")
+    @JoinColumn (name = "chatId")
     private Chat chat;
 
     public Message() {
@@ -32,14 +34,6 @@ public class Message {
 
     public void setMessageId(Integer messageId) {
         this.messageId = messageId;
-    }
-
-    public int getSenderId() {
-        return senderId;
-    }
-
-    public void setSenderId(int senderId) {
-        this.senderId = senderId;
     }
 
     public String getMessageContent() {
@@ -64,5 +58,13 @@ public class Message {
 
     public void setChat(Chat chat) {
         this.chat = chat;
+    }
+
+    public Benutzer getSender() {
+        return sender;
+    }
+
+    public void setSender(Benutzer sender) {
+        this.sender = sender;
     }
 }
