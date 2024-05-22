@@ -102,4 +102,44 @@ public class Plant {
     public void setImage(String image) {
         this.image = image;
     }
+
+    public Set<Benutzer> getBenutzerWishlist() {
+        return benutzerWishlist;
+    }
+
+    public void setBenutzerWishlist(Set<Benutzer> benutzerWishlist) {
+        this.benutzerWishlist = benutzerWishlist;
+    }
+
+    public Benutzer getSeller() {
+        return seller;
+    }
+
+    public void setSeller(Benutzer seller) {
+        this.seller = seller;
+    }
+
+    public Benutzer getBuyer() {
+        return buyer;
+    }
+
+    public void setBuyer(Benutzer buyer) {
+        this.buyer = buyer;
+    }
+
+    public CareTip getCareTip() {
+        return careTip;
+    }
+
+    public void setCareTip(CareTip careTip) {
+        this.careTip = careTip;
+    }
+
+    public List<Chat> getChatsAboutThisPlant() {
+        return chatsAboutThisPlant;
+    }
+
+    public void setChatsAboutThisPlant(List<Chat> chatsAboutThisPlant) {
+        this.chatsAboutThisPlant = chatsAboutThisPlant;
+    }
 }

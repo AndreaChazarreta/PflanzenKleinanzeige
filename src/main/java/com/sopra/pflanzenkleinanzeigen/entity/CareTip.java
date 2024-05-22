@@ -87,4 +87,12 @@ public class CareTip {
     public void setOtherTips(String otherTips) {
         this.otherTips = otherTips;
     }
+
+    public List<Plant> getDescribedPlants() {
+        return describedPlants;
+    }
+
+    public void setDescribedPlants(List<Plant> describedPlants) {
+        this.describedPlants = describedPlants;
+    }
 }
