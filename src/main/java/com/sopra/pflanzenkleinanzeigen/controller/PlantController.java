@@ -61,4 +61,26 @@ public class PlantController {
         plantService.savePlant(newPlant);
         return "redirect:/plants";
     }
+
+    @GetMapping("/plants/edit/{id}")
+    public String editPlantForm(@PathVariable int id, Model model) {
+        Plant plantToUpdate = plantService.findPlantById(id);
+        if (plantToUpdate == null) {
+            return "redirect:/plants";
+        }
+        model.addAttribute("plantToUpdate", plantToUpdate);
+        return "editPlant";
+    }
+
+    //TODO: schauen ob wir hier @PathVariable (ich glaube das ist bestPractice) benutzen oder @RequestParam (sowie in die Vorlesung)
+    @PostMapping("/plants/update/{id}")
+    public String updatePlant(@PathVariable int id, @Valid @ModelAttribute("plantToUpdate") Plant plantToUpdate, BindingResult result, Model model) {
+        if (result.hasErrors()) {
+            model.addAttribute("plantToUpdate", plantToUpdate);
+            return "editPlant";
+        }
+        plantToUpdate.setPlantId(id);
+        plantService.savePlant(plantToUpdate);
+        return "redirect:/plants";
+    }
 }
