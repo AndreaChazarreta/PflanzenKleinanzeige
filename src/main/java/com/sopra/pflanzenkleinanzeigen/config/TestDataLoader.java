@@ -101,11 +101,11 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         plantService.savePlant(kaktus);
 
         Plant rose = new Plant();
-        kaktus.setName("Rose");
-        kaktus.setPrice(12.45);
-        kaktus.setHeight(34.09);
-        kaktus.setDescription("sehr schön");
-        kaktus.setSeller(andrea);
+        rose.setName("Rose");
+        rose.setPrice(15.00);
+        rose.setHeight(50.00);
+        rose.setDescription("wunderschön");
+        rose.setSeller(andrea);
         plantService.savePlant(rose);
 
         Chat chat1 = new Chat();
