@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Pflanze bearbeiten</title>
+</head>
+<body>
+<h1>Pflanze bearbeiten</h1>
+
+<form th:action="@{/plants/edit/{id}(id=${plantToUpdate.plantId})}" th:object="${plantToUpdate}" method="post">
+    <div>
+        <label for="name">Name:</label>
+        <input type="text" id="name" placeholder="Name" th:field="*{name}" required/>
+    </div>
+    <div>
+        <label for="price">Price:</label>
+        <input type="number" id="price" placeholder="Price" th:field="*{price}"/>
+    </div>
+    <div>
+        <label for="height">Height:</label>
+        <input type="number" id="height" placeholder="Height" th:field="*{height}"/>
+    </div>
+    <div>
+        <label for="description">Description:</label>
+        <textarea id="description" placeholder="Description" th:field="*{description}"></textarea>
+    </div>
+    <div>
+        <button th:text="'Speichern'" th:type="submit"/>
+    </div>
+</form>
+<a th:href="@{/plants}">Zurück zur Liste</a>
+</body>
+</html>

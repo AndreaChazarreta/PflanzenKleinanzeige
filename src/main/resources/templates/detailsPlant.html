@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Pflanzendetails</title>
+</head>
+<body>
+<h1>Pflanzendetails</h1>
+
+<p><strong>Name:</strong> <span th:text="${plant.getName()}"></span></p>
+<p><strong>Preis:</strong> <span th:text="${plant.getPrice()}"></span></p>
+<p><strong>Groeße:</strong> <span th:text="${plant.getHeight()}"></span></p>
+<p><strong>Beschreibung:</strong> <span th:text="${plant.getDescription()}"></span></p>
+
+<a th:href="@{/plants}">Zurück zur Liste</a>
+
+</body>
+</html>

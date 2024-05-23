@@ -21,4 +21,12 @@ public class PlantService {
     public List<Plant> findAllPlants() {
         return plantRepository.findAll();
     }
+
+    public Plant findPlantById(Integer id) {
+        return plantRepository.findById(id).orElse(null);
+    }
+
+    public void deletePlantById(int id) {
+        plantRepository.deleteById(id);
+    }
 }
