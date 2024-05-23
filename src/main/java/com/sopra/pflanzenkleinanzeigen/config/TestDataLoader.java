@@ -1,11 +1,7 @@
 package com.sopra.pflanzenkleinanzeigen.config;
 
-import com.sopra.pflanzenkleinanzeigen.entity.Plant;
-import com.sopra.pflanzenkleinanzeigen.entity.Rolle;
-import com.sopra.pflanzenkleinanzeigen.entity.Benutzer;
-import com.sopra.pflanzenkleinanzeigen.service.PlantService;
-import com.sopra.pflanzenkleinanzeigen.service.RoleService;
-import com.sopra.pflanzenkleinanzeigen.service.UserService;
+import com.sopra.pflanzenkleinanzeigen.entity.*;
+import com.sopra.pflanzenkleinanzeigen.service.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +30,12 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
     @Autowired
     private PlantService plantService;
 
+    @Autowired
+    private ChatService chatService;
+
+    @Autowired
+    private MessageService messageService;
+
     /**
      * Diese Methode wird zum Aufsetzen von Testdaten für die Datenbank verwendet werden. Die Methode wird immer dann
      * ausgeführt, wenn der Spring Kontext initialisiert wurde, d.h. wenn Sie Ihren Server (neu-)starten.
@@ -59,6 +61,12 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         normalUser.setPassword(passwordEncoder.encode("1234"));
         normalUser.setRoles(userRoles);
         userService.saveUser(normalUser);
+
+        Benutzer normalUser2 = new Benutzer();
+        normalUser2.setUsername("1");
+        normalUser2.setPassword(passwordEncoder.encode("1"));
+        normalUser2.setRoles(userRoles);
+        userService.saveUser(normalUser2);
 
         Benutzer admin = new Benutzer();
         admin.setUsername("admin");
@@ -95,7 +103,43 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         kaktus.setPrice(12.45);
         kaktus.setHeight(34.09);
         kaktus.setDescription("sehr schön");
+        kaktus.setSeller(admin);
         plantService.savePlant(kaktus);
 
+        Plant rose = new Plant();
+        rose.setName("Rose");
+        rose.setPrice(15.00);
+        rose.setHeight(50.00);
+        rose.setDescription("wunderschön");
+        rose.setSeller(andrea);
+        plantService.savePlant(rose);
+
+        Chat chat1 = new Chat();
+        chat1.setPlant(kaktus);
+        chat1.setPossibleBuyer(normalUser);
+        chatService.saveChat(chat1);
+
+        Chat chat2 = new Chat();
+        chat2.setPlant(rose);
+        chat2.setPossibleBuyer(normalUser);
+        chatService.saveChat(chat2);
+
+        Message message1 = new Message();
+        message1.setChat(chat1);
+        message1.setSender(normalUser);
+        message1.setMessageContent("Hello World!");
+        messageService.saveMessage(message1);
+
+        Message message2 = new Message();
+        message2.setChat(chat1);
+        message2.setSender(normalUser);
+        message2.setMessageContent("Sharon war hier!");
+        messageService.saveMessage(message2);
+
+        Message message3 = new Message();
+        message3.setChat(chat2);
+        message3.setSender(normalUser);
+        message3.setMessageContent("Andrea war hier!");
+        messageService.saveMessage(message3);
     }
 }

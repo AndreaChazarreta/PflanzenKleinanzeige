@@ -7,5 +7,7 @@
 <body>
 <p th:text="'Du bist angemeldet und befindest dich auf der Startseite.'"></p>
 <p th:text="${message}"></p>
+<a th:href="@{/plants}" class="btn btn-primary">Alle Pflanzen anzeigen</a>
+<a th:href="@{/chats/{id}(id=${currentBenutzer.userId})}" class="btn btn-primary">Alle Chats anzeigen</a>
 </body>
 </html>
