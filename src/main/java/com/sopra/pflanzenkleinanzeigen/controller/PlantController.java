@@ -46,6 +46,7 @@ public class PlantController {
         return "detailsPlant";
     }
 
+    //TODO: FRAGEN: warum braucht man diesen zwischenschritt
     @GetMapping("/plants/new")
     public String createPlantForm(Model model) {
         model.addAttribute("newPlant", new Plant());
@@ -73,7 +74,7 @@ public class PlantController {
     }
 
     //TODO: schauen ob wir hier @PathVariable (ich glaube das ist bestPractice) benutzen oder @RequestParam (sowie in die Vorlesung)
-    @PostMapping("/plants/update/{id}")
+    @PostMapping("/plants/edit/{id}")
     public String updatePlant(@PathVariable int id, @Valid @ModelAttribute("plantToUpdate") Plant plantToUpdate, BindingResult result, Model model) {
         if (result.hasErrors()) {
             model.addAttribute("plantToUpdate", plantToUpdate);

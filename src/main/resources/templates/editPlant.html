@@ -7,7 +7,7 @@
 <body>
 <h1>Pflanze bearbeiten</h1>
 
-<form th:action="@{/plants/update/{id}(id=${plantToUpdate.plantId})}" th:object="${plantToUpdate}" method="post">
+<form th:action="@{/plants/edit/{id}(id=${plantToUpdate.plantId})}" th:object="${plantToUpdate}" method="post">
     <div>
         <label for="name">Name:</label>
         <input type="text" id="name" placeholder="Name" th:field="*{name}" required/>
