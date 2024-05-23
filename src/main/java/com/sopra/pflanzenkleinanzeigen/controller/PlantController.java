@@ -83,4 +83,10 @@ public class PlantController {
         plantService.savePlant(plantToUpdate);
         return "redirect:/plants";
     }
+
+    @GetMapping("/plants/delete/{id}")
+    public String deletePlant(@PathVariable int id) {
+        plantService.deletePlantById(id);
+        return "redirect:/plants";
+    }
 }

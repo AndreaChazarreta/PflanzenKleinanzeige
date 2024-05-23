@@ -26,4 +26,7 @@ public class PlantService {
         return plantRepository.findById(id).orElse(null);
     }
 
+    public void deletePlantById(int id) {
+        plantRepository.deleteById(id);
+    }
 }
