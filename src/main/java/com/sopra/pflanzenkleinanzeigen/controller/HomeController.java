@@ -1,5 +1,6 @@
 package com.sopra.pflanzenkleinanzeigen.controller;
 
+import com.sopra.pflanzenkleinanzeigen.entity.Benutzer;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.sopra.pflanzenkleinanzeigen.service.UserService;
 import org.springframework.stereotype.Controller;
@@ -19,8 +20,9 @@ public class HomeController {
      */
     @GetMapping("/")
     public String showHome(Model model) {
-        String username = userService.getCurrentUser().getUsername();
-        model.addAttribute("message", "Willkommen " + username + "!");
+        Benutzer currentBenutzer = userService.getCurrentUser();
+        model.addAttribute("currentBenutzer", currentBenutzer);
+        model.addAttribute("message", "Willkommen " + currentBenutzer.getUsername() + "!");
         return "home";
     }
 }
