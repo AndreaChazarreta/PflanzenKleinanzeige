@@ -1,5 +1,6 @@
 package com.sopra.pflanzenkleinanzeigen.controller;
 
+import com.sopra.pflanzenkleinanzeigen.entity.Chat;
 import com.sopra.pflanzenkleinanzeigen.service.ChatService;
 import com.sopra.pflanzenkleinanzeigen.service.MessageService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,14 @@ public class ChatController {
         model.addAttribute("allChats", chatService.findUserChats(userId));
         return "chats";
     }
+
+    @GetMapping("/chat/{chatId}")
+    public String getChat (@PathVariable int chatId, Model model){
+        Chat chat = chatService.findChatById(chatId);
+        model.addAttribute("allMessages", chat.getMessages());
+        return "messages";
+    }
+
 
 
 }

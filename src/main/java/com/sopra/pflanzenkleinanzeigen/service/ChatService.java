@@ -19,6 +19,11 @@ public class ChatService {
         return chatRepository.save(chat);
     }
 
+    public Chat findChatById(Integer id) {
+        return chatRepository.findById(id).orElse(null);
+    }
+
+
     /**
      * This method lists all chats from one specific user
      * @param userId of one user
