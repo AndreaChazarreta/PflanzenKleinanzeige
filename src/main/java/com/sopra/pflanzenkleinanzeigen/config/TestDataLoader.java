@@ -1,8 +1,10 @@
 package com.sopra.pflanzenkleinanzeigen.config;
 
+import com.sopra.pflanzenkleinanzeigen.entity.Chat;
 import com.sopra.pflanzenkleinanzeigen.entity.Plant;
 import com.sopra.pflanzenkleinanzeigen.entity.Rolle;
 import com.sopra.pflanzenkleinanzeigen.entity.Benutzer;
+import com.sopra.pflanzenkleinanzeigen.service.ChatService;
 import com.sopra.pflanzenkleinanzeigen.service.PlantService;
 import com.sopra.pflanzenkleinanzeigen.service.RoleService;
 import com.sopra.pflanzenkleinanzeigen.service.UserService;
@@ -33,6 +35,9 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
 
     @Autowired
     private PlantService plantService;
+
+    @Autowired
+    private ChatService chatService;
 
     /**
      * Diese Methode wird zum Aufsetzen von Testdaten für die Datenbank verwendet werden. Die Methode wird immer dann
@@ -95,7 +100,12 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         kaktus.setPrice(12.45);
         kaktus.setHeight(34.09);
         kaktus.setDescription("sehr schön");
+        kaktus.setSeller(admin);
         plantService.savePlant(kaktus);
 
+        Chat chat1 = new Chat();
+        chat1.setPlant(kaktus);
+        chat1.setPossibleBuyer(normalUser);
+        chatService.saveChat(chat1);
     }
 }
