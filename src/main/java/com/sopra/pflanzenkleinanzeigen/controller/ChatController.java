@@ -1,8 +1,10 @@
 package com.sopra.pflanzenkleinanzeigen.controller;
 
+import com.sopra.pflanzenkleinanzeigen.entity.Benutzer;
 import com.sopra.pflanzenkleinanzeigen.entity.Chat;
 import com.sopra.pflanzenkleinanzeigen.service.ChatService;
 import com.sopra.pflanzenkleinanzeigen.service.MessageService;
+import com.sopra.pflanzenkleinanzeigen.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,6 +17,9 @@ public class ChatController {
     @Autowired
     private ChatService chatService;
 
+    @Autowired
+    private UserService userService;
+
     /**
      * This method shows the chats for one user
      * @param userId
@@ -23,6 +28,11 @@ public class ChatController {
      */
     @GetMapping("/chats/{userId}")
     public String getChats (@PathVariable int userId, Model model){
+        Benutzer currentBenutzer = userService.getCurrentUser();
+        if (userId != currentBenutzer.getUserId()) {
+            userId = currentBenutzer.getUserId();
+            return "redirect:/chats/" + userId;
+        }
         model.addAttribute("allChats", chatService.findUserChats(userId));
         return "chats";
     }
@@ -33,7 +43,5 @@ public class ChatController {
         model.addAttribute("allMessages", chat.getMessages());
         return "messages";
     }
-
-
 
 }
