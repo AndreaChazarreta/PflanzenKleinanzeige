@@ -32,7 +32,9 @@ public class ChatService {
         List<Chat> allChats = chatRepository.findAll();
         List<Chat> userChats = new ArrayList<>();
         for(Chat chat : allChats){
-            if(chat.getPlant().getSeller().getUserId() == userId){
+            int sellerId = chat.getPlant().getSeller().getUserId();
+            int buyerId = chat.getPossibleBuyer().getUserId();
+            if( sellerId == userId || buyerId == userId){
                 userChats.add(chat);
             }
         }
