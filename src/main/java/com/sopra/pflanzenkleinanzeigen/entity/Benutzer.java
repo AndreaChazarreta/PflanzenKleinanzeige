@@ -8,6 +8,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * This class represents a user in the system.
+ * It contains information about the user such as their username, password, roles, and related entities like plants and chats.
+ */
 @Entity
 public class Benutzer {
 
@@ -48,6 +52,9 @@ public class Benutzer {
     @OneToMany(mappedBy = "sender")
     private List<Message> sendedMessages = new ArrayList<>();
 
+    /**
+     * Default constructor for Hibernate.
+     */
     public Benutzer() {
         // empty constructor for Hibernate
     }

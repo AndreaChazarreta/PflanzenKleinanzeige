@@ -7,6 +7,10 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/**
+ * This class represents a role service in the system.
+ * It contains methods to save a role and to find all roles.
+ */
 @Service
 public class RoleService {
 

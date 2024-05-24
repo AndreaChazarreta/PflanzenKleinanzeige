@@ -9,6 +9,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
+/**
+ * This controller is responsible for managing chats.
+ * It provides endpoints for retrieving chats for a specific user and for retrieving messages in a specific chat.
+ */
 @Controller
 public class ChatController {
 
@@ -27,6 +31,12 @@ public class ChatController {
         return "chats";
     }
 
+    /**
+     * This method shows the messages in a specific chat.
+     * @param chatId The ID of the chat whose messages should be displayed.
+     * @param model The model that is sent to the view.
+     * @return "messages", the view with all messages in a specific chat.
+     */
     @GetMapping("/chat/{chatId}")
     public String getChat (@PathVariable int chatId, Model model){
         Chat chat = chatService.findChatById(chatId);

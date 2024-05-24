@@ -13,6 +13,10 @@ import org.springframework.stereotype.Component;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * This class is used to load test data into the database.
+ * It implements ApplicationListener, which allows it to run when the application context is refreshed.
+ */
 @Component
 public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent> {
 
@@ -37,14 +41,16 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
     private MessageService messageService;
 
     /**
-     * Diese Methode wird zum Aufsetzen von Testdaten für die Datenbank verwendet werden. Die Methode wird immer dann
-     * ausgeführt, wenn der Spring Kontext initialisiert wurde, d.h. wenn Sie Ihren Server (neu-)starten.
+     * This method is triggered when the application context is refreshed.
+     * It initializes the database with test data.
+     *
+     * @param event The event that triggers this method.
      */
     @Override
     public void onApplicationEvent(ContextRefreshedEvent event) {
-        logger.info("Initialisiere Datenbank mit Testdaten...");
+        logger.info("Initialize database with test data...");
 
-        // Initialisieren Sie Beispielobjekte und speichern Sie diese über Ihre Services
+        // Initialisierung der Beispielobjekte und Speicherung dessen über Sie die Services
         Rolle userRole = new Rolle("ROLE_USER");
         Rolle adminRole = new Rolle("ROLE_ADMIN");
         roleService.saveRole(userRole);

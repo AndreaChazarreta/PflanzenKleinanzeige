@@ -8,7 +8,10 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
-
+/**
+ * This class represents a chat service in the system.
+ * It contains methods to save a chat and to find a chat by id.
+ */
 @Service
 public class ChatService {
 

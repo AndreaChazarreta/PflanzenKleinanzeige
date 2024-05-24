@@ -7,7 +7,10 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-
+/**
+ * This class represents a message service in the system.
+ * It contains methods to save a message and to find all messages.
+ */
 @Service
 public class MessageService {
 

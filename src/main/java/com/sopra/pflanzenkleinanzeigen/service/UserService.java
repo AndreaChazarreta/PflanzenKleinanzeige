@@ -17,12 +17,23 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
+/**
+ * This class represents a user service in the system.
+ * It contains methods to save a user, find all users, get a user by username, get the current user, get the current user details, load user by username, and get user authorities.
+ */
 @Service
 public class UserService implements UserDetailsService {
 
     @Autowired
     private UserRepository userRepository;
 
+    /**
+     * Saves a user to the repository.
+     * If the username is already taken, an IllegalArgumentException is thrown.
+     *
+     * @param user The user to be saved.
+     * @return The saved user.
+     */
     public Benutzer saveUser(Benutzer user) {
         if (userRepository.findByUsername(user.getUsername()) == null) {
             return userRepository.save(user);
@@ -31,15 +42,20 @@ public class UserService implements UserDetailsService {
         }
     }
 
+    /**
+     * Finds all users in the repository.
+     *
+     * @return A list of all users.
+     */
     public List<Benutzer> findAllUsers() {
         return userRepository.findAll();
     }
 
     /**
-     * Sucht nach einem User mit einem bestimmten Usernamen.
+     * Finds a user by username.
      *
-     * @param username der username.
-     * @return User-Objekt.
+     * @param username The username of the user.
+     * @return The user with the given username.
      */
     public Benutzer getUserByUsername(String username) {
         return userRepository.findByUsername(username);
@@ -50,9 +66,9 @@ public class UserService implements UserDetailsService {
     ///////////////////////////////////////////////////////////////////////////
 
     /**
-     * Gibt den aktuell eingeloggten User zurück.
+     * Gets the currently logged in user.
      *
-     * @return User.
+     * @return The currently logged in user.
      */
     public Benutzer getCurrentUser() {
         return getUserByUsername(((org.springframework.security.core.userdetails.User) SecurityContextHolder.getContext()
@@ -60,10 +76,10 @@ public class UserService implements UserDetailsService {
     }
 
     /**
-     * Gibt das UserDetails Objekt des aktuell eingeloggten Users zurück. Wird u.U. benötigt um
-     * Rollen-Authentifizierungschecks durchzuführen.
+     * Gets the UserDetails object of the currently logged in user.
+     * This may be needed to perform role authentication checks.
      *
-     * @return UserDetails Objekt der Spring Security.
+     * @return The UserDetails object of the currently logged in user.
      */
     public org.springframework.security.core.userdetails.User getCurrentUserDetails() {
         return (org.springframework.security.core.userdetails.User) SecurityContextHolder.getContext()
@@ -71,11 +87,12 @@ public class UserService implements UserDetailsService {
     }
 
     /**
-     * Überschreibt die Methode, welche für den Login der Spring Security benötigt wird..
+     * Loads a user by username.
+     * This method is needed for Spring Security's login process.
      *
-     * @param username the username des Benutzers.
-     * @return UserDetails Objekt des Spring Security Frameworks.
-     * @throws UsernameNotFoundException exception.
+     * @param username The username of the user.
+     * @return The UserDetails object of the user.
+     * @throws UsernameNotFoundException If the user could not be found.
      */
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -88,6 +105,12 @@ public class UserService implements UserDetailsService {
                 user.isEnabled(), true, true, user.isEnabled(), grantedAuthorities);
     }
 
+    /**
+     * Gets the authorities of a user.
+     *
+     * @param roleSet The roles of the user.
+     * @return A list of the user's authorities.
+     */
     private List<GrantedAuthority> getUserAuthorities(Set<Rolle> roleSet) {
         List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
         for (Rolle role : roleSet) {
