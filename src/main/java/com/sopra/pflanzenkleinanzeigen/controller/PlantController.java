@@ -8,6 +8,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
@@ -22,6 +24,9 @@ public class PlantController {
 
     @Autowired
     private PlantService plantService;
+
+    private static final Logger logger = LoggerFactory.getLogger(PlantController.class);
+
 
     //TODO: FRAGEN: wie sollen wir "Get all Plants" implementieren? mit @ModelAttribute
     // oder mit @GetMapping und dann model.Attribute?
@@ -41,7 +46,13 @@ public class PlantController {
      */
     @GetMapping("/plants")
     public String getPlants(Model model) {
-        model.addAttribute("allPlants", plantService.findAllPlants());
+        try {
+            model.addAttribute("allPlants", plantService.findAllPlants());
+        } catch (Exception getPlantException ) {
+            logger.error("Fehler beim Abrufen der Pflanzen", getPlantException);
+            model.addAttribute("error", "Ein Fehler ist aufgetreten. Bitte versuchen Sie es später erneut.");
+            return "error";
+        }
         return "plants";
     }
 
@@ -55,7 +66,6 @@ public class PlantController {
     public String getPlantDetails(@PathVariable int id, Model model) {
         Plant plant = plantService.findPlantById(id);
         if (plant == null) {
-            // Handle case where plant is not found, maybe redirect to an error page or back to the plants list
             return "redirect:/plants";
         }
         model.addAttribute("plant", plant);
@@ -134,7 +144,14 @@ public class PlantController {
      */
     @GetMapping("/plants/delete/{id}")
     public String deletePlant(@PathVariable int id) {
-        plantService.deletePlantById(id);
+        try {
+            plantService.deletePlantById(id);
+        } catch (Exception e) {
+            logger.error("Fehler beim Löschen der Pflanze mit der ID: " + id, e);
+            // TODO: Weiterleitung zu einer Fehlerseite oder Anzeige einer Fehlermeldung auf der aktuellen Seite:
+            //  Der Fehler wird zwar im Log protokolliert, aber der Benutzer wird lediglich auf die Pflanzenübersichtsseite weitergeleitet, ohne eine spezifische Fehlermeldung zu erhalten.
+            return "redirect:/plants";
+        }
         return "redirect:/plants";
     }
 }

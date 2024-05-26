@@ -11,6 +11,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +29,9 @@ public class UserService implements UserDetailsService {
     @Autowired
     private UserRepository userRepository;
 
+    private static final Logger logger = LoggerFactory.getLogger(UserService.class);
+
+    //TODO: Exceptions testen bei der Registrierung von Benutzern
     /**
      * Saves a user to the repository.
      * If the username is already taken, an IllegalArgumentException is thrown.
@@ -35,12 +40,28 @@ public class UserService implements UserDetailsService {
      * @return The saved user.
      */
     public Benutzer saveUser(Benutzer user) {
-        if (userRepository.findByUsername(user.getUsername()) == null) {
-            return userRepository.save(user);
-        } else {
-            throw new IllegalArgumentException("Benutzername bereits vergeben");
+        try {
+            if (user == null) {
+                throw new IllegalArgumentException("Benutzer darf nicht null sein");
+            }
+
+            Benutzer existingUser = userRepository.findByUsername(user.getUsername());
+            if (existingUser == null) {
+                return userRepository.save(user);
+            } else {
+                throw new IllegalArgumentException("Benutzername bereits vergeben");
+            }
+        } catch (IllegalArgumentException e) {
+            logger.error("Fehler beim Speichern des Benutzers: " + e.getMessage(), e);
+            //TODO: Weiterleitung zu einer Fehlerseite oder Anzeige einer Fehlermeldung auf der aktuellen Seite
+            throw e;
+        } catch (Exception e) {
+            logger.error("Unbekannter Fehler beim Speichern des Benutzers", e);
+            //TODO: Weiterleitung zu einer Fehlerseite oder Anzeige einer Fehlermeldung auf der aktuellen Seite
+            throw new RuntimeException("Ein unerwarteter Fehler ist aufgetreten. Bitte versuchen Sie es später erneut.");
         }
     }
+
 
     /**
      * Finds all users in the repository.
@@ -98,7 +119,7 @@ public class UserService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Benutzer user = userRepository.findByUsername(username);
         if (Objects.isNull(user)) {
-            throw new UsernameNotFoundException("Could not find the user for username " + username);
+            throw new UsernameNotFoundException("Der Benutzer für den Benutzernamen konnte nicht gefunden werden " + username);
         }
         List<GrantedAuthority> grantedAuthorities = getUserAuthorities(user.getRoles());
         return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(),
