@@ -24,7 +24,7 @@ public class Chat {
     @JoinColumn (name = "plantId")
     private Plant plant;
 
-    @OneToMany(mappedBy = "chat")
+    @OneToMany(mappedBy = "chat", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Message> messages = new ArrayList<>();
 
     /**

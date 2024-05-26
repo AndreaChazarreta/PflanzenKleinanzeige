@@ -2,6 +2,7 @@ package com.sopra.pflanzenkleinanzeigen.service;
 
 import com.sopra.pflanzenkleinanzeigen.entity.Message;
 import com.sopra.pflanzenkleinanzeigen.repository.MessageRepository;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +18,7 @@ public class MessageService {
     @Autowired
     private MessageRepository messageRepository;
 
-    public Message saveMessage(Message message) {
+    public Message saveMessage(@Valid Message message) {
         return messageRepository.save(message);
     }
 
