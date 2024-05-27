@@ -6,23 +6,39 @@ import com.sopra.pflanzenkleinanzeigen.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
+/**
+ * This controller is responsible for managing chats.
+ * It provides endpoints for retrieving chats for a specific user and for retrieving messages in a specific chat.
+ */
 @Controller
 public class HomeController {
+
     @Autowired
     private UserService userService;
 
+    private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
+
+//TODO: Sollen wir error page implementieren?
     /**
-     * Zeigt die Startseite Ihrer Anwendung.
-     * @param model enthält alle ModelAttribute.
-     * @return home-Seite.
+     * This method shows the home page of your application.
+     * @param model contains all ModelAttributes.
+     * @return home page.
      */
     @GetMapping("/")
     public String showHome(Model model) {
+        try{
         Benutzer currentBenutzer = userService.getCurrentUser();
         model.addAttribute("currentBenutzer", currentBenutzer);
         model.addAttribute("message", "Willkommen " + currentBenutzer.getUsername() + "!");
+        } catch (Exception BenutzerException) {
+            logger.error("Fehler beim Abrufen des aktuellen Benutzers", BenutzerException);
+            model.addAttribute("error", "Ein Fehler ist aufgetreten. Bitte versuchen Sie es später erneut.");
+            //return "error"; -> this would be the better solution, but we don't have an error page yet
+        }
         return "home";
     }
 }

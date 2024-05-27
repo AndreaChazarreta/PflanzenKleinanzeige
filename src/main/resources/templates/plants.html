@@ -6,6 +6,16 @@
 </head>
 <body>
     <h1>Plants</h1>
+    <div>
+        <form class="search">
+            <div class="search_input">
+                <Input   label="Find a Title:" type="text"/>
+            </div>
+            <div class="search_button">
+                <Button type="submit" >Search</Button>
+            </div>
+        </form>
+    </div>
     <ul>
         <li th:each="plant : ${allPlants}">
             <a th:href="@{/plants/{id}(id=${plant.plantId})}" th:text="${plant.getName()}"></a>

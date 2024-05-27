@@ -1,9 +1,14 @@
 package com.sopra.pflanzenkleinanzeigen.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 
 import java.time.Instant;
 
+/**
+ * This class represents a message in the system.
+ * It contains information about the message such as the sender, the message content, the time it was sent, and the chat it belongs to.
+ */
 @Entity
 public class Message {
 
@@ -15,7 +20,7 @@ public class Message {
     @JoinColumn (name = "senderId")
     private Benutzer sender;
 
-
+    @NotBlank(message = "Message cannot be blank")
     private String messageContent;
 
     private Instant sentAt;
@@ -24,6 +29,9 @@ public class Message {
     @JoinColumn (name = "chatId")
     private Chat chat;
 
+    /**
+     * Default constructor for Hibernate.
+     */
     public Message() {
         // empty constructor for Hibernate
     }

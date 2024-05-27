@@ -5,6 +5,11 @@ import jakarta.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This class represents a care tip in the system.
+ * It contains information about the care tip such as irrigation, lighting conditions, fertilization, repotting, temperature, and other tips.
+ * It also contains a list of plants that this care tip describes.
+ */
 @Entity
 public class CareTip {
 
@@ -27,7 +32,9 @@ public class CareTip {
     @OneToMany(mappedBy = "careTip")
     private List<Plant> describedPlants = new ArrayList<>();
 
-
+    /**
+     * Default constructor for Hibernate.
+     */
     public CareTip() {
         // empty constructor for Hibernate
     }

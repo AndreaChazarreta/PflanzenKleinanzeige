@@ -11,18 +11,21 @@
     <div>
         <label for="name">Name:</label>
         <input type="text" id="name" placeholder="Name" th:field="*{name}" required/>
+        <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
     </div>
     <div>
-        <label for="price">Price:</label>
-        <input type="number" id="price" placeholder="Price" th:field="*{price}"/>
+        <label for="price">Preis:</label>
+        <input type="number" id="price" placeholder="Preis in Euro" th:field="*{price}" step="any" required/>
+        <div th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></div>
     </div>
     <div>
-        <label for="height">Height:</label>
-        <input type="number" id="height" placeholder="Height" th:field="*{height}"/>
+        <label for="height">Höhe:</label>
+        <input type="number" id="height" placeholder="Höhe in Zentimeter" th:field="*{height}" step="any" required/>
+        <div th:if="${#fields.hasErrors('height')}" th:errors="*{height}"></div>
     </div>
     <div>
-        <label for="description">Description:</label>
-        <textarea id="description" placeholder="Description" th:field="*{description}"></textarea>
+        <label for="description">Beschreibung:</label>
+        <textarea id="description" placeholder="Beschreibung" th:field="*{description}"></textarea>
     </div>
     <div>
         <button th:text="'Speichern'" th:type="submit"/>

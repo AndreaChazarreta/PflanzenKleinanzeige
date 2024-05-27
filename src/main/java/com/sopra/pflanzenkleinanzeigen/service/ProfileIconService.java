@@ -7,6 +7,10 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/**
+ * This class represents a profile icon service in the system.
+ * It contains methods to save a profile icon and to find all profile icons.
+ */
 @Service
 public class ProfileIconService {
 
