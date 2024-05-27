@@ -34,4 +34,12 @@ public class PlantService {
     public void deletePlantById(int id) {
         plantRepository.deleteById(id);
     }
+
+    public List<Plant> findByKeyword(String keyword) {
+        if (keyword != null) {
+            return plantRepository.findByKeyword(keyword);
+        } else {
+            return plantRepository.findAll();
+        }
+    }
 }
