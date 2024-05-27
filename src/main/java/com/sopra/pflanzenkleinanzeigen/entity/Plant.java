@@ -1,11 +1,16 @@
 package com.sopra.pflanzenkleinanzeigen.entity;
 
 import jakarta.persistence.*;
-
+import jakarta.validation.constraints.*;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * This class represents a plant in the system.
+ * It contains information about the plant such as the name, price, height, description, whether a pot is included, an image, the seller, the buyer, the care tip, and related entities like the wishlist, chats, and the seller.
+ */
 @Entity
 public class Plant {
 
@@ -13,12 +18,20 @@ public class Plant {
     @GeneratedValue
     private Integer plantId;
 
+    @NotBlank(message = "Name cannot be blank")
     private String name;
 
-    private double price;
+    // Price in Euro
+    @DecimalMin(value = "0.0", inclusive = true, message = "Der Preis muss größer gleich Null sein")
+    @Digits(integer = 10, fraction = 2, message = "Preis muss ein gültiger Geldbetrag sein mit bis zu 2 Nachkommastellen")
+    private BigDecimal price;
 
-    private double height;
+    // Height in centimeters
+    @DecimalMin(value = "0.0", inclusive = true, message = "Die Höhe muss größer gleich Null sein")
+    @Digits(integer = 10, fraction = 2, message = "Höhe muss eine gültige Zahl mit bis zu 2 Nachkommastellen")
+    private BigDecimal height;
 
+    @NotBlank(message = "Beschreibung kann nicht leer sein")
     private String description;
 
     private boolean potIncluded;
@@ -40,14 +53,18 @@ public class Plant {
     @JoinColumn (name = "careTipId")
     private CareTip careTip;
 
-    @OneToMany(mappedBy = "plant")
+    //TODO: Cascade schauen, passt so?
+    @OneToMany(mappedBy = "plant", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Chat> chatsAboutThisPlant = new ArrayList<>();
 
+    /**
+     * Default constructor for Hibernate.
+     */
     public Plant() {
         // empty constructor for Hibernate
     }
 
-    public Plant(String name, double price, double height, String description){
+    public Plant(String name, BigDecimal price, BigDecimal height, String description){
         this.name = name;
         this.price = price;
         this.height = height;
@@ -70,19 +87,19 @@ public class Plant {
         this.name = name;
     }
 
-    public double getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
     }
 
-    public double getHeight() {
+    public BigDecimal getHeight() {
         return height;
     }
 
-    public void setHeight(double height) {
+    public void setHeight(BigDecimal height) {
         this.height = height;
     }
 

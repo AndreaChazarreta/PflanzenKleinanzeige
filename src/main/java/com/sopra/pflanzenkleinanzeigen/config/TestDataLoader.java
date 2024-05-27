@@ -1,11 +1,7 @@
 package com.sopra.pflanzenkleinanzeigen.config;
 
-import com.sopra.pflanzenkleinanzeigen.entity.Plant;
-import com.sopra.pflanzenkleinanzeigen.entity.Rolle;
-import com.sopra.pflanzenkleinanzeigen.entity.Benutzer;
-import com.sopra.pflanzenkleinanzeigen.service.PlantService;
-import com.sopra.pflanzenkleinanzeigen.service.RoleService;
-import com.sopra.pflanzenkleinanzeigen.service.UserService;
+import com.sopra.pflanzenkleinanzeigen.entity.*;
+import com.sopra.pflanzenkleinanzeigen.service.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,9 +10,14 @@ import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * This class is used to load test data into the database.
+ * It implements ApplicationListener, which allows it to run when the application context is refreshed.
+ */
 @Component
 public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent> {
 
@@ -34,15 +35,23 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
     @Autowired
     private PlantService plantService;
 
+    @Autowired
+    private ChatService chatService;
+
+    @Autowired
+    private MessageService messageService;
+
     /**
-     * Diese Methode wird zum Aufsetzen von Testdaten für die Datenbank verwendet werden. Die Methode wird immer dann
-     * ausgeführt, wenn der Spring Kontext initialisiert wurde, d.h. wenn Sie Ihren Server (neu-)starten.
+     * This method is triggered when the application context is refreshed.
+     * It initializes the database with test data.
+     *
+     * @param event The event that triggers this method.
      */
     @Override
     public void onApplicationEvent(ContextRefreshedEvent event) {
-        logger.info("Initialisiere Datenbank mit Testdaten...");
+        logger.info("Initialize database with test data...");
 
-        // Initialisieren Sie Beispielobjekte und speichern Sie diese über Ihre Services
+        // Initialisierung der Beispielobjekte und Speicherung dessen über Sie die Services
         Rolle userRole = new Rolle("ROLE_USER");
         Rolle adminRole = new Rolle("ROLE_ADMIN");
         roleService.saveRole(userRole);
@@ -60,10 +69,22 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         normalUser.setRoles(userRoles);
         userService.saveUser(normalUser);
 
+        Benutzer normalUser2 = new Benutzer();
+        normalUser2.setUsername("1");
+        normalUser2.setPassword(passwordEncoder.encode("1"));
+        normalUser2.setRoles(userRoles);
+        normalUser2.setFirstname("Paul");
+        normalUser2.setLastname("Kuhn");
+        normalUser2.setEmail("paul.kuhn@gmail.com");
+        userService.saveUser(normalUser2);
+
         Benutzer admin = new Benutzer();
         admin.setUsername("admin");
         admin.setPassword(passwordEncoder.encode("admin"));
         admin.setRoles(adminRoles);
+        admin.setFirstname("Marc");
+        admin.setLastname("Uwe");
+        admin.setEmail("marc.uwe@uni.de");
         userService.saveUser(admin);
 
         Benutzer andrea = new Benutzer();
@@ -92,10 +113,46 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
 
         Plant kaktus = new Plant();
         kaktus.setName("Kaktus");
-        kaktus.setPrice(12.45);
-        kaktus.setHeight(34.09);
+        kaktus.setPrice(new BigDecimal("12.45"));
+        kaktus.setHeight(new BigDecimal("34.09"));
         kaktus.setDescription("sehr schön");
+        kaktus.setSeller(admin);
         plantService.savePlant(kaktus);
 
+        Plant rose = new Plant();
+        rose.setName("Rose");
+        rose.setPrice(new BigDecimal("15.00"));
+        rose.setHeight(new BigDecimal("50.00"));
+        rose.setDescription("wunderschön");
+        rose.setSeller(andrea);
+        plantService.savePlant(rose);
+
+        Chat chat1 = new Chat();
+        chat1.setPlant(kaktus);
+        chat1.setPossibleBuyer(normalUser);
+        chatService.saveChat(chat1);
+
+        Chat chat2 = new Chat();
+        chat2.setPlant(rose);
+        chat2.setPossibleBuyer(normalUser);
+        chatService.saveChat(chat2);
+
+        Message message1 = new Message();
+        message1.setChat(chat1);
+        message1.setSender(normalUser);
+        message1.setMessageContent("Hello World!");
+        messageService.saveMessage(message1);
+
+        Message message2 = new Message();
+        message2.setChat(chat1);
+        message2.setSender(normalUser);
+        message2.setMessageContent("Sharon war hier!");
+        messageService.saveMessage(message2);
+
+        Message message3 = new Message();
+        message3.setChat(chat2);
+        message3.setSender(normalUser);
+        message3.setMessageContent("Andrea war hier!");
+        messageService.saveMessage(message3);
     }
 }
