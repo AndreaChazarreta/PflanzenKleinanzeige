@@ -10,6 +10,7 @@ import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -106,16 +107,16 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
 
         Plant kaktus = new Plant();
         kaktus.setName("Kaktus");
-        kaktus.setPrice(12.45);
-        kaktus.setHeight(34.09);
+        kaktus.setPrice(new BigDecimal("12.45"));
+        kaktus.setHeight(new BigDecimal("34.09"));
         kaktus.setDescription("sehr schön");
         kaktus.setSeller(admin);
         plantService.savePlant(kaktus);
 
         Plant rose = new Plant();
         rose.setName("Rose");
-        rose.setPrice(15.00);
-        rose.setHeight(50.00);
+        rose.setPrice(new BigDecimal("15.00"));
+        rose.setHeight(new BigDecimal("50.00"));
         rose.setDescription("wunderschön");
         rose.setSeller(andrea);
         plantService.savePlant(rose);

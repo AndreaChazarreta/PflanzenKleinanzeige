@@ -1,6 +1,7 @@
 package com.sopra.pflanzenkleinanzeigen.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 
 import java.time.Instant;
 
@@ -19,7 +20,7 @@ public class Message {
     @JoinColumn (name = "senderId")
     private Benutzer sender;
 
-
+    @NotBlank(message = "Message cannot be blank")
     private String messageContent;
 
     private Instant sentAt;
