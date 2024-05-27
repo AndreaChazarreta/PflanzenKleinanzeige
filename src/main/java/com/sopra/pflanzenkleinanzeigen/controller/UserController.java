@@ -22,21 +22,10 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    /**
-     * Zeigt die Pflanzen Seite mit allen Pflanzen an.
-     * @return die View mit allen Pflanzen (also die plants.html).
-     */
-    @GetMapping("/users")
-    public String getusers(Model model) {
-        model.addAttribute("allUsers", userService.findAllUsers());
-        return "users";
-    }
-
     @GetMapping("/users/{name}")
     public String getUserDetails(@PathVariable String name, Model model) {
         Benutzer user = userService.getUserByUsername(name);
         if (user == null) {
-            // Handle case where plant is not found, maybe redirect to an error page or back to the plants list
             return "redirect:/users";
         }
         model.addAttribute("user", user);
