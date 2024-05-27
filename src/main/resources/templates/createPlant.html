@@ -10,15 +10,18 @@
 <form th:action="@{/plants}" th:object="${newPlant}" method="post">
     <label for="name">Name:</label>
     <input type="text" id="name" placeholder="Name" th:field="*{name}" required/>
+    <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
     <br>
-    <label for="price">Price:</label>
-    <input type="number" id="price" placeholder="Price" th:field="*{price}"/>
+    <label for="price">Preis (€):</label>
+    <input type="number" id="price" placeholder="Preis in Euro" th:field="*{price}" step="any" min="0" required/>
+    <div th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></div>
     <br>
-    <label for="height">Height:</label>
-    <input type="number" id="height" placeholder="Height" th:field="*{height}"/>
+    <label for="height">Höhe (cm):</label>
+    <input type="number" id="height" placeholder="Höhe in Zentimeter" th:field="*{height}" step="any" min="0" required/>
+    <div th:if="${#fields.hasErrors('height')}" th:errors="*{height}"></div>
     <br>
-    <label for="description">Description:</label>
-    <input type="text" id="description" placeholder="Description" th:field="*{description}"/>
+    <label for="description">Beschreibung:</label>
+    <input type="text" id="description" placeholder="Beschreibung" th:field="*{description}"/>
     <br>
     <button th:text="'Create'" th:type="submit"/>
 </form>

@@ -10,9 +10,14 @@ import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * This class is used to load test data into the database.
+ * It implements ApplicationListener, which allows it to run when the application context is refreshed.
+ */
 @Component
 public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent> {
 
@@ -37,14 +42,16 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
     private MessageService messageService;
 
     /**
-     * Diese Methode wird zum Aufsetzen von Testdaten für die Datenbank verwendet werden. Die Methode wird immer dann
-     * ausgeführt, wenn der Spring Kontext initialisiert wurde, d.h. wenn Sie Ihren Server (neu-)starten.
+     * This method is triggered when the application context is refreshed.
+     * It initializes the database with test data.
+     *
+     * @param event The event that triggers this method.
      */
     @Override
     public void onApplicationEvent(ContextRefreshedEvent event) {
-        logger.info("Initialisiere Datenbank mit Testdaten...");
+        logger.info("Initialize database with test data...");
 
-        // Initialisieren Sie Beispielobjekte und speichern Sie diese über Ihre Services
+        // Initialisierung der Beispielobjekte und Speicherung dessen über Sie die Services
         Rolle userRole = new Rolle("ROLE_USER");
         Rolle adminRole = new Rolle("ROLE_ADMIN");
         roleService.saveRole(userRole);
@@ -66,12 +73,18 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         normalUser2.setUsername("1");
         normalUser2.setPassword(passwordEncoder.encode("1"));
         normalUser2.setRoles(userRoles);
+        normalUser2.setFirstname("Paul");
+        normalUser2.setLastname("Kuhn");
+        normalUser2.setEmail("paul.kuhn@gmail.com");
         userService.saveUser(normalUser2);
 
         Benutzer admin = new Benutzer();
         admin.setUsername("admin");
         admin.setPassword(passwordEncoder.encode("admin"));
         admin.setRoles(adminRoles);
+        admin.setFirstname("Marc");
+        admin.setLastname("Uwe");
+        admin.setEmail("marc.uwe@uni.de");
         userService.saveUser(admin);
 
         Benutzer andrea = new Benutzer();
@@ -100,16 +113,16 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
 
         Plant kaktus = new Plant();
         kaktus.setName("Kaktus");
-        kaktus.setPrice(12.45);
-        kaktus.setHeight(34.09);
+        kaktus.setPrice(new BigDecimal("12.45"));
+        kaktus.setHeight(new BigDecimal("34.09"));
         kaktus.setDescription("sehr schön");
         kaktus.setSeller(admin);
         plantService.savePlant(kaktus);
 
         Plant rose = new Plant();
         rose.setName("Rose");
-        rose.setPrice(15.00);
-        rose.setHeight(50.00);
+        rose.setPrice(new BigDecimal("15.00"));
+        rose.setHeight(new BigDecimal("50.00"));
         rose.setDescription("wunderschön");
         rose.setSeller(andrea);
         plantService.savePlant(rose);
