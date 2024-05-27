@@ -7,16 +7,19 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-
+/**
+ * This controller is responsible for managing chats.
+ * It provides endpoints for retrieving chats for a specific user and for retrieving messages in a specific chat.
+ */
 @Controller
 public class HomeController {
     @Autowired
     private UserService userService;
 
     /**
-     * Zeigt die Startseite Ihrer Anwendung.
-     * @param model enthält alle ModelAttribute.
-     * @return home-Seite.
+     * This method shows the home page of your application.
+     * @param model contains all ModelAttributes.
+     * @return home page.
      */
     @GetMapping("/")
     public String showHome(Model model) {

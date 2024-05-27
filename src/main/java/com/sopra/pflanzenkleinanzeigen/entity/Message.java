@@ -4,6 +4,10 @@ import jakarta.persistence.*;
 
 import java.time.Instant;
 
+/**
+ * This class represents a message in the system.
+ * It contains information about the message such as the sender, the message content, the time it was sent, and the chat it belongs to.
+ */
 @Entity
 public class Message {
 
@@ -24,6 +28,9 @@ public class Message {
     @JoinColumn (name = "chatId")
     private Chat chat;
 
+    /**
+     * Default constructor for Hibernate.
+     */
     public Message() {
         // empty constructor for Hibernate
     }

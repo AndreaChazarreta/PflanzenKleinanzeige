@@ -6,6 +6,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * This class represents a plant in the system.
+ * It contains information about the plant such as the name, price, height, description, whether a pot is included, an image, the seller, the buyer, the care tip, and related entities like the wishlist, chats, and the seller.
+ */
 @Entity
 public class Plant {
 
@@ -43,6 +47,9 @@ public class Plant {
     @OneToMany(mappedBy = "plant")
     private List<Chat> chatsAboutThisPlant = new ArrayList<>();
 
+    /**
+     * Default constructor for Hibernate.
+     */
     public Plant() {
         // empty constructor for Hibernate
     }

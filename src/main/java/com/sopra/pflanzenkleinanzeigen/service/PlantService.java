@@ -7,7 +7,10 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-
+/**
+ * This class represents a plant service in the system.
+ * It contains methods to save a plant, to find all plants, to find a plant by id and to delete a plant by id.
+ */
 @Service
 public class PlantService {
 
