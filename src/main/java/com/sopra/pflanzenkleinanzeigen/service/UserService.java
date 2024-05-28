@@ -19,6 +19,9 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
+//TODO: "SaveUser" nochmal überprüfen, brauchen wir überhaupt try and catch sowie fehlermeldungen? Ich glaube es ist nicht nötigt.
+// Außerdem diese Funktion wurde uns in die wiki so gegeben wie es war, daher denke ich auch das es nicht nötig ist zu ändern.
+
 /**
  * This class encapsulates access to the UserRepository. It provides methods for managing User entities
  * without exposing direct access to the repository from outside the service layer.
@@ -63,11 +66,6 @@ public class UserService implements UserDetailsService {
     }
 
 
-    /**
-     * Finds all users in the repository.
-     *
-     * @return A list of all users.
-     */
     public List<Benutzer> findAllUsers() {
         return userRepository.findAll();
     }
@@ -108,8 +106,7 @@ public class UserService implements UserDetailsService {
     }
 
     /**
-     * Loads a user by username.
-     * This method is needed for Spring Security's login process.
+     * Overrides the method required for Spring Security login.
      *
      * @param username The username of the user.
      * @return The UserDetails object of the user.
