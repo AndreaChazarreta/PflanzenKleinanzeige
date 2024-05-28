@@ -5,7 +5,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 
 /**
- * This class represents a role in the system.
+ * This class represents a role in the system. It is used to control the authorities of the users.
  * It contains information about the role such as the role name.
  */
 @Entity

@@ -5,9 +5,7 @@ import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 /**
- * This method deletes a specific plant by its ID.
- * @param id The ID of the plant to be deleted.
- * @return "redirect:/plants", the view with all plants.
+ * Controller for all requests that only render static HTML content and do not use ModelAttribute.
  */
 @Controller
 public class StaticPagesController implements WebMvcConfigurer {

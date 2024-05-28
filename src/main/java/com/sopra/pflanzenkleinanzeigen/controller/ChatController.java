@@ -3,7 +3,6 @@ package com.sopra.pflanzenkleinanzeigen.controller;
 import com.sopra.pflanzenkleinanzeigen.entity.Benutzer;
 import com.sopra.pflanzenkleinanzeigen.entity.Chat;
 import com.sopra.pflanzenkleinanzeigen.service.ChatService;
-import com.sopra.pflanzenkleinanzeigen.service.MessageService;
 import com.sopra.pflanzenkleinanzeigen.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,8 +13,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * This controller is responsible for managing chats.
- * It provides endpoints for retrieving chats for a specific user and for retrieving messages in a specific chat.
+ * The ChatController class handles web requests related to chat operations.
+ * It interacts with the ChatService to manage chat information, including
+ * retrieving, creating, and deleting chats, and preparing the data for display in the view Layer.
  */
 @Controller
 public class ChatController {
@@ -45,6 +45,7 @@ public class ChatController {
         return "chats";
     }
     //TODO: Sollen wir error page implementieren?
+    //TODO: nur auf seine eigene chats zugreifen können!
     /**
      * This method shows the messages in a specific chat.
      * @param chatId The ID of the chat whose messages should be displayed.

@@ -6,12 +6,11 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 /**
- * This class represents a plant service in the system.
- * It contains methods to save a plant, to find all plants, to find a plant by id and to delete a plant by id.
+ * This class encapsulates access to the PlantRepository. It provides methods for managing Plant entities
+ * without exposing direct access to the repository from outside the service layer.
  */
 @Service
 public class PlantService {

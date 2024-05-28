@@ -14,11 +14,10 @@ import org.slf4j.LoggerFactory;
 import java.util.List;
 
 /**
- * This controller is responsible for managing plants.
- * It provides endpoints for retrieving all plants, for retrieving a specific plant, for creating a new plant,
- * for updating a plant and for deleting a plant.
+ * The PlantController class handles web requests related to plant operations.
+ * It interacts with the PlantService to manage plant information, including
+ * retrieving, creating, updating, and deleting plants, and preparing the data for display in the view Layer.
  */
-
 @Controller
 public class PlantController {
 
@@ -39,6 +38,7 @@ public class PlantController {
         return plantService.findAllPlants();
     }
 
+    //TODO: brauchen wir für solche funktionen try and catch? Hier kann relativ wenig schief gehen
     /**
      * This method retrieves all plants and displays them on the plants page.
      * @param model The model that is sent to the view.

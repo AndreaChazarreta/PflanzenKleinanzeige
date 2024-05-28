@@ -7,8 +7,8 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 /**
- * This class represents a chat service in the system.
- * It contains methods to save a chat and to find a chat by id.
+ * This class encapsulates access to the ChatRepository. It provides methods for managing Chat entities
+ * without exposing direct access to the repository from outside the service layer.
  */
 @Service
 public class ChatService {
