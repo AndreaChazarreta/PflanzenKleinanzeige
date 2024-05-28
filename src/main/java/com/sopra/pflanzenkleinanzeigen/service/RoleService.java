@@ -7,6 +7,10 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/**
+ * This class encapsulates access to the RoleRepository. It provides methods for managing Role entities
+ * without exposing direct access to the repository from outside the service layer.
+ */
 @Service
 public class RoleService {
 
@@ -17,7 +21,4 @@ public class RoleService {
         return roleRepository.save(role);
     }
 
-    public List<Rolle> findAllRoles() {
-        return roleRepository.findAll();
-    }
 }

@@ -8,6 +8,10 @@ import jakarta.persistence.OneToMany;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This class represents a profile icon in the system.
+ * It contains information about the profile icon such as the image and the users who selected this icon.
+ */
 @Entity
 public class ProfileIcon {
 
@@ -20,7 +24,9 @@ public class ProfileIcon {
     @OneToMany(mappedBy = "profileIcon")
     private List<Benutzer> iconSelectedBy = new ArrayList<>();
 
-
+    /**
+     * Default constructor for Hibernate.
+     */
     public ProfileIcon() {
         // empty constructor for Hibernate
     }

@@ -4,6 +4,10 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 
+/**
+ * This class represents a role in the system. It is used to control the authorities of the users.
+ * It contains information about the role such as the role name.
+ */
 @Entity
 public class Rolle {
 
@@ -13,6 +17,9 @@ public class Rolle {
 
     private String rolename;
 
+    /**
+     * Default constructor for Hibernate.
+     */
     public Rolle() {
         //empty constructor for Hibernate
     }

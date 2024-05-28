@@ -5,6 +5,10 @@ import jakarta.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This class represents a chat in the system.
+ * It contains information about the chat such as the possible buyer, the plant, and the messages in the chat.
+ */
 @Entity
 public class Chat {
 
@@ -20,10 +24,13 @@ public class Chat {
     @JoinColumn (name = "plantId")
     private Plant plant;
 
-    @OneToMany(mappedBy = "chat")
+    //TODO: Cascade schauen, passt so?
+    @OneToMany(mappedBy = "chat", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Message> messages = new ArrayList<>();
 
-
+    /**
+     * Default constructor for Hibernate.
+     */
     public Chat() {
         // empty constructor for Hibernate
     }

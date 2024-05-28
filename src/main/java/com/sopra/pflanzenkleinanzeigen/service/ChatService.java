@@ -4,11 +4,12 @@ import com.sopra.pflanzenkleinanzeigen.entity.Chat;
 import com.sopra.pflanzenkleinanzeigen.repository.ChatRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
 import java.util.List;
 
-
+/**
+ * This class encapsulates access to the ChatRepository. It provides methods for managing Chat entities
+ * without exposing direct access to the repository from outside the service layer.
+ */
 @Service
 public class ChatService {
 
@@ -28,16 +29,7 @@ public class ChatService {
      * This method lists all chats from one specific user
      * @param userId of one user
      */
-    public List<Chat> findUserChats(int userId){
-        List<Chat> allChats = chatRepository.findAll();
-        List<Chat> userChats = new ArrayList<>();
-        for(Chat chat : allChats){
-            int sellerId = chat.getPlant().getSeller().getUserId();
-            int buyerId = chat.getPossibleBuyer().getUserId();
-            if( sellerId == userId || buyerId == userId){
-                userChats.add(chat);
-            }
-        }
-        return userChats;
+    public List<Chat> findUserChats(int userId) {
+        return chatRepository.findChatsByUserId(userId);
     }
 }

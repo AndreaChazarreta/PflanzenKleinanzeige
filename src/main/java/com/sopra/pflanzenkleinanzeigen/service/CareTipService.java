@@ -7,6 +7,10 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/**
+ * This class encapsulates access to the CareTipRepository. It provides methods for managing CareTip entities
+ * without exposing direct access to the repository from outside the service layer.
+ */
 @Service
 public class CareTipService {
 
