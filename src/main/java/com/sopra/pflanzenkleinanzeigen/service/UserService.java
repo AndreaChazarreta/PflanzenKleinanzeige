@@ -20,8 +20,8 @@ import java.util.Objects;
 import java.util.Set;
 
 /**
- * This class represents a user service in the system.
- * It contains methods to save a user, find all users, get a user by username, get the current user, get the current user details, load user by username, and get user authorities.
+ * This class encapsulates access to the UserRepository. It provides methods for managing User entities
+ * without exposing direct access to the repository from outside the service layer.
  */
 @Service
 public class UserService implements UserDetailsService {

@@ -8,8 +8,8 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 /**
- * This class represents a message service in the system.
- * It contains methods to save a message and to find all messages.
+ * This class encapsulates access to the MessageRepository. It provides methods for managing Message entities
+ * without exposing direct access to the repository from outside the service layer.
  */
 @Service
 public class MessageService {
@@ -21,7 +21,4 @@ public class MessageService {
         return messageRepository.save(message);
     }
 
-    public List<Message> findAllMessages() {
-        return messageRepository.findAll();
-    }
 }
