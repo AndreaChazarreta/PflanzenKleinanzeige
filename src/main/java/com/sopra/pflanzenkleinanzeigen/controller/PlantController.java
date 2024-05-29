@@ -144,10 +144,16 @@ public class PlantController {
      * @param id The ID of the plant to be deleted.
      * @return "redirect:/plants", the view with all plants.
      */
+    //TODO: nur der seller soll die Pflanze löschen können!!
     @PostMapping("/plants/delete/{id}")
     public String deletePlant(@PathVariable int id) {
         try {
-            plantService.deletePlantById(id);
+            Plant plant = plantService.findPlantById(id);
+            if(plant == null) {
+                logger.error("Pflanze mit ID: " + id + " wurde nicht gefunden.");
+                return "redirect:/plants";
+            }
+            plantService.deletePlant(plant);
         } catch (Exception deletePlantException) {
             logger.error("Fehler beim Löschen der Pflanze", deletePlantException);
             //TODO: create error html or redirect to another page

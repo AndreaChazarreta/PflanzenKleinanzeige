@@ -4,6 +4,7 @@ import com.sopra.pflanzenkleinanzeigen.entity.Plant;
 import com.sopra.pflanzenkleinanzeigen.repository.PlantRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,6 +23,7 @@ public class PlantService {
     public Plant savePlant(@Valid Plant plant) {
         return plantRepository.save(plant);
     }
+
     public List<Plant> findAllPlants() {
         return plantRepository.findAll();
     }
@@ -30,8 +32,9 @@ public class PlantService {
         return plantRepository.findById(id).orElse(null);
     }
 
-    public void deletePlantById(int id) {
-        plantRepository.deleteById(id);
+    @PreAuthorize("#plant.seller.username == authentication.name")
+    public void deletePlant(Plant plant) {
+        plantRepository.delete(plant);
     }
 
     public List<Plant> findByKeyword(String keyword) {
