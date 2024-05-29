@@ -1,7 +1,9 @@
 package com.sopra.pflanzenkleinanzeigen.controller;
 
+import com.sopra.pflanzenkleinanzeigen.entity.Benutzer;
 import com.sopra.pflanzenkleinanzeigen.entity.Plant;
 import com.sopra.pflanzenkleinanzeigen.service.PlantService;
+import com.sopra.pflanzenkleinanzeigen.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -25,6 +27,8 @@ public class PlantController {
     private PlantService plantService;
 
     private static final Logger logger = LoggerFactory.getLogger(PlantController.class);
+    @Autowired
+    private UserService userService;
 
 
     //TODO: FRAGEN: wie sollen wir "Get all Plants" implementieren? mit @ModelAttribute
@@ -145,18 +149,25 @@ public class PlantController {
      * @return "redirect:/plants", the view with all plants.
      */
     //TODO: nur der seller soll die Pflanze löschen können!!
+    //TODO: Post oder get?
     @PostMapping("/plants/delete/{id}")
-    public String deletePlant(@PathVariable int id) {
+    public String deletePlant(@PathVariable int id, Model model) {
         try {
             Plant plant = plantService.findPlantById(id);
             if(plant == null) {
                 logger.error("Pflanze mit ID: " + id + " wurde nicht gefunden.");
                 return "redirect:/plants";
             }
+            Benutzer currentUser = userService.getCurrentUser();
+            if (!plantService.isSeller(currentUser, plant)) {
+                logger.error("Benutzer ist nicht berechtigt, die Pflanze zu löschen.");
+                model.addAttribute("error", "Sie sind nicht berechtigt, diese Pflanze zu löschen.");
+                return "error";
+            }
             plantService.deletePlant(plant);
         } catch (Exception deletePlantException) {
             logger.error("Fehler beim Löschen der Pflanze", deletePlantException);
-            //TODO: create error html or redirect to another page
+            model.addAttribute("error", "Ein Fehler ist aufgetreten. Bitte versuchen Sie es später erneut.");
             return "error";
         }
         return "redirect:/plants";
