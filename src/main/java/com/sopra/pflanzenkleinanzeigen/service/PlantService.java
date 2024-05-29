@@ -36,10 +36,6 @@ public class PlantService {
         plantRepository.delete(plant);
     }
 
-    public boolean isSeller(Benutzer user, Plant plant) {
-        return plant.getSeller().getUserId().equals(user.getUserId());
-    }
-
     public List<Plant> findByKeyword(String keyword) {
         if (keyword != null) {
             return plantRepository.findByKeyword(keyword);

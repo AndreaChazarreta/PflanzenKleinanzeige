@@ -159,7 +159,7 @@ public class PlantController {
                 return "redirect:/plants";
             }
             Benutzer currentUser = userService.getCurrentUser();
-            if (!plantService.isSeller(currentUser, plant)) {
+            if (!plant.getSeller().equals(currentUser)) {
                 logger.error("Benutzer ist nicht berechtigt, die Pflanze zu löschen.");
                 model.addAttribute("error", "Sie sind nicht berechtigt, diese Pflanze zu löschen.");
                 return "error";
