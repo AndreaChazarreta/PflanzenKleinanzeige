@@ -94,6 +94,7 @@ public class PlantController {
     @PostMapping("/plants")
     public String addPlant(@Valid @ModelAttribute("newPlant") Plant newPlant, BindingResult result, Model model) {
         if (result.hasErrors()) {
+            //TODO: schauen warum es hier Beschreibung leer lassen als Fehler angenommen wird
             model.addAttribute("newPlant", newPlant);
             return "createPlant";
         }
@@ -131,6 +132,7 @@ public class PlantController {
         model.addAttribute("plantToUpdate", plantToUpdate);
         plantToUpdate.setPlantId(id);
         if (result.hasErrors()) {
+            //TODO: schauen warum es hier Beschreibung leer lassen als Fehler angenommen wird
             return "editPlant";
         }
         plantService.savePlant(plantToUpdate);
@@ -138,19 +140,18 @@ public class PlantController {
     }
 
     /**
-     * This method deletes a specific plant by its ID.
+     * This method deletes a plant by its ID.
      * @param id The ID of the plant to be deleted.
      * @return "redirect:/plants", the view with all plants.
      */
-    @GetMapping("/plants/delete/{id}")
+    @PostMapping("/plants/delete/{id}")
     public String deletePlant(@PathVariable int id) {
         try {
             plantService.deletePlantById(id);
-        } catch (Exception e) {
-            logger.error("Fehler beim Löschen der Pflanze mit der ID: " + id, e);
-            // TODO: Weiterleitung zu einer Fehlerseite oder Anzeige einer Fehlermeldung auf der aktuellen Seite:
-            //  Der Fehler wird zwar im Log protokolliert, aber der Benutzer wird lediglich auf die Pflanzenübersichtsseite weitergeleitet, ohne eine spezifische Fehlermeldung zu erhalten.
-            return "redirect:/plants";
+        } catch (Exception deletePlantException) {
+            logger.error("Fehler beim Löschen der Pflanze", deletePlantException);
+            //TODO: create error html or redirect to another page
+            return "error";
         }
         return "redirect:/plants";
     }
