@@ -35,14 +35,10 @@ public class ChatController {
      * @return "chats", the view with all chats from one specific user.
      */
     //TODO: ist diese Überprüfung in Ordnung?
-    @GetMapping("/chats/{userId}")
-    public String getChats (@PathVariable int userId, Model model){
+    @GetMapping("/chats")
+    public String getChats (Model model){
         Benutzer currentBenutzer = userService.getCurrentUser();
-        if (userId != currentBenutzer.getUserId()) {
-            userId = currentBenutzer.getUserId();
-            return "redirect:/chats/" + userId;
-        }
-        model.addAttribute("allChats", chatService.findUserChats(userId));
+        model.addAttribute("allChats", chatService.findUserChats(currentBenutzer.getUserId()));
         return "chats";
     }
     //TODO: Sollen wir error page implementieren?
