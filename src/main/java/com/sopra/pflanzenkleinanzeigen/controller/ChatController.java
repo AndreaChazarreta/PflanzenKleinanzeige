@@ -34,6 +34,7 @@ public class ChatController {
      * @param model The model that is sent to the view.
      * @return "chats", the view with all chats from one specific user.
      */
+    //TODO: ist diese Überprüfung in Ordnung?
     @GetMapping("/chats/{userId}")
     public String getChats (@PathVariable int userId, Model model){
         Benutzer currentBenutzer = userService.getCurrentUser();

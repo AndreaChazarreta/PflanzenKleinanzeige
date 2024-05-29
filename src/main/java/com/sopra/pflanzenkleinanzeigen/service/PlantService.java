@@ -1,5 +1,6 @@
 package com.sopra.pflanzenkleinanzeigen.service;
 
+import com.sopra.pflanzenkleinanzeigen.entity.Benutzer;
 import com.sopra.pflanzenkleinanzeigen.entity.Plant;
 import com.sopra.pflanzenkleinanzeigen.repository.PlantRepository;
 import jakarta.validation.Valid;
@@ -22,6 +23,7 @@ public class PlantService {
     public Plant savePlant(@Valid Plant plant) {
         return plantRepository.save(plant);
     }
+
     public List<Plant> findAllPlants() {
         return plantRepository.findAll();
     }
@@ -30,8 +32,8 @@ public class PlantService {
         return plantRepository.findById(id).orElse(null);
     }
 
-    public void deletePlantById(int id) {
-        plantRepository.deleteById(id);
+    public void deletePlant(Plant plant) {
+        plantRepository.delete(plant);
     }
 
     public List<Plant> findByKeyword(String keyword) {
