@@ -1,7 +1,9 @@
 package com.sopra.pflanzenkleinanzeigen.controller;
 
+import com.sopra.pflanzenkleinanzeigen.entity.Benutzer;
 import com.sopra.pflanzenkleinanzeigen.entity.Plant;
 import com.sopra.pflanzenkleinanzeigen.service.PlantService;
+import com.sopra.pflanzenkleinanzeigen.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -25,6 +27,8 @@ public class PlantController {
     private PlantService plantService;
 
     private static final Logger logger = LoggerFactory.getLogger(PlantController.class);
+    @Autowired
+    private UserService userService;
 
 
     //TODO: FRAGEN: wie sollen wir "Get all Plants" implementieren? mit @ModelAttribute
@@ -94,6 +98,7 @@ public class PlantController {
     @PostMapping("/plants")
     public String addPlant(@Valid @ModelAttribute("newPlant") Plant newPlant, BindingResult result, Model model) {
         if (result.hasErrors()) {
+            //TODO: schauen warum es hier Beschreibung leer lassen als Fehler angenommen wird
             model.addAttribute("newPlant", newPlant);
             return "createPlant";
         }
@@ -131,6 +136,7 @@ public class PlantController {
         model.addAttribute("plantToUpdate", plantToUpdate);
         plantToUpdate.setPlantId(id);
         if (result.hasErrors()) {
+            //TODO: schauen warum es hier Beschreibung leer lassen als Fehler angenommen wird
             return "editPlant";
         }
         plantService.savePlant(plantToUpdate);
@@ -138,19 +144,31 @@ public class PlantController {
     }
 
     /**
-     * This method deletes a specific plant by its ID.
+     * This method deletes a plant by its ID.
      * @param id The ID of the plant to be deleted.
      * @return "redirect:/plants", the view with all plants.
      */
-    @GetMapping("/plants/delete/{id}")
-    public String deletePlant(@PathVariable int id) {
+    //TODO: nur der seller soll die Pflanze löschen können!!
+    //TODO: Post oder get?
+    @PostMapping("/plants/delete/{id}")
+    public String deletePlant(@PathVariable int id, Model model) {
         try {
-            plantService.deletePlantById(id);
-        } catch (Exception e) {
-            logger.error("Fehler beim Löschen der Pflanze mit der ID: " + id, e);
-            // TODO: Weiterleitung zu einer Fehlerseite oder Anzeige einer Fehlermeldung auf der aktuellen Seite:
-            //  Der Fehler wird zwar im Log protokolliert, aber der Benutzer wird lediglich auf die Pflanzenübersichtsseite weitergeleitet, ohne eine spezifische Fehlermeldung zu erhalten.
-            return "redirect:/plants";
+            Plant plant = plantService.findPlantById(id);
+            if(plant == null) {
+                logger.error("Pflanze mit ID: " + id + " wurde nicht gefunden.");
+                return "redirect:/plants";
+            }
+            Benutzer currentUser = userService.getCurrentUser();
+            if (!plantService.isSeller(currentUser, plant)) {
+                logger.error("Benutzer ist nicht berechtigt, die Pflanze zu löschen.");
+                model.addAttribute("error", "Sie sind nicht berechtigt, diese Pflanze zu löschen.");
+                return "error";
+            }
+            plantService.deletePlant(plant);
+        } catch (Exception deletePlantException) {
+            logger.error("Fehler beim Löschen der Pflanze", deletePlantException);
+            model.addAttribute("error", "Ein Fehler ist aufgetreten. Bitte versuchen Sie es später erneut.");
+            return "error";
         }
         return "redirect:/plants";
     }
