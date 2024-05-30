@@ -30,33 +30,34 @@ public class ChatController {
 
     /**
      * This method shows the chats for one user
-     * @param userId The ID of the user whose chats should be displayed.
      * @param model The model that is sent to the view.
      * @return "chats", the view with all chats from one specific user.
      */
-    //TODO: ist diese Überprüfung in Ordnung?
-    @GetMapping("/chats/{userId}")
-    public String getChats (@PathVariable int userId, Model model){
+    @GetMapping("/chats")
+    public String getChats (Model model){
         Benutzer currentBenutzer = userService.getCurrentUser();
-        if (userId != currentBenutzer.getUserId()) {
-            userId = currentBenutzer.getUserId();
-            return "redirect:/chats/" + userId;
-        }
-        model.addAttribute("allChats", chatService.findUserChats(userId));
+        model.addAttribute("allChats", chatService.findUserChats(currentBenutzer.getUserId()));
         return "chats";
     }
-    //TODO: Sollen wir error page implementieren?
-    //TODO: nur auf seine eigene chats zugreifen können!
+
     /**
      * This method shows the messages in a specific chat.
      * @param chatId The ID of the chat whose messages should be displayed.
      * @param model The model that is sent to the view.
      * @return "messages", the view with all messages in a specific chat.
      */
-    @GetMapping("/chat/{chatId}")
+    @GetMapping("/chats/{chatId}")
     public String getChat(@PathVariable int chatId, Model model) {
         try {
             Chat chat = chatService.findChatById(chatId);
+            Benutzer seller = chat.getPlant().getSeller();
+            Benutzer possibleBuyer = chat.getPossibleBuyer();
+            Benutzer currentUser = userService.getCurrentUser();
+            if(! (currentUser.equals(possibleBuyer) || currentUser.equals(seller))){
+                logger.error("Benutzer ist nicht berechtigt, die Nachrichten in diesen Chat zu sehen.");
+                model.addAttribute("error", "Sie sind nicht berechtigt, die Nachrichten in diesen Chat zu sehen, da sie nicht Teilnehmer dieses Chats sind.");
+                return "error";
+            }
             model.addAttribute("allMessages", chat.getMessages());
             return "messages";
         } catch (Exception findChatException) {

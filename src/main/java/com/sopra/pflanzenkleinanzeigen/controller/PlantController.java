@@ -148,7 +148,6 @@ public class PlantController {
      * @param id The ID of the plant to be deleted.
      * @return "redirect:/plants", the view with all plants.
      */
-    //TODO: nur der seller soll die Pflanze löschen können!!
     //TODO: Post oder get?
     @PostMapping("/plants/delete/{id}")
     public String deletePlant(@PathVariable int id, Model model) {
@@ -156,6 +155,7 @@ public class PlantController {
             Plant plant = plantService.findPlantById(id);
             if(plant == null) {
                 logger.error("Pflanze mit ID: " + id + " wurde nicht gefunden.");
+                model.addAttribute("error", "Fehler beim Abrufen der Pflanze mit Id: " + id);
                 return "redirect:/plants";
             }
             Benutzer currentUser = userService.getCurrentUser();
