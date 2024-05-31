@@ -164,6 +164,12 @@ public class PlantController {
                 model.addAttribute("error", "Sie sind nicht berechtigt, diese Pflanze zu löschen.");
                 return "error";
             }
+            //TODO: unterschiedliche Fehlermeldungen pro case oder möchten wir das lieber in frontend handeln?
+            if(!(plant.getChatsAboutThisPlant().isEmpty() && plant.getWishedBy().isEmpty() && plant.getBuyer() == null)){
+                logger.error("Man darf diese Pflanze nicht löschen, da es chats und/oder Merkzetteln zu diesen Pflanze existieren oder diese Pflanze wurde verkauft.");
+                model.addAttribute("error", "Sie dürfen diese Pflanze nicht löschen, aber sie können die archivieren.");
+                return "error";
+            }
             plantService.deletePlant(plant);
         } catch (Exception deletePlantException) {
             logger.error("Fehler beim Löschen der Pflanze", deletePlantException);

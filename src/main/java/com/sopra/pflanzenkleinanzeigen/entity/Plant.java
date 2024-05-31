@@ -51,12 +51,13 @@ public class Plant {
     @JoinColumn (name = "buyerId")
     private Benutzer buyer;
 
+    private boolean adIsActive;
+
     @ManyToOne
     @JoinColumn (name = "careTipId")
     private CareTip careTip;
 
-    //TODO: Cascade schauen, passt so?
-    @OneToMany(mappedBy = "plant", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "plant")
     private List<Chat> chatsAboutThisPlant = new ArrayList<>();
 
     /**
@@ -151,6 +152,14 @@ public class Plant {
 
     public void setBuyer(Benutzer buyer) {
         this.buyer = buyer;
+    }
+
+    public boolean isAdIsActive() {
+        return adIsActive;
+    }
+
+    public void setAdIsActive(boolean adIsActive) {
+        this.adIsActive = adIsActive;
     }
 
     public CareTip getCareTip() {
