@@ -137,6 +137,9 @@ public class PlantController {
     public String updatePlant(@PathVariable int id, @Valid @ModelAttribute("plantToUpdate") Plant plantToUpdate, BindingResult result, Model model) {
         model.addAttribute("plantToUpdate", plantToUpdate);
         plantToUpdate.setPlantId(id);
+        Plant oldPlant = plantService.findPlantById(id);
+        plantToUpdate.setSeller(oldPlant.getSeller());
+        plantToUpdate.setAdIsActive(oldPlant.isAdIsActive());
         if (result.hasErrors()) {
             //TODO: schauen warum es hier Beschreibung leer lassen als Fehler angenommen wird
             return "editPlant";
