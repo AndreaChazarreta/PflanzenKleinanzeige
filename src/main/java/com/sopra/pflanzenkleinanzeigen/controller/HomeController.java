@@ -10,10 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 
-/**
- * This controller is responsible for managing chats.
- * It provides endpoints for retrieving chats for a specific user and for retrieving messages in a specific chat.
- */
+//TODO: HomeController wahrscheinlich löschen, da wir direkt die Pflanzen anzeigen möchten.
 @Controller
 public class HomeController {
 

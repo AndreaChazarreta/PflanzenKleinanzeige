@@ -3,7 +3,6 @@ package com.sopra.pflanzenkleinanzeigen.controller;
 import com.sopra.pflanzenkleinanzeigen.entity.Benutzer;
 import com.sopra.pflanzenkleinanzeigen.entity.Chat;
 import com.sopra.pflanzenkleinanzeigen.service.ChatService;
-import com.sopra.pflanzenkleinanzeigen.service.MessageService;
 import com.sopra.pflanzenkleinanzeigen.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,8 +13,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * This controller is responsible for managing chats.
- * It provides endpoints for retrieving chats for a specific user and for retrieving messages in a specific chat.
+ * The ChatController class handles web requests related to chat operations.
+ * It interacts with the ChatService to manage chat information, including
+ * retrieving, creating, and deleting chats, and preparing the data for display in the view Layer.
  */
 @Controller
 public class ChatController {
@@ -30,31 +30,34 @@ public class ChatController {
 
     /**
      * This method shows the chats for one user
-     * @param userId The ID of the user whose chats should be displayed.
      * @param model The model that is sent to the view.
      * @return "chats", the view with all chats from one specific user.
      */
-    @GetMapping("/chats/{userId}")
-    public String getChats (@PathVariable int userId, Model model){
+    @GetMapping("/chats")
+    public String getChats (Model model){
         Benutzer currentBenutzer = userService.getCurrentUser();
-        if (userId != currentBenutzer.getUserId()) {
-            userId = currentBenutzer.getUserId();
-            return "redirect:/chats/" + userId;
-        }
-        model.addAttribute("allChats", chatService.findUserChats(userId));
+        model.addAttribute("allChats", chatService.findUserChats(currentBenutzer.getUserId()));
         return "chats";
     }
-    //TODO: Sollen wir error page implementieren?
+
     /**
      * This method shows the messages in a specific chat.
      * @param chatId The ID of the chat whose messages should be displayed.
      * @param model The model that is sent to the view.
      * @return "messages", the view with all messages in a specific chat.
      */
-    @GetMapping("/chat/{chatId}")
+    @GetMapping("/chats/{chatId}")
     public String getChat(@PathVariable int chatId, Model model) {
         try {
             Chat chat = chatService.findChatById(chatId);
+            Benutzer seller = chat.getPlant().getSeller();
+            Benutzer possibleBuyer = chat.getPossibleBuyer();
+            Benutzer currentUser = userService.getCurrentUser();
+            if(! (currentUser.equals(possibleBuyer) || currentUser.equals(seller))){
+                logger.error("Benutzer ist nicht berechtigt, die Nachrichten in diesen Chat zu sehen.");
+                model.addAttribute("error", "Sie sind nicht berechtigt, die Nachrichten in diesen Chat zu sehen, da sie nicht Teilnehmer dieses Chats sind.");
+                return "error";
+            }
             model.addAttribute("allMessages", chat.getMessages());
             return "messages";
         } catch (Exception findChatException) {
