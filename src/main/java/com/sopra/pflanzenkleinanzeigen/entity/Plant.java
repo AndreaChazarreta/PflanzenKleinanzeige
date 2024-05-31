@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -40,7 +41,7 @@ public class Plant {
     private String image;
 
     @ManyToMany(targetEntity = com.sopra.pflanzenkleinanzeigen.entity.Benutzer.class, fetch = FetchType.EAGER)
-    private Set<Benutzer> benutzerWishlist;
+    private Set<Benutzer> wishedBy = new HashSet<>();
 
     @ManyToOne
     @JoinColumn (name = "sellerId")
@@ -50,12 +51,13 @@ public class Plant {
     @JoinColumn (name = "buyerId")
     private Benutzer buyer;
 
+    private boolean adIsActive;
+
     @ManyToOne
     @JoinColumn (name = "careTipId")
     private CareTip careTip;
 
-    //TODO: Cascade schauen, passt so?
-    @OneToMany(mappedBy = "plant", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "plant")
     private List<Chat> chatsAboutThisPlant = new ArrayList<>();
 
     /**
@@ -128,12 +130,12 @@ public class Plant {
         this.image = image;
     }
 
-    public Set<Benutzer> getBenutzerWishlist() {
-        return benutzerWishlist;
+    public Set<Benutzer> getWishedBy() {
+        return wishedBy;
     }
 
-    public void setBenutzerWishlist(Set<Benutzer> benutzerWishlist) {
-        this.benutzerWishlist = benutzerWishlist;
+    public void setWishedBy(Set<Benutzer> wishedBy) {
+        this.wishedBy = wishedBy;
     }
 
     public Benutzer getSeller() {
@@ -150,6 +152,14 @@ public class Plant {
 
     public void setBuyer(Benutzer buyer) {
         this.buyer = buyer;
+    }
+
+    public boolean isAdIsActive() {
+        return adIsActive;
+    }
+
+    public void setAdIsActive(boolean adIsActive) {
+        this.adIsActive = adIsActive;
     }
 
     public CareTip getCareTip() {
