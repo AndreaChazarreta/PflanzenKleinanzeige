@@ -102,6 +102,8 @@ public class PlantController {
             model.addAttribute("newPlant", newPlant);
             return "createPlant";
         }
+        newPlant.setSeller(userService.getCurrentUser());
+        newPlant.setAdIsActive(true);
         plantService.savePlant(newPlant);
         return "redirect:/plants";
     }
