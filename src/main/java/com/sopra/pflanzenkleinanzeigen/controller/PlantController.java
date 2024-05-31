@@ -102,6 +102,8 @@ public class PlantController {
             model.addAttribute("newPlant", newPlant);
             return "createPlant";
         }
+        newPlant.setSeller(userService.getCurrentUser());
+        newPlant.setAdIsActive(true);
         plantService.savePlant(newPlant);
         return "redirect:/plants";
     }
@@ -135,6 +137,9 @@ public class PlantController {
     public String updatePlant(@PathVariable int id, @Valid @ModelAttribute("plantToUpdate") Plant plantToUpdate, BindingResult result, Model model) {
         model.addAttribute("plantToUpdate", plantToUpdate);
         plantToUpdate.setPlantId(id);
+        Plant oldPlant = plantService.findPlantById(id);
+        plantToUpdate.setSeller(oldPlant.getSeller());
+        plantToUpdate.setAdIsActive(oldPlant.isAdIsActive());
         if (result.hasErrors()) {
             //TODO: schauen warum es hier Beschreibung leer lassen als Fehler angenommen wird
             return "editPlant";
@@ -148,7 +153,6 @@ public class PlantController {
      * @param id The ID of the plant to be deleted.
      * @return "redirect:/plants", the view with all plants.
      */
-    //TODO: nur der seller soll die Pflanze löschen können!!
     //TODO: Post oder get?
     @PostMapping("/plants/delete/{id}")
     public String deletePlant(@PathVariable int id, Model model) {
@@ -156,12 +160,19 @@ public class PlantController {
             Plant plant = plantService.findPlantById(id);
             if(plant == null) {
                 logger.error("Pflanze mit ID: " + id + " wurde nicht gefunden.");
+                model.addAttribute("error", "Fehler beim Abrufen der Pflanze mit Id: " + id);
                 return "redirect:/plants";
             }
             Benutzer currentUser = userService.getCurrentUser();
             if (!plant.getSeller().equals(currentUser)) {
                 logger.error("Benutzer ist nicht berechtigt, die Pflanze zu löschen.");
                 model.addAttribute("error", "Sie sind nicht berechtigt, diese Pflanze zu löschen.");
+                return "error";
+            }
+            //TODO: unterschiedliche Fehlermeldungen pro case oder möchten wir das lieber in frontend handeln?
+            if(!(plant.getChatsAboutThisPlant().isEmpty() && plant.getWishedBy().isEmpty() && plant.getBuyer() == null)){
+                logger.error("Man darf diese Pflanze nicht löschen, da es chats und/oder Merkzetteln zu diesen Pflanze existieren oder diese Pflanze wurde verkauft.");
+                model.addAttribute("error", "Sie dürfen diese Pflanze nicht löschen, aber sie können die archivieren.");
                 return "error";
             }
             plantService.deletePlant(plant);
