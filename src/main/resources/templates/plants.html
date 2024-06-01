@@ -20,6 +20,9 @@
         <li th:each="plant : ${allPlants}">
             <a th:href="@{/plants/{id}(id=${plant.plantId})}" th:text="${plant.getName()}"></a>
             <a th:href="@{/plants/edit/{id}(id=${plant.plantId})}">Bearbeiten</a>
+            <form th:action="@{/plants/{plantId}/newChat(plantId=${plant.plantId})}" method="post" style="display:inline;">
+                <button type="submit">Nachricht versenden</button>
+            </form>
             <form th:action="@{/plants/delete/{id}(id=${plant.plantId})}" method="post" style="display:inline;">
                 <button th:type="submit" onclick="return confirm('Sind Sie sicher, dass Sie diese Pflanze löschen möchten?');">Löschen</button>
             </form>
