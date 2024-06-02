@@ -117,7 +117,8 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         kaktus.setHeight(new BigDecimal("34.09"));
         kaktus.setDescription("sehr schön");
         kaktus.setSeller(admin);
-        plantService.savePlant(kaktus);
+        kaktus.setImagePath("/plant-images/kaktus1.JPG");
+        plantService.savePlantDataLoader(kaktus);
 
         Plant rose = new Plant();
         rose.setName("Rose");
@@ -125,7 +126,8 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         rose.setHeight(new BigDecimal("50.00"));
         rose.setDescription("wunderschön");
         rose.setSeller(andrea);
-        plantService.savePlant(rose);
+        rose.setImagePath("/plant-images/rose1.JPG");
+        plantService.savePlantDataLoader(rose);
 
         Plant testVerkauft = new Plant();
         testVerkauft.setName("TestVerkauft");
@@ -134,7 +136,7 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         testVerkauft.setDescription("wunderschön");
         testVerkauft.setSeller(admin);
         testVerkauft.setBuyer(andrea);
-        plantService.savePlant(testVerkauft);
+        plantService.savePlantDataLoader(testVerkauft);
 
         Plant testNoBeziehungen = new Plant();
         testNoBeziehungen.setName("testNoBeziehungen");
@@ -142,7 +144,7 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         testNoBeziehungen.setHeight(new BigDecimal("50.00"));
         testNoBeziehungen.setDescription("wunderschön");
         testNoBeziehungen.setSeller(admin);
-        plantService.savePlant(testNoBeziehungen);
+        plantService.savePlantDataLoader(testNoBeziehungen);
 
         Chat chat1 = new Chat();
         chat1.setPlant(kaktus);

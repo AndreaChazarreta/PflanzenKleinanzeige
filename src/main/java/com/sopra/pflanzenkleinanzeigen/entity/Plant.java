@@ -38,7 +38,7 @@ public class Plant {
 
     private boolean potIncluded;
 
-    private String image;
+    private String imagePath;
 
     @ManyToMany(targetEntity = com.sopra.pflanzenkleinanzeigen.entity.Benutzer.class, fetch = FetchType.EAGER)
     private Set<Benutzer> wishedBy = new HashSet<>();
@@ -122,12 +122,12 @@ public class Plant {
         this.potIncluded = potIncluded;
     }
 
-    public String getImage() {
-        return image;
+    public String getImagePath() {
+        return imagePath;
     }
 
-    public void setImage(String image) {
-        this.image = image;
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
     }
 
     public Set<Benutzer> getWishedBy() {

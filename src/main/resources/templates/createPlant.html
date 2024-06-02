@@ -7,8 +7,7 @@
 <body>
 <div class="container">
 <h1>Create a Plant</h1>
-
-<form th:action="@{/plants}" th:object="${newPlant}" method="post">
+<form th:action="@{/plants}" th:object="${newPlant}" method="post" enctype="multipart/form-data">
     <label for="name">Name:</label>
     <input type="text" id="name" placeholder="Name" th:field="*{name}" required/>
     <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
@@ -23,6 +22,11 @@
     <br>
     <label for="description">Beschreibung:</label>
     <input type="text" id="description" placeholder="Beschreibung" th:field="*{description}"/>
+    <br>
+    <div class="mb-3">
+        <label for="imageFile" class="form-label">Bild: </label>
+        <input class="form-control" type="file" id="imageFile" name="imageFile" accept="image/*">
+    </div>
     <br>
     <button th:text="'Create'" th:type="submit"/>
 </form>

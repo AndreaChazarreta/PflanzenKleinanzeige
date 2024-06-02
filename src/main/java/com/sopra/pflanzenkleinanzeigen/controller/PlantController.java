@@ -12,7 +12,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -96,15 +98,20 @@ public class PlantController {
      * @return "redirect:/plants", the view with all plants, if the new plant is valid. Otherwise, it returns "createPlant", the view with the form for creating a new plant.
      */
     @PostMapping("/plants")
-    public String addPlant(@Valid @ModelAttribute("newPlant") Plant newPlant, BindingResult result, Model model) {
+    public String addPlant(@Valid @ModelAttribute("newPlant") Plant newPlant, @RequestParam("imageFile") MultipartFile imageFile, BindingResult result, Model model) {
         if (result.hasErrors()) {
             //TODO: schauen warum es hier Beschreibung leer lassen als Fehler angenommen wird
             model.addAttribute("newPlant", newPlant);
             return "createPlant";
         }
-        newPlant.setSeller(userService.getCurrentUser());
-        newPlant.setAdIsActive(true);
-        plantService.savePlant(newPlant);
+        try {
+            newPlant.setSeller(userService.getCurrentUser());
+            newPlant.setAdIsActive(true);
+            plantService.savePlant(newPlant, imageFile);
+        } catch (IOException e) {
+            model.addAttribute("error", "Ein Fehler ist aufgetreten: " + e.getMessage());
+            return "createPlant";
+        }
         return "redirect:/plants";
     }
 
@@ -139,6 +146,7 @@ public class PlantController {
         plantToUpdate.setPlantId(id);
         Plant oldPlant = plantService.findPlantById(id);
         plantToUpdate.setSeller(oldPlant.getSeller());
+        //TODO: das kann man löschen sobald man es richtig in frontend implementiert hat
         plantToUpdate.setAdIsActive(oldPlant.isAdIsActive());
         if (result.hasErrors()) {
             //TODO: schauen warum es hier Beschreibung leer lassen als Fehler angenommen wird
