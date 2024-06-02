@@ -2,11 +2,11 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <th:block th:insert="~{fragments/htmlHead :: head}"></th:block>
-    <title>Create Plant</title>
+    <title>Anzeige erstellen</title>
 </head>
 <body>
 <div class="container">
-<h1>Create a Plant</h1>
+<h1>Erstellt eine Pflanzeanzeige</h1>
 <form th:action="@{/plants}" th:object="${newPlant}" method="post" enctype="multipart/form-data">
     <label for="name">Name:</label>
     <input type="text" id="name" placeholder="Name" th:field="*{name}" required/>
@@ -28,7 +28,7 @@
         <input class="form-control" type="file" id="imageFile" name="imageFile" accept="image/*">
     </div>
     <br>
-    <button th:text="'Create'" th:type="submit"/>
+    <button th:text="'Erstellen'" th:type="submit"/>
 </form>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
