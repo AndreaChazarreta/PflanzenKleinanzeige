@@ -141,18 +141,26 @@ public class PlantController {
      * @return "redirect:/plants", the view with all plants, if the updated plant is valid. Otherwise, it returns "editPlant", the view with the form for editing the plant.
      */
     @PostMapping("/plants/edit/{id}")
-    public String updatePlant(@PathVariable int id, @Valid @ModelAttribute("plantToUpdate") Plant plantToUpdate, BindingResult result, Model model) {
+    public String updatePlant(@PathVariable int id, @Valid @ModelAttribute("plantToUpdate") Plant plantToUpdate, @RequestParam("imageFile") MultipartFile imageFile, BindingResult result, Model model) {
         model.addAttribute("plantToUpdate", plantToUpdate);
         plantToUpdate.setPlantId(id);
         Plant oldPlant = plantService.findPlantById(id);
         plantToUpdate.setSeller(oldPlant.getSeller());
+        if(imageFile == null || imageFile.isEmpty()) {
+            plantToUpdate.setImagePath(oldPlant.getImagePath());
+        }
         //TODO: das kann man löschen sobald man es richtig in frontend implementiert hat
         plantToUpdate.setAdIsActive(oldPlant.isAdIsActive());
         if (result.hasErrors()) {
             //TODO: schauen warum es hier Beschreibung leer lassen als Fehler angenommen wird
             return "editPlant";
         }
-        plantService.savePlant(plantToUpdate);
+        try{
+            plantService.savePlant(plantToUpdate, imageFile);
+        } catch (IOException e) {
+            model.addAttribute("error", "Ein Fehler ist aufgetreten: " + e.getMessage());
+            return "editPlant";
+        }
         return "redirect:/plants";
     }
 

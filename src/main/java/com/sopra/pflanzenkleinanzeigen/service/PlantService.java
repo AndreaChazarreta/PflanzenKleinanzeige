@@ -31,7 +31,11 @@ public class PlantService {
             String imagePath = saveImage(imageFile);
             plant.setImagePath(imagePath);
         } else {
-            plant.setImagePath("/plant-images/defaultImage.jpg");
+            if (plant.getImagePath() != null) {
+                plant.setImagePath(plant.getImagePath());
+            } else {
+                plant.setImagePath("/plant-images/defaultImage.jpg");
+            }
         }
         return plantRepository.save(plant);
     }
