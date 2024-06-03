@@ -2,13 +2,20 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <th:block th:insert="~{fragments/htmlHead :: head}"></th:block>
-    <title>Create Plant</title>
+    <title>Anzeige erstellen</title>
+    <style>
+        img {
+            display: none;
+            max-width: 200px;
+            max-height: 200px;
+            object-fit: cover;  /* Maintain aspect ratio */
+        }
+    </style>
 </head>
 <body>
 <div class="container">
-<h1>Create a Plant</h1>
-
-<form th:action="@{/plants}" th:object="${newPlant}" method="post">
+<h1>Erstellt eine Pflanzeanzeige</h1>
+<form th:action="@{/plants}" th:object="${newPlant}" method="post" enctype="multipart/form-data">
     <label for="name">Name:</label>
     <input type="text" id="name" placeholder="Name" th:field="*{name}" required/>
     <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
@@ -24,8 +31,38 @@
     <label for="description">Beschreibung:</label>
     <input type="text" id="description" placeholder="Beschreibung" th:field="*{description}"/>
     <br>
-    <button th:text="'Create'" th:type="submit"/>
+    <div class="mb-3">
+        <label for="imageFile" class="form-label">Bild: </label>
+        <input class="form-control" type="file" id="imageFile" name="imageFile" accept="image/*" onchange="previewImage()">
+    </div>
+    <br>
+    <img id="preview"/>
+    <button th:text="'Erstellen'" th:type="submit"/>
 </form>
+
+    <script>
+        function previewImage() {
+            const imageFile = document.getElementById('imageFile').files[0];
+
+            if (imageFile) {
+                const reader = new FileReader();
+
+                reader.onload = function (e) {
+                    document.getElementById('preview').src = e.target.result;
+                    document.getElementById('preview').style.display = 'block';
+                };
+
+                reader.onerror = function (e) {
+                    console.error("Error reading image file:", e);
+                    alert("Failed to preview image. Please try again.");
+                };
+
+                reader.readAsDataURL(imageFile);
+            } else {
+                document.getElementById('preview').style.display = 'none';
+            }
+        }
+    </script>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </div>
