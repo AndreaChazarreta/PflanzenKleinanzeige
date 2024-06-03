@@ -1,25 +1,144 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Nachrichten</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            height: 100vh;
+            margin: 0;
+        }
+        .chat-list {
+            width: 30%;
+            border-right: 1px solid #ddd;
+            overflow-y: auto;
+        }
+        .chat-list h1 {
+            text-align: center;
+        }
+        .chat-list ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+        .chat-list li {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+        .chat-list a {
+            text-decoration: none;
+            color: black;
+            display: block;
+        }
+        .chat-list a:hover {
+            background-color: #f0f0f0;
+        }
+        .message-area {
+            width: 70%;
+            display: flex;
+            flex-direction: column;
+        }
+        .header, .message-input-container {
+            background-color: #f8f9fa;
+            padding: 10px;
+        }
+        .message-container {
+            flex-grow: 1;
+            padding: 10px;
+            overflow-y: scroll;
+        }
+        .message-wrapper {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 10px;
+        }
+        .message-wrapper.sender {
+            align-items: flex-end;
+            margin-left: auto;
+            max-width: 70%;
+            text-align: right;
+        }
+        .message-wrapper.receiver {
+            align-items: flex-start;
+            margin-right: auto;
+            max-width: 70%;
+        }
+        .message-content {
+            padding: 10px;
+            border-radius: 10px;
+            word-wrap: break-word;
+        }
+        .message-content.sender {
+            background-color: #dcf8c6;
+        }
+        .message-content.receiver {
+            background-color: #ffffff;
+            border: 1px solid #e9ecef;
+        }
+        .message-timestamp {
+            font-size: 0.8em;
+            color: gray;
+        }
+        .message-input-container {
+            display: flex;
+            padding: 10px;
+            border-top: 1px solid #e9ecef;
+        }
+        .message-input-container input {
+            flex-grow: 1;
+            padding: 10px;
+            border-radius: 20px;
+            border: 1px solid #e9ecef;
+            margin-right: 10px;
+        }
+        .message-input-container button {
+            padding: 10px 20px;
+            border-radius: 20px;
+            border: none;
+            background-color: #007bff;
+            color: #ffffff;
+        }
+    </style>
 </head>
 <body>
-<h1>Nachrichten</h1>
-
-<ul>
-    <li th:each="message : ${allMessages}">
-        <p th:text="${message.messageContent}"></p>
-        <p th:text="${message.sender.username}"></p>
-    </li>
-</ul>
-<form th:action="@{/chats/{chatId}(chatId=${chat.chatId})}" th:object="${newMessage}" method="post">
-    <label for="messageContent">Nachricht:</label>
-    <input type="text" id="messageContent" th:field="*{messageContent}" placeholder="Nachricht eingeben" required/>
-    <button type="submit">Senden</button>
-</form>
-
-<a th:href="@{/plants}">Zurück zu den Pflanzen</a>
-<a th:href="@{/chats}">Zurück zu den Chats</a>
+<div class="chat-list">
+    <h1>Chats</h1>
+    <ul>
+        <li th:each="chat : ${allChats}">
+            <a th:href="@{/chats/{id}(id=${chat.chatId})}" th:text="${chat.plant.name}"></a>
+        </li>
+    </ul>
+</div>
+<div class="message-area">
+    <div class="header">
+        <div>
+            <h1>Nachrichten</h1>
+            <h2 th:text="${chat.plant.name}"></h2>
+            <h3 th:if="${currentUser.username == chat.possibleBuyer.username}" th:text="${chat.plant.seller.username}"></h3>
+            <h3 th:if="${currentUser.username != chat.possibleBuyer.username}" th:text="${chat.possibleBuyer.username}"></h3>
+        </div>
+    </div>
+    <div class="message-container">
+        <div th:each="message: ${allMessages}">
+            <div th:if="${message.sender.username == currentUser.username}" class="message-wrapper sender">
+                <div class="message-content sender" th:text="${message.messageContent}"></div>
+                <div class="message-timestamp" th:text="${#dates.format(message.sentAt, 'dd.MM.yyyy HH:mm')}"></div>
+            </div>
+            <div th:if="${message.sender.username != currentUser.username}" class="message-wrapper receiver">
+                <div class="message-content receiver" th:text="${message.messageContent}"></div>
+                <div class="message-timestamp" th:text="${#dates.format(message.sentAt, 'dd.MM.yyyy HH:mm')}"></div>
+            </div>
+        </div>
+    </div>
+    <div class="message-input-container">
+        <form th:action="@{/chats/{chatId}(chatId=${chat.chatId})}" th:object="${newMessage}" method="post">
+            <input type="text" th:field="*{messageContent}" placeholder="Nachricht eingeben" required/>
+            <button type="submit">Senden</button>
+        </form>
+    </div>
+</div>
 </body>
 </html>
+

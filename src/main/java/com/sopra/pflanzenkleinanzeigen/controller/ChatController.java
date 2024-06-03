@@ -53,11 +53,19 @@ public class ChatController {
      * @param model The model that is sent to the view.
      * @return "chats", the view with all chats from the current user.
      */
-    @GetMapping("/chats")
+    //TODO: getChats() methode und die Logik dahinter überarbeiten
+    @GetMapping("/chats/allChats")
     public String getChats(Model model) {
         Benutzer currentBenutzer = userService.getCurrentUser();
-        model.addAttribute("allChats", chatService.findUserChats(currentBenutzer.getUserId()));
-        return "chats";
+        List<Chat> userChats = chatService.findUserChats(currentBenutzer.getUserId());
+        model.addAttribute("allChats", userChats);
+
+        if (!userChats.isEmpty()) {
+            Chat firstChat = userChats.get(0);
+            return "redirect:/chats/" + firstChat.getChatId();
+        } else {
+            return "messages";
+        }
     }
 
     /**
@@ -80,9 +88,12 @@ public class ChatController {
                 model.addAttribute("error", "Sie sind nicht berechtigt, Nachrichten in diesem Chat zu sehen, da Sie kein Teilnehmer sind.");
                 return "error";
             }
+            model.addAttribute("allChats", chatService.findUserChats(currentUser.getUserId()));
             model.addAttribute("chat", chat);
             model.addAttribute("allMessages", chat.getMessages());
             model.addAttribute("newMessage", new Message());
+            model.addAttribute("currentUser", currentUser);
+            model.addAttribute("seller", chat.getPlant().getSeller());
             return "messages";
         } catch (Exception cannotGetChatException) {
             logger.error("Fehler beim Abrufen von Nachrichten für den Chat mit der ID: " + chatId, cannotGetChatException);
@@ -120,6 +131,7 @@ public class ChatController {
         try {
             Benutzer currentBenutzer = userService.getCurrentUser();
             Plant interestedPlant = plantService.findPlantById(plantId);
+            model.addAttribute("interestedPlant", interestedPlant);
             if (interestedPlant.getSeller().equals((currentBenutzer))) {
                 logger.error("Der Verkäufer dieser Pflanze kann sich selbst keine Nachrichten senden!");
                 model.addAttribute("error", "Der Verkäufer dieser Pflanze kann sich selbst keine Nachrichten senden!");
