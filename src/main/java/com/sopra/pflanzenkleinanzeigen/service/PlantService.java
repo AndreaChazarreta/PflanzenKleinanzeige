@@ -36,9 +36,9 @@ public class PlantService {
         plantRepository.delete(plant);
     }
 
-    public List<Plant> findByKeyword(String keyword) {
-        if (keyword != null) {
-            return plantRepository.findByKeyword(keyword);
+    public List<Plant> findByKeywordName(String name) {
+        if (name != null) {
+            return plantRepository.findByKeywordName(name);
         } else {
             return plantRepository.findAll();
         }

@@ -9,7 +9,7 @@
     <div>
         <form class="search">
             <div class="search_input">
-                <input   label="Find a Title:" type="text"/>
+                <input class="form-control" id="name"  name="name" label="Suche nach Name:" type="text" th:value="${name}"/>
             </div>
             <div class="search_button">
                 <button type="submit" >Search</button>
@@ -28,6 +28,15 @@
             </form>
         </li>
     </ul>
+    <ul>
+        <li th:each="plant : ${plantsByName}">
+            <a th:href="@{/plants/{id}(id=${plant.plantId})}" th:text="${plant.getName()}"></a>
+            <a th:href="@{/plants/edit/{id}(id=${plant.plantId})}">Bearbeiten</a>
+            <a th:href="@{/plants/delete/{id}(id=${plant.plantId})}"
+               onclick="return confirm('Sind Sie sicher, dass Sie diese Pflanze löschen möchten?');">Löschen</a>
+        </li>
+    </ul>
+
     <a th:href="@{/plants/new}" class="btn btn-primary">Neue Pflanze hinzufügen</a>
 </body>
 </html>
