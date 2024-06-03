@@ -151,8 +151,8 @@ public class ChatController {
      * @return The existing chat if found, null otherwise.
      */
     private Chat findExistingChat(Benutzer currentBenutzer, Plant interestedPlant) {
-        List<Chat> allChats = chatService.findAllChats();
-        for (Chat chat : allChats) {
+        List<Chat> userChats = chatService.findUserChats(currentBenutzer.getUserId());
+        for (Chat chat : userChats) {
             if (chat.getPossibleBuyer().equals(currentBenutzer) && chat.getPlant().equals(interestedPlant)) {
                 return chat;
             }
