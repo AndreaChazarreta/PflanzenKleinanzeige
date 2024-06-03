@@ -44,3 +44,5 @@ Das Konzept orientiert sich an Kleinanzeigenportalen, fokussiert sich jedoch aus
 - **Natalie Schulz** - [NatalieSchulz](https://github.com/NatalieSchulz99)
 - **Sharon Tabot** - [SharonTabot](https://github.com/sharii9)
 - **Sena Demiröz** - [SenaDemiröz](https://github.com/Senadem03)
+
+Test Issues

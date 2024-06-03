@@ -127,6 +127,23 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         rose.setSeller(andrea);
         plantService.savePlant(rose);
 
+        Plant testVerkauft = new Plant();
+        testVerkauft.setName("TestVerkauft");
+        testVerkauft.setPrice(new BigDecimal("15.00"));
+        testVerkauft.setHeight(new BigDecimal("50.00"));
+        testVerkauft.setDescription("wunderschön");
+        testVerkauft.setSeller(admin);
+        testVerkauft.setBuyer(andrea);
+        plantService.savePlant(testVerkauft);
+
+        Plant testNoBeziehungen = new Plant();
+        testNoBeziehungen.setName("testNoBeziehungen");
+        testNoBeziehungen.setPrice(new BigDecimal("15.00"));
+        testNoBeziehungen.setHeight(new BigDecimal("50.00"));
+        testNoBeziehungen.setDescription("wunderschön");
+        testNoBeziehungen.setSeller(admin);
+        plantService.savePlant(testNoBeziehungen);
+
         Chat chat1 = new Chat();
         chat1.setPlant(kaktus);
         chat1.setPossibleBuyer(normalUser);

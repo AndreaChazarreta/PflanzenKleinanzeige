@@ -24,8 +24,7 @@ public class Chat {
     @JoinColumn (name = "plantId")
     private Plant plant;
 
-    //TODO: Cascade schauen, passt so?
-    @OneToMany(mappedBy = "chat", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "chat")
     private List<Message> messages = new ArrayList<>();
 
     /**
