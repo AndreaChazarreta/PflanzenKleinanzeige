@@ -1,13 +1,20 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
+    <th:block th:insert="~{fragments/htmlHead :: head}"></th:block>
     <title>Pflanze bearbeiten</title>
+    <style>
+        img {
+            max-width: 200px;
+            max-height: 200px;
+            object-fit: cover;  /* Maintain aspect ratio */
+        }
+    </style>
 </head>
 <body>
 <h1>Pflanze bearbeiten</h1>
 
-<form th:action="@{/plants/edit/{id}(id=${plantToUpdate.plantId})}" th:object="${plantToUpdate}" method="post">
+<form th:action="@{/plants/edit/{id}(id=${plantToUpdate.plantId})}" th:object="${plantToUpdate}" method="post" enctype="multipart/form-data">
     <div>
         <label for="name">Name:</label>
         <input type="text" id="name" placeholder="Name" th:field="*{name}" required/>
@@ -27,10 +34,47 @@
         <label for="description">Beschreibung:</label>
         <textarea id="description" placeholder="Beschreibung" th:field="*{description}"></textarea>
     </div>
+    <div class="mb-3">
+        <label for="imageFile" class="form-label">Bild: </label>
+        <input class="form-control" type="file" id="imageFile" name="imageFile" accept="image/*" onchange="previewImage()">
+    </div>
+    <div>
+        <img id="preview"/>
+    </div>
+    <div th:if="${plantToUpdate.imagePath != null}">
+        <img id="existingImage" th:src="@{${plantToUpdate.getImagePath()}}" alt="Plant image"/>
+    </div>
     <div>
         <button th:text="'Speichern'" th:type="submit"/>
     </div>
 </form>
 <a th:href="@{/plants}">Zurück zur Liste</a>
+
+<script>
+    function previewImage() {
+        const imageFile = document.getElementById('imageFile').files[0];
+
+        if (imageFile) {
+            const reader = new FileReader();
+
+            reader.onload = function (e) {
+                document.getElementById('preview').src = e.target.result;
+                document.getElementById('preview').style.display = 'block';
+                document.getElementById('existingImage').style.display = 'none';
+            };
+
+            reader.onerror = function (e) {
+                console.error("Error reading image file:", e);
+                alert("Failed to preview image. Please try again.");
+            };
+
+            reader.readAsDataURL(imageFile);
+        } else {
+            document.getElementById('preview').style.display = 'none';
+        }
+    }
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>
