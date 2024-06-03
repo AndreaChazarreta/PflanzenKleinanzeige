@@ -6,6 +6,7 @@ import com.sopra.pflanzenkleinanzeigen.service.PlantService;
 import com.sopra.pflanzenkleinanzeigen.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -49,9 +50,14 @@ public class PlantController {
      * @return "plants", the view with all plants.
      */
     @GetMapping("/plants")
-    public String getPlants(Model model) {
+    public String getPlants(Model model, @Param("name") String name) {
         try {
-            model.addAttribute("allPlants", plantService.findAllPlants());
+            if(name != null){
+                model.addAttribute("plantsByName", plantService.findByKeywordName(name));
+                model.addAttribute("name", name);
+            } else {
+                model.addAttribute("allPlants", plantService.findAllPlants());
+            }
         } catch (Exception getPlantException ) {
             logger.error("Fehler beim Abrufen der Pflanzen", getPlantException);
             model.addAttribute("error", "Ein Fehler ist aufgetreten. Bitte versuchen Sie es später erneut.");
