@@ -26,7 +26,7 @@ public class UserController {
             return "redirect:/";
         }
         model.addAttribute("user", user);
-        return "userDetails";
+        return "profile";
     }
 
 }
