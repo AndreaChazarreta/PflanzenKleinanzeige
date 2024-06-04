@@ -64,6 +64,14 @@ public class PlantService {
         }
     }
 
+    public List<Plant> getUploadedPlantsByUserId(Integer userId) {
+        return plantRepository.findUploadedPlantsByUserId(userId);
+    }
+
+    public List<Plant> getPurchasedPlantsByUserId(Integer userId) {
+        return plantRepository.findPurchasedPlantsByUserId(userId);
+    }
+
     private String saveImage(MultipartFile imageFile) throws IOException {
         String randomFilename = UUID.randomUUID().toString();
         String imagePath = IMAGE_DIRECTORY + randomFilename;

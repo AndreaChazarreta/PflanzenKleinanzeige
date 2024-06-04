@@ -2,8 +2,212 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Profilübersicht</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        .header {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            background-color: #fff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .profile-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: #2e8b57;
+            color: #fff;
+            border-radius: 50%;
+            font-size: 20px;
+            text-decoration: none;
+            margin-right: 10px;
+        }
+        .navbar {
+            display: flex;
+            justify-content: center;
+            background-color: #fff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 10px 0;
+            margin-bottom: 20px;
+        }
+        .navbar a {
+            text-decoration: none;
+            color: #333;
+            padding: 10px 20px;
+            font-weight: bold;
+        }
+        .navbar a.active {
+            border-bottom: 2px solid #2e8b57;
+        }
+        .search-bar {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        .search-bar input[type="text"] {
+            padding: 10px;
+            width: 300px;
+            border: 1px solid #ccc;
+            border-radius: 4px 0 0 4px;
+        }
+        .search-bar button {
+            padding: 10px;
+            background-color: #2e8b57; /* Dark green */
+            color: #fff;
+            border: none;
+            border-radius: 0 4px 4px 0;
+            cursor: pointer;
+        }
+        .content {
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin: 0 auto;
+            width: 80%;
+            max-width: 800px;
+        }
+        .content h1 {
+            margin-top: 0;
+        }
+        .content p {
+            margin: 10px 0;
+        }
+        .plant-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        .plant-item {
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            padding: 10px;
+            width: calc(33.333% - 20px);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+        .plant-item img {
+            max-width: 100%;
+            border-bottom: 1px solid #ccc;
+            margin-bottom: 10px;
+        }
+        .plant-item h3 {
+            margin: 0;
+        }
+        .plant-item p {
+            margin: 5px 0;
+        }
+        .plant-item .buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+        }
+        .plant-item .buttons a.button {
+            padding: 5px 10px;
+            background-color: #2e8b57; /* Dark green */
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none; /* Hinzugefügt, um die Unterstreichung zu entfernen */
+        }
+        .add-plant {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        .add-plant button {
+            padding: 10px 20px;
+            background-color: #2e8b57; /* Dark green */
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .button.action-button {
+            padding: 10px 20px;
+            border-radius: 4px;
+            font-size: 16px;
+            margin-top: 10px;
+            text-align: center;
+            color: #fff;
+            background-color: #2e8b57;
+            border: none;
+        }
+
+    </style>
 </head>
 <body>
+<div class="header">
+    <a href="profile.html" class="profile-icon">S</a>
+    <div>Profilübersicht</div>
+</div>
+
+<div class="navbar">
+    <a href="#meine-pflanzen" class="active">Meine Pflanzen</a>
+    <a href="#meine-wunschliste">Meine Wunschliste</a>
+</div>
+
+<div class="search-bar">
+    <input type="text" placeholder="Suchen...">
+    <button>+</button>
+</div>
+
+<div class="content">
+    <h1>Meine Pflanzen</h1>
+
+    <div id="meine-pflanzen" class="plant-list">
+        <!-- Dynamically generated plant items go here -->
+        <div th:each="plant : ${userPlants}" class="plant-item">
+            <img th:src="@{${plant.imagePath}}" alt="Plant Image">
+            <h3 th:text="${plant.name}">Plant Name</h3>
+            <p th:text="'Preis: ' + ${plant.price} + '€'">Plant Price</p>
+            <div class="buttons">
+                <a th:href="@{/plants/edit/{id}(id=${plant.plantId})}" class="button action-button">Bearbeiten</a>
+                <form th:action="@{/plants/delete/{id}(id=${plant.plantId})}" method="post" style="display:inline;">
+                    <button type="submit" class="button action-button" onclick="return confirm('Sind Sie sicher, dass Sie diese Pflanze löschen möchten?');">Löschen</button>
+                </form>
+            </div>
+
+        </div>
+    </div>
+
+    <div id="meine-wunschliste" class="plant-list" style="display: none;">
+        <!-- Dynamically generated wishlist items go here -->
+        <div th:each="wishlistItem : ${currentUserWishlist}" class="plant-item">
+            <img th:src="@{${wishlistItem.imageUrl}}" alt="Plant Image">
+            <h3 th:text="${wishlistItem.name}">Plant Name</h3>
+        </div>
+    </div>
+
+    <div class="add-plant">
+        <button onclick="window.location.href='/plants/new'">+ Pflanze hinzufügen</button>
+    </div>
+</div>
+
+<script>
+    document.querySelectorAll('.navbar a').forEach(link => {
+        link.addEventListener('click', function() {
+            document.querySelectorAll('.navbar a').forEach(nav => nav.classList.remove('active'));
+            this.classList.add('active');
+
+            if (this.getAttribute('href') === '#meine-pflanzen') {
+                document.getElementById('meine-pflanzen').style.display = 'flex';
+                document.getElementById('meine-wunschliste').style.display = 'none';
+            } else {
+                document.getElementById('meine-pflanzen').style.display = 'none';
+                document.getElementById('meine-wunschliste').style.display = 'flex';
+            }
+        });
+    });
+</script>
 </body>
 </html>
