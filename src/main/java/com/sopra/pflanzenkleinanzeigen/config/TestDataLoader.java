@@ -136,6 +136,7 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         testVerkauft.setDescription("wunderschön");
         testVerkauft.setSeller(admin);
         testVerkauft.setBuyer(andrea);
+        testVerkauft.setImagePath("/plant-images/mixBlumen.jpg");
         plantService.savePlantDataLoader(testVerkauft);
 
         Plant testNoBeziehungen = new Plant();
@@ -144,7 +145,26 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         testNoBeziehungen.setHeight(new BigDecimal("50.00"));
         testNoBeziehungen.setDescription("wunderschön");
         testNoBeziehungen.setSeller(admin);
+        testNoBeziehungen.setImagePath("/plant-images/noImage.jpg");
         plantService.savePlantDataLoader(testNoBeziehungen);
+
+        Plant orangenbaum = new Plant();
+        orangenbaum.setName("orangenbaum");
+        orangenbaum.setPrice(new BigDecimal("15.00"));
+        orangenbaum.setHeight(new BigDecimal("50.00"));
+        orangenbaum.setDescription("hat leckere Orangen");
+        orangenbaum.setSeller(admin);
+        orangenbaum.setImagePath("/plant-images/orangenbaum.JPG");
+        plantService.savePlantDataLoader(orangenbaum);
+
+        Plant monstera = new Plant();
+        monstera.setName("monstera");
+        monstera.setPrice(new BigDecimal("15.00"));
+        monstera.setHeight(new BigDecimal("50.00"));
+        monstera.setDescription("hat leckere Orangen");
+        monstera.setSeller(admin);
+        monstera.setImagePath("/plant-images/monstera.JPG");
+        plantService.savePlantDataLoader(monstera);
 
         Chat chat1 = new Chat();
         chat1.setPlant(kaktus);

@@ -13,8 +13,8 @@ import java.util.List;
  */
 public interface PlantRepository extends JpaRepository<Plant, Integer> {
 
-    @Query("SELECT p FROM Plant p WHERE p.name LIKE %?1%")
-    public List<Plant> findByKeywordName(@Param("name") String name);
+    @Query("SELECT p FROM Plant p WHERE LOWER(p.name) LIKE LOWER(CONCAT('%', :name, '%'))")
+    List<Plant> findByKeywordName(@Param("name") String name);
 
 }
 
