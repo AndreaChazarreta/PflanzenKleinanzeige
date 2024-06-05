@@ -34,7 +34,7 @@ public class PlantService {
             if (plant.getImagePath() != null) {
                 plant.setImagePath(plant.getImagePath());
             } else {
-                plant.setImagePath("/plant-images/defaultImage.jpg");
+                plant.setImagePath("/plant-images/noImage.jpg");
             }
         }
         return plantRepository.save(plant);
