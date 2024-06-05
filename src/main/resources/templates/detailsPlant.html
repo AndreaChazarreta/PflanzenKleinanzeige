@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
+    <th:block th:insert="~{fragments/htmlHead :: head}"></th:block>
     <title>Pflanzendetails</title>
     <style>
         img {
-            width: 200px;
-            height: 150px;
+            max-width: 200px;
+            max-height: 200px;
             object-fit: cover;  /* Maintain aspect ratio */
         }
     </style>
@@ -19,8 +19,16 @@
 <p><strong>Groeße:</strong> <span th:text="${plant.getHeight()}"></span></p>
 <p><strong>Beschreibung:</strong> <span th:text="${plant.getDescription()}"></span></p>
 <p><strong>Bild:</strong> <img th:src="@{${plant.getImagePath()}}" alt="Plant image"></p>
+<br>
+<a th:href="@{/plants/edit/{id}(id=${plant.plantId})}">Bearbeiten</a>
+<form th:action="@{/plants/{plantId}/newChat(plantId=${plant.plantId})}" method="post" style="display:inline;">
+    <button type="submit">Nachricht versenden</button>
+</form>
+<form th:action="@{/plants/delete/{id}(id=${plant.plantId})}" method="post" style="display:inline;">
+    <button th:type="submit" onclick="return confirm('Sind Sie sicher, dass Sie diese Pflanze löschen möchten?');">Löschen</button>
+</form>
 
-<a th:href="@{/plants}">Zurück zur Liste</a>
+<a th:href="@{/plants}">Zurück zur Liste  <i class="bi bi-arrow-left"></i></a>
 
 </body>
 </html>
