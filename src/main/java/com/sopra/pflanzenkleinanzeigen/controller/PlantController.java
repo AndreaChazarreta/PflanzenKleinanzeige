@@ -52,9 +52,9 @@ public class PlantController {
      * @return "plants", the view with all plants.
      */
     @GetMapping("/plants")
-    public String getPlants(Model model, @Param("name") String name) {
+    public String getPlants(Model model, @RequestParam(value = "name", required = false) String name) {
         try {
-            if(name != null){
+            if(name != null && !name.isEmpty()){
                 model.addAttribute("plantsByName", plantService.findByKeywordName(name));
                 model.addAttribute("name", name);
             } else {

@@ -58,7 +58,7 @@ public class PlantService {
 
     public List<Plant> findByKeywordName(String name) {
         if (name != null) {
-            return plantRepository.findByKeywordName(name);
+            return plantRepository.findByKeywordName(name.toLowerCase());
         } else {
             return plantRepository.findAll();
         }
