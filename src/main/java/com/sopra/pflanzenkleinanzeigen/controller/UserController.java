@@ -42,8 +42,7 @@ public class UserController {
         if (currentUser == null) {
             return "redirect:/";
         }
-        List<Plant> userPlants = plantService.getUploadedPlantsByUserId(currentUser.getUserId());
-        model.addAttribute("userPlants", userPlants);
+        model.addAttribute("userPlants", currentUser.getUploadedPlants());
         return "profileOverview";
     }
 }

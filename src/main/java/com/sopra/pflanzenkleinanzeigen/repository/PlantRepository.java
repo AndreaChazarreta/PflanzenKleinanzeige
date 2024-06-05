@@ -17,10 +17,5 @@ public interface PlantRepository extends JpaRepository<Plant, Integer> {
     @Query("SELECT p FROM Plant p WHERE LOWER(p.name) LIKE LOWER(CONCAT('%', :name, '%'))")
     List<Plant> findByKeywordName(@Param("name") String name);
 
-    @Query("SELECT p FROM Plant p WHERE p.seller.userId = :userId")
-    List<Plant> findUploadedPlantsByUserId(@Param("userId") Integer userId);
-
-    @Query("SELECT p FROM Plant p WHERE p.buyer.userId = :userId")
-    List<Plant> findPurchasedPlantsByUserId(@Param("userId") Integer userId);
 }
 
