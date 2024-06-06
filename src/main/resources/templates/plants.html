@@ -17,6 +17,30 @@
             text-decoration: none;
             color: inherit;
         }
+        .search-bar {
+            display: flex;
+            align-items: center;
+            border: 1px solid grey;
+            border-radius: 25px;
+            padding: 8px;
+        }
+        .search-bar input {
+            border: none;
+            outline: none;
+        }
+        .search-bar input:focus {
+            box-shadow: none;
+        }
+        .search-bar button {
+            border: none;
+            background-color: #ffffff;
+            border-radius: 25px 25px 25px 25px;
+            padding: 8px 10px;
+            cursor: pointer;
+        }
+        .search-bar button i {
+            color: #000;
+        }
     </style>
     <title>Plants</title>
 </head>
@@ -27,9 +51,9 @@
 
     <div class="row mb-4">
         <div class="col-12">
-            <form class="input-group" th:action="@{/plants}" method="get" onsubmit="return checkSearch()">
+            <form class="search-bar" th:action="@{/plants}" method="get" onsubmit="return checkSearch()">
+                <button class="btn" type="submit"><i class="bi bi-search"></i></button>
                 <input class="form-control" id="name" name="name" label="Suche nach Name:" type="text" th:value="${name}" placeholder="Suche nach Name">
-                <button class="btn btn-primary" type="submit">Suche</button>
             </form>
         </div>
     </div>
