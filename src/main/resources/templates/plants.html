@@ -8,6 +8,15 @@
             max-height: 200px;
             object-fit: cover;  /* Maintain aspect ratio */
         }
+        .card {
+            border: none;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s;
+        }
+        .card a {
+            text-decoration: none;
+            color: inherit;
+        }
     </style>
     <title>Plants</title>
 </head>
@@ -26,35 +35,15 @@
     </div>
 
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4">
-        <div class="col mb-4" th:each="plant : ${allPlants}">
-            <div class="card h-100">
-                <img th:src="@{${plant.getImagePath()}}" alt="Plant image" class="card-img-top">
-                <div class="card-body">
-                    <h5 class="card-title">
-                        <a th:href="@{/plants/{id}(id=${plant.plantId})}" th:text="${plant.getName()}"></a>
-                    </h5>
-                    <form th:action="@{/plants/{plantId}/newChat(plantId=${plant.plantId})}" method="post" class="d-inline">
-                        <button class="btn btn-info btn-sm" type="submit">Nachricht versenden</button>
-                    </form>
-                </div>
-            </div>
-        </div>
+        <th:block th:each="plant : ${allPlants}">
+            <th:block th:insert="~{fragments/cardPlantsOverview :: cardFragment(plant=${plant})}"></th:block>
+        </th:block>
     </div>
 
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4">
-        <div class="col mb-4" th:each="plant : ${plantsByName}">
-            <div class="card h-100">
-                <img th:src="@{${plant.getImagePath()}}" alt="Plant image" class="card-img-top">
-                <div class="card-body">
-                    <h5 class="card-title">
-                        <a th:href="@{/plants/{id}(id=${plant.plantId})}" th:text="${plant.getName()}"></a>
-                    </h5>
-                    <form th:action="@{/plants/{plantId}/newChat(plantId=${plant.plantId})}" method="post" class="d-inline">
-                        <button class="btn btn-info btn-sm" type="submit">Nachricht versenden</button>
-                    </form>
-                </div>
-            </div>
-        </div>
+        <th:block th:each="plant : ${plantsByName}">
+            <th:block th:insert="~{fragments/cardPlantsOverview :: cardFragment(plant=${plant})}"></th:block>
+        </th:block>
     </div>
 </div>
 
