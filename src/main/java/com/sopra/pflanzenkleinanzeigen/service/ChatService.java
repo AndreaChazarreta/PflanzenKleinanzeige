@@ -20,8 +20,6 @@ public class ChatService {
         return chatRepository.save(chat);
     }
 
-    public List<Chat> findAllChats(){return chatRepository.findAll();}
-
     public Chat findChatById(Integer id) {
         return chatRepository.findById(id).orElse(null);
     }
