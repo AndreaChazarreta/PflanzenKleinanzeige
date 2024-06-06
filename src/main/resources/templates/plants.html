@@ -8,6 +8,39 @@
             max-height: 200px;
             object-fit: cover;  /* Maintain aspect ratio */
         }
+        .card {
+            border: none;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s;
+        }
+        .card a {
+            text-decoration: none;
+            color: inherit;
+        }
+        .search-bar {
+            display: flex;
+            align-items: center;
+            border: 1px solid grey;
+            border-radius: 25px;
+            padding: 8px;
+        }
+        .search-bar input {
+            border: none;
+            outline: none;
+        }
+        .search-bar input:focus {
+            box-shadow: none;
+        }
+        .search-bar button {
+            border: none;
+            background-color: #ffffff;
+            border-radius: 25px 25px 25px 25px;
+            padding: 8px 10px;
+            cursor: pointer;
+        }
+        .search-bar button i {
+            color: #000;
+        }
     </style>
     <title>Plants</title>
 </head>
@@ -18,43 +51,23 @@
 
     <div class="row mb-4">
         <div class="col-12">
-            <form class="input-group" th:action="@{/plants}" method="get" onsubmit="return checkSearch()">
+            <form class="search-bar" th:action="@{/plants}" method="get" onsubmit="return checkSearch()">
+                <button class="btn" type="submit"><i class="bi bi-search"></i></button>
                 <input class="form-control" id="name" name="name" label="Suche nach Name:" type="text" th:value="${name}" placeholder="Suche nach Name">
-                <button class="btn btn-primary" type="submit">Suche</button>
             </form>
         </div>
     </div>
 
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4">
-        <div class="col mb-4" th:each="plant : ${allPlants}">
-            <div class="card h-100">
-                <img th:src="@{${plant.getImagePath()}}" alt="Plant image" class="card-img-top">
-                <div class="card-body">
-                    <h5 class="card-title">
-                        <a th:href="@{/plants/{id}(id=${plant.plantId})}" th:text="${plant.getName()}"></a>
-                    </h5>
-                    <form th:action="@{/plants/{plantId}/newChat(plantId=${plant.plantId})}" method="post" class="d-inline">
-                        <button class="btn btn-info btn-sm" type="submit">Nachricht versenden</button>
-                    </form>
-                </div>
-            </div>
-        </div>
+        <th:block th:each="plant : ${allPlants}">
+            <th:block th:insert="~{fragments/cardPlantsOverview :: cardFragment(plant=${plant})}"></th:block>
+        </th:block>
     </div>
 
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4">
-        <div class="col mb-4" th:each="plant : ${plantsByName}">
-            <div class="card h-100">
-                <img th:src="@{${plant.getImagePath()}}" alt="Plant image" class="card-img-top">
-                <div class="card-body">
-                    <h5 class="card-title">
-                        <a th:href="@{/plants/{id}(id=${plant.plantId})}" th:text="${plant.getName()}"></a>
-                    </h5>
-                    <form th:action="@{/plants/{plantId}/newChat(plantId=${plant.plantId})}" method="post" class="d-inline">
-                        <button class="btn btn-info btn-sm" type="submit">Nachricht versenden</button>
-                    </form>
-                </div>
-            </div>
-        </div>
+        <th:block th:each="plant : ${plantsByName}">
+            <th:block th:insert="~{fragments/cardPlantsOverview :: cardFragment(plant=${plant})}"></th:block>
+        </th:block>
     </div>
 </div>
 
