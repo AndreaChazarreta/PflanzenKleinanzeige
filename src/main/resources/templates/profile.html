@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+    <th:block th:insert="~{fragments/htmlHead :: head}"></th:block>
     <title>Userprofil</title>
 </head>
 <body>
-<h1>Benutzerprofil</h1>
+<th:block th:insert="~{fragments/htmlNavBar :: navbar}"></th:block>
 
+<h1>Benutzerprofil</h1>
 <p><strong>Name:</strong> <span th:text="${user.getUsername()}"></span></p>
 <p><strong>Vorname:</strong> <span th:text="${user.getFirstname()}"></span></p>
 <p><strong>Nachname:</strong> <span th:text="${user.getLastname()}"></span></p>
 <p><strong>Email:</strong> <span th:text="${user.getEmail}"></span></p>
 
-<a th:href="@{/}">Zurück zu Home</a>
-
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>
