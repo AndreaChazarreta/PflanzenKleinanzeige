@@ -1,15 +1,19 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
+    <th:block th:insert="~{fragments/htmlHead :: head}"></th:block>
     <title>Home</title>
 </head>
 <body>
+<th:block th:insert="~{fragments/htmlNavBar :: navbar}"></th:block>
+
 <p th:text="'Du bist angemeldet und befindest dich auf der Startseite.'"></p>
 <p th:text="${message}"></p>
 <a th:href="@{/users}" class="btn btn-primary">Mein Profil anzeigen</a>
 <a th:href="@{/plants}" class="btn btn-primary">Alle Pflanzen anzeigen</a>
 <a th:href="@{/chats}" class="btn btn-primary">Alle Chats anzeigen</a>
 <a th:href="@{/profileOverview}" class="btn btn-primary">Profilübersicht anzeigen</a>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>

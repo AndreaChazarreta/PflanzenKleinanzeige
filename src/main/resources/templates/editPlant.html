@@ -12,8 +12,9 @@
     </style>
 </head>
 <body>
-<h1>Pflanze bearbeiten</h1>
+<th:block th:insert="~{fragments/htmlNavBar :: navbar}"></th:block>
 
+<h1>Pflanze bearbeiten</h1>
 <form th:action="@{/plants/edit/{id}(id=${plantToUpdate.plantId})}" th:object="${plantToUpdate}" method="post" enctype="multipart/form-data">
     <div>
         <label for="name">Name:</label>
