@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<th:block th:fragment="cardFragment (plant)">
+    <div class="col mb-4">
+        <div class="card h-100">
+            <a th:href="@{/plants/{id}(id=${plant.plantId})}">
+                <img th:src="@{${plant.getImagePath()}}" alt="Plant image" class="card-img-top">
+                <div class="card-body">
+                    <h5 class="card-title" th:text="${plant.getName()}"></h5>
+                    <p>€<span th:text="${plant.getPrice()}"></span></p>
+                    <div class="text-end">
+                        <form th:action="@{/plants/{plantId}/newChat(plantId=${plant.plantId})}" method="post" class="d-inline" style="padding-bottom: 10px; padding-left: 10px">
+                            <button class="btn btn-light" type="submit"><i class="bi bi-chat-dots" style="font-size: 1.6rem"></i> Anfragen</button>
+                        </form>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+</th:block>
+</html>

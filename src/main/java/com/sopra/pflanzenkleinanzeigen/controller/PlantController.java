@@ -52,9 +52,9 @@ public class PlantController {
      * @return "plants", the view with all plants.
      */
     @GetMapping("/plants")
-    public String getPlants(Model model, @Param("name") String name) {
+    public String getPlants(Model model, @RequestParam(value = "name", required = false) String name) {
         try {
-            if(name != null){
+            if(name != null && !name.isEmpty()){
                 model.addAttribute("plantsByName", plantService.findByKeywordName(name));
                 model.addAttribute("name", name);
             } else {
@@ -132,6 +132,12 @@ public class PlantController {
         Plant plantToUpdate = plantService.findPlantById(id);
         if (plantToUpdate == null) {
             return "redirect:/plants";
+        }
+        Benutzer currentUser = userService.getCurrentUser();
+        if (!plantToUpdate.getSeller().equals(currentUser)) {
+            logger.error("Benutzer ist nicht berechtigt, die Pflanze zu bearbeiten.");
+            model.addAttribute("error", "Sie sind nicht berechtigt, diese Pflanze zu bearbeiten.");
+            return "error";
         }
         model.addAttribute("plantToUpdate", plantToUpdate);
         return "editPlant";

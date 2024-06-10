@@ -34,7 +34,7 @@ public class PlantService {
             if (plant.getImagePath() != null) {
                 plant.setImagePath(plant.getImagePath());
             } else {
-                plant.setImagePath("/plant-images/defaultImage.jpg");
+                plant.setImagePath("/plant-images/noImage.jpg");
             }
         }
         return plantRepository.save(plant);
@@ -58,7 +58,7 @@ public class PlantService {
 
     public List<Plant> findByKeywordName(String name) {
         if (name != null) {
-            return plantRepository.findByKeywordName(name);
+            return plantRepository.findByKeywordName(name.toLowerCase());
         } else {
             return plantRepository.findAll();
         }

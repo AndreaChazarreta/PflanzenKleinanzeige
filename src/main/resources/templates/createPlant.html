@@ -5,7 +5,6 @@
     <title>Anzeige erstellen</title>
     <style>
         img {
-            display: none;
             max-width: 200px;
             max-height: 200px;
             object-fit: cover;  /* Maintain aspect ratio */
@@ -37,6 +36,8 @@
     </div>
     <br>
     <img id="preview"/>
+    <img id="upload" src="/plant-images/upload.png" alt="Plant image" class="me-3 rounded">
+    <br>
     <button th:text="'Erstellen'" th:type="submit"/>
 </form>
 
@@ -50,6 +51,7 @@
                 reader.onload = function (e) {
                     document.getElementById('preview').src = e.target.result;
                     document.getElementById('preview').style.display = 'block';
+                    document.getElementById('upload').style.display = 'none';
                 };
 
                 reader.onerror = function (e) {
