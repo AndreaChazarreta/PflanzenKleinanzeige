@@ -54,7 +54,7 @@ public class ChatController {
      * @return "chats", the view with all chats from the current user.
      */
     //TODO: getChats() methode und die Logik dahinter überarbeiten
-    @GetMapping("/chats/allChats")
+    @GetMapping("/chats")
     public String getChats(Model model) {
         Benutzer currentBenutzer = userService.getCurrentUser();
         List<Chat> userChats = chatService.findUserChats(currentBenutzer.getUserId());
