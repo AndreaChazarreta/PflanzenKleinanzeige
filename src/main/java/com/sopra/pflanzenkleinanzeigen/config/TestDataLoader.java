@@ -11,6 +11,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
+import java.time.Instant;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -156,22 +157,29 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         chat2.setPossibleBuyer(normalUser);
         chatService.saveChat(chat2);
 
+        Instant anInstant1 = Instant.ofEpochSecond(1715324919);
+        Instant anInstant2 = Instant.ofEpochSecond(1715843319);
+        Instant anInstant3 = Instant.ofEpochSecond(1716188919);
+
         Message message1 = new Message();
         message1.setChat(chat1);
         message1.setSender(normalUser);
         message1.setMessageContent("Hello World!");
+        message1.setSentAt(anInstant1);
         messageService.saveMessage(message1);
 
         Message message2 = new Message();
         message2.setChat(chat1);
         message2.setSender(normalUser);
         message2.setMessageContent("Sharon war hier!");
+        message2.setSentAt(anInstant2);
         messageService.saveMessage(message2);
 
         Message message3 = new Message();
         message3.setChat(chat2);
         message3.setSender(normalUser);
         message3.setMessageContent("Andrea war hier!");
+        message3.setSentAt(anInstant3);
         messageService.saveMessage(message3);
     }
 }
