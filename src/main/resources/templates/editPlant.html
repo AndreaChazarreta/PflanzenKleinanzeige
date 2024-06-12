@@ -9,47 +9,89 @@
             max-height: 200px;
             object-fit: cover;  /* Maintain aspect ratio */
         }
+        .form-container {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .form-container h1 {
+            margin-bottom: 20px;
+        }
+        .form-container form {
+            margin-top: 20px;
+        }
+        .form-container form .form-group {
+            margin-bottom: 20px;
+        }
+        .form-container form .btn {
+            background-color: #2e8b57;
+            color: white;
+        }
+        .form-container form .btn:hover {
+            background-color: #1d6b41;
+        }
+        .form-container img#preview {
+            display: none;
+            max-width: 200px;
+            margin-top: 10px;
+        }
+        .form-container img#existingImage {
+            max-width: 200px;
+            margin-top: 10px;
+        }
+        .back-link {
+            margin-top: 20px;
+            display: inline-block;
+            color: #2e8b57;
+            text-decoration: none;
+        }
+        .back-link:hover {
+            text-decoration: underline;
+        }
     </style>
 </head>
 <body>
 <th:block th:insert="~{fragments/htmlNavBar :: navbar}"></th:block>
 
-<h1>Pflanze bearbeiten</h1>
-<form th:action="@{/plants/edit/{id}(id=${plantToUpdate.plantId})}" th:object="${plantToUpdate}" method="post" enctype="multipart/form-data">
-    <div>
-        <label for="name">Name:</label>
-        <input type="text" id="name" placeholder="Name" th:field="*{name}" required/>
-        <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
+<div class="container mt-5">
+    <div class="form-container">
+        <h1>Pflanze bearbeiten</h1>
+        <form th:action="@{/plants/edit/{id}(id=${plantToUpdate.plantId})}" th:object="${plantToUpdate}" method="post" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="name">Name:</label>
+                <input type="text" class="form-control" id="name" placeholder="Name" th:field="*{name}" required/>
+                <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="text-danger"></div>
+            </div>
+            <div class="form-group">
+                <label for="price">Preis:</label>
+                <input type="number" class="form-control" id="price" placeholder="Preis in Euro" th:field="*{price}" step="any" required/>
+                <div th:if="${#fields.hasErrors('price')}" th:errors="*{price}" class="text-danger"></div>
+            </div>
+            <div class="form-group">
+                <label for="height">Höhe:</label>
+                <input type="number" class="form-control" id="height" placeholder="Höhe in Zentimeter" th:field="*{height}" step="any" required/>
+                <div th:if="${#fields.hasErrors('height')}" th:errors="*{height}" class="text-danger"></div>
+            </div>
+            <div class="form-group">
+                <label for="description">Beschreibung:</label>
+                <textarea id="description" class="form-control" placeholder="Beschreibung" th:field="*{description}"></textarea>
+            </div>
+            <div class="form-group mb-3">
+                <label for="imageFile" class="form-label">Bild: </label>
+                <input class="form-control" type="file" id="imageFile" name="imageFile" accept="image/*" onchange="previewImage()">
+            </div>
+            <div>
+                <img id="preview"/>
+            </div>
+            <div th:if="${plantToUpdate.imagePath != null}">
+                <img id="existingImage" th:src="@{${plantToUpdate.getImagePath()}}" alt="Plant image"/>
+            </div>
+            <button type="submit" class="btn btn-success">Speichern</button>
+        </form>
+        <a th:href="@{/plants}" class="back-link">Zurück zur Liste</a>
     </div>
-    <div>
-        <label for="price">Preis:</label>
-        <input type="number" id="price" placeholder="Preis in Euro" th:field="*{price}" step="any" required/>
-        <div th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></div>
-    </div>
-    <div>
-        <label for="height">Höhe:</label>
-        <input type="number" id="height" placeholder="Höhe in Zentimeter" th:field="*{height}" step="any" required/>
-        <div th:if="${#fields.hasErrors('height')}" th:errors="*{height}"></div>
-    </div>
-    <div>
-        <label for="description">Beschreibung:</label>
-        <textarea id="description" placeholder="Beschreibung" th:field="*{description}"></textarea>
-    </div>
-    <div class="mb-3">
-        <label for="imageFile" class="form-label">Bild: </label>
-        <input class="form-control" type="file" id="imageFile" name="imageFile" accept="image/*" onchange="previewImage()">
-    </div>
-    <div>
-        <img id="preview"/>
-    </div>
-    <div th:if="${plantToUpdate.imagePath != null}">
-        <img id="existingImage" th:src="@{${plantToUpdate.getImagePath()}}" alt="Plant image"/>
-    </div>
-    <div>
-        <button th:text="'Speichern'" th:type="submit"/>
-    </div>
-</form>
-<a th:href="@{/plants}">Zurück zur Liste</a>
+</div>
 
 <script>
     function previewImage() {
