@@ -33,8 +33,8 @@ public class UserController {
         return "profile";
     }
 
-    @GetMapping("/profileOverview")
-    public String profileOverview(Model model) {
+    @GetMapping("/myPlantsOverview")
+    public String myPlantsOverview(Model model) {
         Benutzer currentUser = userService.getCurrentUser();
         if (currentUser == null) {
             return "redirect:/";
