@@ -5,6 +5,7 @@ import jakarta.validation.constraints.Email;
 
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -22,6 +23,8 @@ public class Benutzer {
     @Column(unique = true)
     private String username;
 
+
+
     private String password;
 
     private boolean enabled = true;
@@ -29,6 +32,8 @@ public class Benutzer {
     private String firstname;
 
     private String lastname;
+
+    private String imagePath;
 
     @Email
     private String email;
@@ -41,6 +46,9 @@ public class Benutzer {
 
     @OneToMany(mappedBy = "buyer")
     private List<Plant> purchasedPlants = new ArrayList<>();
+
+    @ManyToMany(mappedBy = "wishedBy", fetch = FetchType.EAGER)
+    private Set<Plant> wishedPlants = new HashSet<>();
 
     @ManyToOne
     @JoinColumn (name = "selectedIconId")
@@ -98,7 +106,13 @@ public class Benutzer {
     public void setRoles(Set<Rolle> roles) {
         this.roles = roles;
     }
+    public String getImagePath() {
+        return imagePath;
+    }
 
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
+    }
     public String getFirstname() {
         return firstname;
     }
@@ -137,6 +151,14 @@ public class Benutzer {
 
     public void setPurchasedPlants(List<Plant> purchasedPlants) {
         this.purchasedPlants = purchasedPlants;
+    }
+
+    public Set<Plant> getWishedPlants() {
+        return wishedPlants;
+    }
+
+    public void setWishedPlants(Set<Plant> wishedPlants) {
+        this.wishedPlants = wishedPlants;
     }
 
     public ProfileIcon getProfileIcon() {

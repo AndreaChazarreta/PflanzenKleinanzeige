@@ -1,7 +1,9 @@
 package com.sopra.pflanzenkleinanzeigen.service;
 
+import com.sopra.pflanzenkleinanzeigen.entity.Plant;
 import com.sopra.pflanzenkleinanzeigen.entity.Rolle;
 import com.sopra.pflanzenkleinanzeigen.entity.Benutzer;
+import com.sopra.pflanzenkleinanzeigen.repository.PlantRepository;
 import com.sopra.pflanzenkleinanzeigen.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -13,6 +15,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +35,9 @@ public class UserService implements UserDetailsService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private PlantRepository plantRepository;
 
     private static final Logger logger = LoggerFactory.getLogger(UserService.class);
 
@@ -135,6 +142,30 @@ public class UserService implements UserDetailsService {
             grantedAuthorities.add(new SimpleGrantedAuthority(role.getRolename()));
         }
         return grantedAuthorities;
+    }
+    public List<Plant> findActivePlantsBySeller(Integer sellerId) {
+        Benutzer seller = userRepository.findById(sellerId).orElse(null);
+        if (seller != null) {
+            return plantRepository.findAllActivePlantsBySeller(seller);
+        } else {
+            return new ArrayList<>();
+        }
+    }
+    public List<Plant> findPlantsByNameAndSeller(String name, Integer sellerId) {
+        Benutzer seller = userRepository.findById(sellerId).orElse(null);
+        if (seller != null) {
+            return plantRepository.findByNameAndSeller(name, seller);
+        } else {
+            return new ArrayList<>();
+        }
+    }
+    public List<Plant> findPurchasedPlantsByNameAndBuyer(String name, Integer buyerId) {
+        Benutzer buyer = userRepository.findById(buyerId).orElse(null);
+        if (buyer != null) {
+            return plantRepository.findPurchasedPlantsByNameAndBuyer(name, buyer);
+        } else {
+            return new ArrayList<>();
+        }
     }
 }
 

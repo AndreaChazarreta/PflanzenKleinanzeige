@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <th:block th:insert="~{fragments/htmlHead :: head}"></th:block>
+    <style>
+        body {
+            background-color: #f0f4f7;
+            font-family: Arial, sans-serif;
+        }
+
+        .card {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border: none;
+            margin: 30px auto;
+            max-width: 800px;
+        }
+
+        .card-body {
+            padding: 20px;
+        }
+
+        .img-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            background-color: #f8f9fa;
+            border-radius: 10px 0 0 10px;
+        }
+
+        .img-container img {
+            border-radius: 50%;
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+        }
+
+        .back-link {
+            color: #2e8b57;
+            text-decoration: none;
+            font-weight: bold;
+            margin-top: 20px;
+            display: inline-block;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+        .card-title {
+            font-size: 24px;
+            color: #333;
+            margin-top: 21px;
+        }
+
+        .card-text {
+            color: #555;
+        }
+    </style>
+    <title>Userprofil</title>
+</head>
+<body>
+<th:block th:insert="~{fragments/htmlNavBar :: navbar}"></th:block>
+
+<div class="card">
+    <div class="row g-0">
+        <div class="col-md-4 img-container">
+            <img th:src="@{${user.getImagePath()}}" alt="User image">
+        </div>
+        <div class="col-md-8">
+            <div class="card-body">
+                <h2 class="card-title"><strong th:text="${user.getUsername()}"></strong></h2>
+                <p class="card-text"><strong>Name:</strong>
+                    <span th:text="${user.getFirstname()}"></span>
+                    <span th:text="${user.getLastname()}"></span>
+                </p>
+                <p class="card-text"><strong>E-Mail: </strong><span th:text="${user.getEmail()}"></span></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+</body>
+</html>

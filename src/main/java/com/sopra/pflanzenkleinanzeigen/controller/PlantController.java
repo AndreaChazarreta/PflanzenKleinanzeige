@@ -1,7 +1,11 @@
 package com.sopra.pflanzenkleinanzeigen.controller;
 
+import com.sopra.pflanzenkleinanzeigen.entity.Benutzer;
+import com.sopra.pflanzenkleinanzeigen.entity.Chat;
 import com.sopra.pflanzenkleinanzeigen.entity.Plant;
+import com.sopra.pflanzenkleinanzeigen.service.ChatService;
 import com.sopra.pflanzenkleinanzeigen.service.PlantService;
+import com.sopra.pflanzenkleinanzeigen.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -10,7 +14,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -25,6 +31,10 @@ public class PlantController {
     private PlantService plantService;
 
     private static final Logger logger = LoggerFactory.getLogger(PlantController.class);
+    @Autowired
+    private UserService userService;
+    @Autowired
+    private ChatService chatService;
 
 
     //TODO: FRAGEN: wie sollen wir "Get all Plants" implementieren? mit @ModelAttribute
@@ -40,14 +50,24 @@ public class PlantController {
 
     //TODO: brauchen wir für solche funktionen try and catch? Hier kann relativ wenig schief gehen
     /**
-     * This method retrieves all plants and displays them on the plants page.
+     * This method retrieves all plants and displays them on the plants page if they are still active.
      * @param model The model that is sent to the view.
      * @return "plants", the view with all plants.
      */
     @GetMapping("/plants")
-    public String getPlants(Model model) {
+    public String getPlants(Model model, @RequestParam(value = "name", required = false) String name) {
         try {
-            model.addAttribute("allPlants", plantService.findAllPlants());
+            Benutzer currentUser = userService.getCurrentUser();
+            model.addAttribute("currentUser", currentUser);
+
+            if(name != null && !name.isEmpty()){
+                List<Plant> plantsByName = plantService.findByKeywordName(name);
+                plantsByName.removeIf(plant -> !plant.isAdIsActive());
+                model.addAttribute("plantsByName", plantsByName);
+                model.addAttribute("name", name);
+            } else {
+                model.addAttribute("allPlants", plantService.findAllActivePlants());
+            }
         } catch (Exception getPlantException ) {
             logger.error("Fehler beim Abrufen der Pflanzen", getPlantException);
             model.addAttribute("error", "Ein Fehler ist aufgetreten. Bitte versuchen Sie es später erneut.");
@@ -92,12 +112,20 @@ public class PlantController {
      * @return "redirect:/plants", the view with all plants, if the new plant is valid. Otherwise, it returns "createPlant", the view with the form for creating a new plant.
      */
     @PostMapping("/plants")
-    public String addPlant(@Valid @ModelAttribute("newPlant") Plant newPlant, BindingResult result, Model model) {
+    public String addPlant(@Valid @ModelAttribute("newPlant") Plant newPlant, @RequestParam("imageFile") MultipartFile imageFile, BindingResult result, Model model) {
         if (result.hasErrors()) {
+            //TODO: schauen warum es hier Beschreibung leer lassen als Fehler angenommen wird
             model.addAttribute("newPlant", newPlant);
             return "createPlant";
         }
-        plantService.savePlant(newPlant);
+        try {
+            newPlant.setSeller(userService.getCurrentUser());
+            newPlant.setAdIsActive(true);
+            plantService.savePlant(newPlant, imageFile);
+        } catch (IOException e) {
+            model.addAttribute("error", "Ein Fehler ist aufgetreten: " + e.getMessage());
+            return "createPlant";
+        }
         return "redirect:/plants";
     }
 
@@ -113,6 +141,12 @@ public class PlantController {
         if (plantToUpdate == null) {
             return "redirect:/plants";
         }
+        Benutzer currentUser = userService.getCurrentUser();
+        if (!plantToUpdate.getSeller().equals(currentUser)) {
+            logger.error("Benutzer ist nicht berechtigt, die Pflanze zu bearbeiten.");
+            model.addAttribute("error", "Sie sind nicht berechtigt, diese Pflanze zu bearbeiten.");
+            return "error";
+        }
         model.addAttribute("plantToUpdate", plantToUpdate);
         return "editPlant";
     }
@@ -127,31 +161,50 @@ public class PlantController {
      * @return "redirect:/plants", the view with all plants, if the updated plant is valid. Otherwise, it returns "editPlant", the view with the form for editing the plant.
      */
     @PostMapping("/plants/edit/{id}")
-    public String updatePlant(@PathVariable int id, @Valid @ModelAttribute("plantToUpdate") Plant plantToUpdate, BindingResult result, Model model) {
+    public String updatePlant(@PathVariable int id, @Valid @ModelAttribute("plantToUpdate") Plant plantToUpdate, @RequestParam("imageFile") MultipartFile imageFile, BindingResult result, Model model) {
         model.addAttribute("plantToUpdate", plantToUpdate);
         plantToUpdate.setPlantId(id);
+        Plant oldPlant = plantService.findPlantById(id);
+        plantToUpdate.setSeller(oldPlant.getSeller());
+        if(imageFile == null || imageFile.isEmpty()) {
+            plantToUpdate.setImagePath(oldPlant.getImagePath());
+        }
+        //TODO: das kann man löschen sobald man es richtig in frontend implementiert hat
+        plantToUpdate.setAdIsActive(oldPlant.isAdIsActive());
         if (result.hasErrors()) {
+            //TODO: schauen warum es hier Beschreibung leer lassen als Fehler angenommen wird
             return "editPlant";
         }
-        plantService.savePlant(plantToUpdate);
+        try{
+            plantService.savePlant(plantToUpdate, imageFile);
+        } catch (IOException e) {
+            model.addAttribute("error", "Ein Fehler ist aufgetreten: " + e.getMessage());
+            return "editPlant";
+        }
         return "redirect:/plants";
     }
 
     /**
-     * This method deletes a specific plant by its ID.
+     * This method deletes a plant by its ID.
      * @param id The ID of the plant to be deleted.
      * @return "redirect:/plants", the view with all plants.
      */
-    @GetMapping("/plants/delete/{id}")
-    public String deletePlant(@PathVariable int id) {
-        try {
-            plantService.deletePlantById(id);
-        } catch (Exception e) {
-            logger.error("Fehler beim Löschen der Pflanze mit der ID: " + id, e);
-            // TODO: Weiterleitung zu einer Fehlerseite oder Anzeige einer Fehlermeldung auf der aktuellen Seite:
-            //  Der Fehler wird zwar im Log protokolliert, aber der Benutzer wird lediglich auf die Pflanzenübersichtsseite weitergeleitet, ohne eine spezifische Fehlermeldung zu erhalten.
-            return "redirect:/plants";
+    //TODO: Post oder get?
+   @PostMapping("/plants/delete/{id}")
+    public String deletePlant(@PathVariable int id, Model model) {
+        Plant plant = plantService.findPlantById(id);
+        if(!(plant.getChatsAboutThisPlant().isEmpty() && plant.getWishedBy().isEmpty() && plant.getBuyer() == null)){
+            plant.setAdIsActive(false);
+            plantService.savePlantDataLoader(plant);
+        }else{
+            plantService.deletePlant(plant);
         }
-        return "redirect:/plants";
+        return "redirect:/myPlantsForSale";
+    }
+
+    @GetMapping("/myWishlist")
+    public String myWishlist(Model model) {
+        //TODO: Hier die Logik noch für die Anzeige der Wunschliste des Benutzers
+        return "myWishlist";
     }
 }

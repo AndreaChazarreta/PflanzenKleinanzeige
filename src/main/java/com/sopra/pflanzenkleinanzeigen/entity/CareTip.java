@@ -32,11 +32,8 @@ public class CareTip {
     @OneToMany(mappedBy = "careTip")
     private List<Plant> describedPlants = new ArrayList<>();
 
-    /**
-     * Default constructor for Hibernate.
-     */
+
     public CareTip() {
-        // empty constructor for Hibernate
     }
 
     public Integer getTipId() {

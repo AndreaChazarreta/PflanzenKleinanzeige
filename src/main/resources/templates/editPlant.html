@@ -1,36 +1,197 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
+    <th:block th:insert="~{fragments/htmlHead :: head}"></th:block>
     <title>Pflanze bearbeiten</title>
+    <style>
+        img {
+            max-width: 200px;
+            max-height: 200px;
+            object-fit: cover;
+        }
+        .form-container {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .form-container h1 {
+            margin-bottom: 20px;
+        }
+        .form-container form {
+            margin-top: 20px;
+        }
+        .form-container form .form-group {
+            margin-bottom: 20px;
+        }
+        .form-container form .btn {
+            background-color: #2e8b57;
+            color: white;
+        }
+        .form-container form .btn:hover {
+            background-color: #1d6b41;
+        }
+        .form-container img#preview {
+            display: none;
+            max-width: 200px;
+            margin-top: 10px;
+        }
+        .form-container img#existingImage {
+            max-width: 200px;
+            margin-top: 10px;
+        }
+        .back-link {
+            margin-top: 20px;
+            display: inline-block;
+            color: white;
+            text-decoration: none;
+        }
+        .back-link:hover {
+            text-decoration: underline;
+        }
+        .btn-success {
+            margin-top: 20px;
+        }
+    </style>
 </head>
 <body>
-<h1>Pflanze bearbeiten</h1>
+<th:block th:insert="~{fragments/htmlNavBar :: navbar}"></th:block>
 
-<form th:action="@{/plants/edit/{id}(id=${plantToUpdate.plantId})}" th:object="${plantToUpdate}" method="post">
-    <div>
-        <label for="name">Name:</label>
-        <input type="text" id="name" placeholder="Name" th:field="*{name}" required/>
-        <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
+<div class="container mt-5">
+    <div class="form-container">
+        <h1>Pflanze bearbeiten</h1>
+        <form th:action="@{/plants/edit/{id}(id=${plantToUpdate.plantId})}" th:object="${plantToUpdate}" method="post" enctype="multipart/form-data" class="needs-validation" novalidate>
+            <div class="form-group">
+                <label for="name">Name:</label>
+                <input type="text" class="form-control" id="name" placeholder="Name" th:field="*{name}" required/>
+                <div class="invalid-feedback">Bitte geben Sie einen Namen ein.</div>
+                <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="text-danger"></div>
+            </div>
+            <div class="form-group">
+                <label for="price">Preis:</label>
+                <input type="number" class="form-control" id="price" placeholder="Preis in Euro" th:field="*{price}" step="any" required/>
+                <div class="invalid-feedback">Bitte geben Sie einen Preis ein.</div>
+                <div th:if="${#fields.hasErrors('price')}" th:errors="*{price}" class="text-danger"></div>
+            </div>
+            <div class="form-group">
+                <label for="height">Höhe:</label>
+                <input type="number" class="form-control" id="height" placeholder="Höhe in Zentimeter" th:field="*{height}" step="any" required/>
+                <div class="invalid-feedback">Bitte geben Sie eine Höhe ein.</div>
+                <div th:if="${#fields.hasErrors('height')}" th:errors="*{height}" class="text-danger"></div>
+            </div>
+            <div class="form-group">
+                <label for="description">Beschreibung:</label>
+                <textarea id="description" class="form-control" placeholder="Beschreibung" th:field="*{description}" required maxlength="5000" oninput="checkMaxLength(this)"></textarea>
+                <div class="invalid-feedback">
+                    Bitte geben Sie eine Beschreibung ein.
+                </div>
+                <div id="length-warning" class="invalid-feedback" style="display: none;">
+                    Sie haben die maximale Länge von 5000 Zeichen erreicht. Bitte kürzen Sie Ihre Nachricht.
+                </div>
+                <div th:if="${#fields.hasErrors('description')}" th:errors="*{description}" class="text-danger"></div>
+            </div>
+            <div class="form-group">
+                <label>Übertopf enthalten:</label>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="potIncluded" id="potIncludedYes" th:field="*{potIncluded}" value="true" required>
+                    <label class="form-check-label" for="potIncludedYes">
+                        Ja
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="potIncluded" id="potIncludedNo" th:field="*{potIncluded}" value="false" required>
+                    <label class="form-check-label" for="potIncludedNo">
+                        Nein
+                    </label>
+                </div>
+                <div class="invalid-feedback">
+                    Bitte wählen Sie aus, ob der Übertopf enthalten ist.
+                </div>
+            </div>
+
+            <div class="form-group mb-3">
+                <label for="imageFile" class="form-label">Bild (jpeg, png): </label>
+                <input class="form-control" type="file" id="imageFile" name="imageFile" accept="image/*" onchange="previewImage()">
+                <div class="invalid-feedback">Bitte laden Sie ein Bild hoch.</div>
+            </div>
+            <div>
+                <img id="preview"/>
+            </div>
+            <div th:if="${plantToUpdate.imagePath != null}">
+                <img id="existingImage" th:src="@{${plantToUpdate.getImagePath()}}" alt="Plant image"/>
+                <input type="hidden" id="imageExists" value="true">
+            </div>
+            <button type="submit" class="btn btn-success">Speichern</button>
+        </form>
+        <a th:href="@{/plants}" class="btn btn-secondary back-link">Alle Pflanzen anzeigen</a>
     </div>
-    <div>
-        <label for="price">Preis:</label>
-        <input type="number" id="price" placeholder="Preis in Euro" th:field="*{price}" step="any" required/>
-        <div th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></div>
-    </div>
-    <div>
-        <label for="height">Höhe:</label>
-        <input type="number" id="height" placeholder="Höhe in Zentimeter" th:field="*{height}" step="any" required/>
-        <div th:if="${#fields.hasErrors('height')}" th:errors="*{height}"></div>
-    </div>
-    <div>
-        <label for="description">Beschreibung:</label>
-        <textarea id="description" placeholder="Beschreibung" th:field="*{description}"></textarea>
-    </div>
-    <div>
-        <button th:text="'Speichern'" th:type="submit"/>
-    </div>
-</form>
-<a th:href="@{/plants}">Zurück zur Liste</a>
+</div>
+
+<script>
+    function checkMaxLength(textarea) {
+        const maxLength = textarea.maxLength;
+        const currentLength = textarea.value.length;
+        const warningMessage = document.getElementById('length-warning');
+
+        if (currentLength >= maxLength) {
+            warningMessage.style.display = 'block';
+        } else {
+            warningMessage.style.display = 'none';
+        }
+    }
+    function previewImage() {
+        const imageFile = document.getElementById('imageFile').files[0];
+
+        if (imageFile) {
+            const reader = new FileReader();
+
+            reader.onload = function (e) {
+                document.getElementById('preview').src = e.target.result;
+                document.getElementById('preview').style.display = 'block';
+                document.getElementById('existingImage').style.display = 'none';
+                document.getElementById('imageExists').value = 'true'; // Set the image exists value to true
+            };
+
+            reader.onerror = function (e) {
+                console.error("Error reading image file:", e);
+                alert("Failed to preview image. Please try again.");
+            };
+
+            reader.readAsDataURL(imageFile);
+        } else {
+            document.getElementById('preview').style.display = 'none';
+        }
+    }
+
+    (function () {
+        'use strict';
+        window.addEventListener('load', function () {
+            var forms = document.getElementsByClassName('needs-validation');
+            Array.prototype.filter.call(forms, function (form) {
+                form.addEventListener('submit', function (event) {
+                    // Check if an image is already uploaded or a new one is being uploaded
+                    var imageExists = document.getElementById('imageExists');
+                    var imageFile = document.getElementById('imageFile').files.length > 0;
+
+                    if (!imageExists && !imageFile) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                        document.getElementById('imageFile').classList.add('is-invalid');
+                    } else {
+                        document.getElementById('imageFile').classList.remove('is-invalid');
+                    }
+
+                    if (form.checkValidity() === false) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                    form.classList.add('was-validated');
+                }, false);
+            });
+        }, false);
+    })();
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>

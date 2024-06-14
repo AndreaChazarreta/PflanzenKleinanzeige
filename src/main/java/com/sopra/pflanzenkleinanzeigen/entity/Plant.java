@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -33,14 +34,17 @@ public class Plant {
     private BigDecimal height;
 
     @NotBlank(message = "Beschreibung kann nicht leer sein")
+    @Column(length = 5000)
     private String description;
 
     private boolean potIncluded;
 
-    private String image;
+    private String imagePath;
+
+    private boolean sold;
 
     @ManyToMany(targetEntity = com.sopra.pflanzenkleinanzeigen.entity.Benutzer.class, fetch = FetchType.EAGER)
-    private Set<Benutzer> benutzerWishlist;
+    private Set<Benutzer> wishedBy = new HashSet<>();
 
     @ManyToOne
     @JoinColumn (name = "sellerId")
@@ -50,12 +54,13 @@ public class Plant {
     @JoinColumn (name = "buyerId")
     private Benutzer buyer;
 
+    private boolean adIsActive = true;
+
     @ManyToOne
     @JoinColumn (name = "careTipId")
     private CareTip careTip;
 
-    //TODO: Cascade schauen, passt so?
-    @OneToMany(mappedBy = "plant", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "plant")
     private List<Chat> chatsAboutThisPlant = new ArrayList<>();
 
     /**
@@ -70,6 +75,7 @@ public class Plant {
         this.price = price;
         this.height = height;
         this.description = description;
+        this.potIncluded = false;
     }
 
     public Integer getPlantId() {
@@ -120,20 +126,20 @@ public class Plant {
         this.potIncluded = potIncluded;
     }
 
-    public String getImage() {
-        return image;
+    public String getImagePath() {
+        return imagePath;
     }
 
-    public void setImage(String image) {
-        this.image = image;
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
     }
 
-    public Set<Benutzer> getBenutzerWishlist() {
-        return benutzerWishlist;
+    public Set<Benutzer> getWishedBy() {
+        return wishedBy;
     }
 
-    public void setBenutzerWishlist(Set<Benutzer> benutzerWishlist) {
-        this.benutzerWishlist = benutzerWishlist;
+    public void setWishedBy(Set<Benutzer> wishedBy) {
+        this.wishedBy = wishedBy;
     }
 
     public Benutzer getSeller() {
@@ -152,6 +158,14 @@ public class Plant {
         this.buyer = buyer;
     }
 
+    public boolean isAdIsActive() {
+        return adIsActive;
+    }
+
+    public void setAdIsActive(boolean adIsActive) {
+        this.adIsActive = adIsActive;
+    }
+
     public CareTip getCareTip() {
         return careTip;
     }
@@ -167,4 +181,13 @@ public class Plant {
     public void setChatsAboutThisPlant(List<Chat> chatsAboutThisPlant) {
         this.chatsAboutThisPlant = chatsAboutThisPlant;
     }
+
+    public boolean isSold() {
+        return sold;
+    }
+
+    public void setSold(boolean sold) {
+        this.sold = sold;
+    }
+
 }

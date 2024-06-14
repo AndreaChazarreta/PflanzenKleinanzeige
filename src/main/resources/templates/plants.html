@@ -1,29 +1,97 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
+    <th:block th:insert="~{fragments/htmlHead :: head}"></th:block>
+    <style>
+        img {
+            max-width: 100%;
+            max-height: 200px;
+            object-fit: cover;
+        }
+        .card {
+            border: none;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s;
+        }
+        .card:hover {
+            transform: scale(1.05);
+        }
+        .card a {
+            text-decoration: none;
+            color: inherit;
+        }
+        .search-bar {
+            display: flex;
+            align-items: center;
+            border: 1px solid grey;
+            border-radius: 25px;
+            padding: 8px;
+            margin-bottom: 20px;
+            margin-top: 10px;
+        }
+        .search-bar input {
+            border: none;
+            outline: none;
+        }
+        .search-bar input:focus {
+            box-shadow: none;
+        }
+        .search-bar button {
+            border: none;
+            background-color: #ffffff;
+            border-radius: 25px 25px 25px 25px;
+            padding: 8px 10px;
+            cursor: pointer;
+        }
+        .search-bar button i {
+            color: #000;
+        }
+    </style>
     <title>Plants</title>
 </head>
 <body>
-    <h1>Plants</h1>
-    <div>
-        <form class="search">
-            <div class="search_input">
-                <Input   label="Find a Title:" type="text"/>
-            </div>
-            <div class="search_button">
-                <Button type="submit" >Search</Button>
-            </div>
-        </form>
+<th:block th:insert="~{fragments/htmlNavBar :: navbar}"></th:block>
+
+<div class="container mt-5">
+    <h1>Die grüne Ecke - Dein Secondhand-Pflanzenmarkt</h1>
+
+    <div class="row mb-4">
+        <div class="col-12">
+            <form class="search-bar" th:action="@{/plants}" method="get" onsubmit="return checkSearch()">
+                <button class="btn" type="submit"><i class="bi bi-search"></i></button>
+                <input class="form-control" id="name" name="name" label="Suche nach Name:" type="text" th:value="${name}" placeholder="Suche nach Name">
+            </form>
+        </div>
     </div>
-    <ul>
-        <li th:each="plant : ${allPlants}">
-            <a th:href="@{/plants/{id}(id=${plant.plantId})}" th:text="${plant.getName()}"></a>
-            <a th:href="@{/plants/edit/{id}(id=${plant.plantId})}">Bearbeiten</a>
-            <a th:href="@{/plants/delete/{id}(id=${plant.plantId})}"
-               onclick="return confirm('Sind Sie sicher, dass Sie diese Pflanze löschen möchten?');">Löschen</a>
-        </li>
-    </ul>
-    <a th:href="@{/plants/new}" class="btn btn-primary">Neue Pflanze hinzufügen</a>
+
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4">
+        <th:block th:each="plant : ${allPlants}">
+            <div th:if="${plant.isSold() == false}">
+                <th:block th:insert="~{fragments/cardPlantsOverview :: cardFragment(plant=${plant}, currentUser=${currentUser})}"></th:block>
+            </div>
+        </th:block>
+    </div>
+
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4">
+        <th:block th:each="plant : ${plantsByName}">
+            <div th:if="${plant.isSold() == false}">
+                <th:block th:insert="~{fragments/cardPlantsOverview :: cardFragment(plant=${plant}, currentUser=${currentUser})}"></th:block>
+            </div>
+        </th:block>
+    </div>
+</div>
+
+<script>
+    function checkSearch() {
+        var searchField = document.getElementById("name").value;
+        if (searchField.trim() === "") {
+            window.location.href = "/plants";
+            return false;
+        }
+        return true;
+    }
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>
