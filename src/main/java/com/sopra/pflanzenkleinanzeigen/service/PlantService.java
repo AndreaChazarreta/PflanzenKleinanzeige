@@ -1,13 +1,16 @@
 package com.sopra.pflanzenkleinanzeigen.service;
 
+import com.sopra.pflanzenkleinanzeigen.entity.Benutzer;
 import com.sopra.pflanzenkleinanzeigen.entity.Plant;
 import com.sopra.pflanzenkleinanzeigen.repository.PlantRepository;
+import com.sopra.pflanzenkleinanzeigen.repository.UserRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -23,6 +26,9 @@ public class PlantService {
 
     @Autowired
     private PlantRepository plantRepository;
+
+    @Autowired
+    private UserRepository userRepository;
 
     private static final String IMAGE_DIRECTORY = "src/main/resources/static/plant-images/";
 
@@ -46,6 +52,10 @@ public class PlantService {
 
     public List<Plant> findAllPlants() {
         return plantRepository.findAll();
+    }
+
+    public List<Plant> findAllActivePlants() {
+        return plantRepository.findAllActivePlants();
     }
 
     public Plant findPlantById(Integer id) {

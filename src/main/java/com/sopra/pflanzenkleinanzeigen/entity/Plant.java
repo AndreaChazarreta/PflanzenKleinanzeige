@@ -51,7 +51,7 @@ public class Plant {
     @JoinColumn (name = "buyerId")
     private Benutzer buyer;
 
-    private boolean adIsActive;
+    private boolean adIsActive = true;
 
     @ManyToOne
     @JoinColumn (name = "careTipId")
@@ -72,6 +72,7 @@ public class Plant {
         this.price = price;
         this.height = height;
         this.description = description;
+        this.potIncluded = false;
     }
 
     public Integer getPlantId() {

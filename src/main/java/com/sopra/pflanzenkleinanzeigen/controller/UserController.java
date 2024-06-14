@@ -1,12 +1,15 @@
 package com.sopra.pflanzenkleinanzeigen.controller;
 
 import com.sopra.pflanzenkleinanzeigen.entity.Benutzer;
+import com.sopra.pflanzenkleinanzeigen.entity.Plant;
 import com.sopra.pflanzenkleinanzeigen.service.PlantService;
 import com.sopra.pflanzenkleinanzeigen.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+
+import java.util.List;
 
 /**
  * The UserController class handles web requests related to user operations.
@@ -39,7 +42,15 @@ public class UserController {
         if (currentUser == null) {
             return "redirect:/";
         }
-        model.addAttribute("userPlants", currentUser.getUploadedPlants());
+        model.addAttribute("userPlants", userService.findActivePlantsBySeller(currentUser.getUserId()));
         return "myPlantsOverview";
+    }
+
+    @GetMapping("/myPlants")
+    public String myBoughtPlants(Model model) {
+        Benutzer currentUser = userService.getCurrentUser();
+        List<Plant> boughtPlants = currentUser.getPurchasedPlants();
+        model.addAttribute("boughtPlants", boughtPlants);
+        return "myPlants";
     }
 }
