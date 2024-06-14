@@ -149,7 +149,7 @@
                 document.getElementById('preview').src = e.target.result;
                 document.getElementById('preview').style.display = 'block';
                 document.getElementById('existingImage').style.display = 'none';
-                document.getElementById('imageExists').value = 'true'; // Set the image exists value to true
+                document.getElementById('imageExists').value = 'true';
             };
 
             reader.onerror = function (e) {
@@ -169,7 +169,6 @@
             var forms = document.getElementsByClassName('needs-validation');
             Array.prototype.filter.call(forms, function (form) {
                 form.addEventListener('submit', function (event) {
-                    // Check if an image is already uploaded or a new one is being uploaded
                     var imageExists = document.getElementById('imageExists');
                     var imageFile = document.getElementById('imageFile').files.length > 0;
 
