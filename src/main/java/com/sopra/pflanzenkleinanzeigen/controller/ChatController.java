@@ -227,6 +227,7 @@ public class ChatController {
         model.addAttribute("plant", chat.getPlant());
         model.addAttribute("chat", chat);
         plant.setSold(true);
+        plant.setAdIsActive(false);
         plant.setBuyer(chat.getPossibleBuyer());
         plantService.savePlantDataLoader(plant);
         return "redirect:/chats/" + chat.getChatId();
