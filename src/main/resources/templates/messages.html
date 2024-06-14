@@ -101,6 +101,7 @@
             display: flex;
             padding: 10px;
             border-top: 1px solid #e9ecef;
+            z-index: 1040;
         }
         .message-input-container input {
             flex-grow: 1;
@@ -156,8 +157,25 @@
             width: 150px;
             height: 150px;
         }
-        .alert alert-success {
+        .alert.alert-success {
+            background-color: lightgray;
+            height: 40px;
+            width: 70%;
+            color: #323131;
+            display: flex;
+            position: fixed;
+            padding: 0;
             border: none;
+            align-items: center;
+            justify-content: center;
+            bottom: 50px;
+            box-shadow: 0 -5px 10px rgba(0,0,0,0.1);
+            border-radius: 0;
+            z-index: 1050;
+        }
+        .alert-heading {
+            font-size: 1.25rem;
+            margin: 0;
         }
     </style>
 </head>
@@ -206,13 +224,14 @@
                             <div class="message-timestamp" th:text="${#dates.format(message.sentAt, 'dd.MM.yyyy HH:mm')}"></div>
                         </div>
                     </div>
-
                 </div>
             </div>
         <div th:if="${chat.plant.isSold()}">
             <div class="alert alert-success" role="alert">
-                <h4 class="alert-heading">Glückwunsch, diese Pflanze ist verkauft</h4>
+                <p th:if="${currentUser.username == chat.possibleBuyer.username}" class="alert-heading">Diese Pflanze wurde bereits verkauft</p>
+                <p th:if="${currentUser.username != chat.possibleBuyer.username}" class="alert-heading">Sie haben diese Pflanze verkauft</p>
             </div>
+        </div>
         </div>
             <div class="message-input-container">
                 <form th:action="@{/chats/{chatId}(chatId=${chat.chatId})}" th:object="${newMessage}" method="post" class="d-flex" style="width: 60%; display: flex;">
