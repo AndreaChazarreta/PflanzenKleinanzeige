@@ -7,30 +7,29 @@
         img {
             max-width: 200px;
             max-height: 200px;
-            object-fit: cover;  /* Maintain aspect ratio */
+            object-fit: cover;
         }
     </style>
 </head>
 <body>
-<th:block th:insert="~{fragments/htmlNavBar :: navbar}"></th:block>
+    <th:block th:insert="~{fragments/htmlNavBar :: navbar}"></th:block>
 
-<h1>Pflanzendetails</h1>
-<p><strong>Name:</strong> <span th:text="${plant.getName()}"></span></p>
-<p><strong>Preis:</strong> <span th:text="${plant.getPrice()}"></span></p>
-<p><strong>Groeße:</strong> <span th:text="${plant.getHeight()}"></span></p>
-<p><strong>Beschreibung:</strong> <span th:text="${plant.getDescription()}"></span></p>
-<p><strong>Bild:</strong> <img th:src="@{${plant.getImagePath()}}" alt="Plant image"></p>
-<br>
-<a th:href="@{/plants/edit/{id}(id=${plant.plantId})}">Bearbeiten</a>
-<form th:action="@{/plants/{plantId}/newChat(plantId=${plant.plantId})}" method="post" style="display:inline;">
-    <button type="submit">Nachricht versenden</button>
-</form>
-<form th:action="@{/plants/delete/{id}(id=${plant.plantId})}" method="post" style="display:inline;">
-    <button th:type="submit" onclick="return confirm('Sind Sie sicher, dass Sie diese Pflanze löschen möchten?');">Löschen</button>
-</form>
+    <h1>Pflanzendetails</h1>
+    <p><strong>Name:</strong> <span th:text="${plant.getName()}"></span></p>
+    <p><strong>Preis:</strong> <span th:text="${plant.getPrice()}"></span></p>
+    <p><strong>Groeße:</strong> <span th:text="${plant.getHeight()}"></span></p>
+    <p><strong>Beschreibung:</strong> <span th:text="${plant.getDescription()}"></span></p>
+    <p><strong>Bild:</strong> <img th:src="@{${plant.getImagePath()}}" alt="Plant image"></p>
+    <br>
+    <a th:href="@{/plants/edit/{id}(id=${plant.plantId})}">Bearbeiten</a>
+    <form th:action="@{/plants/{plantId}/newChat(plantId=${plant.plantId})}" method="post" style="display:inline;">
+        <button type="submit">Nachricht versenden</button>
+    </form>
+    <form th:action="@{/plants/delete/{id}(id=${plant.plantId})}" method="post" style="display:inline;">
+        <button th:type="submit" onclick="return confirm('Sind Sie sicher, dass Sie diese Pflanze löschen möchten?');">Löschen</button>
+    </form>
 
-<a th:href="@{/plants}">Zurück zur Liste  <i class="bi bi-arrow-left"></i></a>
-
+    <a th:href="@{/plants}">Zurück zur Liste  <i class="bi bi-arrow-left"></i></a>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>

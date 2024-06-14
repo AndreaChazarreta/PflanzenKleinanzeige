@@ -25,7 +25,11 @@ public class UserController {
     @Autowired
     private PlantService plantService;
 
-    //TODO: der User soll nur sein Profil ansehen können, aber nicht den Profil von andere Leute!
+    /**
+     * This method retrieves the current user and displays the user details on the profile page.
+     * @param model The model that is sent to the view.
+     * @return "profile", the view with the user details.
+     */
     @GetMapping("/users")
     public String getUserDetails(Model model) {
         Benutzer user = userService.getCurrentUser();
@@ -36,6 +40,11 @@ public class UserController {
         return "profile";
     }
 
+    /**
+     * This method retrieves all plants of the current user and displays them on the myPlantsOverview page.
+     * @param model The model that is sent to the view.
+     * @return "myPlantsOverview", the view with all plants of the current user.
+     */
     @GetMapping("/myPlantsOverview")
     public String myPlantsOverview(Model model) {
         Benutzer currentUser = userService.getCurrentUser();
@@ -46,6 +55,11 @@ public class UserController {
         return "myPlantsOverview";
     }
 
+    /**
+     * This method retrieves all plants that the current user has bought and displays them on the myPlants page.
+     * @param model The model that is sent to the view.
+     * @return "myPlants", the view with all plants that the current user has bought.
+     */
     @GetMapping("/myPlants")
     public String myBoughtPlants(Model model) {
         Benutzer currentUser = userService.getCurrentUser();
