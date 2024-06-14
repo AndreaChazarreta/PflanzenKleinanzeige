@@ -212,6 +212,13 @@ public class ChatController {
         }
     }
 
+    /**
+     * This method marks a plant as sold and sets the possible buyer as buyer.
+     *
+     * @param id The ID of the chat where the plant want to buy.
+     * @param model The Model object used to pass attributes to the view.
+     * @return The Chat in there the plant has sold.
+     */
     @PostMapping("/chats/markSold/{id}")
     public String markSold(@PathVariable int id, Model model){
         Chat chat = chatService.findChatById(id);
