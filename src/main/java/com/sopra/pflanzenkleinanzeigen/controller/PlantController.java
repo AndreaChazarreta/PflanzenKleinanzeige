@@ -197,7 +197,7 @@ public class PlantController {
 
     @GetMapping("/myWishlist")
     public String myWishlist(Model model) {
-        // Hier die Logik noch für die Anzeige der Wunschliste des Benutzers
+        //TODO: Hier die Logik noch für die Anzeige der Wunschliste des Benutzers
         return "myWishlist";
     }
 }

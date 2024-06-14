@@ -52,7 +52,6 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
     public void onApplicationEvent(ContextRefreshedEvent event) {
         logger.info("Initialize database with test data...");
 
-        // Initialisierung der Beispielobjekte und Speicherung dessen über Sie die Services
         Rolle userRole = new Rolle("ROLE_USER");
         Rolle adminRole = new Rolle("ROLE_ADMIN");
         roleService.saveRole(userRole);
