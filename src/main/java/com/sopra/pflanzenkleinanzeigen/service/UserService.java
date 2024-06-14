@@ -54,7 +54,6 @@ public class UserService implements UserDetailsService {
             if (user == null) {
                 throw new IllegalArgumentException("Benutzer darf nicht null sein");
             }
-
             Benutzer existingUser = userRepository.findByUsername(user.getUsername());
             if (existingUser == null) {
                 return userRepository.save(user);
