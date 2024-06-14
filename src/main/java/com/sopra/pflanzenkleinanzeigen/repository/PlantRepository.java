@@ -23,5 +23,10 @@ public interface PlantRepository extends JpaRepository<Plant, Integer> {
     @Query("SELECT p FROM Plant p WHERE p.seller = :seller AND p.adIsActive = true")
     List<Plant> findAllActivePlantsBySeller(@Param("seller") Benutzer seller);
 
+    @Query("SELECT p FROM Plant p WHERE p.seller = :seller AND LOWER(p.name) LIKE LOWER(CONCAT('%', :name, '%')) AND p.adIsActive = true")
+    List<Plant> findByNameAndSeller(@Param("name") String name, @Param("seller") Benutzer seller);
+
+    @Query("SELECT p FROM Plant p WHERE p.buyer = :buyer AND LOWER(p.name) LIKE LOWER(CONCAT('%', :name, '%'))")
+    List<Plant> findPurchasedPlantsByNameAndBuyer(@Param("name") String name, @Param("buyer") Benutzer buyer);
 }
 

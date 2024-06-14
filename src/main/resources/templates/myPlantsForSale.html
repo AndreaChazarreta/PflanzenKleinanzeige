@@ -118,9 +118,9 @@
 
     <div class="row mb-4">
         <div class="col-12">
-            <form class="search-bar" th:action="@{/plants}" method="get">
+            <form class="search-bar" th:action="@{/myPlantsForSale}" method="get" onsubmit="return checkSearch()">
                 <button class="btn" type="submit"><i class="bi bi-search"></i></button>
-                <input class="form-control" name="name" placeholder="Suche nach Name" type="text">
+                <input class="form-control" name="name" placeholder="Suche nach Name" type="text" th:value="${param.name}">
             </form>
         </div>
     </div>
