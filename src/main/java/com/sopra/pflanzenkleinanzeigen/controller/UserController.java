@@ -43,7 +43,7 @@ public class UserController {
             return "redirect:/";
         }
         model.addAttribute("userPlants", userService.findActivePlantsBySeller(currentUser.getUserId()));
-        return "myPlantsOverview";
+        return "myBoughtPlants";
     }
 
     @GetMapping("/myPlants")
