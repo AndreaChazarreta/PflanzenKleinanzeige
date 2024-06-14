@@ -21,6 +21,7 @@ public class Message {
     private Benutzer sender;
 
     @NotBlank(message = "Message cannot be blank")
+    @Column(length = 1000)
     private String messageContent;
 
     private Instant sentAt;

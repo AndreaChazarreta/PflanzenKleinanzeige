@@ -343,7 +343,7 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         Message message5 = new Message();
         message5.setChat(chat1);
         message5.setSender(normalUser);
-        message5.setMessageContent("Sharon war hier!");
+        message5.setMessageContent("Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.");
         message5.setSentAt(anInstant2);
         messageService.saveMessage(message5);
 
