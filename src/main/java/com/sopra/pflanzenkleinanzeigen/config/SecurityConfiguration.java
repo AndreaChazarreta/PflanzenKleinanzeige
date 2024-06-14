@@ -35,7 +35,7 @@ public class SecurityConfiguration {
 
                 .formLogin( formLogin -> formLogin
                         .loginPage("/login").failureUrl("/login?error=true").permitAll()
-                        .defaultSuccessUrl("/", true)
+                        .defaultSuccessUrl("/plants", true)
                         .usernameParameter("username")
                         .passwordParameter("password"))
                 // everyone may logout
