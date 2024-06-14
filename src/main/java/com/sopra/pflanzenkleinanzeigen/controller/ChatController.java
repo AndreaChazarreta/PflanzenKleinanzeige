@@ -94,6 +94,7 @@ public class ChatController {
             model.addAttribute("newMessage", new Message());
             model.addAttribute("currentUser", currentUser);
             model.addAttribute("seller", chat.getPlant().getSeller());
+            model.addAttribute("plant", chat.getPlant());
 
             return "messages";
         } catch (Exception cannotGetChatException) {
@@ -230,4 +231,5 @@ public class ChatController {
         plantService.savePlantDataLoader(plant);
         return "redirect:/chats/" + chat.getChatId();
     }
+
 }
