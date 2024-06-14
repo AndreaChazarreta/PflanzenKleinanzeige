@@ -115,6 +115,7 @@
             border: none;
             background-color: #55d808;
             color: #ffffff;
+            margin-left: 5px;
         }
         .no-messages {
             display: flex;
@@ -183,10 +184,12 @@
                     <h3 th:if="${currentUser.username == chat.possibleBuyer.username}">
                         <small>@</small>
                         <span th:text="${chat.plant.seller.username}"></span>
+                        <span th:text="${chat.getPlant().getPlantId()}"></span>
                     </h3>
                     <h3 th:if="${currentUser.username != chat.possibleBuyer.username}">
                         <small>@</small>
                         <span th:text="${chat.possibleBuyer.username}"></span>
+                        <span th:text="${chat.getPlant().getPlantId()}"></span>
                     </h3>
             </div>
         </div>
@@ -204,6 +207,7 @@
                     </div>
                 </div>
             </div>
+
             <div class="message-input-container">
                 <form th:action="@{/chats/{chatId}(chatId=${chat.chatId})}" th:object="${newMessage}" method="post" class="d-flex" style="width: 60%; display: flex;">
                     <input type="text" th:field="*{messageContent}" class="form-control mr-2" placeholder="Nachricht eingeben" required/>
@@ -211,6 +215,20 @@
                         <i class="fa fa-send" aria-hidden="true"></i>
                     </button>
                 </form>
+                <div th:if="${currentUser.username == chat.possibleBuyer.username}">
+                    <form th:action="@{/chats/marked/{id}(id=${chat.getChatId()})}" th:object="${plant}" method="post" class="d-flex" style="width: 60%; display: flex;">
+                    <button class="btn">
+                        Gekauft
+                    </button>
+                    </form>
+                </div>
+                <div th:if="${currentUser.username != chat.possibleBuyer.username}">
+                    <form th:action="@{/chats/marked/{chatId}(chatId=${chat.chatId})}" th:object="${plant}" method="post" class="d-flex" style="width: 60%; display: flex;">
+                    <button class="btn">
+                        Verkauft
+                    </button>
+                    </form>
+                </div>
             </div>
         </div>
         <div th:if="${allChats.isEmpty()}" class="no-messages">

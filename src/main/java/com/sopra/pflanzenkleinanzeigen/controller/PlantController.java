@@ -1,7 +1,9 @@
 package com.sopra.pflanzenkleinanzeigen.controller;
 
 import com.sopra.pflanzenkleinanzeigen.entity.Benutzer;
+import com.sopra.pflanzenkleinanzeigen.entity.Chat;
 import com.sopra.pflanzenkleinanzeigen.entity.Plant;
+import com.sopra.pflanzenkleinanzeigen.service.ChatService;
 import com.sopra.pflanzenkleinanzeigen.service.PlantService;
 import com.sopra.pflanzenkleinanzeigen.service.UserService;
 import jakarta.validation.Valid;
@@ -32,6 +34,8 @@ public class PlantController {
     private static final Logger logger = LoggerFactory.getLogger(PlantController.class);
     @Autowired
     private UserService userService;
+    @Autowired
+    private ChatService chatService;
 
 
     //TODO: FRAGEN: wie sollen wir "Get all Plants" implementieren? mit @ModelAttribute
