@@ -5,9 +5,11 @@ import com.sopra.pflanzenkleinanzeigen.entity.Plant;
 import com.sopra.pflanzenkleinanzeigen.service.PlantService;
 import com.sopra.pflanzenkleinanzeigen.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -36,14 +38,14 @@ public class UserController {
         return "profile";
     }
 
-    @GetMapping("/myPlantsOverview")
-    public String myPlantsOverview(Model model) {
+    @GetMapping("/myPlantsForSale")
+    public String myPlantsForSaleOverview(Model model) {
         Benutzer currentUser = userService.getCurrentUser();
         if (currentUser == null) {
             return "redirect:/";
         }
         model.addAttribute("userPlants", userService.findActivePlantsBySeller(currentUser.getUserId()));
-        return "myBoughtPlants";
+        return "myPlantsForSale";
     }
 
     @GetMapping("/myPlants")
