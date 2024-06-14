@@ -156,6 +156,9 @@
             width: 150px;
             height: 150px;
         }
+        .alert alert-success {
+            border: none;
+        }
     </style>
 </head>
 <body>
@@ -184,14 +187,12 @@
                     <h3 th:if="${currentUser.username == chat.possibleBuyer.username}">
                         <small>@</small>
                         <span th:text="${chat.plant.seller.username}"></span>
-                        <span th:text="${chat.getPlant().getPlantId()}"></span>
                     </h3>
                     <h3 th:if="${currentUser.username != chat.possibleBuyer.username}">
                         <small>@</small>
                         <span th:text="${chat.possibleBuyer.username}"></span>
-                        <span th:text="${chat.getPlant().getPlantId()}"></span>
                     </h3>
-            </div>
+                </div>
         </div>
             <div data-bs-spy="scroll" data-bs-target="#navbar-example2" data-bs-offset="0" class="scrollspy-example" tabindex="0" style="position: relative; height: 400px; overflow-y: scroll;">
                 <div class="message-container">
@@ -205,9 +206,14 @@
                             <div class="message-timestamp" th:text="${#dates.format(message.sentAt, 'dd.MM.yyyy HH:mm')}"></div>
                         </div>
                     </div>
+
                 </div>
             </div>
-
+        <div th:if="${chat.plant.isSold()}">
+            <div class="alert alert-success" role="alert">
+                <h4 class="alert-heading">Glückwunsch, diese Pflanze ist verkauft</h4>
+            </div>
+        </div>
             <div class="message-input-container">
                 <form th:action="@{/chats/{chatId}(chatId=${chat.chatId})}" th:object="${newMessage}" method="post" class="d-flex" style="width: 60%; display: flex;">
                     <input type="text" th:field="*{messageContent}" class="form-control mr-2" placeholder="Nachricht eingeben" required/>
@@ -215,13 +221,6 @@
                         <i class="fa fa-send" aria-hidden="true"></i>
                     </button>
                 </form>
-                <div th:if="${currentUser.username == chat.possibleBuyer.username}">
-                    <form th:action="@{/chats/markBought/{id}(id=${chat.getChatId()})}" th:object="${plant}" method="post" class="d-flex" style="width: 60%; display: flex;">
-                    <button class="btn">
-                        Gekauft
-                    </button>
-                    </form>
-                </div>
                 <div th:if="${currentUser.username != chat.possibleBuyer.username}">
                     <form th:action="@{/chats/markSold/{id}(id=${chat.chatId})}" th:object="${plant}" method="post" class="d-flex" style="width: 60%; display: flex;">
                     <button class="btn">

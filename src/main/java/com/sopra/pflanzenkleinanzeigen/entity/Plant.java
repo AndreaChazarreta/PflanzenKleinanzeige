@@ -42,8 +42,6 @@ public class Plant {
 
     private boolean sold;
 
-    private boolean bought;
-
     @ManyToMany(targetEntity = com.sopra.pflanzenkleinanzeigen.entity.Benutzer.class, fetch = FetchType.EAGER)
     private Set<Benutzer> wishedBy = new HashSet<>();
 
@@ -190,11 +188,4 @@ public class Plant {
         this.sold = sold;
     }
 
-    public boolean isBought() {
-        return bought;
-    }
-
-    public void setBought(boolean bought) {
-        this.bought = bought;
-    }
 }

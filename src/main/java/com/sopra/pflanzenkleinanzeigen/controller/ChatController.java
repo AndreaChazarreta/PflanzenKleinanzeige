@@ -211,16 +211,6 @@ public class ChatController {
             return "error";
         }
     }
-    @PostMapping("/chats/markBought/{id}")
-    public String markBought(@PathVariable int id, Model model){
-        Chat chat = chatService.findChatById(id);
-        Plant plant = plantService.findPlantById(chat.getPlant().getPlantId());
-        model.addAttribute("plant", chat.getPlant());
-        model.addAttribute("chat", chat);
-        plant.setBought(true);
-        plantService.savePlantDataLoader(plant);
-        return "redirect:/plants";
-    }
 
     @PostMapping("/chats/markSold/{id}")
     public String markSold(@PathVariable int id, Model model){
@@ -228,9 +218,9 @@ public class ChatController {
         Plant plant = plantService.findPlantById(chat.getPlant().getPlantId());
         model.addAttribute("plant", chat.getPlant());
         model.addAttribute("chat", chat);
-        plant.setBought(true);
+        plant.setSold(true);
         plant.setBuyer(chat.getPossibleBuyer());
         plantService.savePlantDataLoader(plant);
-        return "redirect:/plants";
+        return "redirect:/chats/" + chat.getChatId();
     }
 }
