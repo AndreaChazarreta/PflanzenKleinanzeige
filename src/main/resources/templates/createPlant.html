@@ -77,9 +77,12 @@
             </div>
             <div class="form-group">
                 <label for="description">Beschreibung:</label>
-                <textarea id="description" class="form-control" placeholder="Beschreibung" th:field="*{description}" required maxlength="10000"></textarea>
+                <textarea id="description" class="form-control" placeholder="Beschreibung" th:field="*{description}" required maxlength="5000" oninput="checkMaxLength(this)"></textarea>
                 <div class="invalid-feedback">
                     Bitte geben Sie eine Beschreibung ein.
+                </div>
+                <div id="length-warning" class="invalid-feedback" style="display: none;">
+                    Sie haben die maximale Länge von 5000 Zeichen erreicht. Bitte kürzen Sie Ihre Nachricht.
                 </div>
             </div>
             <div class="form-group">
@@ -118,6 +121,17 @@
 </div>
 
 <script>
+    function checkMaxLength(textarea) {
+        const maxLength = textarea.maxLength;
+        const currentLength = textarea.value.length;
+        const warningMessage = document.getElementById('length-warning');
+
+        if (currentLength >= maxLength) {
+            warningMessage.style.display = 'block';
+        } else {
+            warningMessage.style.display = 'none';
+        }
+    }
     function previewImage() {
         const imageFile = document.getElementById('imageFile').files[0];
 

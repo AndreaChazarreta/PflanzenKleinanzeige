@@ -34,7 +34,7 @@ public class Plant {
     private BigDecimal height;
 
     @NotBlank(message = "Beschreibung kann nicht leer sein")
-    @Column(length = 1000)
+    @Column(length = 5000)
     private String description;
 
     private boolean potIncluded;

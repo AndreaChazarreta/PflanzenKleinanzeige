@@ -235,8 +235,8 @@
             </div>
         </div>
         <div class="message-input-container">
-            <form th:action="@{/chats/{chatId}(chatId=${chat.chatId})}" th:object="${newMessage}" method="post" class="d-flex" style="flex-grow: 1;">
-                <textarea type="text" th:field="*{messageContent}" class="form-control mr-2" placeholder="Nachricht eingeben" required/>
+            <form th:action="@{/chats/{chatId}(chatId=${chat.chatId})}" th:object="${newMessage}" method="post" class="d-flex" style="flex-grow: 1; ">
+                <textarea type="text" th:field="*{messageContent}" class="form-control mr-2" placeholder="Nachricht eingeben" required maxlength="5000"/>
                 <button class="btn">
                     <i class="fa fa-send" aria-hidden="true"></i>
                 </button>
