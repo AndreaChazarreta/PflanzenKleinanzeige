@@ -216,14 +216,14 @@
                     </button>
                 </form>
                 <div th:if="${currentUser.username == chat.possibleBuyer.username}">
-                    <form th:action="@{/chats/marked/{id}(id=${chat.getChatId()})}" th:object="${plant}" method="post" class="d-flex" style="width: 60%; display: flex;">
+                    <form th:action="@{/chats/markBought/{id}(id=${chat.getChatId()})}" th:object="${plant}" method="post" class="d-flex" style="width: 60%; display: flex;">
                     <button class="btn">
                         Gekauft
                     </button>
                     </form>
                 </div>
                 <div th:if="${currentUser.username != chat.possibleBuyer.username}">
-                    <form th:action="@{/chats/marked/{chatId}(chatId=${chat.chatId})}" th:object="${plant}" method="post" class="d-flex" style="width: 60%; display: flex;">
+                    <form th:action="@{/chats/markSold/{id}(id=${chat.chatId})}" th:object="${plant}" method="post" class="d-flex" style="width: 60%; display: flex;">
                     <button class="btn">
                         Verkauft
                     </button>
