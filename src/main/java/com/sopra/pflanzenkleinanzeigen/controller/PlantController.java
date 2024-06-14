@@ -6,7 +6,6 @@ import com.sopra.pflanzenkleinanzeigen.service.PlantService;
 import com.sopra.pflanzenkleinanzeigen.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -47,7 +46,7 @@ public class PlantController {
 
     //TODO: brauchen wir für solche funktionen try and catch? Hier kann relativ wenig schief gehen
     /**
-     * This method retrieves all plants and displays them on the plants page.
+     * This method retrieves all plants and displays them on the plants page if they are still active.
      * @param model The model that is sent to the view.
      * @return "plants", the view with all plants.
      */
@@ -55,10 +54,12 @@ public class PlantController {
     public String getPlants(Model model, @RequestParam(value = "name", required = false) String name) {
         try {
             if(name != null && !name.isEmpty()){
-                model.addAttribute("plantsByName", plantService.findByKeywordName(name));
+                List<Plant> plantsByName = plantService.findByKeywordName(name);
+                plantsByName.removeIf(plant -> !plant.isAdIsActive()); // Entfernen Sie Pflanzen, deren adIsActive false ist
+                model.addAttribute("plantsByName", plantsByName);
                 model.addAttribute("name", name);
             } else {
-                model.addAttribute("allPlants", plantService.findAllPlants());
+                model.addAttribute("allPlants", plantService.findAllActivePlants()); // Nur aktive Pflanzen anzeigen
             }
         } catch (Exception getPlantException ) {
             logger.error("Fehler beim Abrufen der Pflanzen", getPlantException);
@@ -182,33 +183,21 @@ public class PlantController {
      * @return "redirect:/plants", the view with all plants.
      */
     //TODO: Post oder get?
-    @PostMapping("/plants/delete/{id}")
+   @PostMapping("/plants/delete/{id}")
     public String deletePlant(@PathVariable int id, Model model) {
-        try {
-            Plant plant = plantService.findPlantById(id);
-            if(plant == null) {
-                logger.error("Pflanze mit ID: " + id + " wurde nicht gefunden.");
-                model.addAttribute("error", "Fehler beim Abrufen der Pflanze mit Id: " + id);
-                return "redirect:/plants";
-            }
-            Benutzer currentUser = userService.getCurrentUser();
-            if (!plant.getSeller().equals(currentUser)) {
-                logger.error("Benutzer ist nicht berechtigt, die Pflanze zu löschen.");
-                model.addAttribute("error", "Sie sind nicht berechtigt, diese Pflanze zu löschen.");
-                return "error";
-            }
-            //TODO: unterschiedliche Fehlermeldungen pro case oder möchten wir das lieber in frontend handeln?
-            if(!(plant.getChatsAboutThisPlant().isEmpty() && plant.getWishedBy().isEmpty() && plant.getBuyer() == null)){
-                logger.error("Man darf diese Pflanze nicht löschen, da es chats und/oder Merkzetteln zu diesen Pflanze existieren oder diese Pflanze wurde verkauft.");
-                model.addAttribute("error", "Sie dürfen diese Pflanze nicht löschen, aber sie können die archivieren.");
-                return "error";
-            }
+        Plant plant = plantService.findPlantById(id);
+        if(!(plant.getChatsAboutThisPlant().isEmpty() && plant.getWishedBy().isEmpty() && plant.getBuyer() == null)){
+            plant.setAdIsActive(false);
+            plantService.savePlantDataLoader(plant);
+        }else{
             plantService.deletePlant(plant);
-        } catch (Exception deletePlantException) {
-            logger.error("Fehler beim Löschen der Pflanze", deletePlantException);
-            model.addAttribute("error", "Ein Fehler ist aufgetreten. Bitte versuchen Sie es später erneut.");
-            return "error";
         }
-        return "redirect:/plants";
+        return "redirect:/myPlantsOverview";
+    }
+
+    @GetMapping("/myWishlist")
+    public String myWishlist(Model model) {
+        // Hier die Logik noch für die Anzeige der Wunschliste des Benutzers
+        return "myWishlist";
     }
 }
