@@ -164,18 +164,15 @@
             height: 150px;
         }
         .alert.alert-success {
-            background-color: lightgray;
+            background-color: #eceaea;
             height: 40px;
-            width: 70%;
-            color: #323131;
+            color: #333632;
             display: flex;
-            position: fixed;
             padding: 0;
             border: none;
             align-items: center;
             justify-content: center;
-            bottom: 50px;
-            box-shadow: 0 -5px 10px rgba(0,0,0,0.1);
+            box-shadow: 0 5px 10px rgba(0,0,0,0.1);
             border-radius: 0;
             z-index: 1050;
         }
@@ -217,6 +214,12 @@
                 </h3>
             </div>
         </div>
+        <div th:if="${chat.plant.isSold()}">
+            <div class="alert alert-success" role="alert">
+                <p th:if="${currentUser.username == chat.possibleBuyer.username}" class="alert-heading">Diese Pflanze wurde bereits verkauft</p>
+                <p th:if="${currentUser.username != chat.possibleBuyer.username}" class="alert-heading">Sie haben diese Pflanze verkauft</p>
+            </div>
+        </div>
         <div class="message-container">
             <div th:each="message: ${allMessages}">
                 <div th:if="${message.sender.username == currentUser.username}" class="message-wrapper sender">
@@ -227,12 +230,6 @@
                     <div class="message-content receiver" th:text="${message.messageContent}"></div>
                     <div class="message-timestamp" th:text="${#dates.format(message.sentAt, 'dd.MM.yyyy HH:mm')}"></div>
                 </div>
-            </div>
-        </div>
-        <div th:if="${chat.plant.isSold()}">
-            <div class="alert alert-success" role="alert">
-                <p th:if="${currentUser.username == chat.possibleBuyer.username}" class="alert-heading">Diese Pflanze wurde bereits verkauft</p>
-                <p th:if="${currentUser.username != chat.possibleBuyer.username}" class="alert-heading">Sie haben diese Pflanze verkauft</p>
             </div>
         </div>
         <div class="message-input-container">
