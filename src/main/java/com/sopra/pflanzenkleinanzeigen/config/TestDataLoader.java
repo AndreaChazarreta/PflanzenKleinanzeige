@@ -169,7 +169,7 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         testNoBeziehungen.setHeight(new BigDecimal("10.00"));
         testNoBeziehungen.setDescription("in rot");
         testNoBeziehungen.setSeller(admin);
-        testNoBeziehungen.setImagePath("/plant-images/noImage.jpg");
+        testNoBeziehungen.setImagePath("/plant-images/Tulpen.jpg");
         plantService.savePlantDataLoader(testNoBeziehungen);
 
         Plant orangenbaum = new Plant();
@@ -259,7 +259,7 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         testData8.setHeight(new BigDecimal("30.00"));
         testData8.setDescription("Gibt einen guten Geruch");
         testData8.setSeller(natti);
-        testData8.setImagePath("/plant-images/testData8.JPG");
+        testData8.setImagePath("/plant-images/Graspflanze.jpeg");
         plantService.savePlantDataLoader(testData8);
 
         Plant testData9 = new Plant();
