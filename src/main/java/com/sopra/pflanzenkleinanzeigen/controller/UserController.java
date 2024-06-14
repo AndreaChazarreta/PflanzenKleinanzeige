@@ -36,13 +36,21 @@ public class UserController {
         return "profile";
     }
 
-    @GetMapping("/profileOverview")
-    public String profileOverview(Model model) {
+    @GetMapping("/myPlantsOverview")
+    public String myPlantsOverview(Model model) {
         Benutzer currentUser = userService.getCurrentUser();
         if (currentUser == null) {
             return "redirect:/";
         }
-        model.addAttribute("userPlants", currentUser.getUploadedPlants());
-        return "profileOverview";
+        model.addAttribute("userPlants", userService.findActivePlantsBySeller(currentUser.getUserId()));
+        return "myPlantsOverview";
+    }
+
+    @GetMapping("/myPlants")
+    public String myBoughtPlants(Model model) {
+        Benutzer currentUser = userService.getCurrentUser();
+        List<Plant> boughtPlants = currentUser.getPurchasedPlants();
+        model.addAttribute("boughtPlants", boughtPlants);
+        return "myPlants";
     }
 }

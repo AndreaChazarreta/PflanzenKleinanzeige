@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:insert="~{fragments/htmlHead :: head}"></th:block>
+    <style>
+        img {
+            max-width: 100%;
+            max-height: 200px;
+            object-fit: cover;
+        }
+        .card {
+            border: none;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s;
+        }
+        .card:hover {
+            transform: scale(1.05);
+        }
+        .card a {
+            text-decoration: none;
+            color: inherit;
+        }
+        .search-bar {
+            display: flex;
+            align-items: center;
+            border: 1px solid grey;
+            border-radius: 25px;
+            padding: 8px;
+            margin-bottom: 20px;
+        }
+        .search-bar input {
+            border: none;
+            outline: none;
+            flex: 1;
+        }
+        .search-bar input:focus {
+            box-shadow: none;
+        }
+        .search-bar button {
+            border: none;
+            background-color: #ffffff;
+            border-radius: 25px 25px 25px 25px;
+            padding: 8px 10px;
+            cursor: pointer;
+        }
+        .search-bar button i {
+            color: #000;
+        }
+        .add-card {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px dashed #2e8b57;
+            background-color: #f8f9fa;
+            cursor: pointer;
+            height: 100%;
+            transition: all 0.3s ease;
+        }
+        .add-card:hover {
+            background-color: #e9ecef;
+            border-color: #1d6b41;
+        }
+        .add-card .content {
+            text-align: center;
+            color: #2e8b57;
+        }
+        .add-card .content h3 {
+            font-size: 4rem;
+            margin-bottom: 10px;
+        }
+        .add-card .content p {
+            font-size: 1.5rem;
+            margin: 0;
+        }
+        .btn-success {
+            color: #fff !important;
+        }
+        .btn-success:hover,
+        .btn-success:focus {
+            color: #fff !important;
+        }
+        .info-icon {
+            margin-left: 10px;
+            color: #6c757d;
+            cursor: pointer;
+            font-size: 1.2rem;
+        }
+        .nav-underline {
+            margin-bottom: 30px;
+        }
+        .custom-nav-link .nav-link{
+            color: #2e8b57 !important;
+            font-size: 1.25rem;
+            text-decoration: none;
+        }
+        .custom-nav-link .nav-link.active {
+            text-decoration: underline;
+        }
+    </style>
+
+    <title>Profilübersicht</title>
+</head>
+<body>
+<th:block th:insert="~{fragments/htmlNavBar :: navbar}"></th:block>
+
+<div class="container mt-5">
+    <ul class="nav nav-underline">
+        <li class="nav-item custom-nav-link">
+            <a class="nav-link active" href="/myPlantsOverview">Meine Verkäufe</a>
+        </li>
+        <li class="nav-item custom-nav-link">
+            <a class="nav-link" href="/myPlants">Meine Pflanzen</a>
+        </li>
+        <li class="nav-item custom-nav-link">
+            <a class="nav-link" href="/myWishlist">Meine Wunschliste</a>
+        </li>
+    </ul>
+
+    <div class="row mb-4">
+        <div class="col-12">
+            <form class="search-bar" th:action="@{/plants}" method="get">
+                <button class="btn" type="submit"><i class="bi bi-search"></i></button>
+                <input class="form-control" name="name" placeholder="Suche nach Name" type="text">
+            </form>
+        </div>
+    </div>
+
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
+        <div class="col">
+            <div class="card add-card" onclick="window.location.href='/plants/new'">
+                <div class="content">
+                    <h3>+</h3>
+                    <p>Neue Pflanze hinzufügen</p>
+                </div>
+            </div>
+        </div>
+
+        <th:block th:each="plant : ${userPlants}">
+            <div class="col">
+                <div class="card">
+                    <img th:src="@{${plant.imagePath}}" class="card-img-top" alt="Pflanzenbild">
+                    <div class="card-body">
+                        <h5 class="card-title" th:text="${plant.name}">Plant Name</h5>
+                        <p class="card-text" th:text="'Preis: ' + ${plant.price} + '€'">Plant Price</p>
+                        <div class="d-flex justify-content-between">
+                            <a th:href="@{/plants/edit/{id}(id=${plant.plantId})}" class="btn btn-success">Bearbeiten</a>
+                            <div class="btn-group">
+                                <form th:if="${!(plant.chatsAboutThisPlant.isEmpty() && plant.getWishedBy().isEmpty() && plant.getBuyer() == null)}" th:action="@{/plants/delete/{id}(id=${plant.plantId})}" method="post" class="d-inline">
+                                    <button type="submit" class="btn btn-warning" onclick="return confirm('Sind Sie sicher, dass Sie diese Pflanze deaktivieren möchten?');">Deakt.</button>
+                                    <i class="bi bi-info-circle info-icon" data-bs-toggle="tooltip" data-bs-placement="top" title="Die Pflanze wird auf allen Anzeigeseiten entfernt, aber die zugehörigen Chats bleiben erhalten."></i>
+                                </form>
+                            </div>
+                            <div class="btn-group">
+                                <form th:if="${plant.chatsAboutThisPlant.isEmpty() && plant.getWishedBy().isEmpty() && plant.getBuyer() == null}" th:action="@{/plants/delete/{id}(id=${plant.plantId})}" method="post" class="d-inline">
+                                    <button type="submit" class="btn btn-danger" onclick="return confirm('Sind Sie sicher, dass Sie diese Pflanze löschen möchten?');">Löschen</button>
+                                    <i class="bi bi-info-circle info-icon" data-bs-toggle="tooltip" data-bs-placement="top" title="Alle Daten zu dieser Pflanze, einschließlich Chats, werden unwiderruflich gelöscht."></i>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </th:block>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+<script>
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl)
+    })
+
+    document.querySelectorAll('.nav-link').forEach(link => {
+        link.addEventListener('click', function () {
+            document.querySelectorAll('.nav-link').forEach(nav => nav.classList.remove('active'));
+            this.classList.add('active');
+        });
+    });
+</script>
+</body>
+</html>

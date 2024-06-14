@@ -1,7 +1,7 @@
 package com.sopra.pflanzenkleinanzeigen.repository;
 
-import com.sopra.pflanzenkleinanzeigen.entity.Plant;
 import com.sopra.pflanzenkleinanzeigen.entity.Benutzer;
+import com.sopra.pflanzenkleinanzeigen.entity.Plant;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -16,6 +16,12 @@ public interface PlantRepository extends JpaRepository<Plant, Integer> {
 
     @Query("SELECT p FROM Plant p WHERE LOWER(p.name) LIKE LOWER(CONCAT('%', :name, '%'))")
     List<Plant> findByKeywordName(@Param("name") String name);
+
+    @Query("SELECT p FROM Plant p WHERE p.adIsActive = true")
+    List<Plant> findAllActivePlants();
+
+    @Query("SELECT p FROM Plant p WHERE p.seller = :seller AND p.adIsActive = true")
+    List<Plant> findAllActivePlantsBySeller(@Param("seller") Benutzer seller);
 
 }
 
