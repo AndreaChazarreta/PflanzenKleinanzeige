@@ -5,9 +5,11 @@ import com.sopra.pflanzenkleinanzeigen.entity.Plant;
 import com.sopra.pflanzenkleinanzeigen.service.PlantService;
 import com.sopra.pflanzenkleinanzeigen.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -45,14 +47,20 @@ public class UserController {
      * @param model The model that is sent to the view.
      * @return "myPlantsOverview", the view with all plants of the current user.
      */
-    @GetMapping("/myPlantsOverview")
-    public String myPlantsOverview(Model model) {
+    @GetMapping("/myPlantsForSale")
+    public String myPlantsForSaleOverview(@RequestParam(required = false) String name, Model model) {
         Benutzer currentUser = userService.getCurrentUser();
         if (currentUser == null) {
             return "redirect:/";
         }
-        model.addAttribute("userPlants", userService.findActivePlantsBySeller(currentUser.getUserId()));
-        return "myPlantsOverview";
+        List<Plant> plants;
+        if (name != null && !name.isEmpty()) {
+            plants = userService.findPlantsByNameAndSeller(name, currentUser.getUserId());
+        } else {
+            plants = userService.findActivePlantsBySeller(currentUser.getUserId());
+        }
+        model.addAttribute("userPlants", plants);
+        return "myPlantsForSale";
     }
 
     /**
@@ -61,9 +69,17 @@ public class UserController {
      * @return "myPlants", the view with all plants that the current user has bought.
      */
     @GetMapping("/myPlants")
-    public String myBoughtPlants(Model model) {
+    public String myPlantsOverview(@RequestParam(required = false) String name, Model model) {
         Benutzer currentUser = userService.getCurrentUser();
-        List<Plant> boughtPlants = currentUser.getPurchasedPlants();
+        if (currentUser == null) {
+            return "redirect:/";
+        }
+        List<Plant> boughtPlants;
+        if (name != null && !name.isEmpty()) {
+            boughtPlants = userService.findPurchasedPlantsByNameAndBuyer(name, currentUser.getUserId());
+        } else {
+            boughtPlants = currentUser.getPurchasedPlants();
+        }
         model.addAttribute("boughtPlants", boughtPlants);
         return "myPlants";
     }

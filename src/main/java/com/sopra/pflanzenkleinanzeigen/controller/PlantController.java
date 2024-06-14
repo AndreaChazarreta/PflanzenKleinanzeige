@@ -196,7 +196,7 @@ public class PlantController {
         }else{
             plantService.deletePlant(plant);
         }
-        return "redirect:/myPlantsOverview";
+        return "redirect:/myPlantsForSale";
     }
 
     @GetMapping("/myWishlist")
