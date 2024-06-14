@@ -53,34 +53,59 @@
 <div class="container mt-5">
     <div class="form-container">
         <h1>Pflanzeanzeige erstellen</h1>
-        <form th:action="@{/plants}" th:object="${newPlant}" method="post" enctype="multipart/form-data">
+        <form class="needs-validation" th:action="@{/plants}" th:object="${newPlant}" method="post" enctype="multipart/form-data" novalidate>
             <div class="form-group">
                 <label for="name">Name:</label>
                 <input type="text" class="form-control" id="name" placeholder="Name" th:field="*{name}" required/>
-                <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="text-danger"></div>
+                <div class="invalid-feedback">
+                    Bitte geben Sie einen Namen ein.
+                </div>
             </div>
             <div class="form-group">
                 <label for="price">Preis (€):</label>
                 <input type="number" class="form-control" id="price" placeholder="Preis in Euro" th:field="*{price}" step="any" min="0" required/>
-                <div th:if="${#fields.hasErrors('price')}" th:errors="*{price}" class="text-danger"></div>
+                <div class="invalid-feedback">
+                    Bitte geben Sie einen gültigen Preis ein.
+                </div>
             </div>
             <div class="form-group">
                 <label for="height">Höhe (cm):</label>
                 <input type="number" class="form-control" id="height" placeholder="Höhe in Zentimeter" th:field="*{height}" step="any" min="0" required/>
-                <div th:if="${#fields.hasErrors('height')}" th:errors="*{height}" class="text-danger"></div>
+                <div class="invalid-feedback">
+                    Bitte geben Sie eine gültige Höhe ein.
+                </div>
             </div>
             <div class="form-group">
                 <label for="description">Beschreibung:</label>
-                <textarea id="description" class="form-control" placeholder="Beschreibung" th:field="*{description}"></textarea>
+                <textarea id="description" class="form-control" placeholder="Beschreibung" th:field="*{description}" required></textarea>
+                <div class="invalid-feedback">
+                    Bitte geben Sie eine Beschreibung ein.
+                </div>
             </div>
-            <div class="form-group form-check">
-                <input type="checkbox" class="form-check-input" id="potIncluded" th:field="*{potIncluded}"/>
-                <label class="form-check-label" for="potIncluded">Übertopf enthalten</label>
+            <div class="form-group">
+                <label>Übertopf enthalten:</label>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="potIncluded" id="potIncludedYes" th:field="*{potIncluded}" value="true" required>
+                    <label class="form-check-label" for="potIncludedYes">
+                        Ja
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="potIncluded" id="potIncludedNo" th:field="*{potIncluded}" value="false" required>
+                    <label class="form-check-label" for="potIncludedNo">
+                        Nein
+                    </label>
+                </div>
+                <div class="invalid-feedback">
+                    Bitte wählen Sie aus, ob der Übertopf enthalten ist.
+                </div>
             </div>
-
             <div class="form-group mb-3">
                 <label for="imageFile" class="form-label">Bild: </label>
-                <input class="form-control" type="file" id="imageFile" name="imageFile" accept="image/*" onchange="previewImage()">
+                <input class="form-control" type="file" id="imageFile" name="imageFile" accept="image/*" onchange="previewImage()" required>
+                <div class="invalid-feedback">
+                    Bitte laden Sie ein Bild hoch.
+                </div>
             </div>
             <div>
                 <img id="preview"/>
@@ -88,7 +113,8 @@
             </div>
             <button type="submit" class="btn btn-success mt-3">Erstellen</button>
         </form>
-        <a th:href="@{/plants}" class="btn btn-secondary back-link">Alle Pflanzen anzeigen</a>    </div>
+        <a th:href="@{/plants}" class="btn btn-secondary back-link">Alle Pflanzen anzeigen</a>
+    </div>
 </div>
 
 <script>
@@ -114,6 +140,23 @@
             document.getElementById('preview').style.display = 'none';
         }
     }
+    
+    (() => {
+        'use strict'
+
+        const forms = document.querySelectorAll('.needs-validation')
+
+        Array.from(forms).forEach(form => {
+            form.addEventListener('submit', event => {
+                if (!form.checkValidity()) {
+                    event.preventDefault()
+                    event.stopPropagation()
+                }
+
+                form.classList.add('was-validated')
+            }, false)
+        })
+    })()
 </script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
