@@ -77,12 +77,6 @@ public class UserService implements UserDetailsService {
         return userRepository.findAll();
     }
 
-    /**
-     * Finds a user by username.
-     *
-     * @param username The username of the user.
-     * @return The user with the given username.
-     */
     public Benutzer getUserByUsername(String username) {
         return userRepository.findByUsername(username);
     }
@@ -91,22 +85,12 @@ public class UserService implements UserDetailsService {
     // Spring Security Authentication Methoden
     ///////////////////////////////////////////////////////////////////////////
 
-    /**
-     * Gets the currently logged in user.
-     *
-     * @return The currently logged in user.
-     */
+
     public Benutzer getCurrentUser() {
         return getUserByUsername(((org.springframework.security.core.userdetails.User) SecurityContextHolder.getContext()
                 .getAuthentication().getPrincipal()).getUsername());
     }
 
-    /**
-     * Gets the UserDetails object of the currently logged in user.
-     * This may be needed to perform role authentication checks.
-     *
-     * @return The UserDetails object of the currently logged in user.
-     */
     public org.springframework.security.core.userdetails.User getCurrentUserDetails() {
         return (org.springframework.security.core.userdetails.User) SecurityContextHolder.getContext()
                 .getAuthentication().getPrincipal();
@@ -143,6 +127,13 @@ public class UserService implements UserDetailsService {
         }
         return grantedAuthorities;
     }
+
+    /**
+     * Finds and returns a list of active plants sold by a specific seller.
+     *
+     * @param sellerId The ID of the seller whose active plants are to be found.
+     * @return A list of active plants sold by the seller. If the seller does not exist, an empty list is returned.
+     */
     public List<Plant> findActivePlantsBySeller(Integer sellerId) {
         Benutzer seller = userRepository.findById(sellerId).orElse(null);
         if (seller != null) {
@@ -151,6 +142,14 @@ public class UserService implements UserDetailsService {
             return new ArrayList<>();
         }
     }
+
+    /**
+     * Finds and returns a list of plants sold by a specific seller and with a specific name.
+     *
+     * @param name The name of the plants to be found.
+     * @param sellerId The ID of the seller whose plants are to be found.
+     * @return A list of plants sold by the seller and with the specified name. If the seller does not exist, an empty list is returned.
+     */
     public List<Plant> findPlantsByNameAndSeller(String name, Integer sellerId) {
         Benutzer seller = userRepository.findById(sellerId).orElse(null);
         if (seller != null) {
@@ -159,6 +158,14 @@ public class UserService implements UserDetailsService {
             return new ArrayList<>();
         }
     }
+    
+    /**
+     * Finds and returns a list of plants purchased by a specific buyer and with a specific name.
+     *
+     * @param name The name of the plants to be found.
+     * @param buyerId The ID of the buyer whose purchased plants are to be found.
+     * @return A list of plants purchased by the buyer and with the specified name. If the buyer does not exist, an empty list is returned.
+     */
     public List<Plant> findPurchasedPlantsByNameAndBuyer(String name, Integer buyerId) {
         Benutzer buyer = userRepository.findById(buyerId).orElse(null);
         if (buyer != null) {
