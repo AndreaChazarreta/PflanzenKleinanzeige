@@ -17,11 +17,7 @@ public class Rolle {
 
     private String rolename;
 
-    /**
-     * Default constructor for Hibernate.
-     */
     public Rolle() {
-        //empty constructor for Hibernate
     }
 
     public Rolle(String rolename) {

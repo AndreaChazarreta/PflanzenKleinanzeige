@@ -6,7 +6,7 @@
         img {
             max-width: 100%;
             max-height: 200px;
-            object-fit: cover;  /* Maintain aspect ratio */
+            object-fit: cover;
         }
         .card {
             border: none;
@@ -27,6 +27,7 @@
             border-radius: 25px;
             padding: 8px;
             margin-bottom: 20px;
+            margin-top: 10px;
         }
         .search-bar input {
             border: none;
@@ -65,13 +66,18 @@
 
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4">
         <th:block th:each="plant : ${allPlants}">
-            <th:block th:insert="~{fragments/cardPlantsOverview :: cardFragment(plant=${plant})}"></th:block>
+            <div th:if="${plant.isSold() == false}">
+                <th:block th:insert="~{fragments/cardPlantsOverview :: cardFragment(plant=${plant})}"></th:block>
+            </div>
         </th:block>
     </div>
 
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4">
         <th:block th:each="plant : ${plantsByName}">
-            <th:block th:insert="~{fragments/cardPlantsOverview :: cardFragment(plant=${plant})}"></th:block>
+            <div th:if="${plant.isSold() == false}">
+                <th:block th:insert="~{fragments/cardPlantsOverview :: cardFragment(plant=${plant})}"></th:block>
+            </div>
+
         </th:block>
     </div>
 </div>

@@ -7,7 +7,7 @@
         img {
             max-width: 200px;
             max-height: 200px;
-            object-fit: cover;  /* Maintain aspect ratio */
+            object-fit: cover;
         }
         .form-container {
             background-color: #f8f9fa;
@@ -39,7 +39,7 @@
         .back-link {
             margin-top: 20px;
             display: inline-block;
-            color: #2e8b57;
+            color: white;
             text-decoration: none;
         }
         .back-link:hover {
@@ -83,8 +83,7 @@
             </div>
             <button type="submit" class="btn btn-success mt-3">Erstellen</button>
         </form>
-        <a th:href="@{/plants}" class="back-link">Zurück zur Liste</a>
-    </div>
+        <a th:href="@{/plants}" class="btn btn-secondary back-link">Alle Pflanzen anzeigen</a>    </div>
 </div>
 
 <script>
@@ -111,7 +110,6 @@
         }
     }
 </script>
-
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>

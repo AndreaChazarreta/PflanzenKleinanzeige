@@ -7,7 +7,7 @@
         img {
             max-width: 200px;
             max-height: 200px;
-            object-fit: cover;  /* Maintain aspect ratio */
+            object-fit: cover;
         }
         .form-container {
             background-color: #f8f9fa;
@@ -43,11 +43,14 @@
         .back-link {
             margin-top: 20px;
             display: inline-block;
-            color: #2e8b57;
+            color: white;
             text-decoration: none;
         }
         .back-link:hover {
             text-decoration: underline;
+        }
+        .btn-success {
+            margin-top: 20px;
         }
     </style>
 </head>
@@ -89,7 +92,7 @@
             </div>
             <button type="submit" class="btn btn-success">Speichern</button>
         </form>
-        <a th:href="@{/plants}" class="back-link">Zurück zur Liste</a>
+        <a th:href="@{/plants}" class="btn btn-secondary back-link">Alle Pflanzen anzeigen</a>    </div>
     </div>
 </div>
 

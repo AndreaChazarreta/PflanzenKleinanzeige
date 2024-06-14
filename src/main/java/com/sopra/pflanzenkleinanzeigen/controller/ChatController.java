@@ -94,6 +94,7 @@ public class ChatController {
             model.addAttribute("newMessage", new Message());
             model.addAttribute("currentUser", currentUser);
             model.addAttribute("seller", chat.getPlant().getSeller());
+
             return "messages";
         } catch (Exception cannotGetChatException) {
             logger.error("Fehler beim Abrufen von Nachrichten für den Chat mit der ID: " + chatId, cannotGetChatException);
@@ -209,5 +210,17 @@ public class ChatController {
             model.addAttribute("error", "Fehler beim Senden einer neuen Nachricht");
             return "error";
         }
+    }
+
+    @PostMapping("/chats/markSold/{id}")
+    public String markSold(@PathVariable int id, Model model){
+        Chat chat = chatService.findChatById(id);
+        Plant plant = plantService.findPlantById(chat.getPlant().getPlantId());
+        model.addAttribute("plant", chat.getPlant());
+        model.addAttribute("chat", chat);
+        plant.setSold(true);
+        plant.setBuyer(chat.getPossibleBuyer());
+        plantService.savePlantDataLoader(plant);
+        return "redirect:/chats/" + chat.getChatId();
     }
 }
