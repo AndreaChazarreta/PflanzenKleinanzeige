@@ -158,7 +158,7 @@ public class UserService implements UserDetailsService {
             return new ArrayList<>();
         }
     }
-    
+
     /**
      * Finds and returns a list of plants purchased by a specific buyer and with a specific name.
      *
