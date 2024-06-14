@@ -101,6 +101,7 @@
             display: flex;
             padding: 10px;
             border-top: 1px solid #e9ecef;
+            z-index: 1040;
         }
         .message-input-container input {
             flex-grow: 1;
@@ -115,6 +116,7 @@
             border: none;
             background-color: #55d808;
             color: #ffffff;
+            margin-left: 5px;
         }
         .no-messages {
             display: flex;
@@ -155,6 +157,26 @@
             width: 150px;
             height: 150px;
         }
+        .alert.alert-success {
+            background-color: lightgray;
+            height: 40px;
+            width: 70%;
+            color: #323131;
+            display: flex;
+            position: fixed;
+            padding: 0;
+            border: none;
+            align-items: center;
+            justify-content: center;
+            bottom: 50px;
+            box-shadow: 0 -5px 10px rgba(0,0,0,0.1);
+            border-radius: 0;
+            z-index: 1050;
+        }
+        .alert-heading {
+            font-size: 1.25rem;
+            margin: 0;
+        }
     </style>
 </head>
 <body>
@@ -188,7 +210,7 @@
                         <small>@</small>
                         <span th:text="${chat.possibleBuyer.username}"></span>
                     </h3>
-            </div>
+                </div>
         </div>
             <div data-bs-spy="scroll" data-bs-target="#navbar-example2" data-bs-offset="0" class="scrollspy-example" tabindex="0" style="position: relative; height: 400px; overflow-y: scroll;">
                 <div class="message-container">
@@ -204,6 +226,13 @@
                     </div>
                 </div>
             </div>
+        <div th:if="${chat.plant.isSold()}">
+            <div class="alert alert-success" role="alert">
+                <p th:if="${currentUser.username == chat.possibleBuyer.username}" class="alert-heading">Diese Pflanze wurde bereits verkauft</p>
+                <p th:if="${currentUser.username != chat.possibleBuyer.username}" class="alert-heading">Sie haben diese Pflanze verkauft</p>
+            </div>
+        </div>
+        </div>
             <div class="message-input-container">
                 <form th:action="@{/chats/{chatId}(chatId=${chat.chatId})}" th:object="${newMessage}" method="post" class="d-flex" style="width: 60%; display: flex;">
                     <input type="text" th:field="*{messageContent}" class="form-control mr-2" placeholder="Nachricht eingeben" required/>
@@ -211,6 +240,13 @@
                         <i class="fa fa-send" aria-hidden="true"></i>
                     </button>
                 </form>
+                <div th:if="${currentUser.username != chat.possibleBuyer.username}">
+                    <form th:action="@{/chats/markSold/{id}(id=${chat.chatId})}" th:object="${plant}" method="post" class="d-flex" style="width: 60%; display: flex;">
+                    <button class="btn">
+                        Verkauft
+                    </button>
+                    </form>
+                </div>
             </div>
         </div>
         <div th:if="${allChats.isEmpty()}" class="no-messages">
