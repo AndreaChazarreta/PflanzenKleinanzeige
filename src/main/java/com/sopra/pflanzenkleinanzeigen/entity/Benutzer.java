@@ -23,6 +23,8 @@ public class Benutzer {
     @Column(unique = true)
     private String username;
 
+
+
     private String password;
 
     private boolean enabled = true;
@@ -30,6 +32,8 @@ public class Benutzer {
     private String firstname;
 
     private String lastname;
+
+    private String imagePath;
 
     @Email
     private String email;
@@ -102,7 +106,13 @@ public class Benutzer {
     public void setRoles(Set<Rolle> roles) {
         this.roles = roles;
     }
+    public String getImagePath() {
+        return imagePath;
+    }
 
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
+    }
     public String getFirstname() {
         return firstname;
     }
