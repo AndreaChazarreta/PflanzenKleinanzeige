@@ -80,6 +80,9 @@
                 <label for="description">Beschreibung:</label>
                 <textarea id="description" class="form-control" placeholder="Beschreibung" th:field="*{description}"></textarea>
             </div>
+            <div class="form-group form-check">
+                <input type="checkbox" class="form-check-input" id="potIncluded" th:field="*{potIncluded}" th:checked="${potIncluded} ? 'checked'"/>                <label class="form-check-label" for="potIncluded">Übertopf enthalten</label>
+            </div>
             <div class="form-group mb-3">
                 <label for="imageFile" class="form-label">Bild: </label>
                 <input class="form-control" type="file" id="imageFile" name="imageFile" accept="image/*" onchange="previewImage()">
