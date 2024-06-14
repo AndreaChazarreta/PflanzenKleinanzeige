@@ -57,13 +57,16 @@ public class PlantController {
     @GetMapping("/plants")
     public String getPlants(Model model, @RequestParam(value = "name", required = false) String name) {
         try {
+            Benutzer currentUser = userService.getCurrentUser();
+            model.addAttribute("currentUser", currentUser);
+
             if(name != null && !name.isEmpty()){
                 List<Plant> plantsByName = plantService.findByKeywordName(name);
-                plantsByName.removeIf(plant -> !plant.isAdIsActive()); // Entfernen Sie Pflanzen, deren adIsActive false ist
+                plantsByName.removeIf(plant -> !plant.isAdIsActive());
                 model.addAttribute("plantsByName", plantsByName);
                 model.addAttribute("name", name);
             } else {
-                model.addAttribute("allPlants", plantService.findAllActivePlants()); // Nur aktive Pflanzen anzeigen
+                model.addAttribute("allPlants", plantService.findAllActivePlants());
             }
         } catch (Exception getPlantException ) {
             logger.error("Fehler beim Abrufen der Pflanzen", getPlantException);
