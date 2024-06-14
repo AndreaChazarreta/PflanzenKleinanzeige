@@ -11,9 +11,11 @@ Das Konzept orientiert sich an Kleinanzeigenportalen, fokussiert sich jedoch aus
 
 ### Verwendung
 - **Einloggen**: Logge dich ein, um Pflanzen zu verkaufen oder zu kaufen.
-- _(In Bearbeitung)_ **Suchen und Filtern**: Verwende das Suchfeld und die Filteroptionen, um Pflanzen zu finden.
-- _(In Bearbeitung)_ **Merkzettel**: Markiere interessante Pflanzen, um sie zu deinem Merkzettel hinzuzufügen.
-- _(In Bearbeitung)_ **Pflanzen verwalten**: Lade Pflanzen hoch, bearbeite sie oder markiere sie als verkauft.
+- **Pflanzen anzeigen**: Sieh dir alle Pflanzen an, die zum Verkauf stehen.
+- **Nachricht schicken**: Schicke dem Verkäufer eine Nachricht, um mehr über die Pflanze zu erfahren.
+- **Pflanze suchen**: Suche nach Pflanzen, die deinen Kriterien entsprechen.
+- **Pflanzen verwalten**: Lade Pflanzen hoch, bearbeite sie oder markiere sie als verkauft.
+- **Profile ansehen**: Sieh dir dein eigenes Profil an.
 
 ## Installation
 1. **Repository klonen**
