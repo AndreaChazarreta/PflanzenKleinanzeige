@@ -232,5 +232,4 @@ public class ChatController {
         plantService.savePlantDataLoader(plant);
         return "redirect:/chats/" + chat.getChatId();
     }
-
 }

@@ -13,13 +13,6 @@ import java.util.List;
  */
 public interface ChatRepository extends JpaRepository<Chat, Integer> {
 
-    /**
-     * Finds chats involving a user by their ID.
-     * Looks for chats where the user is either the seller or the potential buyer.
-     *
-     * @param userId The ID of the user.
-     * @return A list of chats involving the user.
-     */
     @Query("SELECT c FROM Chat c WHERE c.plant.seller.userId = :userId OR c.possibleBuyer.userId = :userId")
     List<Chat> findChatsByUserId(@Param("userId") int userId);
 
