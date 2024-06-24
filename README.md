@@ -16,6 +16,12 @@ Das Konzept orientiert sich an Kleinanzeigenportalen, fokussiert sich jedoch aus
 - **Pflanze suchen**: Suche nach Pflanzen, die deinen Kriterien entsprechen.
 - **Pflanzen verwalten**: Lade Pflanzen hoch, bearbeite sie oder markiere sie als verkauft.
 - **Profile ansehen**: Sieh dir dein eigenes Profil an.
+- 
+### Achte darauf:
+- **Deaktiviere eine Anzeige**: du willst deine Pflanze doch nicht mehr verkaufen? Dann deaktiviere sie unter meine Pflanzen. Diese Pflanzenanzeige wird dann nicht mehr angezeigt.
+- **Lösche eine Pflanzenanzeige**: bitte beachte, dass du nur deine Pflanzen löschen kannst, wenn es keine Chats dazu existieren und die Pflanze noch nicht verkauft wurde. Sollte dies der Fall sein, dann kannst du diese nur noch deaktivieren.
+- **Status der Pflanzenanzeige**: in den Chats wird angezeigt, ob eine Pflanzenanzeige immer noch aktiv ist, oder ob diese schon deaktiviert wurde.
+- **Markiert eine Pflanze als verkauft**: Wenn du eine Pflanze als verkauft markierst, wird diese nicht mehr an die Pflanzenübersichtseite angezeigt, und alle users werden in den Chats sehen, dass du diese Pflanze verkauft hast.
 
 ## Installation
 1. **Repository klonen**

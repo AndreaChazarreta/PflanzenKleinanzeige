@@ -224,7 +224,7 @@
             </div>
         </div>
 
-        <div th:if="${!allMessages.isEmpty()}" class="message-container">
+        <div th:if="${!allChats.isEmpty()}" class="message-container">
             <div th:each="message: ${allMessages}">
                 <div th:if="${message.sender.username == currentUser.username}" class="message-wrapper sender">
                     <div class="message-content sender" th:text="${message.messageContent}"></div>
@@ -237,7 +237,7 @@
             </div>
         </div>
 
-        <div th:if="${allMessages.isEmpty()}" class="no-messages">
+        <div th:if="${allChats.isEmpty()}" class="no-messages">
             <div class="center-content">
                 <img th:src="@{/plant-images/ghost_green.jpg}" alt="Keine Nachrichten" class="responsive-image"/>
                 <p>Bei uns auf der Pflanzenanzeigenseite ist es ganz einfach, in Kontakt zu treten! Hier sind zwei Tipps:</p>
