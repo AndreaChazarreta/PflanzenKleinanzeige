@@ -41,6 +41,8 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
 
     @Autowired
     private MessageService messageService;
+    @Autowired
+    private CategoryService categoryService;
 
     /**
      * This method is triggered when the application context is refreshed.
@@ -135,6 +137,30 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         sharon.setImagePath("/plant-images/bild_user7.png");
         userService.saveUser(sharon);
 
+        Category category1 = new Category();
+        category1.setName("Baum");
+        categoryService.saveCategory(category1);
+
+        Category category2 = new Category();
+        category2.setName("Zierpflanze");
+        categoryService.saveCategory(category2);
+
+        Category category3 = new Category();
+        category3.setName("Grünpflanze");
+        categoryService.saveCategory(category3);
+
+        Category category4 = new Category();
+        category4.setName("Draußenpflanze");
+        categoryService.saveCategory(category4);
+
+        Category category5 = new Category();
+        category5.setName("Kräuter");
+        categoryService.saveCategory(category5);
+
+        Category category6 = new Category();
+        category6.setName("Strauß");
+        categoryService.saveCategory(category6);
+
         Plant kaktus = new Plant();
         kaktus.setName("Kaktus");
         kaktus.setPrice(new BigDecimal("12.45"));
@@ -142,6 +168,7 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         kaktus.setDescription("sehr schön");
         kaktus.setSeller(admin);
         kaktus.setImagePath("/plant-images/kaktus1.JPG");
+        kaktus.setCategory(category3);
         plantService.savePlantDataLoader(kaktus);
 
         Plant rose = new Plant();
@@ -529,5 +556,6 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         message31.setMessageContent("Sharon war hier!");
         message31.setSentAt(anInstant2);
         messageService.saveMessage(message31);
+
     }
 }

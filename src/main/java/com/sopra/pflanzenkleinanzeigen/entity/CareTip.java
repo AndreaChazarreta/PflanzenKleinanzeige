@@ -32,6 +32,10 @@ public class CareTip {
     @OneToMany(mappedBy = "careTip")
     private List<Plant> describedPlants = new ArrayList<>();
 
+    @ManyToOne
+    @JoinColumn (name = "categoryId")
+    private Category category;
+
 
     public CareTip() {
     }
@@ -98,5 +102,13 @@ public class CareTip {
 
     public void setDescribedPlants(List<Plant> describedPlants) {
         this.describedPlants = describedPlants;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
     }
 }
