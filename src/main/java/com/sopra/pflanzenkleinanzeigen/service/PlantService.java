@@ -105,4 +105,15 @@ public class PlantService {
         Files.write(path, imageFile.getBytes());
         return "/plant-images/" + randomFilename;
     }
+    public void markPlantAsWished(Benutzer user, Plant plant) {
+        if (!plant.getWishedBy().contains(user)) {
+            plant.getWishedBy().add(user);
+            user.getWishedPlants().add(plant);
+            plantRepository.save(plant);
+            userRepository.save(user);
+        }
+    }
+    public List<Plant> getWishlistForUser(Benutzer user) {
+        return new ArrayList<>(user.getWishedPlants());
+    }
 }
