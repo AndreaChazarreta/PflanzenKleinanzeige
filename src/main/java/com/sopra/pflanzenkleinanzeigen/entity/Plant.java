@@ -63,6 +63,10 @@ public class Plant {
     @OneToMany(mappedBy = "plant")
     private List<Chat> chatsAboutThisPlant = new ArrayList<>();
 
+    @ManyToOne
+    @JoinColumn (name = "categoryId")
+    private Category category;
+
     /**
      * Default constructor for Hibernate.
      */
@@ -190,4 +194,11 @@ public class Plant {
         this.sold = sold;
     }
 
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
 }
