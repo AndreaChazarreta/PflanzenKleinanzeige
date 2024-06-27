@@ -1,7 +1,6 @@
 package com.sopra.pflanzenkleinanzeigen.controller;
 
 import com.sopra.pflanzenkleinanzeigen.entity.Benutzer;
-import com.sopra.pflanzenkleinanzeigen.entity.Chat;
 import com.sopra.pflanzenkleinanzeigen.entity.Plant;
 import com.sopra.pflanzenkleinanzeigen.service.ChatService;
 import com.sopra.pflanzenkleinanzeigen.service.PlantService;
@@ -202,9 +201,31 @@ public class PlantController {
         return "redirect:/myPlantsForSale";
     }
 
+    @PostMapping("/plants/wishlist/{id}")
+    @ResponseBody
+    public void markPlantAsWished(@PathVariable int id) {
+        Benutzer currentUser = userService.getCurrentUser();
+        Plant plant = plantService.findPlantById(id);
+        if (plant != null && !plant.getWishedBy().contains(currentUser)) {
+            plantService.markPlantAsWished(currentUser, plant);
+        }
+    }
+
+    @PostMapping("/plants/wishlist/remove/{id}")
+    @ResponseBody
+    public void unmarkPlantAsWished(@PathVariable int id) {
+        Benutzer currentUser = userService.getCurrentUser();
+        Plant plant = plantService.findPlantById(id);
+        if (plant != null && plant.getWishedBy().contains(currentUser)) {
+            plantService.unmarkPlantAsWished(currentUser, plant);
+        }
+    }
+
     @GetMapping("/myWishlist")
     public String myWishlist(Model model) {
-        //TODO: Hier die Logik noch für die Anzeige der Wunschliste des Benutzers
+        Benutzer currentUser = userService.getCurrentUser();
+        List<Plant> wishlist = plantService.getWishlistForUser(currentUser);
+        model.addAttribute("wishlist", wishlist);
         return "myWishlist";
     }
 }

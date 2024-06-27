@@ -43,7 +43,8 @@ public class Plant {
 
     private boolean sold;
 
-    @ManyToMany(targetEntity = com.sopra.pflanzenkleinanzeigen.entity.Benutzer.class, fetch = FetchType.EAGER)
+
+    @ManyToMany(targetEntity = Benutzer.class, fetch = FetchType.EAGER)
     private Set<Benutzer> wishedBy = new HashSet<>();
 
     @ManyToOne
@@ -201,4 +202,5 @@ public class Plant {
     public void setCategory(Category category) {
         this.category = category;
     }
+
 }
