@@ -161,6 +161,9 @@ public class Plant {
 
     public void setBuyer(Benutzer buyer) {
         this.buyer = buyer;
+        if (buyer != null) {
+            this.adIsActive = false;
+        }
     }
 
     public boolean isAdIsActive() {
