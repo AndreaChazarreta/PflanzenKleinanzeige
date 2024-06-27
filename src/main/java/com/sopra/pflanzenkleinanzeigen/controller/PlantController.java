@@ -211,6 +211,16 @@ public class PlantController {
         }
     }
 
+    @PostMapping("/plants/wishlist/remove/{id}")
+    @ResponseBody
+    public void unmarkPlantAsWished(@PathVariable int id) {
+        Benutzer currentUser = userService.getCurrentUser();
+        Plant plant = plantService.findPlantById(id);
+        if (plant != null && plant.getWishedBy().contains(currentUser)) {
+            plantService.unmarkPlantAsWished(currentUser, plant);
+        }
+    }
+
     @GetMapping("/myWishlist")
     public String myWishlist(Model model) {
         Benutzer currentUser = userService.getCurrentUser();
