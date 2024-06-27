@@ -61,6 +61,12 @@ public class PlantController {
 
             if(name != null && !name.isEmpty()){
                 List<Plant> plantsByName = plantService.findByKeywordName(name);
+                for (Plant plant : plantsByName) {
+                    if (plant.getBuyer() != null) {
+                        plant.setAdIsActive(false);
+                        plantService.savePlantDataLoader(plant);
+                    }
+                }
                 plantsByName.removeIf(plant -> !plant.isAdIsActive());
                 model.addAttribute("plantsByName", plantsByName);
                 model.addAttribute("name", name);
