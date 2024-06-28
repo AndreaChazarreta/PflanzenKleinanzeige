@@ -84,9 +84,11 @@ public class PlantController {
     @GetMapping("/plants/{id}")
     public String getPlantDetails(@PathVariable int id, Model model) {
         Plant plant = plantService.findPlantById(id);
+        Benutzer currentUser = userService.getCurrentUser();
         if (plant == null) {
             return "redirect:/plants";
         }
+        model.addAttribute("currentUser", currentUser);
         model.addAttribute("plant", plant);
         return "detailsPlant";
     }
