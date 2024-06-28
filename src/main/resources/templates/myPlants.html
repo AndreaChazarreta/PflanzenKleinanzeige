@@ -132,6 +132,11 @@
                     <div class="card-body">
                         <h5 class="card-title" th:text="${plant.name}">Plant Name</h5>
                         <p class="card-text" th:text="'Preis: ' + ${plant.price} + '€'">Plant Price</p>
+                        <form th:action="@{/plants/careTip/{id}(id=${plant.plantId})}" th:object="${plant}" method="get" class="d-flex" style="flex-grow: 0;">
+                            <button class="btn">
+                                Pflegehinweise
+                            </button>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -147,6 +152,7 @@
                         <p class="card-text" th:text="'Preis: ' + ${plant.price} + '€'">Plant Price</p>
                         <div class="d-flex justify-content-between">
                             <a th:href="@{/plants/edit/{id}(id=${plant.plantId})}" class="btn btn-success">Bearbeiten</a>
+
                             <div class="btn-group">
                                 <form th:if="${!(plant.chatsAboutThisPlant.isEmpty() && plant.getWishedBy().isEmpty() && plant.getBuyer() == null)}" th:action="@{/plants/delete/{id}(id=${plant.plantId})}" method="post" class="d-inline">
                                     <button type="submit" class="btn btn-warning" onclick="return confirm('Sind Sie sicher, dass Sie diese Pflanze deaktivieren möchten?');">Löschen</button>

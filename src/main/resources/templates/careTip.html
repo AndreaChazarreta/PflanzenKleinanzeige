@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:insert="~{fragments/htmlHead :: head}"></th:block>
+    <style>
+        .card {
+            border: none;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s;
+        }
+
+        .card a {
+            text-decoration: none;
+            color: inherit;
+        }
+    </style>
+    <title>Pflegehinweise</title>
+</head>
+<body>
+<th:block th:insert="~{fragments/htmlNavBar :: navbar}"></th:block>
+
+<h1>Pflegehinweise</h1>
+<div class="col mb-4">
+    <div class="card h-100">
+        <a th:href="@{/careTip/{id}(id=${careTip.tipId})}">
+            <div class="card-body">
+                <p>Dünung: <span th:text="${careTip.getFertilization()}"></span></p>
+                <p>Bewässerung: <span th:text="${careTip.getIrrigation()}"></span></p>
+                <p>Licht: <span th:text="${careTip.getLightingConditions()}"></span></p>
+                <p>Weitere Tipps: <span th:text="${careTip.getOtherTips()}"></span></p>
+                <p>Umpflanzen: <span th:text="${careTip.getRepotting()}"></span></p>
+                <p>Temperatur: <span th:text="${careTip.getTemperature()}"></span></p>
+            </div>
+        </a>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+</body>
+</html>

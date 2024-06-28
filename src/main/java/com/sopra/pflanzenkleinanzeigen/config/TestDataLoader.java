@@ -43,6 +43,8 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
     private MessageService messageService;
     @Autowired
     private CategoryService categoryService;
+    @Autowired
+    private CareTipService careTipService;
 
     /**
      * This method is triggered when the application context is refreshed.
@@ -161,6 +163,16 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         category6.setName("Strauß");
         categoryService.saveCategory(category6);
 
+        CareTip careTip1 = new CareTip();
+        careTip1.setLightingConditions("high");
+        careTip1.setFertilization("Nein");
+        careTip1.setIrrigation("viel");
+        careTip1.setOtherTips("keine");
+        careTip1.setRepotting("Ja");
+        careTip1.setTemperature("20 Grad");
+
+        careTipService.saveCareTip(careTip1);
+
         Plant kaktus = new Plant();
         kaktus.setName("Kaktus");
         kaktus.setPrice(new BigDecimal("12.45"));
@@ -169,6 +181,7 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         kaktus.setSeller(admin);
         kaktus.setImagePath("/plant-images/kaktus1.JPG");
         kaktus.setCategory(category3);
+        kaktus.setCareTip(careTip1);
         plantService.savePlantDataLoader(kaktus);
 
         Plant rose = new Plant();
@@ -188,6 +201,7 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         testVerkauft.setSeller(admin);
         testVerkauft.setBuyer(andrea);
         testVerkauft.setImagePath("/plant-images/mixBlumen.jpg");
+        testVerkauft.setCareTip(careTip1);
         plantService.savePlantDataLoader(testVerkauft);
 
         Plant testNoBeziehungen = new Plant();

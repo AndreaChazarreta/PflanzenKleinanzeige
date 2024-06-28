@@ -1,6 +1,7 @@
 package com.sopra.pflanzenkleinanzeigen.service;
 
 import com.sopra.pflanzenkleinanzeigen.entity.CareTip;
+import com.sopra.pflanzenkleinanzeigen.entity.Plant;
 import com.sopra.pflanzenkleinanzeigen.repository.CareTipRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,5 +24,9 @@ public class CareTipService {
 
     public List<CareTip> findAllCareTips() {
         return careTipRepository.findAll();
+    }
+
+    public CareTip findCareTipById(Integer id) {
+        return careTipRepository.findById(id).orElse(null);
     }
 }
