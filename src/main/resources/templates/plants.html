@@ -52,6 +52,7 @@
             cursor: pointer;
             width: 40px;
             height: 40px;
+            margin-bottom: 20px;
         }
         .wishlist-container {
             display: flex;
@@ -80,29 +81,7 @@
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4">
         <th:block th:each="plant : ${allPlants}">
             <div th:if="${plant.isSold() == false}">
-                <div class="col mb-4">
-                    <div class="card h-100">
-                        <a th:href="@{/plants/{id}(id=${plant.plantId})}">
-                            <img th:src="@{${plant.imagePath}}" class="card-img-top" alt="Plant Image">
-                        </a>
-                        <div class="card-body">
-                            <h5 class="card-title" th:text="${plant.name}">Plant Name</h5>
-                            <p class="card-text" th:text="'Preis: ' + ${plant.price} + '€'">Plant Price</p>
-                            <div class="wishlist-container">
-                                <th:block th:if="${plant.seller.userId == currentUser.userId}">
-                                    <img src="/plant-images/wishListButtonBlack.png" class="wishlist-image" data-bs-toggle="tooltip" data-bs-placement="top" title="Du kannst deine eigene Pflanze nicht zur Wunschliste hinzufügen">
-                                </th:block>
-                                <th:block th:unless="${plant.seller.userId == currentUser.userId}">
-                                    <img th:src="@{${#lists.contains(currentUser.wishedPlants, plant) ? '/plant-images/wishListButtonColoured.png' : '/plant-images/wishListButtonBlack.png'}}"
-                                         th:data-plant-id="${plant.plantId}"
-                                         th:data-action="${#lists.contains(currentUser.wishedPlants, plant) ? 'remove' : 'add'}"
-                                         class="wishlist-image"
-                                         onclick="toggleWishlist(this)">
-                                </th:block>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <th:block th:insert="~{fragments/cardPlantsOverview :: cardFragment(plant=${plant}, currentUser=${currentUser})}"></th:block>
             </div>
         </th:block>
     </div>
@@ -110,29 +89,7 @@
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4">
         <th:block th:each="plant : ${plantsByName}">
             <div th:if="${plant.isSold() == false}">
-                <div class="col mb-4">
-                    <div class="card h-100">
-                        <a th:href="@{/plants/{id}(id=${plant.plantId})}">
-                            <img th:src="@{${plant.imagePath}}" class="card-img-top" alt="Plant Image">
-                        </a>
-                        <div class="card-body">
-                            <h5 class="card-title" th:text="${plant.name}">Plant Name</h5>
-                            <p class="card-text" th:text="'Preis: ' + ${plant.price} + '€'">Plant Price</p>
-                            <div class="wishlist-container">
-                                <th:block th:if="${plant.seller.userId == currentUser.userId}">
-                                    <img src="/plant-images/wishListButtonBlack.png" class="wishlist-image" data-bs-toggle="tooltip" data-bs-placement="top" title="Du kannst deine eigene Pflanze nicht zur Wunschliste hinzufügen">
-                                </th:block>
-                                <th:block th:unless="${plant.seller.userId == currentUser.userId}">
-                                    <img th:src="@{${#lists.contains(currentUser.wishedPlants, plant) ? '/plant-images/wishListButtonColoured.png' : '/plant-images/wishListButtonBlack.png'}}"
-                                         th:data-plant-id="${plant.plantId}"
-                                         th:data-action="${#lists.contains(currentUser.wishedPlants, plant) ? 'remove' : 'add'}"
-                                         class="wishlist-image"
-                                         onclick="toggleWishlist(this)">
-                                </th:block>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <th:block th:insert="~{fragments/cardPlantsOverview :: cardFragment(plant=${plant}, currentUser=${currentUser})}"></th:block>
             </div>
         </th:block>
     </div>
