@@ -1,5 +1,6 @@
 package com.sopra.pflanzenkleinanzeigen.entity;
 
+import com.sopra.pflanzenkleinanzeigen.entity.criteria.*;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import java.math.BigDecimal;
@@ -43,6 +44,23 @@ public class Plant {
 
     private boolean sold;
 
+    private boolean lifespan;
+
+    private HardinessZone hardinessZone;
+
+    private SoilType soilType;
+
+    private FloweringTime floweringTime;
+
+    private boolean isToxicForPets;
+
+    private LightRequirement lightRequirement;
+
+    private WaterRequirement waterRequirement;
+
+    private boolean isAirPurifying;
+
+    private Usability usability;
 
     @ManyToMany(targetEntity = Benutzer.class, fetch = FetchType.EAGER)
     private Set<Benutzer> wishedBy = new HashSet<>();
