@@ -97,6 +97,17 @@
                         <option value="false" th:selected="${potIncluded == false}">Ohne Übertopf</option>
                     </select>
 
+                    <label for="category">Kategorie:</label>
+                    <select class="form-select" aria-label="Kategorie:" id="category" name="category" th:value="${category}">
+                        <option value="" th:selected="${category == null}">Alle anzeigen</option>
+                        <option th:value="Baum" th:selected="${category == 'Baum'}">Baum</option>
+                        <option value="Zierpflanze" th:selected="${category == 'Zierpflanze'}">Zierpflanze</option>
+                        <option value="Grünpflanze" th:selected="${category == 'Grünpflanze'}">Grünpflanze</option>
+                        <option value="Draußenpflanze" th:selected="${category == 'Draußenpflanze'}">Draußenpflanze</option>
+                        <option value="Kräuter" th:selected="${category == 'Kräuter'}">Kräuter</option>
+                        <option value="Strauß" th:selected="${category == 'Strauß'}">Strauß</option>
+                    </select>
+
                     <button type="submit">Filtern</button>
                 </div>
             </form>
@@ -128,7 +139,8 @@
             maxPrice: document.getElementById('maxPrice').value,
             minHeight: document.getElementById('minHeight').value,
             maxHeight: document.getElementById('maxHeight').value,
-            potIncluded: document.getElementById('potIncluded').value
+            potIncluded: document.getElementById('potIncluded').value,
+            category: document.getElementById('category').value
         };
 
         const queryString = Object.keys(params)
