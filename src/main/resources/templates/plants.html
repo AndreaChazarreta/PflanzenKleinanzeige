@@ -133,22 +133,29 @@
     }
 
     function buildUrl() {
-        const params = {
-            name: document.getElementById('name').value,
-            minPrice: document.getElementById('minPrice').value,
-            maxPrice: document.getElementById('maxPrice').value,
-            minHeight: document.getElementById('minHeight').value,
-            maxHeight: document.getElementById('maxHeight').value,
-            potIncluded: document.getElementById('potIncluded').value,
-            category: document.getElementById('category').value
-        };
+        const name = document.getElementById('name').value;
+        const minPrice = document.getElementById('minPrice').value;
+        const maxPrice = document.getElementById('maxPrice').value;
+        const minHeight = document.getElementById('minHeight').value;
+        const maxHeight = document.getElementById('maxHeight').value;
+        const potIncluded = document.getElementById('potIncluded').value;
+        const category = document.getElementById('category').value;
 
-        const queryString = Object.keys(params)
-            .filter(key => params[key] !== '' && params[key] !== null)
-            .map(key => `${key}=${encodeURIComponent(params[key])}`)
-            .join('&');
+        const params = { name, minPrice, maxPrice, minHeight, maxHeight, potIncluded, category };
 
-        const url = `/plants?${queryString}`;
+        // Check if any of the parameters have values
+        const hasParams = Object.values(params).some(value => value !== '');
+
+        let queryString = '';
+
+        if (hasParams) {
+            queryString = Object.keys(params)
+                .filter(key => params[key] !== '' && params[key] !== null)
+                .map(key => `${key}=${encodeURIComponent(params[key])}`)
+                .join('&');
+        }
+
+        const url = `/plants${queryString ? `?${queryString}` : ''}`;
         window.location.href = url;
         return false;
     }
