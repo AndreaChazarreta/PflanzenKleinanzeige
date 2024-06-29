@@ -185,6 +185,15 @@
             this.classList.add('active');
         });
     });
+
+    function checkSearch() {
+        var searchField = document.getElementById("name").value;
+        if (searchField.trim() === "") {
+            window.location.href = "/plants";
+            return false;
+        }
+        return true;
+    }
 </script>
 </body>
 </html>

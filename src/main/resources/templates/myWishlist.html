@@ -169,6 +169,15 @@
             return new bootstrap.Tooltip(tooltipTriggerEl);
         });
     });
+
+    function checkSearch() {
+        var searchField = document.getElementById("name").value;
+        if (searchField.trim() === "") {
+            window.location.href = "/plants";
+            return false;
+        }
+        return true;
+    }
 </script>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
