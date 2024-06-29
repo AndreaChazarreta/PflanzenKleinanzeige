@@ -16,6 +16,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,21 +44,25 @@ public class PlantController {
      * @return "plants", the view with all plants.
      */
     @GetMapping("/plants")
-    public String getPlants(Model model, @RequestParam(value = "name", required = false) String name) {
+    public String getPlants(Model model,
+                            @RequestParam(value = "name", required = false) String name,
+                            @RequestParam(value = "minPrice", required = false) BigDecimal minPrice,
+                            @RequestParam(value = "maxPrice", required = false) BigDecimal maxPrice,
+                            @RequestParam(value = "minHeight", required = false) BigDecimal minHeight,
+                            @RequestParam(value = "maxHeight", required = false) BigDecimal maxHeight,
+                            @RequestParam(value = "potIncluded", required = false) Boolean potIncluded) {
         try {
             Benutzer currentUser = userService.getCurrentUser();
             model.addAttribute("currentUser", currentUser);
 
-            List<Plant> plants;
-            if(name != null && !name.isEmpty()){
-                plants = plantService.findByKeywordName(name);
-                plants.removeIf(plant -> !plant.isAdIsActive());
-                model.addAttribute("name", name);
-            } else {
-                plants = plantService.findAllActivePlants();
-            }
-
+            List<Plant> plants = plantService.findPlantsByFilters(name, minPrice, maxPrice, minHeight, maxHeight, potIncluded);
             model.addAttribute("plants", plants);
+            model.addAttribute("name", name);
+            model.addAttribute("minPrice", minPrice);
+            model.addAttribute("maxPrice", maxPrice);
+            model.addAttribute("minHeight", minHeight);
+            model.addAttribute("maxHeight", maxHeight);
+            model.addAttribute("potIncluded", potIncluded);
 
         } catch (Exception getPlantException ) {
             logger.error("Fehler beim Abrufen der Pflanzen", getPlantException);
@@ -66,6 +71,7 @@ public class PlantController {
         }
         return "plants";
     }
+
 
     /**
      * This method retrieves a specific plant by its ID and displays its details.

@@ -69,14 +69,37 @@
 <div class="container mt-5">
     <h1>Die grüne Ecke - Dein Secondhand-Pflanzenmarkt</h1>
 
-    <div class="row mb-4">
-        <div class="col-12">
-            <form class="search-bar" th:action="@{/plants}" method="get" onsubmit="return checkSearch()">
-                <button class="btn" type="submit"><i class="bi bi-search"></i></button>
-                <input class="form-control" id="name" name="name" label="Suche nach Name:" type="text" th:value="${name}" placeholder="Suche nach Name">
+
+            <form id="filterForm" th:action="@{/plants}" method="get" onsubmit="return buildUrl()">
+
+                <div class="search-bar">
+                    <input class="form-control" id="name" name="name" label="Suche nach Name:" type="text" th:value="${name}" placeholder="Suche nach Name">
+                    <button class="btn" type="submit"><i class="bi bi-search"></i></button>
+                </div>
+
+                <div>
+                    <label for="minPrice">Mindestpreis:</label>
+                    <input class="form-control" id="minPrice" name="minPrice" type="number" th:value="${minPrice}" step="0.01">
+
+                    <label for="maxPrice">Höchstpreis:</label>
+                    <input class="form-control" id="maxPrice" name="maxPrice" type="number" th:value="${maxPrice}" step="0.01">
+
+                    <label for="minHeight">Mindesthöhe:</label>
+                    <input class="form-control" id="minHeight" name="minHeight" type="number" th:value="${minHeight}" step="0.01">
+
+                    <label for="maxHeight">Höchsthöhe:</label>
+                    <input class="form-control" id="maxHeight" name="maxHeight" type="number" th:value="${maxHeight}" step="0.01">
+
+                    <label for="potIncluded">Übertopf enthalten:</label>
+                    <select class="form-control" id="potIncluded" name="potIncluded">
+                        <option value="" th:selected="${potIncluded == null}">Alle anzeigen</option>
+                        <option value="true" th:selected="${potIncluded == true}">Mit Übertopf</option>
+                        <option value="false" th:selected="${potIncluded == false}">Ohne Übertopf</option>
+                    </select>
+
+                    <button type="submit">Filtern</button>
+                </div>
             </form>
-        </div>
-    </div>
 
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4">
         <th:block th:each="plant : ${plants}">
@@ -96,6 +119,26 @@
             return false;
         }
         return true;
+    }
+
+    function buildUrl() {
+        const params = {
+            name: document.getElementById('name').value,
+            minPrice: document.getElementById('minPrice').value,
+            maxPrice: document.getElementById('maxPrice').value,
+            minHeight: document.getElementById('minHeight').value,
+            maxHeight: document.getElementById('maxHeight').value,
+            potIncluded: document.getElementById('potIncluded').value
+        };
+
+        const queryString = Object.keys(params)
+            .filter(key => params[key] !== '' && params[key] !== null)
+            .map(key => `${key}=${encodeURIComponent(params[key])}`)
+            .join('&');
+
+        const url = `/plants?${queryString}`;
+        window.location.href = url;
+        return false;
     }
 
     function toggleWishlist(imageElement) {

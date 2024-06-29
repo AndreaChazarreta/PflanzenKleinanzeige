@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.nio.file.Files;
@@ -71,6 +72,13 @@ public class PlantService {
     public Plant findPlantById(Integer id) {
         return plantRepository.findById(id).orElse(null);
     }
+
+    public List<Plant> findPlantsByFilters(String name, BigDecimal minPrice, BigDecimal maxPrice,
+                                           BigDecimal minHeight, BigDecimal maxHeight,
+                                           Boolean potIncluded) {
+        return plantRepository.findByFilters(name, minPrice, maxPrice, minHeight, maxHeight, potIncluded);
+    }
+
 
     public void deletePlant(Plant plant) {
         plantRepository.delete(plant);
