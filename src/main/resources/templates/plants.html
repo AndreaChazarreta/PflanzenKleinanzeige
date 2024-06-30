@@ -97,16 +97,15 @@
                         <option value="false" th:selected="${potIncluded == false}">Ohne Übertopf</option>
                     </select>
 
-                    <label for="category">Kategorie:</label>
-                    <select class="form-select" aria-label="Kategorie:" id="category" name="category" th:value="${category}">
-                        <option value="" th:selected="${category == null}">Alle anzeigen</option>
-                        <option th:value="Baum" th:selected="${category == 'Baum'}">Baum</option>
-                        <option value="Zierpflanze" th:selected="${category == 'Zierpflanze'}">Zierpflanze</option>
-                        <option value="Grünpflanze" th:selected="${category == 'Grünpflanze'}">Grünpflanze</option>
-                        <option value="Draußenpflanze" th:selected="${category == 'Draußenpflanze'}">Draußenpflanze</option>
-                        <option value="Kräuter" th:selected="${category == 'Kräuter'}">Kräuter</option>
-                        <option value="Strauß" th:selected="${category == 'Strauß'}">Strauß</option>
-                    </select>
+                    <label>Kategorie:</label>
+                    <div>
+                        <label><input type="checkbox" name="category" value="Baum" th:checked="${categories != null && categories.contains('Baum')}"> Baum</label>
+                        <label><input type="checkbox" name="category" value="Zierpflanze" th:checked="${categories != null && categories.contains('Zierpflanze')}"> Zierpflanze</label>
+                        <label><input type="checkbox" name="category" value="Grünpflanze" th:checked="${categories != null && categories.contains('Grünpflanze')}"> Grünpflanze</label>
+                        <label><input type="checkbox" name="category" value="Draußenpflanze" th:checked="${categories != null && categories.contains('Draußenpflanze')}"> Draußenpflanze</label>
+                        <label><input type="checkbox" name="category" value="Kräuter" th:checked="${categories != null && categories.contains('Kräuter')}"> Kräuter</label>
+                        <label><input type="checkbox" name="category" value="Strauß" th:checked="${categories != null && categories.contains('Strauß')}"> Strauß</label>
+                    </div>
 
                     <label for="sortPrice">Sortieren nach Preis:</label>
                     <select class="form-select" id="sortPrice" name="sortPrice">
@@ -146,19 +145,18 @@
         const minHeight = document.getElementById('minHeight').value;
         const maxHeight = document.getElementById('maxHeight').value;
         const potIncluded = document.getElementById('potIncluded').value;
-        const category = document.getElementById('category').value;
+        const categories = Array.from(document.querySelectorAll('input[name="category"]:checked')).map(checkbox => checkbox.value);
         const sortPrice = document.getElementById('sortPrice').value;
 
-        const params = { name, minPrice, maxPrice, minHeight, maxHeight, potIncluded, category, sortPrice };
+        const params = { name, minPrice, maxPrice, minHeight, maxHeight, potIncluded, category: categories.join(','), sortPrice };
 
-        // Check if any of the parameters have values
-        const hasParams = Object.values(params).some(value => value !== '');
+        const hasParams = Object.values(params).some(value => value !== '' && value.length !== 0);
 
         let queryString = '';
 
         if (hasParams) {
             queryString = Object.keys(params)
-                .filter(key => params[key] !== '' && params[key] !== null)
+                .filter(key => params[key] !== '' && params[key] !== null && params[key].length !== 0)
                 .map(key => `${key}=${encodeURIComponent(params[key])}`)
                 .join('&');
         }

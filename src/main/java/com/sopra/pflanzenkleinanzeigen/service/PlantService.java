@@ -75,8 +75,8 @@ public class PlantService {
 
     public List<Plant> findPlantsByFilters(String name, BigDecimal minPrice, BigDecimal maxPrice,
                                            BigDecimal minHeight, BigDecimal maxHeight,
-                                           Boolean potIncluded, String category, String sortPrice) {
-        return plantRepository.findByFilters(name, minPrice, maxPrice, minHeight, maxHeight, potIncluded, category, sortPrice);
+                                           Boolean potIncluded, List<String> categories, String sortPrice) {
+        return plantRepository.findByFilters(name, minPrice, maxPrice, minHeight, maxHeight, potIncluded, categories, sortPrice);
     }
 
     public List<Plant> findPlantsByFiltersWithoutCategory(String name, BigDecimal minPrice, BigDecimal maxPrice,

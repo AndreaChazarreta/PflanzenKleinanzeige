@@ -51,15 +51,15 @@ public class PlantController {
                             @RequestParam(value = "minHeight", required = false) BigDecimal minHeight,
                             @RequestParam(value = "maxHeight", required = false) BigDecimal maxHeight,
                             @RequestParam(value = "potIncluded", required = false) Boolean potIncluded,
-                            @RequestParam(value = "category", required = false) String category,
+                            @RequestParam(value = "category", required = false) List<String> categories,
                             @RequestParam(value = "sortPrice", required = false) String sortPrice) {
         try {
             Benutzer currentUser = userService.getCurrentUser();
             model.addAttribute("currentUser", currentUser);
             List<Plant> plants = new ArrayList<>();
 
-            if(category != null){
-                plants = plantService.findPlantsByFilters(name, minPrice, maxPrice, minHeight, maxHeight, potIncluded, category, sortPrice);
+            if(categories != null && !categories.isEmpty()){
+                plants = plantService.findPlantsByFilters(name, minPrice, maxPrice, minHeight, maxHeight, potIncluded, categories, sortPrice);
             } else{
                 plants = plantService.findPlantsByFiltersWithoutCategory(name, minPrice, maxPrice, minHeight, maxHeight, potIncluded, sortPrice);
             }
@@ -71,7 +71,7 @@ public class PlantController {
             model.addAttribute("minHeight", minHeight);
             model.addAttribute("maxHeight", maxHeight);
             model.addAttribute("potIncluded", potIncluded);
-            model.addAttribute("category", category);
+            model.addAttribute("categories", categories);
             model.addAttribute("sortPrice", sortPrice);
 
         } catch (Exception getPlantException ) {
