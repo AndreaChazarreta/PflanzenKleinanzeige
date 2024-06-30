@@ -71,6 +71,28 @@
             align-items: center;
             margin-top: 10px;
         }
+        .draggable {
+            cursor: move;
+        }
+
+        .droppable {
+            border: 2px dashed #2e8b57;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .comparison-table th, .comparison-table td {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: center;
+        }
     </style>
 </head>
 <body>
@@ -98,27 +120,34 @@
         </div>
     </div>
 
-    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4">
-        <th:block th:each="plant : ${wishlist}">
-            <div class="col mb-4">
-                <div class="card h-100">
-                    <a th:href="@{/plants/{id}(id=${plant.plantId})}">
-                        <img th:src="@{${plant.imagePath}}" class="card-img-top" alt="Pflanzenbild">
-                    </a>
-                    <div class="card-body">
-                        <h5 class="card-title" th:text="${plant.name}">Plant Name</h5>
-                        <p class="card-text" th:text="'Preis: ' + ${plant.price} + '€'">Plant Price</p>
-                        <div class="wishlist-container">
-                            <img th:src="@{'/plant-images/wishListButtonColoured.png'}"
-                                 th:data-plant-id="${plant.plantId}"
-                                 th:data-action="'remove'"
-                                 class="wishlist-image"
-                                 onclick="toggleWishlist(this)">
+    <div id="drop-container" class="droppable" ondrop="drop(event)" ondragover="allowDrop(event)">
+        <p>Ziehe Pflanzen hierher, um sie zu vergleichen</p>
+    </div>
+
+    <div id="plants">
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4">
+            <th:block th:each="plant : ${wishlist}">
+                <div class="col mb-4">
+                    <div class="card h-100 draggable" draggable="true" data-plant-id="${plant.plantId}"
+                         ondragstart="drag(event)">
+                        <a th:href="@{/plants/{id}(id=${plant.plantId})}">
+                            <img th:src="@{${plant.imagePath}}" class="card-img-top" alt="Pflanzenbild">
+                        </a>
+                        <div class="card-body">
+                            <h5 class="card-title" th:text="${plant.name}">Plant Name</h5>
+                            <p class="card-text" th:text="'Preis: ' + ${plant.price} + '€'">Plant Price</p>
+                            <div class="wishlist-container">
+                                <img th:src="@{'/plant-images/wishListButtonColoured.png'}"
+                                     th:data-plant-id="${plant.plantId}"
+                                     th:data-action="'remove'"
+                                     class="wishlist-image"
+                                     onclick="toggleWishlist(this)">
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </th:block>
+            </th:block>
+        </div>
     </div>
 </div>
 
@@ -163,12 +192,83 @@
                 console.error('Fehler:', error);
             });
     }
+
     document.addEventListener('DOMContentLoaded', function () {
         var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
         var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
             return new bootstrap.Tooltip(tooltipTriggerEl);
         });
     });
+
+    function drag(event) {
+        event.dataTransfer.setData("plantId", event.target.getAttribute('data-plant-id'));
+    }
+
+    function allowDrop(event) {
+        event.preventDefault();
+    }
+    function drop(event) {
+        event.preventDefault();
+        var plantId = event.dataTransfer.getData("plantId");
+        var draggedElement = document.querySelector(`[data-plant-id="${plantId}"]`);
+
+        if (!draggedElement) {
+            console.error("Dragged element not found for plantId:", plantId);
+            return;
+        }
+
+        var dropContainer = document.getElementById("drop-container");
+        var comparisonTable = dropContainer.querySelector("table");
+
+        if (!comparisonTable) {
+            comparisonTable = document.createElement("table");
+            comparisonTable.classList.add("comparison-table");
+
+            var tbody = document.createElement("tbody");
+
+            var imageRow = document.createElement("tr");
+            var nameRow = document.createElement("tr");
+            var priceRow = document.createElement("tr");
+
+            tbody.appendChild(imageRow);
+            tbody.appendChild(nameRow);
+            tbody.appendChild(priceRow);
+
+            comparisonTable.appendChild(tbody);
+
+            dropContainer.innerHTML = "";
+            dropContainer.appendChild(comparisonTable);
+        }
+
+        var tbody = comparisonTable.querySelector("tbody");
+        var imageRow = tbody.children[0];
+        var nameRow = tbody.children[1];
+        var priceRow = tbody.children[2];
+
+        if (imageRow.cells.length < 3) {
+            var plantName = draggedElement.querySelector(".card-title").textContent;
+            var plantPrice = draggedElement.querySelector(".card-text").textContent;
+            var plantImageSrc = draggedElement.querySelector("img").src;
+
+            var imgCell = document.createElement("td");
+            var img = document.createElement("img");
+            img.src = plantImageSrc;
+            img.style.width = "100px";
+            imgCell.appendChild(img);
+
+            var nameCell = document.createElement("td");
+            nameCell.textContent = plantName;
+
+            var priceCell = document.createElement("td");
+            priceCell.textContent = plantPrice;
+
+            imageRow.appendChild(imgCell);
+            nameRow.appendChild(nameCell);
+            priceRow.appendChild(priceCell);
+        } else {
+            alert("Du kannst maximal 3 Pflanzen vergleichen.");
+        }
+    }
 </script>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
