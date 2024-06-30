@@ -37,11 +37,13 @@ public interface PlantRepository extends JpaRepository<Plant, Integer> {
             "AND (:maxHeight IS NULL OR p.height <= :maxHeight) " +
             "AND (:potIncluded IS NULL OR p.potIncluded = :potIncluded) " +
             "AND (:category IS NULL OR p.category.name = :category) " +
-            "AND p.adIsActive = true")
+            "AND p.adIsActive = true " +
+            "ORDER BY CASE WHEN :sortPrice = 'asc' THEN p.price END ASC, " +
+            "CASE WHEN :sortPrice = 'desc' THEN p.price END DESC")
     List<Plant> findByFilters(@Param("name") String name, @Param("minPrice") BigDecimal minPrice,
-                              @Param("maxPrice") BigDecimal maxPrice,
-                              @Param("minHeight") BigDecimal minHeight, @Param("maxHeight") BigDecimal maxHeight,
-                              @Param("potIncluded") Boolean potIncluded, @Param("category") String category);
+                              @Param("maxPrice") BigDecimal maxPrice, @Param("minHeight") BigDecimal minHeight,
+                              @Param("maxHeight") BigDecimal maxHeight, @Param("potIncluded") Boolean potIncluded,
+                              @Param("category") String category, @Param("sortPrice") String sortPrice);
 
     @Query("SELECT p FROM Plant p WHERE (:name IS NULL OR LOWER(p.name) LIKE LOWER(CONCAT('%', :name, '%'))) " +
             "AND (:minPrice IS NULL OR p.price >= :minPrice) " +
@@ -49,10 +51,12 @@ public interface PlantRepository extends JpaRepository<Plant, Integer> {
             "AND (:minHeight IS NULL OR p.height >= :minHeight) " +
             "AND (:maxHeight IS NULL OR p.height <= :maxHeight) " +
             "AND (:potIncluded IS NULL OR p.potIncluded = :potIncluded) " +
-            "AND p.adIsActive = true")
+            "AND p.adIsActive = true " +
+            "ORDER BY CASE WHEN :sortPrice = 'asc' THEN p.price END ASC, " +
+            "CASE WHEN :sortPrice = 'desc' THEN p.price END DESC")
     List<Plant> findByFiltersWithoutCategory(@Param("name") String name, @Param("minPrice") BigDecimal minPrice,
-                              @Param("maxPrice") BigDecimal maxPrice,
-                              @Param("minHeight") BigDecimal minHeight, @Param("maxHeight") BigDecimal maxHeight,
-                              @Param("potIncluded") Boolean potIncluded);
+                              @Param("maxPrice") BigDecimal maxPrice, @Param("minHeight") BigDecimal minHeight,
+                              @Param("maxHeight") BigDecimal maxHeight, @Param("potIncluded") Boolean potIncluded,
+                              @Param("sortPrice") String sortPrice);
 }
 

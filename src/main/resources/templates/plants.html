@@ -108,6 +108,13 @@
                         <option value="Strauß" th:selected="${category == 'Strauß'}">Strauß</option>
                     </select>
 
+                    <label for="sortPrice">Sortieren nach Preis:</label>
+                    <select class="form-select" id="sortPrice" name="sortPrice">
+                        <option value="" th:selected="${sortPrice == null}">Keine Sortierung</option>
+                        <option value="asc" th:selected="${sortPrice == 'asc'}">Preis aufsteigend</option>
+                        <option value="desc" th:selected="${sortPrice == 'desc'}">Preis absteigend</option>
+                    </select>
+
                     <button type="submit">Filtern</button>
                 </div>
             </form>
@@ -140,8 +147,9 @@
         const maxHeight = document.getElementById('maxHeight').value;
         const potIncluded = document.getElementById('potIncluded').value;
         const category = document.getElementById('category').value;
+        const sortPrice = document.getElementById('sortPrice').value;
 
-        const params = { name, minPrice, maxPrice, minHeight, maxHeight, potIncluded, category };
+        const params = { name, minPrice, maxPrice, minHeight, maxHeight, potIncluded, category, sortPrice };
 
         // Check if any of the parameters have values
         const hasParams = Object.values(params).some(value => value !== '');

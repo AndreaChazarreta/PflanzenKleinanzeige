@@ -51,31 +51,28 @@ public class PlantController {
                             @RequestParam(value = "minHeight", required = false) BigDecimal minHeight,
                             @RequestParam(value = "maxHeight", required = false) BigDecimal maxHeight,
                             @RequestParam(value = "potIncluded", required = false) Boolean potIncluded,
-                            @RequestParam(value = "category", required = false) String category) {
+                            @RequestParam(value = "category", required = false) String category,
+                            @RequestParam(value = "sortPrice", required = false) String sortPrice) {
         try {
             Benutzer currentUser = userService.getCurrentUser();
             model.addAttribute("currentUser", currentUser);
+            List<Plant> plants = new ArrayList<>();
 
             if(category != null){
-                List<Plant> plants = plantService.findPlantsByFilters(name, minPrice, maxPrice, minHeight, maxHeight, potIncluded, category);
-                model.addAttribute("plants", plants);
-                model.addAttribute("name", name);
-                model.addAttribute("minPrice", minPrice);
-                model.addAttribute("maxPrice", maxPrice);
-                model.addAttribute("minHeight", minHeight);
-                model.addAttribute("maxHeight", maxHeight);
-                model.addAttribute("potIncluded", potIncluded);
-                model.addAttribute("category", category);
-            } else if(category == null){
-                List<Plant> plants = plantService.findPlantsByFiltersWithoutCategory(name, minPrice, maxPrice, minHeight, maxHeight, potIncluded);
-                model.addAttribute("plants", plants);
-                model.addAttribute("name", name);
-                model.addAttribute("minPrice", minPrice);
-                model.addAttribute("maxPrice", maxPrice);
-                model.addAttribute("minHeight", minHeight);
-                model.addAttribute("maxHeight", maxHeight);
-                model.addAttribute("potIncluded", potIncluded);
+                plants = plantService.findPlantsByFilters(name, minPrice, maxPrice, minHeight, maxHeight, potIncluded, category, sortPrice);
+            } else{
+                plants = plantService.findPlantsByFiltersWithoutCategory(name, minPrice, maxPrice, minHeight, maxHeight, potIncluded, sortPrice);
             }
+
+            model.addAttribute("plants", plants);
+            model.addAttribute("name", name);
+            model.addAttribute("minPrice", minPrice);
+            model.addAttribute("maxPrice", maxPrice);
+            model.addAttribute("minHeight", minHeight);
+            model.addAttribute("maxHeight", maxHeight);
+            model.addAttribute("potIncluded", potIncluded);
+            model.addAttribute("category", category);
+            model.addAttribute("sortPrice", sortPrice);
 
         } catch (Exception getPlantException ) {
             logger.error("Fehler beim Abrufen der Pflanzen", getPlantException);
