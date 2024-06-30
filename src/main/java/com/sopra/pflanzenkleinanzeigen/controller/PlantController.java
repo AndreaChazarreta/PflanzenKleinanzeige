@@ -17,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * The PlantController class handles web requests related to plant operations.
@@ -235,7 +236,11 @@ public class PlantController {
         } else {
             wishlist = plantService.getWishlistForUser(currentUser);
         }
-        model.addAttribute("wishlist", wishlist);
+        List<Plant> sortedWishlist = wishlist.stream()
+                .sorted((p1, p2) -> Boolean.compare(p2.isAdIsActive(), p1.isAdIsActive()))
+                .collect(Collectors.toList());
+
+        model.addAttribute("wishlist", sortedWishlist);
         return "myWishlist";
     }
 

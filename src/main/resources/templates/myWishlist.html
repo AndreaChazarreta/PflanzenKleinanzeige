@@ -103,12 +103,17 @@
         <th:block th:each="plant : ${wishlist}">
             <div class="col mb-4">
                 <div class="card h-100">
-                    <a th:href="@{/plants/{id}(id=${plant.plantId})}">
-                        <img th:src="@{${plant.imagePath}}" class="card-img-top" alt="Pflanzenbild">
-                    </a>
+                    <th:block th:if="${plant.adIsActive}">
+                        <a th:href="@{/plants/{id}(id=${plant.plantId})}">
+                            <img th:src="@{${plant.imagePath}}" class="card-img-top" alt="Pflanzenbild">
+                        </a>
+                    </th:block>
+                    <th:block th:if="${!plant.adIsActive}">
+                        <img th:src="@{/plant-images/PlantNotAvailablePic.jpg}" class="card-img-top" alt="Pflanzenbild">
+                    </th:block>
                     <div class="card-body">
                         <h5 class="card-title" th:text="${plant.name}">Plant Name</h5>
-                        <p class="card-text" th:text="'Preis: ' + ${plant.price} + '€'">Plant Price</p>
+                        <p class="card-text" th:text="${plant.adIsActive} ? 'Preis: ' + ${plant.price} + '€' : 'Pflanze ist nicht mehr verfügbar'">Plant Price</p>
                         <div class="wishlist-container">
                             <img th:src="@{'/plant-images/wishListButtonColoured.png'}"
                                  th:data-plant-id="${plant.plantId}"
