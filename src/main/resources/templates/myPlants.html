@@ -27,6 +27,7 @@
             border-radius: 25px;
             padding: 8px;
             margin-bottom: 20px;
+            margin-top: 10px;
         }
         .search-bar input {
             border: none;
@@ -117,9 +118,9 @@
 
     <div class="row mb-4">
         <div class="col-12">
-            <form class="search-bar" th:action="@{/myPlants}" method="get">
+            <form class="search-bar" th:action="@{/myPlants}" method="get" onsubmit="return checkSearch()">
+                <input class="form-control" id="name" name="name" label="Suche nach Name:" type="text" th:value="${name}" placeholder="Suche nach Name">
                 <button class="btn" type="submit"><i class="bi bi-search"></i></button>
-                <input class="form-control" name="name" placeholder="Suche nach Name" type="text">
             </form>
         </div>
     </div>
@@ -185,6 +186,23 @@
             this.classList.add('active');
         });
     });
+
+    function checkSearch() {
+        var searchField = document.getElementById("name").value;
+        if (searchField.trim() === "") {
+            window.location.href = "/myPlants";
+            return false;
+        }
+        return true;
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+            return new bootstrap.Tooltip(tooltipTriggerEl);
+        });
+    });
+
 </script>
 </body>
 </html>

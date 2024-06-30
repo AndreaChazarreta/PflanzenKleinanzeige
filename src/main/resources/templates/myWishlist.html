@@ -46,6 +46,7 @@
         .search-bar input {
             border: none;
             outline: none;
+            flex: 1;
         }
         .search-bar input:focus {
             box-shadow: none;
@@ -92,8 +93,8 @@
     <div class="row mb-4">
         <div class="col-12">
             <form class="search-bar" th:action="@{/myWishlist}" method="get" onsubmit="return checkSearch()">
-                <button class="btn" type="submit"><i class="bi bi-search"></i></button>
                 <input class="form-control" id="name" name="name" label="Suche nach Name:" type="text" th:value="${name}" placeholder="Suche nach Name">
+                <button class="btn" type="submit"><i class="bi bi-search"></i></button>
             </form>
         </div>
     </div>
@@ -102,12 +103,17 @@
         <th:block th:each="plant : ${wishlist}">
             <div class="col mb-4">
                 <div class="card h-100">
-                    <a th:href="@{/plants/{id}(id=${plant.plantId})}">
-                        <img th:src="@{${plant.imagePath}}" class="card-img-top" alt="Pflanzenbild">
-                    </a>
+                    <th:block th:if="${plant.adIsActive}">
+                        <a th:href="@{/plants/{id}(id=${plant.plantId})}">
+                            <img th:src="@{${plant.imagePath}}" class="card-img-top" alt="Pflanzenbild">
+                        </a>
+                    </th:block>
+                    <th:block th:if="${!plant.adIsActive}">
+                        <img th:src="@{/plant-images/PlantNotAvailablePic.jpg}" class="card-img-top" alt="Pflanzenbild">
+                    </th:block>
                     <div class="card-body">
                         <h5 class="card-title" th:text="${plant.name}">Plant Name</h5>
-                        <p class="card-text" th:text="'Preis: ' + ${plant.price} + '€'">Plant Price</p>
+                        <p class="card-text" th:text="${plant.adIsActive} ? 'Preis: ' + ${plant.price} + '€' : 'Pflanze ist nicht mehr verfügbar'">Plant Price</p>
                         <div class="wishlist-container">
                             <img th:src="@{'/plant-images/wishListButtonColoured.png'}"
                                  th:data-plant-id="${plant.plantId}"
@@ -163,6 +169,22 @@
                 console.error('Fehler:', error);
             });
     }
+    document.addEventListener('DOMContentLoaded', function () {
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+            return new bootstrap.Tooltip(tooltipTriggerEl);
+        });
+    });
+
+    function checkSearch() {
+        var searchField = document.getElementById("name").value;
+        if (searchField.trim() === "") {
+            window.location.href = "/myWishlist";
+            return false;
+        }
+        return true;
+    }
+
     document.addEventListener('DOMContentLoaded', function () {
         var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
         var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
