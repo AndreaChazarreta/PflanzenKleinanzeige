@@ -64,6 +64,11 @@ public class PlantController {
                 plants = plantService.findPlantsByFiltersWithoutCategory(name, minPrice, maxPrice, minHeight, maxHeight, potIncluded, sortPrice);
             }
 
+            BigDecimal highestPrice = plantService.findMaxPrice();
+            if (highestPrice.compareTo(new BigDecimal(200)) > 0) {
+                highestPrice = new BigDecimal(200);
+            }
+
             model.addAttribute("plants", plants);
             model.addAttribute("name", name);
             model.addAttribute("minPrice", minPrice);
@@ -73,6 +78,7 @@ public class PlantController {
             model.addAttribute("potIncluded", potIncluded);
             model.addAttribute("categories", categories);
             model.addAttribute("sortPrice", sortPrice);
+            model.addAttribute("highestPrice", highestPrice);
 
         } catch (Exception getPlantException ) {
             logger.error("Fehler beim Abrufen der Pflanzen", getPlantException);

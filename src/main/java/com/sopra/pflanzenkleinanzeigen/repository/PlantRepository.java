@@ -59,5 +59,8 @@ public interface PlantRepository extends JpaRepository<Plant, Integer> {
                               @Param("maxPrice") BigDecimal maxPrice, @Param("minHeight") BigDecimal minHeight,
                               @Param("maxHeight") BigDecimal maxHeight, @Param("potIncluded") Boolean potIncluded,
                               @Param("sortPrice") String sortPrice);
+
+    @Query("SELECT MAX(p.price) FROM Plant p WHERE p.adIsActive = true")
+    BigDecimal findMaxPrice();
 }
 

@@ -4,6 +4,7 @@
     <th:block th:insert="~{fragments/htmlHead :: head}"></th:block>
     <meta name="_csrf" th:content="${_csrf.token}"/>
     <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.5.0/nouislider.min.css" />
     <style>
         img {
             max-width: 100%;
@@ -74,6 +75,56 @@
             text-decoration: underline;
         }
 
+        #price-slider {
+            margin: 10px 0;
+        }
+
+        #price-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .price-label {
+            margin: 0 5px;
+        }
+
+        /* noUiSlider */
+
+        .noUi-target, .noUi-lower {
+            background: #f1f1f1;
+            box-shadow: none !important;
+        }
+
+        .noUi-connect {
+            background: darkgreen;
+        }
+
+        .noUi-horizontal {
+            height: 8px;
+        }
+
+        .noUi-handle {
+            width: 18px !important;
+            height: 18px !important;
+            border-radius: 50%;
+            background: darkgreen;
+            border: 2px solid darkgreen;
+            box-shadow: none !important;
+        }
+
+        .noUi-handle:before, .noUi-handle:after {
+            display: none !important;
+        }
+
+        .noUi-tooltip {
+            display: none !important;
+        }
+
+        .noUi-horizontal .noUi-handle-upper {
+            right: -12px !important;
+        }
+
     </style>
     <title>Plants</title>
 </head>
@@ -92,11 +143,16 @@
                 </div>
 
                 <div>
-                    <label for="minPrice">Mindestpreis:</label>
-                    <input class="form-control" id="minPrice" name="minPrice" type="number" th:value="${minPrice}" step="0.01">
-
-                    <label for="maxPrice">Höchstpreis:</label>
-                    <input class="form-control" id="maxPrice" name="maxPrice" type="number" th:value="${maxPrice}" step="0.01">
+                <div id="price-container">
+                    <span>Preis</span>
+                    <span>
+                        Zwischen <span id="min-price-value" class="price-label"></span> und <span id="max-price-value" class="price-label"></span>
+                    </span>
+                    <span class="button-clear" onclick="clearPriceFilter()">Löschen</span>
+                </div>
+                <div id="price-slider"></div>
+                <input type="hidden" id="minPrice" name="minPrice" th:value="${minPrice}">
+                <input type="hidden" id="maxPrice" name="maxPrice" th:value="${maxPrice}">
 
                     <label for="minHeight">Mindesthöhe:</label>
                     <input class="form-control" id="minHeight" name="minHeight" type="number" th:value="${minHeight}" step="0.01">
@@ -144,15 +200,41 @@
 
 </div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.5.0/nouislider.min.js"></script>
 <script>
-    function checkSearch() {
-        var searchField = document.getElementById("name").value;
-        if (searchField.trim() === "") {
-            window.location.href = "/plants";
-            return false;
-        }
-        return true;
-    }
+    document.addEventListener('DOMContentLoaded', function() {
+        var slider = document.getElementById('price-slider');
+        var minPriceDefault = 0;
+        var maxPriceDefault = [[${highestPrice}]];
+
+        // Get the current min and max price values from the hidden inputs
+        var currentMinPrice = parseFloat(document.getElementById('minPrice').value || minPriceDefault);
+        var currentMaxPrice = parseFloat(document.getElementById('maxPrice').value || maxPriceDefault);
+
+        noUiSlider.create(slider, {
+            start: [currentMinPrice, currentMaxPrice],
+            connect: true,
+            range: {
+                'min': minPriceDefault,
+                'max': maxPriceDefault
+            },
+            tooltips: false,
+            format: {
+                to: function(value) {
+                    return parseFloat(value).toFixed(2);
+                },
+                from: function(value) {
+                    return parseFloat(value);
+                }
+            }
+        });
+
+        slider.noUiSlider.on('update', function(values, handle) {
+            document.getElementById('min-price-value').innerText = '€' + values[0];
+            document.getElementById('max-price-value').innerText = '€' + values[1];
+            document.getElementById('minPrice').value = values[0];
+            document.getElementById('maxPrice').value = values[1];
+        });
 
     function buildUrl() {
         const name = document.getElementById('name').value.trim();
@@ -164,7 +246,10 @@
         const categories = Array.from(document.querySelectorAll('input[name="category"]:checked')).map(checkbox => checkbox.value);
         const sortPrice = document.getElementById('sortPrice').value;
 
-        const params = { name, minPrice, maxPrice, minHeight, maxHeight, potIncluded, category: categories.join(','), sortPrice };
+        const params = { name, minHeight, maxHeight, potIncluded, category: categories.join(','), sortPrice };
+
+        if (minPrice !== minPriceDefault.toFixed(2)) params.minPrice = minPrice;
+        if (maxPrice !== maxPriceDefault.toFixed(2)) params.maxPrice = maxPrice;
 
         let queryString = Object.keys(params)
             .filter(key => params[key] !== '' && params[key] !== undefined && params[key] !== null)
@@ -176,6 +261,13 @@
         return false;
     }
 
+        function clearPriceFilter() {
+            slider.noUiSlider.set([minPriceDefault, maxPriceDefault]);
+            document.getElementById('minPrice').value = minPriceDefault.toFixed(2);
+            document.getElementById('maxPrice').value = maxPriceDefault.toFixed(2);
+            buildUrl();
+        }
+
     function clearPotIncluded() {
         // Entfernt die Auswahl der Radio-Buttons
         document.getElementById('potIncludedTrue').checked = false;
@@ -183,6 +275,10 @@
         buildUrl(); // Aktualisiert die Ansicht, um alle Pflanzen anzuzeigen
     }
 
+        window.buildUrl = buildUrl;
+        window.clearPotIncluded = clearPotIncluded;
+        window.clearPriceFilter = clearPriceFilter;
+    });
 
     function toggleWishlist(imageElement) {
         const plantId = imageElement.getAttribute('data-plant-id');

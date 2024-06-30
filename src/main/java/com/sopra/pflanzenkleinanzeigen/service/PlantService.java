@@ -85,7 +85,9 @@ public class PlantService {
         return plantRepository.findByFiltersWithoutCategory(name, minPrice, maxPrice, minHeight, maxHeight, potIncluded, sortPrice);
     }
 
-
+    public BigDecimal findMaxPrice() {
+        return plantRepository.findMaxPrice();
+    }
 
     public void deletePlant(Plant plant) {
         plantRepository.delete(plant);
