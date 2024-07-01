@@ -1,0 +1,857 @@
+body {
+    background: #F4EEDF;
+    margin: 0;
+    min-width: 700px;
+    min-height: 800px;
+    height: 100vh;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.stack {
+    position: relative;
+}
+
+.pot {
+    /* body of pot*/
+    position: relative;
+    width: 66px;
+    height: 88px;
+    left: 0%;
+    background: #C78F58;
+    transform: perspective(200px) rotateX(-45deg);
+}
+.pot:before {
+    /*dirt in pot*/
+    content: "";
+    position: absolute;
+    background: #68594E;
+    height: 24px;
+    width: 66px;
+    bottom: 100%;
+    border-radius: 50% 50% 0 0;
+}
+.pot:after {
+    /* rim of pot*/
+    content: "";
+    position: absolute;
+    height: 0;
+    width: 72px;
+    height: 28px;
+    bottom: 95%;
+    left: -5%;
+    transform: perspective(400px) rotateX(-45deg);
+    background: #C78F58;
+    background: linear-gradient(to bottom, #C78F58 85%, #b1753b 85%);
+}
+
+.books {
+    position: absolute;
+    top: 70px;
+}
+.books .book:first-of-type {
+    position: relative;
+    height: 30px;
+    width: 110px;
+    border-radius: 0 50px 50px 0;
+    background-size: cover, 4.4977511244px, cover;
+    background-image: radial-gradient(8% 100% at 0% 50%, #F4EEDF 50%, transparent 50%), linear-gradient(to bottom, #DFD0A2 80%, #d2bd7c 80%), radial-gradient(8% 100% at 0% 50%, transparent 50%, #DFD0A2 50%);
+    border: 4.11px solid #e48e70;
+    border-left: 4.11px solid #F4EEDF;
+    right: 25px;
+}
+.books .book:nth-of-type(2) {
+    position: relative;
+    height: 22px;
+    width: 86px;
+    border-radius: 0 50px 50px 0;
+    background-size: cover, 3.2983508246px, cover;
+    background-image: radial-gradient(8% 100% at 0% 50%, #F4EEDF 50%, transparent 50%), linear-gradient(to bottom, #DFD0A2 80%, #d2bd7c 80%), radial-gradient(8% 100% at 0% 50%, transparent 50%, #DFD0A2 50%);
+    border: 3.014px solid #857264;
+    border-left: 3.014px solid #F4EEDF;
+    right: 10px;
+}
+.books .book:nth-of-type(3) {
+    position: relative;
+    height: 28px;
+    width: 130px;
+    border-radius: 0 50px 50px 0;
+    background-size: cover, 4.1979010495px, cover;
+    background-image: radial-gradient(8% 100% at 0% 50%, #F4EEDF 50%, transparent 50%), linear-gradient(to bottom, #DFD0A2 80%, #d2bd7c 80%), radial-gradient(8% 100% at 0% 50%, transparent 50%, #DFD0A2 50%);
+    border: 3.836px solid #F8AA8F;
+    border-left: 3.836px solid #F4EEDF;
+    right: 37px;
+}
+.books .book:nth-of-type(4) {
+    position: relative;
+    height: 20px;
+    width: 144px;
+    border-radius: 0 50px 50px 0;
+    background-size: cover, 2.9985007496px, cover;
+    background-image: radial-gradient(8% 100% at 0% 50%, #F4EEDF 50%, transparent 50%), linear-gradient(to bottom, #DFD0A2 80%, #d2bd7c 80%), radial-gradient(8% 100% at 0% 50%, transparent 50%, #DFD0A2 50%);
+    border: 2.74px solid #a57647;
+    border-left: 2.74px solid #F4EEDF;
+    right: 30px;
+}
+.books .book:nth-of-type(5) {
+    position: relative;
+    height: 34px;
+    width: 148px;
+    border-radius: 0 50px 50px 0;
+    background-size: cover, 5.0974512744px, cover;
+    background-image: radial-gradient(8% 100% at 0% 50%, #F4EEDF 50%, transparent 50%), linear-gradient(to bottom, #DFD0A2 80%, #d2bd7c 80%), radial-gradient(8% 100% at 0% 50%, transparent 50%, #DFD0A2 50%);
+    border: 4.658px solid #caa936;
+    border-left: 4.658px solid #F4EEDF;
+    right: 40px;
+}
+.books .book:nth-of-type(6) {
+    position: relative;
+    height: 26px;
+    width: 146px;
+    border-radius: 0 50px 50px 0;
+    background-size: cover, 3.8980509745px, cover;
+    background-image: radial-gradient(8% 100% at 0% 50%, #F4EEDF 50%, transparent 50%), linear-gradient(to bottom, #DFD0A2 80%, #d2bd7c 80%), radial-gradient(8% 100% at 0% 50%, transparent 50%, #DFD0A2 50%);
+    border: 3.562px solid #a1a351;
+    border-left: 3.562px solid #F4EEDF;
+    right: 30px;
+}
+
+.plant-1 {
+    position: absolute;
+    bottom: 100%;
+    height: 200px;
+    width: 66px;
+}
+.plant-1 .stem:first-of-type {
+    position: absolute;
+    height: 100px;
+    width: 100px;
+    right: 70%;
+    bottom: -15%;
+    background: transparent;
+    border-radius: 50%;
+    border: 2.5px solid transparent;
+    border-right: 2.5px solid #9B9D57;
+    transform: rotate(-35deg);
+}
+.plant-1 .stem:first-of-type .leaf:first-of-type {
+    position: absolute;
+    background: #9B9D57;
+    transform-origin: 100% 50%;
+    height: 10px;
+    width: 20px;
+    border-radius: 50% 50% 0 0;
+    bottom: 85%;
+    left: 68%;
+}
+.plant-1 .stem:first-of-type .leaf:nth-of-type(2) {
+    position: absolute;
+    background: #9B9D57;
+    transform-origin: 100% 40%;
+    height: 10px;
+    width: 20px;
+    border-radius: 50% 0;
+    bottom: 65%;
+    left: 76%;
+}
+.plant-1 .stem:first-of-type .leaf:nth-of-type(3) {
+    position: absolute;
+    background: #9B9D57;
+    transform-origin: 90% 70%;
+    height: 10px;
+    width: 20px;
+    border-radius: 50% 50% 0 0;
+    bottom: 48%;
+    left: 79%;
+}
+.plant-1 .stem:first-of-type .leaf:nth-of-type(4) {
+    position: absolute;
+    background: #9B9D57;
+    transform-origin: 0% 50%;
+    height: 10px;
+    width: 20px;
+    border-radius: 0 50% 50% 50%;
+    bottom: 25%;
+    left: 98%;
+}
+.plant-1 .stem:first-of-type .leaf:nth-of-type(5) {
+    position: absolute;
+    background: #9B9D57;
+    transform-origin: 100% 50%;
+    height: 20px;
+    width: 10px;
+    border-radius: 0 50% 0 50%;
+    bottom: 21%;
+    left: 82%;
+}
+.plant-1 .stem:first-of-type .leaf:nth-of-type(6) {
+    position: absolute;
+    background: #9B9D57;
+    transform-origin: 50% 100%;
+    height: 20px;
+    width: 10px;
+    border-radius: 50% 0 50% 0;
+    bottom: 63%;
+    left: 98%;
+}
+.plant-1 .stem:nth-of-type(2) {
+    position: absolute;
+    height: 150px;
+    width: 100px;
+    right: 71%;
+    bottom: -15%;
+    background: transparent;
+    border-radius: 50%;
+    border: 2.5px solid transparent;
+    border-right: 2.5px solid #9B9D57;
+    transform: rotate(-35deg);
+}
+.plant-1 .stem:nth-of-type(2) .leaf:first-of-type {
+    position: absolute;
+    background: #9B9D57;
+    transform-origin: 100% 40%;
+    height: 10px;
+    width: 20px;
+    border-radius: 50% 50% 0 0;
+    bottom: 85%;
+    left: 68%;
+}
+.plant-1 .stem:nth-of-type(2) .leaf:nth-of-type(2) {
+    position: absolute;
+    background: #9B9D57;
+    transform-origin: 100% 40%;
+    height: 10px;
+    width: 20px;
+    border-radius: 50% 0;
+    bottom: 69%;
+    left: 73%;
+}
+.plant-1 .stem:nth-of-type(2) .leaf:nth-of-type(3) {
+    position: absolute;
+    background: #9B9D57;
+    transform-origin: 0% 50%;
+    height: 10px;
+    width: 20px;
+    border-radius: 50% 50% 0 0;
+    bottom: 48%;
+    left: 99%;
+}
+.plant-1 .stem:nth-of-type(2) .leaf:nth-of-type(4) {
+    position: absolute;
+    background: #9B9D57;
+    transform-origin: 0% 0%;
+    height: 10px;
+    width: 20px;
+    border-radius: 0 50% 50% 50%;
+    bottom: 25%;
+    left: 98%;
+}
+.plant-1 .stem:nth-of-type(2) .leaf:nth-of-type(5) {
+    position: absolute;
+    background: #9B9D57;
+    transform-origin: 100% 50%;
+    height: 20px;
+    width: 10px;
+    border-radius: 0 50% 0 50%;
+    bottom: 31%;
+    left: 88%;
+}
+.plant-1 .stem:nth-of-type(2) .leaf:nth-of-type(6) {
+    position: absolute;
+    background: #9B9D57;
+    transform-origin: 50% 100%;
+    height: 20px;
+    width: 10px;
+    border-radius: 50% 0 50% 0;
+    bottom: 63%;
+    left: 98%;
+}
+.plant-1 .stem:nth-of-type(3) {
+    position: absolute;
+    height: 200px;
+    width: 80px;
+    right: 56%;
+    bottom: -15%;
+    background: transparent;
+    border-radius: 50%;
+    border: 2.5px solid transparent;
+    border-right: 2.5px solid #9B9D57;
+    transform: rotate(-12deg);
+}
+.plant-1 .stem:nth-of-type(3) .leaf:first-of-type {
+    position: absolute;
+    background: #9B9D57;
+    transform-origin: 80% 100%;
+    height: 20px;
+    width: 10px;
+    border-radius: 0 50% 0 50%;
+    bottom: 90%;
+    left: 68%;
+}
+.plant-1 .stem:nth-of-type(3) .leaf:nth-of-type(2) {
+    position: absolute;
+    background: #9B9D57;
+    transform-origin: 100% 30%;
+    height: 10px;
+    width: 20px;
+    border-radius: 50% 0;
+    bottom: 75%;
+    left: 66%;
+}
+.plant-1 .stem:nth-of-type(3) .leaf:nth-of-type(3) {
+    position: absolute;
+    background: #9B9D57;
+    transform-origin: 100% 70%;
+    height: 10px;
+    width: 20px;
+    border-radius: 0 50% 0 50%;
+    bottom: 62%;
+    left: 76%;
+}
+.plant-1 .stem:nth-of-type(3) .leaf:nth-of-type(4) {
+    position: absolute;
+    background: #9B9D57;
+    transform-origin: 10% 50%;
+    height: 10px;
+    width: 20px;
+    border-radius: 50% 0 50% 50%;
+    bottom: 69%;
+    left: 98%;
+}
+.plant-1 .stem:nth-of-type(3) .leaf:nth-of-type(5) {
+    position: absolute;
+    background: #9B9D57;
+    transform-origin: 0% 60%;
+    height: 10px;
+    width: 20px;
+    border-radius: 50% 0 50% 0;
+    bottom: 55%;
+    left: 99%;
+}
+.plant-1 .stem:nth-of-type(3) .leaf:nth-of-type(6) {
+    position: absolute;
+    background: #9B9D57;
+    transform-origin: 10% 90%;
+    height: 20px;
+    width: 10px;
+    border-radius: 50% 0 50% 0;
+    bottom: 85%;
+    left: 88%;
+}
+.plant-1 .stem:nth-of-type(4) {
+    position: absolute;
+    height: 200px;
+    width: 80px;
+    right: -90%;
+    bottom: -16%;
+    background: transparent;
+    border-radius: 50%;
+    border: 2.5px solid transparent;
+    border-left: 2.5px solid #9B9D57;
+    transform: rotate(12deg);
+}
+.plant-1 .stem:nth-of-type(4) .leaf:first-of-type {
+    position: absolute;
+    background: #9B9D57;
+    transform-origin: 0% 50%;
+    height: 10px;
+    width: 20px;
+    border-radius: 50% 0 50% 0;
+    bottom: 90%;
+    left: 18%;
+}
+.plant-1 .stem:nth-of-type(4) .leaf:nth-of-type(2) {
+    position: absolute;
+    background: #9B9D57;
+    transform-origin: 10% 40%;
+    height: 10px;
+    width: 20px;
+    border-radius: 0 50% 0 50%;
+    bottom: 75%;
+    left: 6%;
+}
+.plant-1 .stem:nth-of-type(4) .leaf:nth-of-type(3) {
+    position: absolute;
+    background: #9B9D57;
+    transform-origin: 20% 100%;
+    height: 20px;
+    width: 10px;
+    border-radius: 50% 0 50% 0;
+    bottom: 50%;
+    left: 1%;
+}
+.plant-1 .stem:nth-of-type(4) .leaf:nth-of-type(4) {
+    position: absolute;
+    background: #9B9D57;
+    transform-origin: 50% 100%;
+    height: 20px;
+    width: 10px;
+    border-radius: 0 50% 0 50%;
+    bottom: 68%;
+    left: -11%;
+}
+.plant-1 .stem:nth-of-type(4) .leaf:nth-of-type(5) {
+    position: absolute;
+    background: #9B9D57;
+    transform-origin: 50% 100%;
+    height: 20px;
+    width: 10px;
+    border-radius: 0 50% 0 50%;
+    bottom: 84%;
+    left: 0%;
+}
+.plant-1 .stem:nth-of-type(4) .leaf:nth-of-type(6) {
+    position: absolute;
+    background: #9B9D57;
+    transform-origin: 0% 100%;
+    height: 20px;
+    width: 10px;
+    border-radius: 50% 0 50% 0;
+    bottom: 25%;
+    left: 3%;
+}
+.plant-1 .stem:nth-of-type(5) {
+    position: absolute;
+    height: 150px;
+    width: 100px;
+    right: -135%;
+    bottom: -16%;
+    background: transparent;
+    border-radius: 50%;
+    border: 2.5px solid transparent;
+    border-left: 2.5px solid #9B9D57;
+    transform: rotate(35deg);
+}
+.plant-1 .stem:nth-of-type(5) .leaf:first-of-type {
+    position: absolute;
+    background: #9B9D57;
+    transform-origin: 0% 100%;
+    height: 10px;
+    width: 20px;
+    border-radius: 50% 50% 0 0;
+    bottom: 85%;
+    left: 10%;
+}
+.plant-1 .stem:nth-of-type(5) .leaf:nth-of-type(2) {
+    position: absolute;
+    background: #9B9D57;
+    transform-origin: 0% 100%;
+    height: 10px;
+    width: 20px;
+    border-radius: 50% 0 50% 0;
+    bottom: 72%;
+    left: 5%;
+}
+.plant-1 .stem:nth-of-type(5) .leaf:nth-of-type(3) {
+    position: absolute;
+    background: #9B9D57;
+    transform-origin: 0% 100%;
+    height: 20px;
+    width: 10px;
+    border-radius: 50% 0 50% 0;
+    bottom: 35%;
+    left: 0%;
+}
+.plant-1 .stem:nth-of-type(5) .leaf:nth-of-type(4) {
+    position: absolute;
+    background: #9B9D57;
+    transform-origin: 0% 100%;
+    height: 20px;
+    width: 10px;
+    border-radius: 0 50% 0 50%;
+    bottom: 68%;
+    left: -7%;
+}
+.plant-1 .stem:nth-of-type(6) {
+    position: absolute;
+    height: 100px;
+    width: 100px;
+    right: -130%;
+    bottom: -16%;
+    background: transparent;
+    border-radius: 50%;
+    border: 2.5px solid transparent;
+    border-left: 2.5px solid #9B9D57;
+    transform: rotate(40deg);
+}
+.plant-1 .stem:nth-of-type(6) .leaf:first-of-type {
+    position: absolute;
+    background: #9B9D57;
+    transform-origin: 0% 100%;
+    height: 10px;
+    width: 20px;
+    border-radius: 50% 50% 0 0;
+    bottom: 85%;
+    left: 10%;
+}
+.plant-1 .stem:nth-of-type(6) .leaf:nth-of-type(2) {
+    position: absolute;
+    background: #9B9D57;
+    transform-origin: 0% 100%;
+    height: 10px;
+    width: 20px;
+    border-radius: 50% 0 50% 0;
+    bottom: 45%;
+    left: -3%;
+}
+.plant-1 .stem:nth-of-type(6) .leaf:nth-of-type(3) {
+    position: absolute;
+    background: #9B9D57;
+    transform-origin: 0% 100%;
+    height: 20px;
+    width: 10px;
+    border-radius: 50% 0 50% 0;
+    bottom: 20%;
+    left: 8%;
+}
+.plant-1 .stem:nth-of-type(6) .leaf:nth-of-type(4) {
+    position: absolute;
+    background: #9B9D57;
+    transform-origin: 0% 100%;
+    height: 20px;
+    width: 10px;
+    border-radius: 0 50% 0 50%;
+    bottom: 68%;
+    left: -7%;
+}
+
+.leaf {
+    animation: leafs-sway 3s alternate infinite;
+}
+
+.stand {
+    position: relative;
+    height: 500px;
+    width: 110px;
+    background: #DABD59;
+    background: linear-gradient(to bottom, transparent 0%, transparent 96.6%, #bc9c2a 96.6%, #bc9c2a 97%, transparent 97%), linear-gradient(to bottom, #DABD59 0%, #DABD59 3.6%, transparent 3.6%, transparent 96.6%, #DABD59 96.6%), linear-gradient(to right, transparent 0%, transparent 42.5%, #DABD59 42.5%, #DABD59 57.5%, transparent 57.5%);
+}
+.stand:before, .stand:after {
+    content: "";
+    position: absolute;
+    height: 18px;
+    width: 120px;
+    background: #DABD59;
+    left: 57%;
+    bottom: 25%;
+    box-shadow: -68px 149px 0 5px #DABD59, -68px 147px 0 5px #bc9c2a;
+}
+.stand:after {
+    width: 150px;
+    bottom: 70%;
+    box-shadow: -83px 385px 0 0 #DABD59, -83px 383px 0 0 #bc9c2a;
+}
+
+.stand .pot:first-of-type {
+    /*big pot on the top*/
+    top: -14%;
+    left: 20%;
+}
+.stand .pot:nth-of-type(3) {
+    /*little pot in the middle*/
+    /* body of pot*/
+    position: relative;
+    width: 46.2px;
+    height: 61.6px;
+    left: 0%;
+    background: #C78F58;
+    transform: perspective(200px) rotateX(-45deg);
+    top: 0%;
+    left: 110%;
+}
+.stand .pot:nth-of-type(3):before {
+    /*dirt in pot*/
+    content: "";
+    position: absolute;
+    background: #68594E;
+    height: 16.8px;
+    width: 46.2px;
+    bottom: 100%;
+    border-radius: 50% 50% 0 0;
+}
+.stand .pot:nth-of-type(3):after {
+    /* rim of pot*/
+    content: "";
+    position: absolute;
+    height: 0;
+    width: 50.4px;
+    height: 19.6px;
+    bottom: 95%;
+    left: -5%;
+    transform: perspective(400px) rotateX(-45deg);
+    background: #C78F58;
+    background: linear-gradient(to bottom, #C78F58 85%, #b1753b 85%);
+}
+.stand .pot:nth-of-type(5) {
+    /*medium pot on the bottom*/
+    /* body of pot*/
+    position: relative;
+    width: 59.4px;
+    height: 79.2px;
+    left: 0%;
+    background: #C78F58;
+    transform: perspective(200px) rotateX(-45deg);
+    top: 13%;
+    left: 95%;
+}
+.stand .pot:nth-of-type(5):before {
+    /*dirt in pot*/
+    content: "";
+    position: absolute;
+    background: #68594E;
+    height: 21.6px;
+    width: 59.4px;
+    bottom: 100%;
+    border-radius: 50% 50% 0 0;
+}
+.stand .pot:nth-of-type(5):after {
+    /* rim of pot*/
+    content: "";
+    position: absolute;
+    height: 0;
+    width: 64.8px;
+    height: 25.2px;
+    bottom: 95%;
+    left: -5%;
+    transform: perspective(400px) rotateX(-45deg);
+    background: #C78F58;
+    background: linear-gradient(to bottom, #C78F58 85%, #b1753b 85%);
+}
+
+.plant-4 {
+    position: relative;
+    background: radial-gradient(80% 80% at 50% 50%, #A1D4A5 50%, transparent 50%);
+    bottom: 19%;
+    left: 95%;
+    height: 79.2px;
+    width: 59.4px;
+}
+.plant-4 .leaf-2:first-of-type {
+    position: absolute;
+    height: 38.4px;
+    width: 32px;
+    background: #A1D4A5;
+    border-radius: 50% 0 50% 0;
+    bottom: 60%;
+    left: 70%;
+    transform: rotate(-10deg);
+}
+.plant-4 .leaf-2:nth-of-type(2) {
+    position: absolute;
+    height: 38.4px;
+    width: 32px;
+    background: #A1D4A5;
+    border-radius: 50% 0 50% 0;
+    bottom: 30%;
+    left: 85%;
+    transform: rotate(35deg);
+}
+.plant-4 .leaf-2:nth-of-type(3) {
+    position: absolute;
+    height: 38.4px;
+    width: 32px;
+    background: #A1D4A5;
+    border-radius: 50% 0 50% 0;
+    bottom: 0%;
+    left: 90%;
+    transform: rotate(60deg);
+}
+.plant-4 .leaf-2:nth-of-type(4) {
+    position: absolute;
+    height: 26.4px;
+    width: 22px;
+    background: #A1D4A5;
+    border-radius: 50% 0 50% 0;
+    bottom: 65%;
+    left: -10%;
+    transform: rotate(85deg);
+}
+.plant-4 .leaf-2:nth-of-type(5) {
+    position: absolute;
+    height: 26.4px;
+    width: 22px;
+    background: #A1D4A5;
+    border-radius: 50% 0 50% 0;
+    bottom: 75%;
+    left: 30%;
+    transform: rotate(120deg);
+}
+.plant-4 .leaf-2:nth-of-type(6) {
+    position: absolute;
+    height: 33.6px;
+    width: 28px;
+    background: #A1D4A5;
+    border-radius: 50% 0 50% 0;
+    bottom: 40%;
+    left: -35%;
+    transform: rotate(75deg);
+}
+.plant-4 .leaf-2:nth-of-type(7) {
+    position: absolute;
+    height: 40.8px;
+    width: 34px;
+    background: #A1D4A5;
+    border-radius: 50% 0 50% 0;
+    bottom: 0%;
+    left: -45%;
+    transform: rotate(40deg);
+}
+.plant-4 .leaf-2:nth-of-type(8) {
+    position: absolute;
+    height: 26.4px;
+    width: 22px;
+    background: #A1D4A5;
+    border-radius: 50% 0 50% 0;
+    bottom: -10%;
+    left: 0%;
+    transform: rotate(0deg);
+}
+.plant-4 .leaf-2:nth-of-type(9) {
+    position: absolute;
+    height: 36px;
+    width: 30px;
+    background: #A1D4A5;
+    border-radius: 50% 0 50% 0;
+    bottom: -15%;
+    left: 40%;
+    transform: rotate(160deg);
+}
+
+.flower {
+    position: relative;
+    height: 40px;
+    width: 40px;
+    transform-origin: 50% 60%;
+    background-image: radial-gradient(25% 25% at 50% 55%, #DABD59 50%, transparent 50%), radial-gradient(50% 50% at 50% 50%, #fff 50%, transparent 50%), radial-gradient(35% 35% at 51% 30%, #fff 52%, transparent 52%), radial-gradient(35% 35% at 82% 50%, #fff 52%, transparent 52%), radial-gradient(35% 35% at 70% 80%, #fff 52%, transparent 52%), radial-gradient(35% 35% at 35% 80%, #fff 52%, transparent 52%), radial-gradient(35% 35% at 20% 50%, #fff 52%, transparent 52%);
+}
+.flower:nth-of-type(10) {
+    top: 25%;
+    left: -30%;
+    transform: rotate(-30deg);
+    animation: flowers-swirl 4.5s alternate infinite;
+}
+.flower:nth-of-type(11) {
+    top: -60%;
+    left: 40%;
+    transform: rotate(10deg);
+    animation: flowers-swirl 4s alternate infinite;
+}
+.flower:nth-of-type(12) {
+    top: -55%;
+    left: 60%;
+    transform: rotate(45deg);
+    animation: flowers-swirl 4.3s alternate-reverse infinite;
+}
+
+.plant-3 {
+    position: relative;
+    bottom: 29%;
+    left: 104%;
+    height: 79.2px;
+    width: 59.4px;
+}
+.plant-3 .stem {
+    z-index: 1;
+    position: absolute;
+    background: transparent;
+    border-radius: 50%;
+    top: 80%;
+}
+.plant-3 .stem:first-of-type {
+    height: 70px;
+    width: 12px;
+    right: 44%;
+    border-left: 2.5px solid #A1D4A5;
+    border-top: 2.5px solid #A1D4A5;
+    transform: rotate(5deg);
+}
+.plant-3 .stem:nth-of-type(2) {
+    height: 70px;
+    width: 12px;
+    right: 31%;
+    border-right: 2.5px solid #A1D4A5;
+    border-top: 2.5px solid #A1D4A5;
+    transform: rotate(5deg);
+}
+.plant-3 .stem:nth-of-type(3) {
+    height: 100px;
+    width: 16px;
+    right: 18%;
+    border-right: 2.5px solid #A1D4A5;
+    border-top: 2.5px solid #A1D4A5;
+    transform: rotate(0deg);
+}
+.plant-3 .stem:nth-of-type(4) {
+    height: 110px;
+    width: 20px;
+    right: 50%;
+    border-left: 2.5px solid #A1D4A5;
+    border-top: 2.5px solid #A1D4A5;
+    transform: rotate(0deg);
+}
+.plant-3 .stem:nth-of-type(5) {
+    height: 66px;
+    width: 30px;
+    right: 55%;
+    border-left: 2.5px solid #A1D4A5;
+    border-top: 2.5px solid #A1D4A5;
+    transform: rotate(0deg);
+}
+.plant-3 .stem:nth-of-type(6) {
+    height: 100px;
+    width: 40px;
+    right: 55%;
+    border-left: 2.5px solid #A1D4A5;
+    border-top: 2.5px solid #A1D4A5;
+    transform: rotate(0deg);
+}
+.plant-3 .stem:nth-of-type(7) {
+    height: 20px;
+    width: 40px;
+    right: 55%;
+    top: 73%;
+    border-right: 2.5px solid #A1D4A5;
+    border-top: 2.5px solid #A1D4A5;
+    transform: rotate(-10deg);
+}
+.plant-3 .stem:nth-of-type(8) {
+    height: 110px;
+    width: 20px;
+    right: -15%;
+    top: 73%;
+    border-right: 2.5px solid #A1D4A5;
+    border-top: 2.5px solid #A1D4A5;
+    transform: rotate(-7deg);
+}
+.plant-3 .stem:nth-of-type(9) {
+    height: 30px;
+    width: 80px;
+    right: -85%;
+    top: 95%;
+    border-left: 2.5px solid #A1D4A5;
+    border-top: 2.5px solid #A1D4A5;
+    transform: rotate(45deg);
+}
+
+@keyframes flowers-swirl {
+    0% {
+        transform: rotate(-180deg);
+    }
+    100% {
+        transform: rotate(180deg);
+    }
+}
+@keyframes leafs-sway {
+    0% {
+        transform: rotate(-15deg);
+    }
+    100% {
+        transform: rotate(15deg);
+    }
+}
+.plant-2 {
+    background: #A1D4A5;
+}
+
+/*# sourceMappingURL=loginStylePage.css.map */
