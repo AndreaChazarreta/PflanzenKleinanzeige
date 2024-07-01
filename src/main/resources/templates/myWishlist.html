@@ -121,14 +121,28 @@
     </div>
 
     <div id="drop-container" class="droppable" ondrop="drop(event)" ondragover="allowDrop(event)">
-        <p>Ziehe Pflanzen hierher, um sie zu vergleichen</p>
+        <p id="drag-instruction">Ziehe Pflanzen hierher, um sie zu vergleichen</p>
+        <table class="comparison-table" hidden>
+            <tbody>
+            <tr id="imageRow"></tr>
+            <tr id="nameRow"></tr>
+            <tr id="priceRow"></tr>
+            <tr id="heightRow"></tr>
+            <tr id="potRow"></tr>
+            <tr id="descriptionRow"></tr>
+            </tbody>
+        </table>
     </div>
 
     <div id="plants">
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4">
             <th:block th:each="plant : ${wishlist}">
                 <div class="col mb-4">
-                    <div class="card h-100 draggable" draggable="true" th:data-plant-id="${plant.plantId}"
+                    <div class="card h-100 draggable" draggable="true"
+                         th:data-plant-id="${plant.plantId}"
+                         th:data-plant-height="${plant.height}"
+                         th:data-plant-potIncluded="${plant.potIncluded}"
+                         th:data-plant-description="${plant.description}"
                          ondragstart="drag(event)">
                         <a th:href="@{/plants/{id}(id=${plant.plantId})}">
                             <img th:src="@{${plant.imagePath}}" class="card-img-top" alt="Pflanzenbild">
@@ -207,6 +221,7 @@
     function allowDrop(event) {
         event.preventDefault();
     }
+
     function drop(event) {
         event.preventDefault();
         var plantId = event.dataTransfer.getData("plantId");
@@ -216,39 +231,42 @@
             console.error("Dragged element not found for plantId:", plantId);
             return;
         }
-
         var dropContainer = document.getElementById("drop-container");
         var comparisonTable = dropContainer.querySelector("table");
 
-        if (!comparisonTable) {
-            comparisonTable = document.createElement("table");
-            comparisonTable.classList.add("comparison-table");
-
-            var tbody = document.createElement("tbody");
-
-            var imageRow = document.createElement("tr");
-            var nameRow = document.createElement("tr");
-            var priceRow = document.createElement("tr");
-
-            tbody.appendChild(imageRow);
-            tbody.appendChild(nameRow);
-            tbody.appendChild(priceRow);
-
-            comparisonTable.appendChild(tbody);
-
-            dropContainer.innerHTML = "";
-            dropContainer.appendChild(comparisonTable);
+        if (comparisonTable.hidden) {
+            comparisonTable.hidden = false;
+            document.getElementById("drag-instruction").hidden = true;
         }
 
-        var tbody = comparisonTable.querySelector("tbody");
-        var imageRow = tbody.children[0];
-        var nameRow = tbody.children[1];
-        var priceRow = tbody.children[2];
+        var imageRow = document.getElementById("imageRow");
+        var nameRow = document.getElementById("nameRow");
+        var priceRow = document.getElementById("priceRow");
+        var heightRow = document.getElementById("heightRow");
+        var potRow = document.getElementById("potRow");
+        var descriptionRow = document.getElementById("descriptionRow");
+
+        var alreadyAdded = false;
+        for (var i = 0; i < nameRow.cells.length; i++) {
+            if (nameRow.cells[i].textContent === draggedElement.querySelector(".card-title").textContent) {
+                alreadyAdded = true;
+                break;
+            }
+        }
+
+        if (alreadyAdded) {
+            alert("Diese Pflanze wurde bereits hinzugefügt.");
+            return;
+        }
+
 
         if (imageRow.cells.length < 3) {
             var plantName = draggedElement.querySelector(".card-title").textContent;
             var plantPrice = draggedElement.querySelector(".card-text").textContent;
             var plantImageSrc = draggedElement.querySelector("img").src;
+            var plantHeight = draggedElement.getAttribute('data-plant-height');
+            var plantPotIncluded = draggedElement.getAttribute('data-plant-potIncluded') === 'true' ? 'Ja' : 'Nein';
+            var plantDescription = draggedElement.getAttribute('data-plant-description');
 
             var imgCell = document.createElement("td");
             var img = document.createElement("img");
@@ -262,9 +280,21 @@
             var priceCell = document.createElement("td");
             priceCell.textContent = plantPrice;
 
+            var heightCell = document.createElement("td");
+            heightCell.textContent = 'Höhe: ' + plantHeight + ' cm';
+
+            var potCell = document.createElement("td");
+            potCell.textContent = 'Topf enthalten: ' + plantPotIncluded;
+
+            var descriptionCell = document.createElement("td");
+            descriptionCell.textContent = 'Beschreibung: ' + plantDescription;
+
             imageRow.appendChild(imgCell);
             nameRow.appendChild(nameCell);
             priceRow.appendChild(priceCell);
+            heightRow.appendChild(heightCell);
+            potRow.appendChild(potCell);
+            descriptionRow.appendChild(descriptionCell);
         } else {
             alert("Du kannst maximal 3 Pflanzen vergleichen.");
         }
