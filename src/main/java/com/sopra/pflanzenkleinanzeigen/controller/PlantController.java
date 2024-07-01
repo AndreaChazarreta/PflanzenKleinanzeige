@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * The PlantController class handles web requests related to plant operations.
@@ -216,6 +217,7 @@ public class PlantController {
         return "redirect:/myPlantsForSale";
     }
 
+
     @PostMapping("/plants/wishlist/{id}")
     @ResponseBody
     public void markPlantAsWished(@PathVariable int id) {
@@ -237,10 +239,22 @@ public class PlantController {
     }
 
     @GetMapping("/myWishlist")
-    public String myWishlist(Model model) {
+    public String getWishlistForUser(Model model, @RequestParam(value = "name", required = false) String name) {
         Benutzer currentUser = userService.getCurrentUser();
-        List<Plant> wishlist = plantService.getWishlistForUser(currentUser);
-        model.addAttribute("wishlist", wishlist);
+        List<Plant> wishlist;
+
+        if (name != null && !name.isEmpty()) {
+            wishlist = plantService.getWishlistForUser(currentUser);
+            model.addAttribute("name", name);
+        } else {
+            wishlist = plantService.getWishlistForUser(currentUser);
+        }
+        List<Plant> sortedWishlist = wishlist.stream()
+                .sorted((p1, p2) -> Boolean.compare(p2.isAdIsActive(), p1.isAdIsActive()))
+                .collect(Collectors.toList());
+
+        model.addAttribute("wishlist", sortedWishlist);
         return "myWishlist";
     }
+
 }

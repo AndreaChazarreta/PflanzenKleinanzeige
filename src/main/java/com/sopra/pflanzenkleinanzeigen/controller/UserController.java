@@ -48,7 +48,7 @@ public class UserController {
      * @return "myPlantsOverview", the view with all plants of the current user.
      */
     @GetMapping("/myPlantsForSale")
-    public String myPlantsForSaleOverview(@RequestParam(required = false) String name, Model model) {
+    public String myPlantsForSaleOverview(@RequestParam(value = "name", required = false) String name, Model model) {
         Benutzer currentUser = userService.getCurrentUser();
         if (currentUser == null) {
             return "redirect:/";
@@ -56,6 +56,7 @@ public class UserController {
         List<Plant> plants;
         if (name != null && !name.isEmpty()) {
             plants = userService.findPlantsByNameAndSeller(name, currentUser.getUserId());
+            model.addAttribute("name", name);
         } else {
             plants = userService.findActivePlantsBySeller(currentUser.getUserId());
         }
@@ -69,7 +70,7 @@ public class UserController {
      * @return "myPlants", the view with all plants that the current user has bought.
      */
     @GetMapping("/myPlants")
-    public String myPlantsOverview(@RequestParam(required = false) String name, Model model) {
+    public String myPlantsOverview(@RequestParam(value = "name", required = false) String name, Model model) {
         Benutzer currentUser = userService.getCurrentUser();
         if (currentUser == null) {
             return "redirect:/";
@@ -77,6 +78,7 @@ public class UserController {
         List<Plant> boughtPlants;
         if (name != null && !name.isEmpty()) {
             boughtPlants = userService.findPurchasedPlantsByNameAndBuyer(name, currentUser.getUserId());
+            model.addAttribute("name", name);
         } else {
             boughtPlants = currentUser.getPurchasedPlants();
         }
