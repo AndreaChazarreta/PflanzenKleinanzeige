@@ -2,12 +2,26 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <th:block th:insert="~{fragments/htmlHead :: head}"></th:block>
+    <style>
+        body {
+            background-image: url('/plant-images/login_Background.jpeg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-position: center;
+        }
+        .card {
+            background: rgba(255, 255, 255, 0.8); /* Add a slight white background with opacity for readability */
+        }
+    </style>
 </head>
 <body>
+<th:block th:insert="~{fragments/htmlNavBar :: navbar}"></th:block>
+
 <div class="container">
     <form th:action="@{/login}" method="POST" class="form-horizontal">
         <div class="d-flex justify-content-center">
-            <div class="card" style="width: 18rem; border: none; padding-top: 2rem;" >
+            <div class="card" style="width: 18rem; border: none; padding-top: 2rem;">
                 <div class="card-body">
                     <h4 class="card-title" th:text="'Please login'"></h4>
                     <div th:if="${param.error}" class="alert alert-danger">
@@ -29,8 +43,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="card-footer" style="background-color: white;" >
-                    <button name="Submit" value="Login" type="Submit" th:text="'Login'" class="btn btn-primary" style="width: 15rem;" ></button>
+                <div class="card-footer" style="background-color: white;">
+                    <button name="Submit" value="Login" type="Submit" th:text="'Login'" class="btn btn-primary" style="width: 15rem;"></button>
                 </div>
             </div>
         </div>
@@ -38,4 +52,3 @@
 </div>
 </body>
 </html>
-
