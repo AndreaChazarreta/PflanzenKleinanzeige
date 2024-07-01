@@ -128,7 +128,7 @@
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4">
             <th:block th:each="plant : ${wishlist}">
                 <div class="col mb-4">
-                    <div class="card h-100 draggable" draggable="true" data-plant-id="${plant.plantId}"
+                    <div class="card h-100 draggable" draggable="true" th:data-plant-id="${plant.plantId}"
                          ondragstart="drag(event)">
                         <a th:href="@{/plants/{id}(id=${plant.plantId})}">
                             <img th:src="@{${plant.imagePath}}" class="card-img-top" alt="Pflanzenbild">
