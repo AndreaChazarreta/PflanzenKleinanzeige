@@ -16,6 +16,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -36,18 +38,6 @@ public class PlantController {
     @Autowired
     private ChatService chatService;
 
-
-    //TODO: FRAGEN: wie sollen wir "Get all Plants" implementieren? mit @ModelAttribute
-    // oder mit @GetMapping und dann model.Attribute?
-    /**
-     * This method retrieves all plants.
-     * @return A list of all plants.
-     */
-    @ModelAttribute("plantsNOTUSED")
-    public List<Plant> getAllPlants() {
-        return plantService.findAllPlants();
-    }
-
     //TODO: brauchen wir für solche funktionen try and catch? Hier kann relativ wenig schief gehen
     /**
      * This method retrieves all plants and displays them on the plants page if they are still active.
@@ -55,19 +45,42 @@ public class PlantController {
      * @return "plants", the view with all plants.
      */
     @GetMapping("/plants")
-    public String getPlants(Model model, @RequestParam(value = "name", required = false) String name) {
+    public String getPlants(Model model,
+                            @RequestParam(value = "name", required = false) String name,
+                            @RequestParam(value = "minPrice", required = false) BigDecimal minPrice,
+                            @RequestParam(value = "maxPrice", required = false) BigDecimal maxPrice,
+                            @RequestParam(value = "minHeight", required = false) BigDecimal minHeight,
+                            @RequestParam(value = "maxHeight", required = false) BigDecimal maxHeight,
+                            @RequestParam(value = "potIncluded", required = false) Boolean potIncluded,
+                            @RequestParam(value = "category", required = false) List<String> categories,
+                            @RequestParam(value = "sortPrice", required = false) String sortPrice) {
         try {
             Benutzer currentUser = userService.getCurrentUser();
             model.addAttribute("currentUser", currentUser);
+            List<Plant> plants = new ArrayList<>();
 
-            if(name != null && !name.isEmpty()){
-                List<Plant> plantsByName = plantService.findByKeywordName(name);
-                plantsByName.removeIf(plant -> !plant.isAdIsActive());
-                model.addAttribute("plantsByName", plantsByName);
-                model.addAttribute("name", name);
-            } else {
-                model.addAttribute("allPlants", plantService.findAllActivePlants());
+            if(categories != null && !categories.isEmpty()){
+                plants = plantService.findPlantsByFilters(name, minPrice, maxPrice, minHeight, maxHeight, potIncluded, categories, sortPrice);
+            } else{
+                plants = plantService.findPlantsByFiltersWithoutCategory(name, minPrice, maxPrice, minHeight, maxHeight, potIncluded, sortPrice);
             }
+
+            BigDecimal highestPrice = plantService.findMaxPrice();
+            if (highestPrice.compareTo(new BigDecimal(200)) > 0) {
+                highestPrice = new BigDecimal(200);
+            }
+
+            model.addAttribute("plants", plants);
+            model.addAttribute("name", name);
+            model.addAttribute("minPrice", minPrice);
+            model.addAttribute("maxPrice", maxPrice);
+            model.addAttribute("minHeight", minHeight);
+            model.addAttribute("maxHeight", maxHeight);
+            model.addAttribute("potIncluded", potIncluded);
+            model.addAttribute("categories", categories);
+            model.addAttribute("sortPrice", sortPrice);
+            model.addAttribute("highestPrice", highestPrice);
+
         } catch (Exception getPlantException ) {
             logger.error("Fehler beim Abrufen der Pflanzen", getPlantException);
             model.addAttribute("error", "Ein Fehler ist aufgetreten. Bitte versuchen Sie es später erneut.");
@@ -75,6 +88,7 @@ public class PlantController {
         }
         return "plants";
     }
+
 
     /**
      * This method retrieves a specific plant by its ID and displays its details.
@@ -153,7 +167,6 @@ public class PlantController {
         return "editPlant";
     }
 
-    //TODO: schauen ob wir hier @PathVariable (ich glaube das ist bestPractice) benutzen oder @RequestParam (sowie in die Vorlesung)
     /**
      * This method updates an existing plant.
      * @param id The ID of the plant to be updated.

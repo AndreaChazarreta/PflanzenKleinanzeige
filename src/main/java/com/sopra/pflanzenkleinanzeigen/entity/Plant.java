@@ -80,7 +80,6 @@ public class Plant {
         this.price = price;
         this.height = height;
         this.description = description;
-        this.potIncluded = false;
     }
 
     public Integer getPlantId() {
