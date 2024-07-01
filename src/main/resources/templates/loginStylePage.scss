@@ -1,0 +1,727 @@
+$background: #F4EEDF;
+$plant: #9B9D57;
+$plant-2: #A1D4A5;
+$chair-base: #D3B19F;
+$ear: #E8C0AA;
+$dog-light: #F9F0E3;
+$dog-dark: #403F47;
+$pot: #C78F58;
+$dirt: #68594E;
+$pages: #DFD0A2;
+$book: #F8AA8F;
+$stand: #DABD59;
+$size: 200px;
+
+body {
+  background: $background;
+  margin: 0;
+  min-width: $size * 3.5;
+  min-height: $size * 4;
+  height: 100vh;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.stack {
+  position: relative;
+}
+
+@mixin pot($pot-scale) {
+  /* body of pot*/
+  position: relative;
+  width: $pot-scale * ($size * .33);
+  height: $pot-scale * ($size * .44);
+  left: 0%;
+  background: $pot;
+  transform: perspective($size) rotateX(-45deg);
+  &:before {
+    /*dirt in pot*/
+    content: '';
+    position: absolute;
+    background: $dirt;
+    height: $pot-scale * ($size * .12);
+    width: $pot-scale * ($size * .33);
+    bottom: 100%;
+    border-radius: 50% 50% 0 0;
+  }
+  &:after {
+    /* rim of pot*/
+    content: '';
+    position: absolute;
+    height: 0;
+    width: $pot-scale * ($size * .36);
+    height: $pot-scale * ($size * .14);
+    bottom: 95%;
+    left: -5%;
+    transform: perspective($size * 2) rotateX(-45deg);
+    background: $pot;
+    background: linear-gradient(to bottom, $pot 85%, darken($pot, 10%) 85%);
+  }
+}
+
+.pot {
+  @include pot(1);
+}
+
+@mixin book($height, $width, $color, $right) {
+  position: relative;
+  height: $height;
+  width: $width;
+  border-radius: 0 ($size * 0.25) ($size * 0.25) 0;
+  background-size: cover, calc($height / 6.67), cover;
+  background-image:
+          radial-gradient(8% 100% at 0% 50%, $background 50%, transparent 50%),
+          linear-gradient(to bottom, $pages 80%, darken($pages, 10%) 80%),
+          radial-gradient(8% 100% at 0% 50%, transparent 50%, $pages 50%);
+;
+  // box-sizing: border-box;
+  border: ($height * 0.137) solid $color;
+  border-left: ($height * 0.137) solid $background;
+  right: $right;
+}
+
+.books {
+  position: absolute;
+  top: $size * .35;
+  .book {
+    &:first-of-type {
+      @include book(($size * .15), ($size * .55), (darken(desaturate($book, 20%), 10%)), 25px );
+    }
+    &:nth-of-type(2) {
+      @include book(($size * .11), ($size * .43), (lighten($dirt, 10%)), 10px );
+    }
+    &:nth-of-type(3) {
+      @include book(($size * .14), ($size * .65), $book, 37px );
+    }
+    &:nth-of-type(4) {
+      @include book(($size * .10), ($size * .72), (desaturate(darken($pot, 10%), 10%)), 30px );
+    }
+    &:nth-of-type(5) {
+      @include book(($size * .17), ($size * .74), desaturate(darken($stand, 10%), 5%), 40px );
+    }
+    &:nth-of-type(6) {
+      @include book(($size * .13), ($size * .73), (saturate($plant, 5%)), 30px );
+    }
+  }
+}
+
+@mixin plant-stem($height, $width, $right, $border-side, $bottom, $rotate){
+  position: absolute;
+  height: $height;
+  width: $width;
+  right: $right;
+  bottom: $bottom;
+  background: transparent;
+  border-radius: 50%;
+  border: ($size * 0.0125) solid transparent;
+  border-#{$border-side}: ($size * 0.0125) solid $plant;
+  transform: rotate($rotate);
+}
+
+.plant-1 {
+  position: absolute;
+  bottom: 100%;
+  height: $size;
+  width: $size * .33;
+  .stem {
+    &:first-of-type {
+      @include plant-stem(($size * .5), ($size * .5), 70%, right, -15%, -35deg);
+      .leaf {
+        &:first-of-type {
+          position: absolute;
+          background: $plant;
+          transform-origin: 100% 50%;
+          height: $size * .05;
+          width: $size * .1;
+          border-radius: 50% 50% 0 0;
+          bottom: 85%;
+          left: 68%;
+        }
+        &:nth-of-type(2) {
+          position: absolute;
+          background: $plant;
+          transform-origin: 100% 40%;
+          height: $size * .05;
+          width: $size * .1;
+          border-radius: 50% 0;
+          bottom: 65%;
+          left: 76%;
+        }
+        &:nth-of-type(3) {
+          position: absolute;
+          background: $plant;
+          transform-origin: 90% 70%;
+          height: $size * .05;
+          width: $size * .1;
+          border-radius: 50% 50% 0 0;
+          bottom: 48%;
+          left: 79%;
+        }
+        &:nth-of-type(4) {
+          position: absolute;
+          background: $plant;
+          transform-origin: 0% 50%;
+          height: $size * .05;
+          width: $size * .1;
+          border-radius: 0 50% 50% 50%;
+          bottom: 25%;
+          left: 98%;
+        }
+        &:nth-of-type(5) {
+          position: absolute;
+          background: $plant;
+          transform-origin: 100% 50%;
+          height: $size * .1;
+          width: $size * .05;
+          border-radius: 0 50% 0 50%;
+          bottom: 21%;
+          left: 82%;
+        }
+        &:nth-of-type(6) {
+          position: absolute;
+          background: $plant;
+          transform-origin: 50% 100%;
+          height: $size * .1;
+          width: $size * .05;
+          border-radius: 50% 0 50% 0;
+          bottom: 63%;
+          left: 98%;
+        }
+      }
+    }
+    &:nth-of-type(2) {
+      @include plant-stem(($size * .75), ($size * .5), 71%, right, -15%, -35deg);
+      .leaf {
+        &:first-of-type {
+          position: absolute;
+          background: $plant;
+          transform-origin: 100% 40%;
+          height: $size * .05;
+          width: $size * .1;
+          border-radius: 50% 50% 0 0;
+          bottom: 85%;
+          left: 68%;
+        }
+        &:nth-of-type(2) {
+          position: absolute;
+          background: $plant;
+          transform-origin: 100% 40%;
+          height: $size * .05;
+          width: $size * .1;
+          border-radius: 50% 0;
+          bottom: 69%;
+          left: 73%;
+        }
+        &:nth-of-type(3) {
+          position: absolute;
+          background: $plant;
+          transform-origin: 0% 50%;
+          height: $size * .05;
+          width: $size * .1;
+          border-radius: 50% 50% 0 0;
+          bottom: 48%;
+          left: 99%;
+        }
+        &:nth-of-type(4) {
+          position: absolute;
+          background: $plant;
+          transform-origin: 0% 0%;
+          height: $size * .05;
+          width: $size * .1;
+          border-radius: 0 50% 50% 50%;
+          bottom: 25%;
+          left: 98%;
+        }
+        &:nth-of-type(5) {
+          position: absolute;
+          background: $plant;
+          transform-origin: 100% 50%;
+          height: $size * .1;
+          width: $size * .05;
+          border-radius: 0 50% 0 50%;
+          bottom: 31%;
+          left: 88%;
+        }
+        &:nth-of-type(6) {
+          position: absolute;
+          background: $plant;
+          transform-origin: 50% 100%;
+          height: $size * .1;
+          width: $size * .05;
+          border-radius: 50% 0 50% 0;
+          bottom: 63%;
+          left: 98%;
+        }
+      }
+    }
+    &:nth-of-type(3) {
+      @include plant-stem(($size), ($size * .4), 56%, right, -15%, -12deg);
+      .leaf {
+        &:first-of-type {
+          position: absolute;
+          background: $plant;
+          transform-origin: 80% 100%;
+          height: $size * .1;
+          width: $size * .05;
+          border-radius: 0 50% 0 50%;
+          bottom: 90%;
+          left: 68%;
+        }
+        &:nth-of-type(2) {
+          position: absolute;
+          background: $plant;
+          transform-origin: 100% 30%;
+          height: $size * .05;
+          width: $size * .1;
+          border-radius: 50% 0;
+          bottom: 75%;
+          left: 66%;
+        }
+        &:nth-of-type(3) {
+          position: absolute;
+          background: $plant;
+          transform-origin: 100% 70%;
+          height: $size * .05;
+          width: $size * .1;
+          border-radius: 0 50% 0 50%;
+          bottom: 62%;
+          left: 76%;
+        }
+        &:nth-of-type(4) {
+          position: absolute;
+          background: $plant;
+          transform-origin: 10% 50%;
+          height: $size * .05;
+          width: $size * .1;
+          border-radius: 50% 0 50% 50%;
+          bottom: 69%;
+          left: 98%;
+        }
+        &:nth-of-type(5) {
+          position: absolute;
+          background: $plant;
+          transform-origin: 0% 60%;
+          height: $size * .05;
+          width: $size * .1;
+          border-radius: 50% 0 50% 0;
+          bottom: 55%;
+          left: 99%;
+        }
+        &:nth-of-type(6) {
+          position: absolute;
+          background: $plant;
+          transform-origin: 10% 90%;
+          height: $size * .1;
+          width: $size * .05;
+          border-radius: 50% 0 50% 0;
+          bottom: 85%;
+          left: 88%;
+        }
+      }
+    }
+    &:nth-of-type(4) {
+      @include plant-stem(($size), ($size * .4), -90%, left, -16%, 12deg);
+      .leaf {
+        &:first-of-type {
+          position: absolute;
+          background: $plant;
+          transform-origin: 0% 50%;
+          height: $size * .05;
+          width: $size * .1;
+          border-radius: 50% 0 50% 0;
+          bottom: 90%;
+          left: 18%;
+        }
+        &:nth-of-type(2) {
+          position: absolute;
+          background: $plant;
+          transform-origin: 10% 40%;
+          height: $size * .05;
+          width: $size * .1;
+          border-radius: 0 50% 0 50%;
+          bottom: 75%;
+          left: 6%;
+        }
+        &:nth-of-type(3) {
+          position: absolute;
+          background: $plant;
+          transform-origin: 20% 100%;
+          height: $size * .1;
+          width: $size * .05;
+          border-radius: 50% 0 50% 0;
+          bottom: 50%;
+          left: 1%;
+        }
+        &:nth-of-type(4) {
+          position: absolute;
+          background: $plant;
+          transform-origin: 50% 100%;
+          height: $size * .1;
+          width: $size * .05;
+          border-radius: 0 50% 0 50%;
+          bottom: 68%;
+          left: -11%;
+        }
+        &:nth-of-type(5) {
+          position: absolute;
+          background: $plant;
+          transform-origin: 50% 100%;
+          height: $size * .1;
+          width: $size * .05;
+          border-radius: 0 50% 0 50%;
+          bottom: 84%;
+          left: 0%;
+        }
+        &:nth-of-type(6) {
+          position: absolute;
+          background: $plant;
+          transform-origin: 0% 100%;
+          height: $size * .1;
+          width: $size * .05;
+          border-radius: 50% 0 50% 0;
+          bottom: 25%;
+          left: 3%;
+        }
+      }
+    }
+    &:nth-of-type(5) {
+      @include plant-stem(($size * .75), ($size * .5), -135%, left, -16%, 35deg);
+      .leaf {
+        &:first-of-type {
+          position: absolute;
+          background: $plant;
+          transform-origin: 0% 100%;
+          height: $size * .05;
+          width: $size * .1;
+          border-radius: 50% 50% 0 0;
+          bottom: 85%;
+          left: 10%;
+        }
+        &:nth-of-type(2) {
+          position: absolute;
+          background: $plant;
+          transform-origin: 0% 100%;
+          height: $size * .05;
+          width: $size * .1;
+          border-radius: 50% 0 50% 0;
+          bottom: 72%;
+          left: 5%;
+        }
+        &:nth-of-type(3) {
+          position: absolute;
+          background: $plant;
+          transform-origin: 0% 100%;
+          height: $size * .1;
+          width: $size * .05;
+          border-radius: 50% 0 50% 0;
+          bottom: 35%;
+          left: 0%;
+        }
+        &:nth-of-type(4) {
+          position: absolute;
+          background: $plant;
+          transform-origin: 0% 100%;
+          height: $size * .1;
+          width: $size * .05;
+          border-radius: 0 50% 0 50%;
+          bottom: 68%;
+          left: -7%;
+        }
+      }
+    }
+    &:nth-of-type(6) {
+      @include plant-stem(($size * .5), ($size * .5), -130%, left, -16%, 40deg);
+      .leaf {
+        &:first-of-type {
+          position: absolute;
+          background: $plant;
+          transform-origin: 0% 100%;
+          height: $size * .05;
+          width: $size * .1;
+          border-radius: 50% 50% 0 0;
+          bottom: 85%;
+          left: 10%;
+        }
+        &:nth-of-type(2) {
+          position: absolute;
+          background: $plant;
+          transform-origin: 0% 100%;
+          height: $size * .05;
+          width: $size * .1;
+          border-radius: 50% 0 50% 0;
+          bottom: 45%;
+          left: -3%;
+        }
+        &:nth-of-type(3) {
+          position: absolute;
+          background: $plant;
+          transform-origin: 0% 100%;
+          height: $size * .1;
+          width: $size * .05;
+          border-radius: 50% 0 50% 0;
+          bottom: 20%;
+          left: 8%;
+        }
+        &:nth-of-type(4) {
+          position: absolute;
+          background: $plant;
+          transform-origin: 0% 100%;
+          height: $size * .1;
+          width: $size * .05;
+          border-radius: 0 50% 0 50%;
+          bottom: 68%;
+          left: -7%;
+        }
+      }
+    }
+  }
+}
+
+.leaf {
+  animation: leafs-sway 3s alternate infinite;
+}
+
+.stand {
+  position: relative;
+  height: $size * 2.5;
+  width: $size * .55;
+  background: $stand;
+  background:
+          linear-gradient(to bottom, transparent 0%, transparent 96.6%, darken($stand, 15%) 96.6%, darken($stand, 15%) 97%, transparent 97%),
+          linear-gradient(to bottom, $stand 0%, $stand 3.6%, transparent 3.6%, transparent 96.6%, $stand 96.6%),
+          linear-gradient(to right, transparent 0%, transparent 42.5%, $stand 42.5%, $stand 57.5%, transparent 57.5%);
+  &:before, &:after {
+    content: '';
+    position: absolute;
+    height: $size * .09;
+    width: $size * .6;
+    background: $stand;
+    left: 57%;
+    bottom: 25%;
+    box-shadow: (($size * -0.34) ($size * 0.745) 0 ($size * 0.025) $stand), (($size * -0.34) ($size * 0.735) 0 ($size * 0.025) darken($stand, 15%));
+  }
+  &:after {
+    width: $size * .75;
+    bottom: 70%;
+    box-shadow: (($size * -0.415) ($size * 1.925) 0 0 $stand), (($size * -0.415) ($size * 1.915) 0 0 darken($stand, 15%));
+  }
+}
+
+.stand {
+  .pot {
+    &:first-of-type {
+      /*big pot on the top*/
+      top: -14%;
+      left: 20%;
+    }
+    &:nth-of-type(3) {
+      /*little pot in the middle*/
+      @include pot(.7);
+      top: 0%;
+      left: 110%;
+    }
+    &:nth-of-type(5) {
+      /*medium pot on the bottom*/
+      @include pot(.9);
+      top: 13%;
+      left: 95%;
+    }
+  }
+}
+
+@mixin leaf-2($leaf-scale, $left, $bottom, $rotate) {
+  position: absolute;
+  height: $leaf-scale * ($size * .12);
+  width: $leaf-scale * ($size * .1);
+  background: $plant-2;
+  border-radius: 50% 0 50% 0;
+  bottom: $bottom;
+  left: $left;
+  transform: rotate(#{$rotate}deg);
+}
+
+.plant-4 {
+  position: relative;
+  background: radial-gradient(80% 80% at 50% 50%, $plant-2 50%, transparent 50%);
+  bottom: 19%;
+  left: 95%;
+  height: .9 * ($size * .44);
+  width: .9 * ($size * .33);
+  .leaf-2 {
+    &:first-of-type {
+      @include leaf-2(1.6, 70%, 60%, -10);
+    }
+    &:nth-of-type(2) {
+      @include leaf-2(1.6, 85%, 30%, 35);
+    }
+    &:nth-of-type(3) {
+      @include leaf-2(1.6, 90%, 0%, 60);
+    }
+    &:nth-of-type(4) {
+      @include leaf-2(1.1, -10%, 65%, 85);
+    }
+    &:nth-of-type(5) {
+      @include leaf-2(1.1, 30%, 75%, 120);
+    }
+    &:nth-of-type(6) {
+      @include leaf-2(1.4, -35%, 40%, 75);
+    }
+    &:nth-of-type(7) {
+      @include leaf-2(1.7, -45%, 0%, 40);
+    }
+    &:nth-of-type(8) {
+      @include leaf-2(1.1, 0%, -10%, 0);
+    }
+    &:nth-of-type(9) {
+      @include leaf-2(1.5, 40%, -15%, 160);
+    }
+  }
+}
+
+.flower {
+  position: relative;
+  height: $size * .2;
+  width: $size * .2;
+  transform-origin: 50% 60%;
+  background-image:
+          radial-gradient(25% 25% at 50% 55%, $stand 50%, transparent 50%),
+          radial-gradient(50% 50% at 50% 50%, #fff 50%, transparent 50%),
+          radial-gradient(35% 35% at 51% 30%, #fff 52%, transparent 52%),
+          radial-gradient(35% 35% at 82% 50%, #fff 52%, transparent 52%),
+          radial-gradient(35% 35% at 70% 80%, #fff 52%, transparent 52%),
+          radial-gradient(35% 35% at 35% 80%, #fff 52%, transparent 52%),
+          radial-gradient(35% 35% at 20% 50%, #fff 52%, transparent 52%);
+  &:nth-of-type(10) {
+    top: 25%;
+    left: -30%;
+    transform: rotate(-30deg);
+    animation: flowers-swirl 4.5s alternate infinite;
+  }
+  &:nth-of-type(11) {
+    top: -60%;
+    left: 40%;
+    transform: rotate(10deg);
+    animation: flowers-swirl 4s alternate infinite;
+  }
+  &:nth-of-type(12) {
+    top: -55%;
+    left: 60%;
+    transform: rotate(45deg);
+    animation: flowers-swirl 4.3s alternate-reverse infinite;
+  }
+}
+
+.plant-3 {
+  position: relative;
+  bottom: 29%;
+  left: 104%;
+  height: .9 * ($size * .44);
+  width: .9 * ($size * .33);
+  .stem {
+    z-index: 1;
+    position: absolute;
+    background: transparent;
+    border-radius: 50%;
+    top: 80%;
+    // border: ($size * 0.0125) solid transparent;
+    &:first-of-type {
+      height: ($size * .35);
+      width: ($size * .06);
+      right: 44%;
+      border-left: ($size * 0.0125) solid $plant-2;
+      border-top: ($size * 0.0125) solid $plant-2;
+      transform: rotate(5deg);
+    }
+    &:nth-of-type(2) {
+      height: ($size * .35);
+      width: ($size * .06);
+      right: 31%;
+      border-right: ($size * 0.0125) solid $plant-2;
+      border-top: ($size * 0.0125) solid $plant-2;
+      transform: rotate(5deg);
+    }
+    &:nth-of-type(3) {
+      height: ($size * .5);
+      width: ($size * .08);
+      right: 18%;
+      border-right: ($size * 0.0125) solid $plant-2;
+      border-top: ($size * 0.0125) solid $plant-2;
+      transform: rotate(0deg);
+    }
+    &:nth-of-type(4) {
+      height: ($size * .55);
+      width: ($size * .1);
+      right: 50%;
+      border-left: ($size * 0.0125) solid $plant-2;
+      border-top: ($size * 0.0125) solid $plant-2;
+      transform: rotate(0deg);
+    }
+    &:nth-of-type(5) {
+      height: ($size * .33);
+      width: ($size * .15);
+      right: 55%;
+      border-left: ($size * 0.0125) solid $plant-2;
+      border-top: ($size * 0.0125) solid $plant-2;
+      transform: rotate(0deg);
+    }
+    &:nth-of-type(6) {
+      height: ($size * .5);
+      width: ($size * .2);
+      right: 55%;
+      border-left: ($size * 0.0125) solid $plant-2;
+      border-top: ($size * 0.0125) solid $plant-2;
+      transform: rotate(0deg);
+    }
+    &:nth-of-type(7) {
+      height: ($size * .1);
+      width: ($size * .2);
+      right: 55%;
+      top: 73%;
+      border-right: ($size * 0.0125) solid $plant-2;
+      border-top: ($size * 0.0125) solid $plant-2;
+      transform: rotate(-10deg);
+    }
+    &:nth-of-type(8) {
+      height: ($size * .55);
+      width: ($size * .1);
+      right: -15%;
+      top: 73%;
+      border-right: ($size * 0.0125) solid $plant-2;
+      border-top: ($size * 0.0125) solid $plant-2;
+      transform: rotate(-7deg);
+    }
+    &:nth-of-type(9) {
+      height: ($size * .15);
+      width: ($size * .40);
+      right: -85%;
+      top: 95%;
+      border-left: ($size * 0.0125) solid $plant-2;
+      border-top: ($size * 0.0125) solid $plant-2;
+      transform: rotate(45deg);
+    }
+  }
+}
+
+
+@keyframes flowers-swirl {
+  0% {
+    transform: rotate(-180deg);
+  }
+  100% {
+    transform: rotate(180deg);
+  }
+}
+
+@keyframes leafs-sway {
+  0% {
+    transform: rotate(-15deg);
+  }
+  100% {
+    transform: rotate(15deg);
+  }
+}
+
+.plant-2 {
+  background: $plant-2;
+}
