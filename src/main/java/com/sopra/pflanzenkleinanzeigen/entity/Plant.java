@@ -224,4 +224,75 @@ public class Plant {
         this.category = category;
     }
 
+    public boolean isLifespan() {
+        return lifespan;
+    }
+
+    public void setLifespan(boolean lifespan) {
+        this.lifespan = lifespan;
+    }
+
+    public HardinessZone getHardinessZone() {
+        return hardinessZone;
+    }
+
+    public void setHardinessZone(HardinessZone hardinessZone) {
+        this.hardinessZone = hardinessZone;
+    }
+
+    public SoilType getSoilType() {
+        return soilType;
+    }
+
+    public void setSoilType(SoilType soilType) {
+        this.soilType = soilType;
+    }
+
+    public FloweringTime getFloweringTime() {
+        return floweringTime;
+    }
+
+    public void setFloweringTime(FloweringTime floweringTime) {
+        this.floweringTime = floweringTime;
+    }
+
+    public boolean isToxicForPets() {
+        return isToxicForPets;
+    }
+
+    public void setToxicForPets(boolean toxicForPets) {
+        isToxicForPets = toxicForPets;
+    }
+
+    public LightRequirement getLightRequirement() {
+        return lightRequirement;
+    }
+
+    public void setLightRequirement(LightRequirement lightRequirement) {
+        this.lightRequirement = lightRequirement;
+    }
+
+    public WaterRequirement getWaterRequirement() {
+        return waterRequirement;
+    }
+
+    public void setWaterRequirement(WaterRequirement waterRequirement) {
+        this.waterRequirement = waterRequirement;
+    }
+
+    public boolean isAirPurifying() {
+        return isAirPurifying;
+    }
+
+    public void setAirPurifying(boolean airPurifying) {
+        isAirPurifying = airPurifying;
+    }
+
+    public Usability getUsability() {
+        return usability;
+    }
+
+    public void setUsability(Usability usability) {
+        this.usability = usability;
+    }
 }
