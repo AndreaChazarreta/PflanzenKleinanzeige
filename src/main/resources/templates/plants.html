@@ -90,9 +90,6 @@
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
-        .filter-container h2 {
-            margin-bottom: 20px;
-        }
         .search-bar {
             display: flex;
             align-items: center;
@@ -113,16 +110,16 @@
         }
         .search-bar button {
             border: none;
-            background-color: rgb(213, 246, 142);
+            background-color: #0a723f;
             border-radius: 25px;
             padding: 8px 10px;
             cursor: pointer;
         }
         .search-bar button:hover {
-            background-color: rgb(213, 246, 142);
+            background-color: #1d6b41;
         }
         .search-bar button i {
-            color: #000;
+            color: #ffffff;
         }
     </style>
     <title>Plants</title>
@@ -135,70 +132,106 @@
     <div class="row">
         <div class="col-lg-3 mb-4">
             <div class="filter-container">
-                <h2>Filter</h2>
                 <form id="filterForm" th:action="@{/plants}" method="get" onsubmit="return buildUrl()">
                     <div class="search-bar">
                         <input class="form-control" id="name" name="name" label="Suche nach Name:" type="text" th:value="${name}" placeholder="Suche nach Name">
                         <button class="btn" type="submit"><i class="bi bi-search"></i></button>
                     </div>
                     <div>
-                        <div id="price-container" class="d-flex justify-content-between align-items-center mb-2">
-                            <span>Preis</span>
-                            <span class="button-clear" onclick="clearPriceFilter()">Löschen</span>
-                        </div>
-                        <div>
-                            Zwischen <span id="min-price-value" class="price-label"></span> und <span id="max-price-value" class="price-label"></span>
-                        </div>
-                        <div id="price-slider"></div>
-                        <input type="hidden" id="minPrice" name="minPrice" th:value="${minPrice}">
-                        <input type="hidden" id="maxPrice" name="maxPrice" th:value="${maxPrice}">
-
-                        <label class="mt-3">Höhe in cm:</label>
-                        <div class="d-flex">
-                            <div class="me-2">
-                                <label for="minHeight">Min</label>
-                                <input class="form-control" id="minHeight" name="minHeight" type="number" th:value="${minHeight}" step="0.01">
-                            </div>
-                            <div>
-                                <label for="maxHeight">Max</label>
-                                <input class="form-control" id="maxHeight" name="maxHeight" type="number" th:value="${maxHeight}" step="0.01">
-                            </div>
-                        </div>
-
-                        <div style="display: flex; justify-content: space-between; align-items: center;">
-                            <label>Übertopf enthalten:</label>
-                            <button type="button" class="button-clear" onclick="clearPotIncluded()">Löschen</button>
-                        </div>
-                        <div class="mb-2">
-                            <input type="radio" id="potIncludedTrue" name="potIncluded" value="true" th:checked="${potIncluded == true}"><label for="potIncludedTrue"> Mit Übertopf</label>
-                            <br>
-                            <input type="radio" id="potIncludedFalse" name="potIncluded" value="false" th:checked="${potIncluded == false}"><label for="potIncludedFalse"> Ohne Übertopf</label>
-                        </div>
-
-                        <label>Kategorie:</label>
-                        <div class="mb-2">
-                            <label><input type="checkbox" name="category" value="Baum" th:checked="${categories != null && categories.contains('Baum')}"> Baum</label>
-                            <br>
-                            <label><input type="checkbox" name="category" value="Zierpflanze" th:checked="${categories != null && categories.contains('Zierpflanze')}"> Zierpflanze</label>
-                            <br>
-                            <label><input type="checkbox" name="category" value="Grünpflanze" th:checked="${categories != null && categories.contains('Grünpflanze')}"> Grünpflanze</label>
-                            <br>
-                            <label><input type="checkbox" name="category" value="Draußenpflanze" th:checked="${categories != null && categories.contains('Draußenpflanze')}"> Draußenpflanze</label>
-                            <br>
-                            <label><input type="checkbox" name="category" value="Kräuter" th:checked="${categories != null && categories.contains('Kräuter')}"> Kräuter</label>
-                            <br>
-                            <label><input type="checkbox" name="category" value="Strauß" th:checked="${categories != null && categories.contains('Strauß')}"> Strauß</label>
-                        </div>
-
                         <label for="sortPrice">Sortieren nach Preis:</label>
                         <select class="form-select mb-3" id="sortPrice" name="sortPrice">
                             <option value="" th:selected="${sortPrice == null}">Keine Sortierung</option>
                             <option value="asc" th:selected="${sortPrice == 'asc'}">Preis aufsteigend</option>
                             <option value="desc" th:selected="${sortPrice == 'desc'}">Preis absteigend</option>
                         </select>
-
-                        <button type="submit" class="btn btn-primary w-100">Filtern</button>
                     </div>
+                    <div class="accordion" id="filterAccordion">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingPrice">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapsePrice" aria-expanded="false" aria-controls="collapsePrice">
+                                    Preis in €
+                                </button>
+                            </h2>
+                            <div id="collapsePrice" class="accordion-collapse collapse" aria-labelledby="headingPrice">
+                                <div class="accordion-body">
+                                    <div id="price-container" class="d-flex justify-content-between align-items-center mb-2">
+                                        <span class="button-clear" onclick="clearPriceFilter()">Löschen</span>
+                                    </div>
+                                    <div>
+                                        Zwischen <span id="min-price-value" class="price-label"></span> und <span id="max-price-value" class="price-label"></span>
+                                    </div>
+                                    <div id="price-slider"></div>
+                                    <input type="hidden" id="minPrice" name="minPrice" th:value="${minPrice}">
+                                    <input type="hidden" id="maxPrice" name="maxPrice" th:value="${maxPrice}">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingHeight">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseHeight" aria-expanded="false" aria-controls="collapseHeight">
+                                    Höhe in cm
+                                </button>
+                            </h2>
+                            <div id="collapseHeight" class="accordion-collapse collapse" aria-labelledby="headingHeight">
+                                <div class="accordion-body">
+                                    <div class="d-flex">
+                                        <div class="me-2">
+                                            <label for="minHeight">Min</label>
+                                            <input class="form-control" id="minHeight" name="minHeight" type="number" th:value="${minHeight}" step="0.01">
+                                        </div>
+                                        <div>
+                                            <label for="maxHeight">Max</label>
+                                            <input class="form-control" id="maxHeight" name="maxHeight" type="number" th:value="${maxHeight}" step="0.01">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingPot">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapsePot" aria-expanded="false" aria-controls="collapsePot">
+                                    Übertopf enthalten
+                                </button>
+                            </h2>
+                            <div id="collapsePot" class="accordion-collapse collapse" aria-labelledby="headingPot">
+                                <div class="accordion-body">
+                                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                                        <button type="button" class="button-clear" onclick="clearPotIncluded()">Löschen</button>
+                                    </div>
+                                    <div class="mb-2">
+                                        <input type="radio" id="potIncludedTrue" name="potIncluded" value="true" th:checked="${potIncluded == true}"><label for="potIncludedTrue"> Mit Übertopf</label>
+                                        <br>
+                                        <input type="radio" id="potIncludedFalse" name="potIncluded" value="false" th:checked="${potIncluded == false}"><label for="potIncludedFalse"> Ohne Übertopf</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingCategory">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseCategory" aria-expanded="false" aria-controls="collapseCategory">
+                                    Kategorie
+                                </button>
+                            </h2>
+                            <div id="collapseCategory" class="accordion-collapse collapse" aria-labelledby="headingCategory">
+                                <div class="accordion-body">
+                                    <div class="mb-2">
+                                        <label><input type="checkbox" name="category" value="Baum" th:checked="${categories != null && categories.contains('Baum')}"> Baum</label>
+                                        <br>
+                                        <label><input type="checkbox" name="category" value="Zierpflanze" th:checked="${categories != null && categories.contains('Zierpflanze')}"> Zierpflanze</label>
+                                        <br>
+                                        <label><input type="checkbox" name="category" value="Grünpflanze" th:checked="${categories != null && categories.contains('Grünpflanze')}"> Grünpflanze</label>
+                                        <br>
+                                        <label><input type="checkbox" name="category" value="Draußenpflanze" th:checked="${categories != null && categories.contains('Draußenpflanze')}"> Draußenpflanze</label>
+                                        <br>
+                                        <label><input type="checkbox" name="category" value="Kräuter" th:checked="${categories != null && categories.contains('Kräuter')}"> Kräuter</label>
+                                        <br>
+                                        <label><input type="checkbox" name="category" value="Strauß" th:checked="${categories != null && categories.contains('Strauß')}"> Strauß</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100" style="background-color: #1d6b41; border:none; margin-top: 10px">Filtern</button>
                 </form>
             </div>
         </div>
@@ -291,6 +324,27 @@
         window.buildUrl = buildUrl;
         window.clearPotIncluded = clearPotIncluded;
         window.clearPriceFilter = clearPriceFilter;
+
+        // Restore accordion state from localStorage
+        var accordionState = JSON.parse(localStorage.getItem('accordionState')) || {};
+        for (var key in accordionState) {
+            if (accordionState[key]) {
+                document.getElementById(key).classList.add('show');
+            }
+        }
+
+        // Add event listeners to update localStorage when accordion is toggled
+        var accordionItems = document.querySelectorAll('.accordion-collapse');
+        accordionItems.forEach(function(item) {
+            item.addEventListener('shown.bs.collapse', function () {
+                accordionState[item.id] = true;
+                localStorage.setItem('accordionState', JSON.stringify(accordionState));
+            });
+            item.addEventListener('hidden.bs.collapse', function () {
+                accordionState[item.id] = false;
+                localStorage.setItem('accordionState', JSON.stringify(accordionState));
+            });
+        });
     });
 
     function toggleWishlist(imageElement) {
