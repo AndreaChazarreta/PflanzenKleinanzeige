@@ -136,34 +136,34 @@
         <div class="col-lg-3 mb-4">
             <div class="filter-container">
                 <h2>Filter</h2>
-            <form id="filterForm" th:action="@{/plants}" method="get" onsubmit="return buildUrl()">
-                <div class="search-bar">
-                    <input class="form-control" id="name" name="name" label="Suche nach Name:" type="text" th:value="${name}" placeholder="Suche nach Name">
-                    <button class="btn" type="submit"><i class="bi bi-search"></i></button>
-                </div>
-                <div>
-                <div id="price-container" class="d-flex justify-content-between align-items-center mb-2">
-                    <span>Preis</span>
-                    <span class="button-clear" onclick="clearPriceFilter()">Löschen</span>
-                </div>
-                    <div>
-                        Zwischen <span id="min-price-value" class="price-label"></span> und <span id="max-price-value" class="price-label"></span>
+                <form id="filterForm" th:action="@{/plants}" method="get" onsubmit="return buildUrl()">
+                    <div class="search-bar">
+                        <input class="form-control" id="name" name="name" label="Suche nach Name:" type="text" th:value="${name}" placeholder="Suche nach Name">
+                        <button class="btn" type="submit"><i class="bi bi-search"></i></button>
                     </div>
-                <div id="price-slider"></div>
-                <input type="hidden" id="minPrice" name="minPrice" th:value="${minPrice}">
-                <input type="hidden" id="maxPrice" name="maxPrice" th:value="${maxPrice}">
-
-                    <label class="mt-3">Höhe in cm:</label>
-                    <div class="d-flex">
-                        <div class="me-2">
-                            <label for="minHeight">Min</label>
-                            <input class="form-control" id="minHeight" name="minHeight" type="number" th:value="${minHeight}" step="0.01">
+                    <div>
+                        <div id="price-container" class="d-flex justify-content-between align-items-center mb-2">
+                            <span>Preis</span>
+                            <span class="button-clear" onclick="clearPriceFilter()">Löschen</span>
                         </div>
                         <div>
-                            <label for="maxHeight">Max</label>
-                            <input class="form-control" id="maxHeight" name="maxHeight" type="number" th:value="${maxHeight}" step="0.01">
+                            Zwischen <span id="min-price-value" class="price-label"></span> und <span id="max-price-value" class="price-label"></span>
                         </div>
-                    </div>
+                        <div id="price-slider"></div>
+                        <input type="hidden" id="minPrice" name="minPrice" th:value="${minPrice}">
+                        <input type="hidden" id="maxPrice" name="maxPrice" th:value="${maxPrice}">
+
+                        <label class="mt-3">Höhe in cm:</label>
+                        <div class="d-flex">
+                            <div class="me-2">
+                                <label for="minHeight">Min</label>
+                                <input class="form-control" id="minHeight" name="minHeight" type="number" th:value="${minHeight}" step="0.01">
+                            </div>
+                            <div>
+                                <label for="maxHeight">Max</label>
+                                <input class="form-control" id="maxHeight" name="maxHeight" type="number" th:value="${maxHeight}" step="0.01">
+                            </div>
+                        </div>
 
                         <div style="display: flex; justify-content: space-between; align-items: center;">
                             <label>Übertopf enthalten:</label>
@@ -214,7 +214,6 @@
     </div>
 </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.5.0/nouislider.min.js"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         var slider = document.getElementById('price-slider');
@@ -250,30 +249,30 @@
             document.getElementById('maxPrice').value = values[1];
         });
 
-    function buildUrl() {
-        const name = document.getElementById('name').value.trim();
-        const minPrice = document.getElementById('minPrice').value;
-        const maxPrice = document.getElementById('maxPrice').value;
-        const minHeight = document.getElementById('minHeight').value;
-        const maxHeight = document.getElementById('maxHeight').value;
-        const potIncluded = document.querySelector('input[name="potIncluded"]:checked') ? document.querySelector('input[name="potIncluded"]:checked').value : '';
-        const categories = Array.from(document.querySelectorAll('input[name="category"]:checked')).map(checkbox => checkbox.value);
-        const sortPrice = document.getElementById('sortPrice').value;
+        function buildUrl() {
+            const name = document.getElementById('name').value.trim();
+            const minPrice = document.getElementById('minPrice').value;
+            const maxPrice = document.getElementById('maxPrice').value;
+            const minHeight = document.getElementById('minHeight').value;
+            const maxHeight = document.getElementById('maxHeight').value;
+            const potIncluded = document.querySelector('input[name="potIncluded"]:checked') ? document.querySelector('input[name="potIncluded"]:checked').value : '';
+            const categories = Array.from(document.querySelectorAll('input[name="category"]:checked')).map(checkbox => checkbox.value);
+            const sortPrice = document.getElementById('sortPrice').value;
 
-        const params = { name, minHeight, maxHeight, potIncluded, category: categories.join(','), sortPrice };
+            const params = { name, minHeight, maxHeight, potIncluded, category: categories.join(','), sortPrice };
 
-        if (minPrice !== minPriceDefault.toFixed(2)) params.minPrice = minPrice;
-        if (maxPrice !== maxPriceDefault.toFixed(2)) params.maxPrice = maxPrice;
+            if (minPrice !== minPriceDefault.toFixed(2)) params.minPrice = minPrice;
+            if (maxPrice !== maxPriceDefault.toFixed(2)) params.maxPrice = maxPrice;
 
-        let queryString = Object.keys(params)
-            .filter(key => params[key] !== '' && params[key] !== undefined && params[key] !== null)
-            .map(key => `${key}=${encodeURIComponent(params[key])}`)
-            .join('&');
+            let queryString = Object.keys(params)
+                .filter(key => params[key] !== '' && params[key] !== undefined && params[key] !== null)
+                .map(key => `${key}=${encodeURIComponent(params[key])}`)
+                .join('&');
 
-        const url = `/plants${queryString ? `?${queryString}` : ''}`;
-        window.location.href = url;
-        return false;
-    }
+            const url = `/plants${queryString ? `?${queryString}` : ''}`;
+            window.location.href = url;
+            return false;
+        }
 
         function clearPriceFilter() {
             slider.noUiSlider.set([minPriceDefault, maxPriceDefault]);
@@ -282,12 +281,12 @@
             buildUrl();
         }
 
-    function clearPotIncluded() {
-        // Entfernt die Auswahl der Radio-Buttons
-        document.getElementById('potIncludedTrue').checked = false;
-        document.getElementById('potIncludedFalse').checked = false;
-        buildUrl(); // Aktualisiert die Ansicht, um alle Pflanzen anzuzeigen
-    }
+        function clearPotIncluded() {
+            // Entfernt die Auswahl der Radio-Buttons
+            document.getElementById('potIncludedTrue').checked = false;
+            document.getElementById('potIncludedFalse').checked = false;
+            buildUrl(); // Aktualisiert die Ansicht, um alle Pflanzen anzuzeigen
+        }
 
         window.buildUrl = buildUrl;
         window.clearPotIncluded = clearPotIncluded;
@@ -333,7 +332,7 @@
         });
     });
 </script>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.5.0/nouislider.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>
