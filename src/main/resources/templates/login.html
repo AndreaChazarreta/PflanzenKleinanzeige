@@ -11,14 +11,21 @@
             background-position: center;
         }
         .card {
-            background: rgba(255, 255, 255, 0.8); /* Add a slight white background with opacity for readability */
+            background: #ffffff;
         }
     </style>
 </head>
 <body>
-<th:block th:insert="~{fragments/htmlNavBar :: navbar}"></th:block>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+        <a class="navbar-brand d-flex align-items-center" th:href="@{/plants}" >
+            <img src="/plant-images/logoPlantHeart.png" alt="Logo" width="70" height="70" class="d-inline-block align-text-center me-2">
+            <h4> Die grüne Ecke </h4>
+        </a>
+    </div>
+</nav>
 
-<div class="container">
+<div class="container" style="margin-top: 75px">
     <form th:action="@{/login}" method="POST" class="form-horizontal">
         <div class="d-flex justify-content-center">
             <div class="card" style="width: 18rem; border: none; padding-top: 2rem;">
