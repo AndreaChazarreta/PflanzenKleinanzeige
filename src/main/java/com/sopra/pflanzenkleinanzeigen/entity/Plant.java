@@ -3,6 +3,7 @@ package com.sopra.pflanzenkleinanzeigen.entity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import java.math.BigDecimal;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -42,6 +43,8 @@ public class Plant {
     private String imagePath;
 
     private boolean sold;
+
+    private Timestamp dateWished;
 
 
     @ManyToMany(targetEntity = Benutzer.class, fetch = FetchType.EAGER)
@@ -203,6 +206,14 @@ public class Plant {
 
     public void setCategory(Category category) {
         this.category = category;
+    }
+
+    public Timestamp getDateWished() {
+        return dateWished;
+    }
+
+    public void setDateWished(Timestamp dateWished) {
+        this.dateWished = dateWished;
     }
 
 }
