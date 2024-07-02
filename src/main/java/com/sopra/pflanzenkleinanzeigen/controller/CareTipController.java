@@ -1,6 +1,8 @@
 package com.sopra.pflanzenkleinanzeigen.controller;
 
+import com.sopra.pflanzenkleinanzeigen.entity.Benutzer;
 import com.sopra.pflanzenkleinanzeigen.entity.CareTip;
+import com.sopra.pflanzenkleinanzeigen.entity.Category;
 import com.sopra.pflanzenkleinanzeigen.entity.Plant;
 import com.sopra.pflanzenkleinanzeigen.service.CareTipService;
 import com.sopra.pflanzenkleinanzeigen.service.PlantService;
@@ -10,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * The PlantController class handles web requests related to plant operations.
@@ -30,7 +34,8 @@ public class CareTipController {
 
     /**
      * This method retrieves a specific plant by its ID and displays the care tip.
-     * @param id The ID of the plant to be retrieved.
+     *
+     * @param id    The ID of the plant to be retrieved.
      * @param model The model that is sent to the view.
      * @return "careTip", the view with the careTip of the specific plant.
      */

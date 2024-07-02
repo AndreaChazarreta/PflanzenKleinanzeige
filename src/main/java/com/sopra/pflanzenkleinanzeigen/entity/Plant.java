@@ -2,6 +2,8 @@ package com.sopra.pflanzenkleinanzeigen.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
+import org.hibernate.annotations.Cascade;
+
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -42,6 +44,8 @@ public class Plant {
     private String imagePath;
 
     private boolean sold;
+
+    private boolean seed;
 
     @ManyToMany(targetEntity = com.sopra.pflanzenkleinanzeigen.entity.Benutzer.class, fetch = FetchType.EAGER)
     private Set<Benutzer> wishedBy = new HashSet<>();
@@ -200,5 +204,13 @@ public class Plant {
 
     public void setCategory(Category category) {
         this.category = category;
+    }
+
+    public boolean isSeed() {
+        return seed;
+    }
+
+    public void setSeed(boolean seed) {
+        this.seed = seed;
     }
 }

@@ -3,6 +3,7 @@ package com.sopra.pflanzenkleinanzeigen.controller;
 import com.sopra.pflanzenkleinanzeigen.entity.Benutzer;
 import com.sopra.pflanzenkleinanzeigen.entity.Chat;
 import com.sopra.pflanzenkleinanzeigen.entity.Plant;
+import com.sopra.pflanzenkleinanzeigen.service.CategoryService;
 import com.sopra.pflanzenkleinanzeigen.service.ChatService;
 import com.sopra.pflanzenkleinanzeigen.service.PlantService;
 import com.sopra.pflanzenkleinanzeigen.service.UserService;
@@ -35,6 +36,9 @@ public class PlantController {
     private UserService userService;
     @Autowired
     private ChatService chatService;
+
+    @Autowired
+    private CategoryService categoryService;
 
 
     //TODO: FRAGEN: wie sollen wir "Get all Plants" implementieren? mit @ModelAttribute
@@ -112,7 +116,8 @@ public class PlantController {
      * @return "redirect:/plants", the view with all plants, if the new plant is valid. Otherwise, it returns "createPlant", the view with the form for creating a new plant.
      */
     @PostMapping("/plants")
-    public String addPlant(@Valid @ModelAttribute("newPlant") Plant newPlant, @RequestParam("imageFile") MultipartFile imageFile, BindingResult result, Model model) {
+    public String addPlant(@Valid @ModelAttribute("newPlant") Plant newPlant, @RequestParam("imageFile") MultipartFile imageFile, BindingResult result, Model model,
+                           @RequestParam(value = "category", required = false) Integer categoryId ) {
         if (result.hasErrors()) {
             //TODO: schauen warum es hier Beschreibung leer lassen als Fehler angenommen wird
             model.addAttribute("newPlant", newPlant);
@@ -121,6 +126,7 @@ public class PlantController {
         try {
             newPlant.setSeller(userService.getCurrentUser());
             newPlant.setAdIsActive(true);
+            newPlant.setCategory(categoryService.findById(categoryId));
             plantService.savePlant(newPlant, imageFile);
         } catch (IOException e) {
             model.addAttribute("error", "Ein Fehler ist aufgetreten: " + e.getMessage());

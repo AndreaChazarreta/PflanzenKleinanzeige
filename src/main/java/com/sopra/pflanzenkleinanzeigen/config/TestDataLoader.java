@@ -164,14 +164,26 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         categoryService.saveCategory(category6);
 
         CareTip careTip1 = new CareTip();
+        careTip1.setCategory(category6);
         careTip1.setLightingConditions("high");
         careTip1.setFertilization("Nein");
         careTip1.setIrrigation("viel");
         careTip1.setOtherTips("keine");
         careTip1.setRepotting("Ja");
         careTip1.setTemperature("20 Grad");
-
+        careTip1.setPlanting("Direkt in die Erde");
         careTipService.saveCareTip(careTip1);
+
+        CareTip careTip2 = new CareTip();
+        careTip2.setCategory(category3);
+        careTip2.setLightingConditions("medium");
+        careTip2.setFertilization("Nein");
+        careTip2.setIrrigation("wenig");
+        careTip2.setOtherTips("keine");
+        careTip2.setRepotting("Ja");
+        careTip2.setTemperature("15 Grad");
+        careTip2.setPlanting("Vorzüchten");
+        careTipService.saveCareTip(careTip2);
 
         Plant kaktus = new Plant();
         kaktus.setName("Kaktus");
