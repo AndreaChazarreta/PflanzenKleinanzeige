@@ -47,7 +47,6 @@ public class Plant {
 
     private boolean seed;
 
-    @ManyToMany(targetEntity = com.sopra.pflanzenkleinanzeigen.entity.Benutzer.class, fetch = FetchType.EAGER)
     private Set<Benutzer> wishedBy = new HashSet<>();
 
     @ManyToOne
@@ -83,7 +82,6 @@ public class Plant {
         this.price = price;
         this.height = height;
         this.description = description;
-        this.potIncluded = false;
     }
 
     public Integer getPlantId() {
@@ -164,6 +162,9 @@ public class Plant {
 
     public void setBuyer(Benutzer buyer) {
         this.buyer = buyer;
+        if (buyer != null) {
+            this.adIsActive = false;
+        }
     }
 
     public boolean isAdIsActive() {

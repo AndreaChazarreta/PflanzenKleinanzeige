@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.nio.file.Files;
@@ -72,6 +73,22 @@ public class PlantService {
         return plantRepository.findById(id).orElse(null);
     }
 
+    public List<Plant> findPlantsByFilters(String name, BigDecimal minPrice, BigDecimal maxPrice,
+                                           BigDecimal minHeight, BigDecimal maxHeight,
+                                           Boolean potIncluded, List<String> categories, String sortPrice) {
+        return plantRepository.findByFilters(name, minPrice, maxPrice, minHeight, maxHeight, potIncluded, categories, sortPrice);
+    }
+
+    public List<Plant> findPlantsByFiltersWithoutCategory(String name, BigDecimal minPrice, BigDecimal maxPrice,
+                                           BigDecimal minHeight, BigDecimal maxHeight,
+                                           Boolean potIncluded, String sortPrice) {
+        return plantRepository.findByFiltersWithoutCategory(name, minPrice, maxPrice, minHeight, maxHeight, potIncluded, sortPrice);
+    }
+
+    public BigDecimal findMaxPrice() {
+        return plantRepository.findMaxPrice();
+    }
+
     public void deletePlant(Plant plant) {
         plantRepository.delete(plant);
     }
@@ -105,4 +122,39 @@ public class PlantService {
         Files.write(path, imageFile.getBytes());
         return "/plant-images/" + randomFilename;
     }
+    /**
+     * Marks a plant as wished for a specific user.
+     * If the plant is not already in the user's wishlist, it is added.
+     * Afterwards, the updated user and plant objects are saved in the database.
+     *
+     * @param user The user who is marking the plant as wished.
+     * @param plant The plant that is being marked as wished.
+     */
+    public void markPlantAsWished(Benutzer user, Plant plant) {
+        if (!plant.getWishedBy().contains(user)) {
+            plant.getWishedBy().add(user);
+            user.getWishedPlants().add(plant);
+            plantRepository.save(plant);
+            userRepository.save(user);
+        }
+    }
+
+    /**
+     * Removes the marking of a plant as wished for a specific user.
+     * The plant is removed from the user's wishlist.
+     * Afterwards, the updated user and plant objects are saved in the database.
+     *
+     * @param user The user for whom the marking of the plant as wished is being removed.
+     * @param plant The plant whose marking as wished is being removed.
+     */
+    public void unmarkPlantAsWished(Benutzer user, Plant plant) {
+        plant.getWishedBy().remove(user);
+        user.getWishedPlants().remove(plant);
+        plantRepository.save(plant);
+        userRepository.save(user);
+    }
+
+    public List<Plant> getWishlistForUser(Benutzer user) {
+        return new ArrayList<>(user.getWishedPlants());
+        }
 }
