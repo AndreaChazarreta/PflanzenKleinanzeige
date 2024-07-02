@@ -11,18 +11,19 @@
             align-items: center;
             justify-content: space-between;
             padding: 20px;
-            background-color: rgba(229, 225, 215, 0.74); /* Helle gelb/braune Hintergrundfarbe */
+            background-color: rgba(229, 225, 215, 0.74);
             flex-wrap: wrap;
         }
         .header-container img {
             max-width: 200px;
             max-height: 200px;
             object-fit: cover;
-            margin-left: 20px;
+            margin-right: 100px;
         }
         .header-title {
             text-align: left;
             flex: 1;
+            margin-left: 100px;
         }
         .main-title {
             font-size: 2.5em;
@@ -33,6 +34,7 @@
             font-size: 1.5em;
             color: #555;
             margin-top: 5px;
+            font-weight: 400;
         }
         /* Media Queries für Mobilgeräte */
         @media (max-width: 768px) {
@@ -44,14 +46,16 @@
             .header-container img {
                 max-width: 100px;
                 max-height: 100px;
-                margin-left: 0;
+                margin-right: 0;
                 margin-top: 10px;
             }
             .main-title {
                 font-size: 2em;
+                margin-left: 0;
             }
             .subtitle {
                 font-size: 1.2em;
+                margin-left: 0;
             }
         }
         img {
@@ -134,10 +138,12 @@
             right: -12px !important;
         }
         .filter-container {
-            background-color: #f6e9c9;
+            background-color: rgba(239, 236, 229, 0.74);
             padding: 20px;
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-color: rgba(70, 60, 33, 0.74);
+            border: 2px;
         }
         .search-bar {
             display: flex;
@@ -159,13 +165,13 @@
         }
         .search-bar button {
             border: none;
-            background-color: #dcbd47;
+            background-color: rgb(129, 158, 0);
             border-radius: 25px;
             padding: 8px 10px;
             cursor: pointer;
         }
         .search-bar button:hover {
-            background-color: #dcbd47;
+            background-color: rgb(129, 158, 0);
         }
         .search-bar button i {
             color: #ffffff;
@@ -177,7 +183,8 @@
 <th:block th:insert="~{fragments/htmlNavBar :: navbar}"></th:block>
 <div class="header-container">
     <div class="header-title">
-        <h1 class="main-title">Die grüne Ecke</h1>
+        <h1 class="main-title" style="font-family: 'Comic Sans MS', cursive;">Die grüne Ecke</h1>
+        <br>
         <h2 class="subtitle">Dein Secondhand-Pflanzenmarkt</h2>
     </div>
     <img src="/plant-images/plant.png" alt="Logo">
@@ -285,7 +292,7 @@
                             </div>
                         </div>
                     </div>
-                    <button type="submit" class="btn btn-primary w-100" style="background-color: #dcbd47; border:none; margin-top: 10px">Filtern</button>
+                    <button type="submit" class="btn btn-primary w-100" style="background-color: rgb(129, 158, 0); border:none; margin-top: 10px">Filtern</button>
                 </form>
             </div>
         </div>
