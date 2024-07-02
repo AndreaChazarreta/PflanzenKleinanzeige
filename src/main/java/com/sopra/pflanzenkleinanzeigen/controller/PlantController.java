@@ -3,8 +3,13 @@ package com.sopra.pflanzenkleinanzeigen.controller;
 import com.sopra.pflanzenkleinanzeigen.entity.Benutzer;
 import com.sopra.pflanzenkleinanzeigen.entity.Plant;
 import com.sopra.pflanzenkleinanzeigen.service.ChatService;
+import com.sopra.pflanzenkleinanzeigen.service.PdfService;
 import com.sopra.pflanzenkleinanzeigen.service.PlantService;
 import com.sopra.pflanzenkleinanzeigen.service.UserService;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,6 +20,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -37,6 +43,8 @@ public class PlantController {
     private UserService userService;
     @Autowired
     private ChatService chatService;
+    @Autowired
+    private PdfService pdfService;
 
     //TODO: brauchen wir für solche funktionen try and catch? Hier kann relativ wenig schief gehen
     /**
@@ -255,6 +263,24 @@ public class PlantController {
 
         model.addAttribute("wishlist", sortedWishlist);
         return "myWishlist";
+    }
+
+    @GetMapping("/plants/pdf/{id}")
+    public ResponseEntity<InputStreamResource> getPlantPdf(@PathVariable int id) {
+        Plant plant = plantService.findPlantById(id);
+        if (plant == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        ByteArrayInputStream bis = pdfService.generatePlantPdf(plant);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Disposition", "inline; filename=plant-details.pdf");
+
+        return ResponseEntity.ok()
+                .headers(headers)
+                .contentType(MediaType.APPLICATION_PDF)
+                .body(new InputStreamResource(bis));
     }
 
 }
