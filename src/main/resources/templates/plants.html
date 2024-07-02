@@ -27,7 +27,7 @@
         }
         .main-title {
             font-size: 2.5em;
-            color: darkgreen;
+            color: #034803;
             margin-bottom: 0;
         }
         .subtitle {
@@ -138,12 +138,10 @@
             right: -12px !important;
         }
         .filter-container {
-            background-color: rgba(239, 236, 229, 0.74);
+            background-color: rgba(218, 213, 201, 0.79);
             padding: 20px;
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            border-color: rgba(70, 60, 33, 0.74);
-            border: 2px;
         }
         .search-bar {
             display: flex;
@@ -176,6 +174,27 @@
         .search-bar button i {
             color: #ffffff;
         }
+        .accordion-button:not(.collapsed) {
+            background-color: transparent; /* Remove the blue background color */
+            color: inherit; /* Ensure text color remains the same */
+            box-shadow: none; /* Remove the box shadow */
+        }
+
+        .accordion-button {
+            background-color: transparent; /* Set background color for both collapsed and expanded states */
+            color: inherit; /* Ensure text color remains the same */
+            box-shadow: none; /* Remove the box shadow */
+        }
+        .accordion-button::after {
+            filter: invert(1); /* Adjust arrow color if needed */
+            box-shadow: none;
+        }
+        .accordion-button:focus,
+        .form-select:focus {
+            box-shadow: none;
+            outline: none;
+            border-color: transparent;
+        }
     </style>
     <title>Plants</title>
 </head>
@@ -200,7 +219,7 @@
                     </div>
                     <div>
                         <label for="sortPrice">Sortieren nach Preis:</label>
-                        <select class="form-select mb-3" id="sortPrice" name="sortPrice">
+                        <select class="form-select mb-3" id="sortPrice" name="sortPrice" style="box-shadow: none; outline: none;">
                             <option value="" th:selected="${sortPrice == null}">Keine Sortierung</option>
                             <option value="asc" th:selected="${sortPrice == 'asc'}">Preis aufsteigend</option>
                             <option value="desc" th:selected="${sortPrice == 'desc'}">Preis absteigend</option>
