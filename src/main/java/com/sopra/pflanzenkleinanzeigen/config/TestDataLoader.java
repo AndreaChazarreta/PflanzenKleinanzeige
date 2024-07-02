@@ -104,7 +104,7 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         andrea.setPassword(passwordEncoder.encode("andrea"));
         andrea.setRoles(adminRoles);
         andrea.setFirstname("Andrea");
-        andrea.setLastname("Chazarreta");
+        andrea.setLastname("Chatzaretta");
         andrea.setEmail("andrea.cha@uni.de");
         andrea.setImagePath("/plant-images/bild_user4.png");
         userService.saveUser(andrea);
@@ -194,7 +194,6 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         kaktus.setImagePath("/plant-images/kaktus1.JPG");
         kaktus.setCategory(category3);
         kaktus.setCareTip(careTip1);
-        kaktus.setPotIncluded(true);
         plantService.savePlantDataLoader(kaktus);
 
         Plant rose = new Plant();
@@ -204,8 +203,6 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         rose.setDescription("wunderschön");
         rose.setSeller(andrea);
         rose.setImagePath("/plant-images/rose1.JPG");
-        rose.setCategory(category2);
-        rose.setPotIncluded(true);
         plantService.savePlantDataLoader(rose);
 
         Plant testVerkauft = new Plant();
@@ -217,7 +214,6 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         testVerkauft.setBuyer(andrea);
         testVerkauft.setImagePath("/plant-images/mixBlumen.jpg");
         testVerkauft.setCareTip(careTip1);
-        testVerkauft.setCategory(category5);
         plantService.savePlantDataLoader(testVerkauft);
 
         Plant testNoBeziehungen = new Plant();
@@ -227,7 +223,6 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         testNoBeziehungen.setDescription("in rot");
         testNoBeziehungen.setSeller(admin);
         testNoBeziehungen.setImagePath("/plant-images/Tulpen.jpg");
-        testNoBeziehungen.setCategory(category6);
         plantService.savePlantDataLoader(testNoBeziehungen);
 
         Plant orangenbaum = new Plant();
@@ -237,7 +232,6 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         orangenbaum.setDescription("hat leckere Orangen");
         orangenbaum.setSeller(admin);
         orangenbaum.setImagePath("/plant-images/orangenbaum.JPG");
-        orangenbaum.setCategory(category1);
         plantService.savePlantDataLoader(orangenbaum);
 
         Plant monstera = new Plant();
@@ -247,8 +241,6 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         monstera.setDescription("hat sehr große Blätter");
         monstera.setSeller(admin);
         monstera.setImagePath("/plant-images/monstera.JPG");
-        monstera.setCategory(category2);
-        monstera.setPotIncluded(true);
         plantService.savePlantDataLoader(monstera);
 
         Plant testData1 = new Plant();
@@ -258,8 +250,6 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         testData1.setDescription("Ist sehr stachelig");
         testData1.setSeller(sena);
         testData1.setImagePath("/plant-images/testData1.JPG");
-        testData1.setCategory(category3);
-        testData1.setPotIncluded(true);
         plantService.savePlantDataLoader(testData1);
 
         Plant testData2 = new Plant();
@@ -269,7 +259,6 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         testData2.setDescription("Er strahlt im einem besonderen Grün");
         testData2.setSeller(sena);
         testData2.setImagePath("/plant-images/testData2.JPG");
-        testData2.setCategory(category3);
         plantService.savePlantDataLoader(testData2);
 
         Plant testData3 = new Plant();
@@ -279,8 +268,6 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         testData3.setDescription("Sie ist rot wie die Liebe und richt sehr gut");
         testData3.setSeller(andrea);
         testData3.setImagePath("/plant-images/testData3.JPG");
-        testData3.setCategory(category4);
-        testData3.setPotIncluded(true);
         plantService.savePlantDataLoader(testData3);
 
         Plant testData4 = new Plant();
@@ -290,7 +277,6 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         testData4.setDescription("Hat immer sehr viele Früchte");
         testData4.setSeller(sena);
         testData4.setImagePath("/plant-images/testData4.JPG");
-        testData4.setCategory(category1);
         plantService.savePlantDataLoader(testData4);
 
         Plant testData5 = new Plant();
@@ -300,7 +286,6 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         testData5.setDescription("Hat sehr sehr große Blätter");
         testData5.setSeller(sharon);
         testData5.setImagePath("/plant-images/testData5.JPG");
-        testData5.setPotIncluded(true);
         plantService.savePlantDataLoader(testData5);
 
         Plant testData6 = new Plant();
@@ -310,7 +295,6 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         testData6.setDescription(" Ist nicht sehr groß ");
         testData6.setSeller(natti);
         testData6.setImagePath("/plant-images/testData6.JPG");
-        testData6.setCategory(category4);
         plantService.savePlantDataLoader(testData6);
 
         Plant testData7 = new Plant();
@@ -320,7 +304,6 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         testData7.setDescription("Strahlen wie die Sonne");
         testData7.setSeller(sena);
         testData7.setImagePath("/plant-images/testData7.JPG");
-        testData7.setCategory(category6);
         plantService.savePlantDataLoader(testData7);
 
         Plant testData8 = new Plant();
@@ -330,7 +313,6 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         testData8.setDescription("Gibt einen guten Geruch");
         testData8.setSeller(natti);
         testData8.setImagePath("/plant-images/Graspflanze.jpeg");
-        testData8.setCategory(category4);
         plantService.savePlantDataLoader(testData8);
 
         Plant testData9 = new Plant();
@@ -340,7 +322,6 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         testData9.setDescription("Muss nicht nur immer Wasser gehalten werden");
         testData9.setSeller(sena);
         testData9.setImagePath("/plant-images/testData9.JPG");
-        testData9.setPotIncluded(true);
         plantService.savePlantDataLoader(testData9);
 
         Plant testData10 = new Plant();
@@ -350,7 +331,6 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         testData10.setDescription("Wir nur sehr klein und kommt ohne Wasser zurecht");
         testData10.setSeller(sena);
         testData10.setImagePath("/plant-images/testData10.JPG");
-        testData10.setCategory(category4);
         plantService.savePlantDataLoader(testData10);
 
         Plant testData11 = new Plant();
@@ -360,7 +340,6 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         testData11.setDescription("Sammlung verschiedner Kaktus Arten");
         testData11.setSeller(sena);
         testData11.setImagePath("/plant-images/testData11.JPG");
-        testData11.setPotIncluded(true);
         plantService.savePlantDataLoader(testData11);
 
         Plant testData12 = new Plant();
@@ -370,7 +349,6 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         testData12.setDescription("Sehr schön");
         testData12.setSeller(sharon);
         testData12.setImagePath("/plant-images/testData12.JPG");
-        testData12.setPotIncluded(true);
         plantService.savePlantDataLoader(testData12);
 
         Chat chat1 = new Chat();

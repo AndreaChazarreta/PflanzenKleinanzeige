@@ -21,7 +21,7 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests(
                         // define all URLs which should be accessible without login
                         auth -> auth
-                                .requestMatchers("/register", "/login", "/plant-images/**").permitAll()
+                                .requestMatchers("/register", "/login").permitAll()
                                 // define all URLs which require an authenticated user with a certain role
                                 // NOTE: Spring Security automatically adds "ROLE_" while performing this check. For this reason we do not
                                 // have to use "ROLE_ADMIN" here, which we define in the TestDatabaseLoader.
@@ -55,7 +55,7 @@ public class SecurityConfiguration {
         return (web) -> web
                 .ignoring()
                 // gewähre immer Zugriff auf Dateien in den folgenden Ordnern
-                .requestMatchers("/resources/**", "/static/**", "/css/**", "/js/**", "/images/**", "/plant-images/**");
+                .requestMatchers("/resources/**", "/static/**", "/css/**", "/js/**", "/images/**");
     }
 
     /**

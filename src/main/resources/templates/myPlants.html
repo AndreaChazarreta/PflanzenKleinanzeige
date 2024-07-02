@@ -27,7 +27,6 @@
             border-radius: 25px;
             padding: 8px;
             margin-bottom: 20px;
-            margin-top: 10px;
         }
         .search-bar input {
             border: none;
@@ -106,10 +105,10 @@
 <div class="container mt-5 mb-5">
     <ul class="nav nav-underline">
         <li class="nav-item custom-nav-link">
-            <a class="nav-link" href="/myPlantsForSale">Pflanzen zum Verkauf</a>
+            <a class="nav-link" href="/myPlantsForSale">Meine Verkäufe</a>
         </li>
         <li class="nav-item custom-nav-link">
-            <a class="nav-link active active-nav-link" href="#">Gekaufte Pflanzen</a>
+            <a class="nav-link active active-nav-link" href="#">Meine Pflanzen</a>
         </li>
         <li class="nav-item custom-nav-link">
             <a class="nav-link" href="/myWishlist">Meine Wunschliste</a>
@@ -118,9 +117,9 @@
 
     <div class="row mb-4">
         <div class="col-12">
-            <form class="search-bar" th:action="@{/myPlants}" method="get" onsubmit="return checkSearch()">
-                <input class="form-control" id="name" name="name" label="Suche nach Name:" type="text" th:value="${name}" placeholder="Suche nach Name">
+            <form class="search-bar" th:action="@{/myPlants}" method="get">
                 <button class="btn" type="submit"><i class="bi bi-search"></i></button>
+                <input class="form-control" name="name" placeholder="Suche nach Name" type="text">
             </form>
         </div>
     </div>
@@ -129,9 +128,7 @@
         <th:block th:each="plant : ${boughtPlants}">
             <div class="col">
                 <div class="card">
-                    <a th:href="@{/plants/{id}(id=${plant.plantId})}">
-                        <img th:src="@{${plant.imagePath}}" class="card-img-top" alt="Pflanzenbild">
-                    </a>
+                    <img th:src="@{${plant.imagePath}}" class="card-img-top" alt="Pflanzenbild">
                     <div class="card-body">
                         <h5 class="card-title" th:text="${plant.name}">Plant Name</h5>
                         <p class="card-text" th:text="'Preis: ' + ${plant.price} + '€'">Plant Price</p>
@@ -146,13 +143,10 @@
         </th:block>
     </div>
 
-    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
         <th:block th:each="plant : ${userPlants}">
             <div class="col">
                 <div class="card">
-                    <a th:href="@{/plants/{id}(id=${plant.plantId})}">
-                        <img th:src="@{${plant.imagePath}}" class="card-img-top" alt="Pflanzenbild">
-                    </a>
+                    <img th:src="@{${plant.imagePath}}" class="card-img-top" alt="Pflanzenbild">
                     <div class="card-body">
                         <h5 class="card-title" th:text="${plant.name}">Plant Name</h5>
                         <p class="card-text" th:text="'Preis: ' + ${plant.price} + '€'">Plant Price</p>
@@ -192,23 +186,6 @@
             this.classList.add('active');
         });
     });
-
-    function checkSearch() {
-        var searchField = document.getElementById("name").value;
-        if (searchField.trim() === "") {
-            window.location.href = "/myPlants";
-            return false;
-        }
-        return true;
-    }
-
-    document.addEventListener('DOMContentLoaded', function () {
-        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
-        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
-            return new bootstrap.Tooltip(tooltipTriggerEl);
-        });
-    });
-
 </script>
 </body>
 </html>

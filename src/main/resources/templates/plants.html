@@ -2,9 +2,6 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <th:block th:insert="~{fragments/htmlHead :: head}"></th:block>
-    <meta name="_csrf" th:content="${_csrf.token}"/>
-    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.5.0/nouislider.min.css" />
     <style>
         img {
             max-width: 100%;
@@ -23,78 +20,10 @@
             text-decoration: none;
             color: inherit;
         }
-        .wishlist-image {
-            cursor: pointer;
-            width: 40px;
-            height: 40px;
-            margin-bottom: 20px;
-        }
-        .wishlist-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-top: 10px;
-        }
-        .button-clear {
-            border: none;
-            color: #666;
-            background-color: transparent;
-            padding: 5px 10px;
-            cursor: pointer;
-            outline: none;
-        }
-        .button-clear:hover {
-            text-decoration: underline;
-        }
-        #price-slider {
-            margin: 10px 0;
-        }
-        #price-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .price-label {
-            margin: 0 5px;
-        }
-        .noUi-target, .noUi-lower {
-            background: #f1f1f1;
-            box-shadow: none !important;
-        }
-        .noUi-connect {
-            background: darkgreen;
-        }
-        .noUi-horizontal {
-            height: 8px;
-        }
-        .noUi-handle {
-            width: 18px !important;
-            height: 18px !important;
-            border-radius: 50%;
-            background: darkgreen;
-            border: 2px solid darkgreen;
-            box-shadow: none !important;
-        }
-        .noUi-handle:before, .noUi-handle:after {
-            display: none !important;
-        }
-        .noUi-tooltip {
-            display: none !important;
-        }
-        .noUi-horizontal .noUi-handle-upper {
-            right: -12px !important;
-        }
-        .filter-container {
-            background-color: #f8f9fa;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
         .search-bar {
             display: flex;
             align-items: center;
             border: 1px solid grey;
-            background-color: #ffffff;
             border-radius: 25px;
             padding: 8px;
             margin-bottom: 20px;
@@ -103,23 +32,19 @@
         .search-bar input {
             border: none;
             outline: none;
-            flex: 1;
         }
-        .search-bar input:focus{
+        .search-bar input:focus {
             box-shadow: none;
         }
         .search-bar button {
             border: none;
-            background-color: #0a723f;
-            border-radius: 25px;
+            background-color: #ffffff;
+            border-radius: 25px 25px 25px 25px;
             padding: 8px 10px;
             cursor: pointer;
         }
-        .search-bar button:hover {
-            background-color: #1d6b41;
-        }
         .search-bar button i {
-            color: #ffffff;
+            color: #000;
         }
     </style>
     <title>Plants</title>
@@ -129,264 +54,44 @@
 
 <div class="container mt-5">
     <h1>Die grüne Ecke - Dein Secondhand-Pflanzenmarkt</h1>
-    <div class="row">
-        <div class="col-lg-3 mb-4">
-            <div class="filter-container">
-                <form id="filterForm" th:action="@{/plants}" method="get" onsubmit="return buildUrl()">
-                    <div class="search-bar">
-                        <input class="form-control" id="name" name="name" label="Suche nach Name:" type="text" th:value="${name}" placeholder="Suche nach Name">
-                        <button class="btn" type="submit"><i class="bi bi-search"></i></button>
-                    </div>
-                    <div>
-                        <label for="sortPrice">Sortieren nach Preis:</label>
-                        <select class="form-select mb-3" id="sortPrice" name="sortPrice">
-                            <option value="" th:selected="${sortPrice == null}">Keine Sortierung</option>
-                            <option value="asc" th:selected="${sortPrice == 'asc'}">Preis aufsteigend</option>
-                            <option value="desc" th:selected="${sortPrice == 'desc'}">Preis absteigend</option>
-                        </select>
-                    </div>
-                    <div class="accordion" id="filterAccordion">
-                        <div class="accordion-item">
-                            <h2 class="accordion-header" id="headingPrice">
-                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapsePrice" aria-expanded="false" aria-controls="collapsePrice">
-                                    Preis in €
-                                </button>
-                            </h2>
-                            <div id="collapsePrice" class="accordion-collapse collapse" aria-labelledby="headingPrice">
-                                <div class="accordion-body">
-                                    <div id="price-container" class="d-flex justify-content-between align-items-center mb-2">
-                                        <span class="button-clear" onclick="clearPriceFilter()">Löschen</span>
-                                    </div>
-                                    <div>
-                                        Zwischen <span id="min-price-value" class="price-label"></span> und <span id="max-price-value" class="price-label"></span>
-                                    </div>
-                                    <div id="price-slider"></div>
-                                    <input type="hidden" id="minPrice" name="minPrice" th:value="${minPrice}">
-                                    <input type="hidden" id="maxPrice" name="maxPrice" th:value="${maxPrice}">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="accordion-item">
-                            <h2 class="accordion-header" id="headingHeight">
-                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseHeight" aria-expanded="false" aria-controls="collapseHeight">
-                                    Höhe in cm
-                                </button>
-                            </h2>
-                            <div id="collapseHeight" class="accordion-collapse collapse" aria-labelledby="headingHeight">
-                                <div class="accordion-body">
-                                    <div class="d-flex">
-                                        <div class="me-2">
-                                            <label for="minHeight">Min</label>
-                                            <input class="form-control" id="minHeight" name="minHeight" type="number" th:value="${minHeight}" step="0.01">
-                                        </div>
-                                        <div>
-                                            <label for="maxHeight">Max</label>
-                                            <input class="form-control" id="maxHeight" name="maxHeight" type="number" th:value="${maxHeight}" step="0.01">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="accordion-item">
-                            <h2 class="accordion-header" id="headingPot">
-                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapsePot" aria-expanded="false" aria-controls="collapsePot">
-                                    Übertopf enthalten
-                                </button>
-                            </h2>
-                            <div id="collapsePot" class="accordion-collapse collapse" aria-labelledby="headingPot">
-                                <div class="accordion-body">
-                                    <div style="display: flex; justify-content: space-between; align-items: center;">
-                                        <button type="button" class="button-clear" onclick="clearPotIncluded()">Löschen</button>
-                                    </div>
-                                    <div class="mb-2">
-                                        <input type="radio" id="potIncludedTrue" name="potIncluded" value="true" th:checked="${potIncluded == true}"><label for="potIncludedTrue"> Mit Übertopf</label>
-                                        <br>
-                                        <input type="radio" id="potIncludedFalse" name="potIncluded" value="false" th:checked="${potIncluded == false}"><label for="potIncludedFalse"> Ohne Übertopf</label>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="accordion-item">
-                            <h2 class="accordion-header" id="headingCategory">
-                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseCategory" aria-expanded="false" aria-controls="collapseCategory">
-                                    Kategorie
-                                </button>
-                            </h2>
-                            <div id="collapseCategory" class="accordion-collapse collapse" aria-labelledby="headingCategory">
-                                <div class="accordion-body">
-                                    <div class="mb-2">
-                                        <label><input type="checkbox" name="category" value="Baum" th:checked="${categories != null && categories.contains('Baum')}"> Baum</label>
-                                        <br>
-                                        <label><input type="checkbox" name="category" value="Zierpflanze" th:checked="${categories != null && categories.contains('Zierpflanze')}"> Zierpflanze</label>
-                                        <br>
-                                        <label><input type="checkbox" name="category" value="Grünpflanze" th:checked="${categories != null && categories.contains('Grünpflanze')}"> Grünpflanze</label>
-                                        <br>
-                                        <label><input type="checkbox" name="category" value="Draußenpflanze" th:checked="${categories != null && categories.contains('Draußenpflanze')}"> Draußenpflanze</label>
-                                        <br>
-                                        <label><input type="checkbox" name="category" value="Kräuter" th:checked="${categories != null && categories.contains('Kräuter')}"> Kräuter</label>
-                                        <br>
-                                        <label><input type="checkbox" name="category" value="Strauß" th:checked="${categories != null && categories.contains('Strauß')}"> Strauß</label>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <button type="submit" class="btn btn-primary w-100" style="background-color: #1d6b41; border:none; margin-top: 10px">Filtern</button>
-                </form>
-            </div>
+
+    <div class="row mb-4">
+        <div class="col-12">
+            <form class="search-bar" th:action="@{/plants}" method="get" onsubmit="return checkSearch()">
+                <button class="btn" type="submit"><i class="bi bi-search"></i></button>
+                <input class="form-control" id="name" name="name" label="Suche nach Name:" type="text" th:value="${name}" placeholder="Suche nach Name">
+            </form>
         </div>
-        <div class="col-lg-9">
-            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4">
-                <th:block th:each="plant : ${plants}">
-                    <div th:if="${plant.isSold() == false}">
-                        <th:block th:insert="~{fragments/cardPlantsOverview :: cardFragment(plant=${plant}, currentUser=${currentUser})}"></th:block>
-                    </div>
-                </th:block>
+    </div>
+
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4">
+        <th:block th:each="plant : ${allPlants}">
+            <div th:if="${plant.isSold() == false}">
+                <th:block th:insert="~{fragments/cardPlantsOverview :: cardFragment(plant=${plant}, currentUser=${currentUser})}"></th:block>
             </div>
-        </div>
+        </th:block>
+    </div>
+
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4">
+        <th:block th:each="plant : ${plantsByName}">
+            <div th:if="${plant.isSold() == false}">
+                <th:block th:insert="~{fragments/cardPlantsOverview :: cardFragment(plant=${plant}, currentUser=${currentUser})}"></th:block>
+            </div>
+        </th:block>
     </div>
 </div>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        var slider = document.getElementById('price-slider');
-        var minPriceDefault = 0;
-        var maxPriceDefault = [[${highestPrice}]];
-
-        // Get the current min and max price values from the hidden inputs
-        var currentMinPrice = parseFloat(document.getElementById('minPrice').value || minPriceDefault);
-        var currentMaxPrice = parseFloat(document.getElementById('maxPrice').value || maxPriceDefault);
-
-        noUiSlider.create(slider, {
-            start: [currentMinPrice, currentMaxPrice],
-            connect: true,
-            range: {
-                'min': minPriceDefault,
-                'max': maxPriceDefault
-            },
-            tooltips: false,
-            format: {
-                to: function(value) {
-                    return parseFloat(value).toFixed(2);
-                },
-                from: function(value) {
-                    return parseFloat(value);
-                }
-            }
-        });
-
-        slider.noUiSlider.on('update', function(values, handle) {
-            document.getElementById('min-price-value').innerText = '€' + values[0];
-            document.getElementById('max-price-value').innerText = '€' + values[1];
-            document.getElementById('minPrice').value = values[0];
-            document.getElementById('maxPrice').value = values[1];
-        });
-
-        function buildUrl() {
-            const name = document.getElementById('name').value.trim();
-            const minPrice = document.getElementById('minPrice').value;
-            const maxPrice = document.getElementById('maxPrice').value;
-            const minHeight = document.getElementById('minHeight').value;
-            const maxHeight = document.getElementById('maxHeight').value;
-            const potIncluded = document.querySelector('input[name="potIncluded"]:checked') ? document.querySelector('input[name="potIncluded"]:checked').value : '';
-            const categories = Array.from(document.querySelectorAll('input[name="category"]:checked')).map(checkbox => checkbox.value);
-            const sortPrice = document.getElementById('sortPrice').value;
-
-            const params = { name, minHeight, maxHeight, potIncluded, category: categories.join(','), sortPrice };
-
-            if (minPrice !== minPriceDefault.toFixed(2)) params.minPrice = minPrice;
-            if (maxPrice !== maxPriceDefault.toFixed(2)) params.maxPrice = maxPrice;
-
-            let queryString = Object.keys(params)
-                .filter(key => params[key] !== '' && params[key] !== undefined && params[key] !== null)
-                .map(key => `${key}=${encodeURIComponent(params[key])}`)
-                .join('&');
-
-            const url = `/plants${queryString ? `?${queryString}` : ''}`;
-            window.location.href = url;
+    function checkSearch() {
+        var searchField = document.getElementById("name").value;
+        if (searchField.trim() === "") {
+            window.location.href = "/plants";
             return false;
         }
-
-        function clearPriceFilter() {
-            slider.noUiSlider.set([minPriceDefault, maxPriceDefault]);
-            document.getElementById('minPrice').value = minPriceDefault.toFixed(2);
-            document.getElementById('maxPrice').value = maxPriceDefault.toFixed(2);
-            buildUrl();
-        }
-
-        function clearPotIncluded() {
-            // Entfernt die Auswahl der Radio-Buttons
-            document.getElementById('potIncludedTrue').checked = false;
-            document.getElementById('potIncludedFalse').checked = false;
-            buildUrl(); // Aktualisiert die Ansicht, um alle Pflanzen anzuzeigen
-        }
-
-        window.buildUrl = buildUrl;
-        window.clearPotIncluded = clearPotIncluded;
-        window.clearPriceFilter = clearPriceFilter;
-
-        // Restore accordion state from localStorage
-        var accordionState = JSON.parse(localStorage.getItem('accordionState')) || {};
-        for (var key in accordionState) {
-            if (accordionState[key]) {
-                document.getElementById(key).classList.add('show');
-            }
-        }
-
-        // Add event listeners to update localStorage when accordion is toggled
-        var accordionItems = document.querySelectorAll('.accordion-collapse');
-        accordionItems.forEach(function(item) {
-            item.addEventListener('shown.bs.collapse', function () {
-                accordionState[item.id] = true;
-                localStorage.setItem('accordionState', JSON.stringify(accordionState));
-            });
-            item.addEventListener('hidden.bs.collapse', function () {
-                accordionState[item.id] = false;
-                localStorage.setItem('accordionState', JSON.stringify(accordionState));
-            });
-        });
-    });
-
-    function toggleWishlist(imageElement) {
-        const plantId = imageElement.getAttribute('data-plant-id');
-        const action = imageElement.getAttribute('data-action');
-        const url = action === 'add' ? `/plants/wishlist/${plantId}` : `/plants/wishlist/remove/${plantId}`;
-
-        const csrfToken = document.querySelector('meta[name="_csrf"]').getAttribute('content');
-        const csrfHeader = document.querySelector('meta[name="_csrf_header"]').getAttribute('content');
-
-        fetch(url, {
-            method: 'POST',
-            headers: {
-                [csrfHeader]: csrfToken,
-            }
-        })
-            .then(response => {
-                if (response.ok) {
-                    if (action === 'add') {
-                        imageElement.src = '/plant-images/wishListButtonColoured.png';
-                        imageElement.setAttribute('data-action', 'remove');
-                    } else {
-                        imageElement.src = '/plant-images/wishListButtonBlack.png';
-                        imageElement.setAttribute('data-action', 'add');
-                    }
-                } else {
-                    console.error('Fehler beim Hinzufügen/Entfernen zur/von der Wunschliste.');
-                }
-            })
-            .catch(error => {
-                console.error('Fehler:', error);
-            });
+        return true;
     }
-
-    document.addEventListener('DOMContentLoaded', function () {
-        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
-        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
-            return new bootstrap.Tooltip(tooltipTriggerEl);
-        });
-    });
 </script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.5.0/nouislider.min.js"></script>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>
