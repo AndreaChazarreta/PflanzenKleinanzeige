@@ -61,7 +61,9 @@ public class PlantController {
 
             if (name != null && !name.isEmpty()) {
                 plants = plantService.searchPlantsByName(name);
-            }else if (categories != null && !categories.isEmpty()) {
+            } else if (categories != null && !categories.isEmpty()) {
+                plants = plantService.findPlantsByFilters(name, minPrice, maxPrice, minHeight, maxHeight, potIncluded, categories, sortPrice);
+            } else {
                 plants = plantService.findPlantsByFiltersWithoutCategory(name, minPrice, maxPrice, minHeight, maxHeight, potIncluded, sortPrice);
             }
 
@@ -244,10 +246,11 @@ public class PlantController {
         List<Plant> wishlist;
 
         if (name != null && !name.isEmpty()) {
-            wishlist = plantService.searchWishlistPlantsByName(currentUser, name);            model.addAttribute("name", name);
+            wishlist = plantService.searchWishlistPlantsByName(currentUser, name);
         } else {
             wishlist = plantService.getWishlistForUser(currentUser);
         }
+
         List<Plant> sortedWishlist = wishlist.stream()
                 .sorted((p1, p2) -> {
                     if (p1.isAdIsActive() != p2.isAdIsActive()) {
@@ -255,10 +258,10 @@ public class PlantController {
                     } else {
                         return p2.getDateWished().compareTo(p1.getDateWished()); // Sort descending by dateWished
                     }
-                })                .collect(Collectors.toList());
+                }).collect(Collectors.toList());
 
         model.addAttribute("wishlist", sortedWishlist);
+        model.addAttribute("name", name);
         return "myWishlist";
     }
-
 }
