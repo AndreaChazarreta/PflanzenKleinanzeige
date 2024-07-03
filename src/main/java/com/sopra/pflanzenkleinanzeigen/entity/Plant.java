@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.sql.Timestamp;
+
 
 /**
  * This class represents a plant in the system.
@@ -43,6 +45,7 @@ public class Plant {
 
     private boolean sold;
 
+    private Timestamp dateWished;
 
     @ManyToMany(targetEntity = Benutzer.class, fetch = FetchType.EAGER)
     private Set<Benutzer> wishedBy = new HashSet<>();
@@ -205,4 +208,11 @@ public class Plant {
         this.category = category;
     }
 
+    public Timestamp getDateWished() {
+        return dateWished;
+    }
+
+    public void setDateWished(Timestamp dateWished) {
+        this.dateWished = dateWished;
+    }
 }

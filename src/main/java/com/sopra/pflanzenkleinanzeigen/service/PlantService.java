@@ -11,12 +11,15 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.UUID;
+import java.time.LocalDateTime;
+import java.util.stream.Collectors;
 
 /**
  * This class encapsulates access to the PlantRepository. It provides methods for managing Plant entities
@@ -108,6 +111,46 @@ public class PlantService {
     }
 
     /**
+     * This method searches for plants by their name.
+     * If the name is not null and not empty, it returns plants whose names start with or contain the given name.
+     * If the name is null or empty, it returns all plants.
+     *
+     * @param name The name to search for in the plants. It can be null or empty.
+     * @return A list of plants that match the given name, or all plants if the name is null or empty.
+     */
+    public List<Plant> searchPlantsByName(String name) {
+        List<Plant> result = new ArrayList<>();
+        if (name != null && !name.isEmpty()) {
+            result.addAll(plantRepository.findByPrefix(name));
+            result.addAll(plantRepository.findByNameContaining(name, name));
+        } else {
+            result.addAll(plantRepository.findAll());
+        }
+        return result;
+    }
+
+    /**
+     * This method searches for plants in a user's wishlist by name.
+     * If the name is not null and not empty, it returns plants whose names start with or contain the given name.
+     * If the name is null or empty, it returns all plants in the user's wishlist.
+     *
+     * @param user The user whose wishlist is to be searched.
+     * @param name The name to search for in the wishlist.
+     * @return A list of plants in the user's wishlist that match the given name, or all plants in the wishlist if the name is null or empty.
+     */
+    public List<Plant> searchWishlistPlantsByName(Benutzer user, String name) {
+        List<Plant> wishlist = getWishlistForUser(user);
+        List<Plant> result = new ArrayList<>();
+        if (name != null && !name.isEmpty()) {
+            result.addAll(wishlist.stream().filter(p -> p.getName().toLowerCase().startsWith(name.toLowerCase())).collect(Collectors.toList()));
+            result.addAll(wishlist.stream().filter(p -> p.getName().toLowerCase().contains(name.toLowerCase()) && !p.getName().toLowerCase().startsWith(name.toLowerCase())).collect(Collectors.toList()));
+        } else {
+            result = wishlist;
+        }
+        return result;
+    }
+
+    /**
      * Saves an image file to a predefined directory and returns the path to the saved image.
      * The image file is saved with a random filename generated using UUID.
      *
@@ -134,6 +177,7 @@ public class PlantService {
         if (!plant.getWishedBy().contains(user)) {
             plant.getWishedBy().add(user);
             user.getWishedPlants().add(plant);
+            plant.setDateWished(new Timestamp(System.currentTimeMillis()));
             plantRepository.save(plant);
             userRepository.save(user);
         }
@@ -150,6 +194,7 @@ public class PlantService {
     public void unmarkPlantAsWished(Benutzer user, Plant plant) {
         plant.getWishedBy().remove(user);
         user.getWishedPlants().remove(plant);
+        plant.setDateWished(null);
         plantRepository.save(plant);
         userRepository.save(user);
     }
