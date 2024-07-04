@@ -165,6 +165,7 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
 
         CareTip careTip1 = new CareTip();
         careTip1.setCategory(category6);
+        careTip1.setPlantName("Rose");
         careTip1.setLightingConditions("high");
         careTip1.setFertilization("Nein");
         careTip1.setIrrigation("viel");
@@ -176,6 +177,7 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
 
         CareTip careTip2 = new CareTip();
         careTip2.setCategory(category3);
+        careTip2.setPlantName("Kaktus");
         careTip2.setLightingConditions("medium");
         careTip2.setFertilization("Nein");
         careTip2.setIrrigation("wenig");
@@ -185,6 +187,150 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         careTip2.setPlanting("Vorzüchten");
         careTipService.saveCareTip(careTip2);
 
+        CareTip careTip3 = new CareTip();
+        careTip3.setCategory(category2);
+        careTip3.setPlantName("Tulpe");
+        careTip3.setLightingConditions("medium");
+        careTip3.setFertilization("Nein");
+        careTip3.setIrrigation("wenig");
+        careTip3.setOtherTips("keine");
+        careTip3.setRepotting("Ja");
+        careTip3.setTemperature("15 Grad");
+        careTip3.setPlanting("Vorzüchten");
+        careTipService.saveCareTip(careTip3);
+
+        CareTip careTip4 = new CareTip();
+        careTip4.setCategory(category3);
+        careTip4.setPlantName("Monstera");
+        careTip4.setLightingConditions("indirektes Licht");
+        careTip4.setFertilization("Ja, monatlich");
+        careTip4.setIrrigation("wenig");
+        careTip4.setOtherTips("Blätter abwischen");
+        careTip4.setRepotting("alle 2 Jahre");
+        careTip4.setTemperature("18-25 Grad");
+        careTip4.setPlanting("Topfpflanze");
+        careTipService.saveCareTip(careTip4);
+
+        CareTip careTip5 = new CareTip();
+        careTip5.setCategory(category5);
+        careTip5.setPlantName("Lavendel");
+        careTip5.setLightingConditions("volles Sonnenlicht");
+        careTip5.setFertilization("Nein");
+        careTip5.setIrrigation("mäßig");
+        careTip5.setOtherTips("regelmäßig schneiden");
+        careTip5.setRepotting("Nein");
+        careTip5.setTemperature("15-25 Grad");
+        careTip5.setPlanting("in gut durchlässiger Erde");
+        careTipService.saveCareTip(careTip5);
+
+        CareTip careTip6 = new CareTip();
+        careTip6.setCategory(category2);
+        careTip6.setPlantName("Orchidee");
+        careTip6.setLightingConditions("indirektes Licht");
+        careTip6.setFertilization("Ja, alle 2 Wochen");
+        careTip6.setIrrigation("wenig");
+        careTip6.setOtherTips("hohe Luftfeuchtigkeit");
+        careTip6.setRepotting("alle 1-2 Jahre");
+        careTip6.setTemperature("20-22 Grad");
+        careTip6.setPlanting("in spezieller Orchideenerde");
+        careTipService.saveCareTip(careTip6);
+
+        CareTip careTip7 = new CareTip();
+        careTip7.setCategory(category6);
+        careTip7.setPlantName("Aloe Vera");
+        careTip7.setLightingConditions("helles Licht");
+        careTip7.setFertilization("Nein");
+        careTip7.setIrrigation("wenig");
+        careTip7.setOtherTips("nur bei Bedarf umtopfen");
+        careTip7.setRepotting("bei Bedarf");
+        careTip7.setTemperature("18-24 Grad");
+        careTip7.setPlanting("in sandiger Erde");
+        careTipService.saveCareTip(careTip7);
+
+        CareTip careTip8 = new CareTip();
+        careTip8.setCategory(category5);
+        careTip8.setPlantName("Basilikum");
+        careTip8.setLightingConditions("volles Sonnenlicht");
+        careTip8.setFertilization("Ja, alle 4 Wochen");
+        careTip8.setIrrigation("mäßig");
+        careTip8.setOtherTips("regelmäßig ernten");
+        careTip8.setRepotting("Nein");
+        careTip8.setTemperature("20-25 Grad");
+        careTip8.setPlanting("direkt in die Erde oder Topf");
+        careTipService.saveCareTip(careTip8);
+
+        CareTip careTip9 = new CareTip();
+        careTip9.setCategory(category1);
+        careTip9.setPlantName("Gummibaum");
+        careTip9.setLightingConditions("helles, indirektes Licht");
+        careTip9.setFertilization("Ja, alle 4 Wochen");
+        careTip9.setIrrigation("mäßig");
+        careTip9.setOtherTips("Blätter abwischen");
+        careTip9.setRepotting("alle 2-3 Jahre");
+        careTip9.setTemperature("18-24 Grad");
+        careTip9.setPlanting("Topfpflanze");
+        careTipService.saveCareTip(careTip9);
+
+        CareTip careTip10 = new CareTip();
+        careTip10.setCategory(category1);
+        careTip10.setPlantName("Palme");
+        careTip10.setLightingConditions("helles Licht");
+        careTip10.setFertilization("Ja, alle 4 Wochen");
+        careTip10.setIrrigation("mäßig");
+        careTip10.setOtherTips("hohe Luftfeuchtigkeit bevorzugt");
+        careTip10.setRepotting("alle 2-3 Jahre");
+        careTip10.setTemperature("20-24 Grad");
+        careTip10.setPlanting("Topfpflanze");
+        careTipService.saveCareTip(careTip10);
+
+        CareTip careTip11 = new CareTip();
+        careTip11.setCategory(category1);
+        careTip11.setPlantName("Bonsai");
+        careTip11.setLightingConditions("helles Licht");
+        careTip11.setFertilization("Ja, alle 2 Wochen");
+        careTip11.setIrrigation("mäßig");
+        careTip11.setOtherTips("regelmäßig beschneiden");
+        careTip11.setRepotting("alle 1-2 Jahre");
+        careTip11.setTemperature("15-25 Grad");
+        careTip11.setPlanting("in Bonsaischale");
+        careTipService.saveCareTip(careTip11);
+
+        CareTip careTip12 = new CareTip();
+        careTip12.setCategory(category1);
+        careTip12.setPlantName("Olivenbaum");
+        careTip12.setLightingConditions("volles Sonnenlicht");
+        careTip12.setFertilization("Ja, alle 4 Wochen");
+        careTip12.setIrrigation("wenig");
+        careTip12.setOtherTips("kann Trockenheit ertragen");
+        careTip12.setRepotting("alle 2-3 Jahre");
+        careTip12.setTemperature("10-25 Grad");
+        careTip12.setPlanting("Topf oder Garten");
+        careTipService.saveCareTip(careTip12);
+
+        CareTip careTip13 = new CareTip();
+        careTip13.setCategory(category1);
+        careTip13.setPlantName("Zitrone");
+        careTip13.setLightingConditions("volles Sonnenlicht");
+        careTip13.setFertilization("Ja, alle 2 Wochen");
+        careTip13.setIrrigation("mäßig");
+        careTip13.setOtherTips("hohe Luftfeuchtigkeit bevorzugt");
+        careTip13.setRepotting("alle 2 Jahre");
+        careTip13.setTemperature("15-25 Grad");
+        careTip13.setPlanting("Topf oder Garten");
+        careTipService.saveCareTip(careTip13);
+
+        CareTip careTip14 = new CareTip();
+        careTip14.setCategory(category1);
+        careTip14.setPlantName("Orange");
+        careTip14.setLightingConditions("volles Sonnenlicht");
+        careTip14.setFertilization("Ja, einmal in Wochen");
+        careTip14.setIrrigation("mäßig");
+        careTip14.setOtherTips("mittlere Luftfeuchtigkeit");
+        careTip14.setRepotting("alle 2 Jahre");
+        careTip14.setTemperature("15-25 Grad");
+        careTip14.setPlanting("Topf oder Garten");
+        careTipService.saveCareTip(careTip14);
+
         Plant kaktus = new Plant();
         kaktus.setName("Kaktus");
         kaktus.setPrice(new BigDecimal("12.45"));
@@ -193,7 +339,7 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         kaktus.setSeller(admin);
         kaktus.setImagePath("/plant-images/kaktus1.JPG");
         kaktus.setCategory(category3);
-        kaktus.setCareTip(careTip1);
+        kaktus.setCareTip(careTip2);
         kaktus.setPotIncluded(true);
         plantService.savePlantDataLoader(kaktus);
 
@@ -205,6 +351,7 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         rose.setSeller(andrea);
         rose.setImagePath("/plant-images/rose1.JPG");
         rose.setCategory(category2);
+        rose.setCareTip(careTip1);
         rose.setPotIncluded(true);
         plantService.savePlantDataLoader(rose);
 
@@ -228,6 +375,7 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         testNoBeziehungen.setSeller(admin);
         testNoBeziehungen.setImagePath("/plant-images/Tulpen.jpg");
         testNoBeziehungen.setCategory(category6);
+        testNoBeziehungen.setCareTip(careTip3);
         plantService.savePlantDataLoader(testNoBeziehungen);
 
         Plant orangenbaum = new Plant();
@@ -259,6 +407,7 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         testData1.setSeller(sena);
         testData1.setImagePath("/plant-images/testData1.JPG");
         testData1.setCategory(category3);
+        testData1.setCareTip(careTip2);
         testData1.setPotIncluded(true);
         plantService.savePlantDataLoader(testData1);
 
@@ -270,6 +419,7 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         testData2.setSeller(sena);
         testData2.setImagePath("/plant-images/testData2.JPG");
         testData2.setCategory(category3);
+        testData2.setCareTip(careTip2);
         plantService.savePlantDataLoader(testData2);
 
         Plant testData3 = new Plant();
@@ -280,6 +430,7 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         testData3.setSeller(andrea);
         testData3.setImagePath("/plant-images/testData3.JPG");
         testData3.setCategory(category4);
+        testData3.setCareTip(careTip1);
         testData3.setPotIncluded(true);
         plantService.savePlantDataLoader(testData3);
 
@@ -311,6 +462,7 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         testData6.setSeller(natti);
         testData6.setImagePath("/plant-images/testData6.JPG");
         testData6.setCategory(category4);
+        testData6.setCareTip(careTip2);
         plantService.savePlantDataLoader(testData6);
 
         Plant testData7 = new Plant();
@@ -361,6 +513,7 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         testData11.setSeller(sena);
         testData11.setImagePath("/plant-images/testData11.JPG");
         testData11.setPotIncluded(true);
+        testData11.setCareTip(careTip2);
         plantService.savePlantDataLoader(testData11);
 
         Plant testData12 = new Plant();
