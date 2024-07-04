@@ -241,15 +241,9 @@ public class PlantController {
     }
 
     @GetMapping("/myWishlist")
-    public String getWishlistForUser(Model model, @RequestParam(value = "name", required = false) String name) {
+    public String getWishlistForUser(Model model) {
         Benutzer currentUser = userService.getCurrentUser();
-        List<Plant> wishlist;
-
-        if (name != null && !name.isEmpty()) {
-            wishlist = plantService.searchWishlistPlantsByName(currentUser, name);
-        } else {
-            wishlist = plantService.getWishlistForUser(currentUser);
-        }
+        List<Plant> wishlist = plantService.getWishlistForUser(currentUser);
 
         List<Plant> sortedWishlist = wishlist.stream()
                 .sorted((p1, p2) -> {
@@ -261,6 +255,15 @@ public class PlantController {
                 }).collect(Collectors.toList());
 
         model.addAttribute("wishlist", sortedWishlist);
+        return "myWishlist";
+    }
+
+    @GetMapping("/searchWishlist")
+    public String searchWishlistPlants(Model model, @RequestParam(value = "name") String name) {
+        Benutzer currentUser = userService.getCurrentUser();
+        List<Plant> wishlist = plantService.searchWishlistPlantsByName(currentUser, name);
+
+        model.addAttribute("wishlist", wishlist);
         model.addAttribute("name", name);
         return "myWishlist";
     }

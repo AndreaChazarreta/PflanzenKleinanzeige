@@ -9,50 +9,81 @@
             background-repeat: no-repeat;
             background-attachment: fixed;
             background-position: center;
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
         }
+
+        .navbar {
+            width: 100%;
+            background-color: rgba(255, 255, 255, 0.85);
+            padding: 1rem;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: center;
+            position: absolute;
+            top: 0;
+        }
+
+        .login-container {
+            background: rgba(255, 255, 255, 0.52);
+            padding: 2rem;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 100%;
+            margin-top: 100px;
+        }
+
         .card {
-            background: #ffffff;
+            background: rgba(255, 255, 255, 0.85);
+            border: none;
+        }
+
+        .card-body {
+            padding-top: 2rem;
+        }
+
+        .card-footer {
+            background-color: white;
         }
     </style>
 </head>
 <body>
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <div class="container-fluid">
-        <a class="navbar-brand d-flex align-items-center" th:href="@{/plants}" >
+<nav class="navbar">
+    <div class="container-fluid d-flex align-items-center justify-content-center">
+        <a class="navbar-brand d-flex align-items-center" th:href="@{/plants}">
             <img src="/plant-images/logoPlantHeart.png" alt="Logo" width="70" height="70" class="d-inline-block align-text-center me-2">
             <h4> Die grüne Ecke </h4>
         </a>
     </div>
 </nav>
 
-<div class="container" style="margin-top: 75px">
+<div class="login-container">
     <form th:action="@{/login}" method="POST" class="form-horizontal">
-        <div class="d-flex justify-content-center">
-            <div class="card" style="width: 18rem; border: none; padding-top: 2rem;">
-                <div class="card-body">
-                    <h4 class="card-title" th:text="'Please login'"></h4>
-                    <div th:if="${param.error}" class="alert alert-danger">
-                        <span th:text="'Login fehlgeschlagen.'"></span>
-                    </div>
-                    <div th:if="${param.logout}" class="alert alert-success">
-                        <span th:text="'Logout erfolgreich.'"></span>
-                    </div>
-                    <div class="row form-group">
-                        <div class="col-12 col-md-6">
-                            <label>Username</label>
-                            <input type="text" id="username" name="username"  th:placeholder="'Username'" class="form-control" style="width: 15rem;"/><br/>
-                        </div>
-                    </div>
-                    <div class="row form-group">
-                        <div class="col-12 col-md-6">
-                            <label>Password</label>
-                            <input type="password"  th:placeholder="'Password'" id="password" name="password" class="form-control" style="width: 15rem;"/><br/>
-                        </div>
-                    </div>
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title" th:text="'Anmeldung'"></h4>
+                <div th:if="${param.error}" class="alert alert-danger">
+                    <span th:text="'Login fehlgeschlagen.'"></span>
                 </div>
-                <div class="card-footer" style="background-color: white;">
-                    <button name="Submit" value="Login" type="Submit" th:text="'Login'" class="btn btn-primary" style="width: 15rem;"></button>
+                <div th:if="${param.logout}" class="alert alert-success">
+                    <span th:text="'Logout erfolgreich.'"></span>
                 </div>
+                <div class="form-group">
+                    <label>Nutzername</label>
+                    <input type="text" id="username" name="username" th:placeholder="'Nutzername'" class="form-control" required autofocus><br/>
+                </div>
+                <div class="form-group">
+                    <label>Passwort</label>
+                    <input type="password" id="password" name="password" th:placeholder="'Passwort'" class="form-control" required><br/>
+                </div>
+            </div>
+            <div class="card-footer">
+                <button name="Submit" value="Login" type="Submit" th:text="'Login'" class="btn btn-primary btn-block"></button>
             </div>
         </div>
     </form>

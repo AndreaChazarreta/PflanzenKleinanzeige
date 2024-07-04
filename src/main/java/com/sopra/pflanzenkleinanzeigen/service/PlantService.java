@@ -140,15 +140,35 @@ public class PlantService {
      */
     public List<Plant> searchWishlistPlantsByName(Benutzer user, String name) {
         List<Plant> wishlist = getWishlistForUser(user);
-        List<Plant> result = new ArrayList<>();
-        if (name != null && !name.isEmpty()) {
-            result.addAll(wishlist.stream().filter(p -> p.getName().toLowerCase().startsWith(name.toLowerCase())).collect(Collectors.toList()));
-            result.addAll(wishlist.stream().filter(p -> p.getName().toLowerCase().contains(name.toLowerCase()) && !p.getName().toLowerCase().startsWith(name.toLowerCase())).collect(Collectors.toList()));
-        } else {
-            result = wishlist;
-        }
-        return result;
+
+        // Filter results to ensure they are in the user's wishlist
+        List<Plant> prefixResults = plantRepository.findByPrefix(name).stream()
+                .filter(wishlist::contains)
+                .collect(Collectors.toList());
+
+        List<Plant> containsResults = plantRepository.findByNameContaining(name, name).stream()
+                .filter(wishlist::contains)
+                .collect(Collectors.toList());
+
+        // Sort the final results: first by prefix, then by name
+        List<Plant> finalResults = new ArrayList<>(prefixResults);
+        finalResults.addAll(containsResults);
+
+        return finalResults.stream()
+                .sorted((p1, p2) -> {
+                    boolean p1StartsWithPrefix = p1.getName().toLowerCase().startsWith(name.toLowerCase());
+                    boolean p2StartsWithPrefix = p2.getName().toLowerCase().startsWith(name.toLowerCase());
+
+                    if (p1StartsWithPrefix && !p2StartsWithPrefix) {
+                        return -1;
+                    } else if (!p1StartsWithPrefix && p2StartsWithPrefix) {
+                        return 1;
+                    } else {
+                        return p1.getName().compareToIgnoreCase(p2.getName());
+                    }
+                }).collect(Collectors.toList());
     }
+
 
     /**
      * Saves an image file to a predefined directory and returns the path to the saved image.
