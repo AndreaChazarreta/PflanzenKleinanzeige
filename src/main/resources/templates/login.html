@@ -16,7 +16,6 @@
             justify-content: center;
             align-items: center;
         }
-
         .navbar {
             width: 100%;
             background-color: rgba(255, 255, 255, 0.85);
@@ -27,7 +26,6 @@
             position: absolute;
             top: 0;
         }
-
         .login-container {
             background: rgba(255, 255, 255, 0.52);
             padding: 2rem;
@@ -37,18 +35,38 @@
             width: 100%;
             margin-top: 100px;
         }
-
         .card {
             background: rgba(255, 255, 255, 0.85);
             border: none;
         }
-
         .card-body {
             padding-top: 2rem;
         }
-
         .card-footer {
-            background-color: white;
+            display: flex;
+            justify-content: center;
+        }
+        .form-control:focus {
+            border-color: #28a745;
+            box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25);
+        }
+        .btn-primary {
+            background-color: #28a745;
+            border-color: #28a745;
+        }
+        .btn-primary:hover {
+            background-color: #218838;
+            border-color: #1e7e34;
+        }
+        .btn-primary:active {
+            background-color: #1e7e34 !important;
+            border-color: #1c7430 !important;
+            box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25) !important;
+        }
+        .btn-primary:focus {
+            background-color: #1e7e34 !important;
+            border-color: #1c7430 !important;
+            box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25) !important;
         }
     </style>
 </head>
