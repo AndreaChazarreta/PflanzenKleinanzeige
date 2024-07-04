@@ -78,6 +78,67 @@
             align-items: center;
             margin-top: 10px;
         }
+        .draggable {
+            cursor: move;
+        }
+
+        .droppable {
+            border: 2px dashed #2e8b57;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            margin-bottom: 20px;
+            display: flex;
+            flex-wrap: nowrap;
+            justify-content: space-between;
+            align-items: stretch;
+        }
+
+        .card-container {
+            flex: 1;
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+            width: 100%;
+        }
+
+        .card-container .card {
+            flex: 1;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 10px;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            min-height: 300px;
+        }
+
+        .card-container .card img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: cover;
+            border-radius: 70%;
+            margin-bottom: 10px;
+        }
+
+        .remove-btn {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background: none;
+            border: none;
+            padding: 0;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .remove-btn i {
+            color: #333;
+            font-size: 1.5rem;
+        }
+
     </style>
 </head>
 <body>
@@ -109,11 +170,21 @@
     </div>
 </nav>
 
-<div class="container mt-5 mb-5">
+    <div id="drop-container" class="droppable" ondrop="drop(event)" ondragover="allowDrop(event)">
+        <p id="drag-instruction">Ziehe Pflanzen hierher, um sie zu vergleichen</p>
+        <div id="comparison-cards" class="card-container" data-sortable="true">
+        </div>
+    </div>
+
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4">
         <th:block th:each="plant : ${wishlist}">
             <div class="col mb-4">
-                <div class="card h-100">
+                <div class="card h-100 draggable" draggable="true"
+                     th:data-plant-id="${plant.plantId}"
+                     th:data-plant-height="${plant.height}"
+                     th:data-plant-potIncluded="${plant.potIncluded}"
+                     th:data-plant-description="${plant.description}"
+                     ondragstart="drag(event)">
                     <th:block th:if="${plant.adIsActive}">
                         <a th:href="@{/plants/{id}(id=${plant.plantId})}">
                             <img th:src="@{${plant.imagePath}}" class="card-img-top" alt="Pflanzenbild">
@@ -186,8 +257,113 @@
             return new bootstrap.Tooltip(tooltipTriggerEl);
         });
     });
+
+    function checkSearch() {
+        var searchField = document.getElementById("name").value;
+        if (searchField.trim() === "") {
+            window.location.href = "/myWishlist";
+            return false;
+        }
+        return true;
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+            return new bootstrap.Tooltip(tooltipTriggerEl);
+        });
+
+        new Sortable(document.getElementById('comparison-cards'), {
+            animation: 150,
+            ghostClass: 'sortable-ghost',
+        });
+    });
+
+    function drag(event) {
+        event.dataTransfer.setData("plantId", event.target.getAttribute('data-plant-id'));
+    }
+
+    function allowDrop(event) {
+        event.preventDefault();
+    }
+
+    function drop(event) {
+        event.preventDefault();
+        var plantId = event.dataTransfer.getData("plantId");
+        var draggedElement = document.querySelector(`[data-plant-id="${plantId}"]`);
+
+        if (!draggedElement) {
+            console.error("Dragged element not found for plantId:", plantId);
+            return;
+        }
+
+        var comparisonCards = document.getElementById("comparison-cards");
+
+        // Check if the plant is already in the comparison list using plantId
+        var alreadyAdded = Array.from(comparisonCards.children).some(card => card.dataset.plantId === plantId);
+
+        if (alreadyAdded) {
+            alert("Diese Pflanze wurde bereits hinzugefügt.");
+            return;
+        }
+
+        if (comparisonCards.children.length === 0) {
+            document.getElementById("drag-instruction").hidden = true;
+        }
+
+        if (comparisonCards.children.length < 3) {
+            var plantName = draggedElement.querySelector(".card-title").textContent;
+            var plantPrice = draggedElement.querySelector(".card-text").textContent;
+            var plantImageSrc = draggedElement.querySelector("img").src;
+            var plantHeight = draggedElement.getAttribute('data-plant-height');
+            var plantPotIncluded = draggedElement.getAttribute('data-plant-potIncluded') === 'true' ? 'Ja' : 'Nein';
+            var plantDescription = draggedElement.getAttribute('data-plant-description');
+
+            var plantData = {
+                id: plantId,
+                image: plantImageSrc,
+                name: plantName,
+                price: plantPrice,
+                height: plantHeight,
+                potIncluded: plantPotIncluded,
+                description: plantDescription
+            };
+
+            var card = document.createElement("div");
+            card.classList.add("card");
+            card.dataset.plantId = plantData.id;
+
+            card.innerHTML = `
+            <button class="remove-btn" onclick="removePlant(this)">&times;</button>
+            <img src="${plantData.image}" class="card-img-top" alt="Pflanzenbild" style="max-width: 100px; height: auto;">
+            <div class="card-body">
+                <h5 class="card-title">${plantData.name}</h5>
+                <p class="card-text">Preis: ${plantData.price}</p>
+                <p class="card-text">Höhe: ${plantData.height} cm</p>
+                <p class="card-text">Topf inklusive: ${plantData.potIncluded}</p>
+                <p class="card-text">${plantData.description}</p>
+            </div>
+        `;
+
+            comparisonCards.appendChild(card);
+        } else {
+            alert("Du kannst maximal 3 Pflanzen vergleichen.");
+        }
+    }
+
+    function removePlant(button) {
+        var cardToRemove = button.closest(".card");
+        if (cardToRemove) {
+            cardToRemove.remove();
+        }
+        if (document.getElementById("comparison-cards").children.length === 0) {
+            document.getElementById("drag-instruction").hidden = false;
+        }
+    }
+
 </script>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.14.0/Sortable.min.js"></script>
 </body>
 </html>

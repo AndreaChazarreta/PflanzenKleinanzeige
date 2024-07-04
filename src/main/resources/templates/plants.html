@@ -6,6 +6,58 @@
     <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.5.0/nouislider.min.css" />
     <style>
+        .header-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px;
+            background-color: rgba(229, 225, 215, 0.74);
+            flex-wrap: wrap;
+        }
+        .header-container img {
+            max-width: 200px;
+            max-height: 200px;
+            object-fit: cover;
+            margin-right: 100px;
+        }
+        .header-title {
+            text-align: left;
+            flex: 1;
+            margin-left: 100px;
+        }
+        .main-title {
+            font-size: 2.5em;
+            color: #034803;
+            margin-bottom: 0;
+        }
+        .subtitle {
+            font-size: 1.5em;
+            color: #555;
+            margin-top: 5px;
+            font-weight: 400;
+        }
+        /* Media Queries für Mobilgeräte */
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+            .header-container img {
+                max-width: 100px;
+                max-height: 100px;
+                margin-right: 0;
+                margin-top: 10px;
+            }
+            .main-title {
+                font-size: 2em;
+                margin-left: 0;
+            }
+            .subtitle {
+                font-size: 1.2em;
+                margin-left: 0;
+            }
+        }
         img {
             max-width: 100%;
             max-height: 200px;
@@ -15,6 +67,7 @@
             border: none;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             transition: transform 0.2s;
+            background-color: #fdfcf8;
         }
         .card:hover {
             transform: scale(1.05);
@@ -85,7 +138,7 @@
             right: -12px !important;
         }
         .filter-container {
-            background-color: #f8f9fa;
+            background-color: rgba(218, 213, 201, 0.79);
             padding: 20px;
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -110,25 +163,51 @@
         }
         .search-bar button {
             border: none;
-            background-color: #0a723f;
+            background-color: rgb(129, 158, 0);
             border-radius: 25px;
             padding: 8px 10px;
             cursor: pointer;
         }
         .search-bar button:hover {
-            background-color: #1d6b41;
+            background-color: rgb(129, 158, 0);
         }
         .search-bar button i {
             color: #ffffff;
         }
+        .accordion-button:not(.collapsed) {
+            background-color: transparent;
+            color: inherit;
+            box-shadow: none;
+        }
+        .accordion-button {
+            background-color: transparent;
+            color: inherit;
+            box-shadow: none;
+        }
+        .accordion-button::after {
+            filter: invert(1);
+            box-shadow: none;
+        }
+        .accordion-button:focus,
+        .form-select:focus {
+            box-shadow: none;
+            outline: none;
+            border-color: transparent;
+        }
     </style>
     <title>Plants</title>
 </head>
-<body>
+<body style="background-color: #fdf8f0">
 <th:block th:insert="~{fragments/htmlNavBar :: navbar}"></th:block>
-
+<div class="header-container">
+    <div class="header-title">
+        <h1 class="main-title" style="font-family: 'Comic Sans MS', cursive;">Die grüne Ecke</h1>
+        <br>
+        <h2 class="subtitle">Dein Secondhand-Pflanzenmarkt</h2>
+    </div>
+    <img src="/plant-images/plant.png" alt="Logo">
+</div>
 <div class="container mt-5">
-    <h1>Die grüne Ecke - Dein Secondhand-Pflanzenmarkt</h1>
     <div class="row">
         <div class="col-lg-3 mb-4">
             <div class="filter-container">
@@ -139,7 +218,7 @@
                     </div>
                     <div>
                         <label for="sortPrice">Sortieren nach Preis:</label>
-                        <select class="form-select mb-3" id="sortPrice" name="sortPrice">
+                        <select class="form-select mb-3" id="sortPrice" name="sortPrice" style="box-shadow: none; outline: none;">
                             <option value="" th:selected="${sortPrice == null}">Keine Sortierung</option>
                             <option value="asc" th:selected="${sortPrice == 'asc'}">Preis aufsteigend</option>
                             <option value="desc" th:selected="${sortPrice == 'desc'}">Preis absteigend</option>
@@ -231,12 +310,12 @@
                             </div>
                         </div>
                     </div>
-                    <button type="submit" class="btn btn-primary w-100" style="background-color: #1d6b41; border:none; margin-top: 10px">Filtern</button>
+                    <button type="submit" class="btn btn-primary w-100" style="background-color: rgb(129, 158, 0); border:none; margin-top: 10px">Filtern</button>
                 </form>
             </div>
         </div>
         <div class="col-lg-9">
-            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4">
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-3">
                 <th:block th:each="plant : ${plants}">
                     <div th:if="${plant.isSold() == false}">
                         <th:block th:insert="~{fragments/cardPlantsOverview :: cardFragment(plant=${plant}, currentUser=${currentUser})}"></th:block>

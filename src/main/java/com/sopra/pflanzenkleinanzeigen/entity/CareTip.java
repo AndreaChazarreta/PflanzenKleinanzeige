@@ -17,6 +17,8 @@ public class CareTip {
     @GeneratedValue
     private Integer tipId;
 
+    private String plantName;
+
     private String irrigation;
 
     private String lightingConditions;
@@ -28,6 +30,8 @@ public class CareTip {
     private String temperature;
 
     private String otherTips;
+
+    private String planting;
 
     @OneToMany(mappedBy = "careTip")
     private List<Plant> describedPlants = new ArrayList<>();
@@ -110,5 +114,21 @@ public class CareTip {
 
     public void setCategory(Category category) {
         this.category = category;
+    }
+
+    public String getPlanting() {
+        return planting;
+    }
+
+    public void setPlanting(String planting) {
+        this.planting = planting;
+    }
+
+    public String getPlantName() {
+        return plantName;
+    }
+
+    public void setPlantName(String plantName) {
+        this.plantName = plantName;
     }
 }

@@ -21,6 +21,10 @@ public class CategoryService {
         return categoryRepository.save(category);
     }
 
+    public Category findById(Integer id) {
+        return categoryRepository.findById(id).orElse(null);
+    }
+
     public List<Category> findAllCategories() {
         return categoryRepository.findAll();
     }
