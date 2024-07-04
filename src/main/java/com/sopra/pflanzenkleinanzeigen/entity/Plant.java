@@ -71,6 +71,28 @@ public class Plant {
     @JoinColumn (name = "categoryId")
     private Category category;
 
+    private String lifespan;
+
+    private String floweringTime;
+
+    private boolean isToxicForPets;
+
+    private boolean isAirPurifying;
+
+    private String usability;
+
+    private String color;
+
+    private String leafShape;
+
+    private String growthRate;
+
+    private String standort;
+
+    private String plantFamily;
+
+    private String fruits;
+
     /**
      * Default constructor for Hibernate.
      */
@@ -214,5 +236,93 @@ public class Plant {
 
     public void setSeed(boolean seed) {
         this.seed = seed;
+    }
+
+    public String isLifespan() {
+        return lifespan;
+    }
+
+    public void setLifespan(String lifespan) {
+        this.lifespan = lifespan;
+    }
+
+    public String getFloweringTime() {
+        return floweringTime;
+    }
+
+    public void setFloweringTime(String floweringTime) {
+        this.floweringTime = floweringTime;
+    }
+
+    public boolean isToxicForPets() {
+        return isToxicForPets;
+    }
+
+    public void setToxicForPets(boolean toxicForPets) {
+        isToxicForPets = toxicForPets;
+    }
+
+    public boolean isAirPurifying() {
+        return isAirPurifying;
+    }
+
+    public void setAirPurifying(boolean airPurifying) {
+        isAirPurifying = airPurifying;
+    }
+
+    public String getUsability() {
+        return usability;
+    }
+
+    public void setUsability(String usability) {
+        this.usability = usability;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
+    }
+
+    public String getLeafShape() {
+        return leafShape;
+    }
+
+    public void setLeafShape(String leafShape) {
+        this.leafShape = leafShape;
+    }
+
+    public String getGrowthRate() {
+        return growthRate;
+    }
+
+    public void setGrowthRate(String growthRate) {
+        this.growthRate = growthRate;
+    }
+
+    public String getStandort() {
+        return standort;
+    }
+
+    public void setStandort(String standort) {
+        this.standort = standort;
+    }
+
+    public String getPlantFamily() {
+        return plantFamily;
+    }
+
+    public void setPlantFamily(String plantFamily) {
+        this.plantFamily = plantFamily;
+    }
+
+    public String getFruits() {
+        return fruits;
+    }
+
+    public void setFruits(String fruits) {
+        this.fruits = fruits;
     }
 }
