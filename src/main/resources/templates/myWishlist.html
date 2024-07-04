@@ -286,18 +286,11 @@
             console.error("Dragged element not found for plantId:", plantId);
             return;
         }
-        var comparisonCards = document.getElementById("comparison-cards");
-        var plantName = draggedElement.querySelector(".card-title").textContent;
 
-        var alreadyAdded = false;
-        var comparisonCardsChildren = comparisonCards.children;
-        for (var i = 0; i < comparisonCardsChildren.length; i++) {
-            var card = comparisonCardsChildren[i];
-            if (card.dataset.plantName === plantName) {
-                alreadyAdded = true;
-                break;
-            }
-        }
+        var comparisonCards = document.getElementById("comparison-cards");
+
+        // Check if the plant is already in the comparison list using plantId
+        var alreadyAdded = Array.from(comparisonCards.children).some(card => card.dataset.plantId === plantId);
 
         if (alreadyAdded) {
             alert("Diese Pflanze wurde bereits hinzugefügt.");
@@ -308,7 +301,8 @@
             document.getElementById("drag-instruction").hidden = true;
         }
 
-        if (comparisonCardsChildren.length < 3) {
+        if (comparisonCards.children.length < 3) {
+            var plantName = draggedElement.querySelector(".card-title").textContent;
             var plantPrice = draggedElement.querySelector(".card-text").textContent;
             var plantImageSrc = draggedElement.querySelector("img").src;
             var plantHeight = draggedElement.getAttribute('data-plant-height');
@@ -316,6 +310,7 @@
             var plantDescription = draggedElement.getAttribute('data-plant-description');
 
             var plantData = {
+                id: plantId,
                 image: plantImageSrc,
                 name: plantName,
                 price: plantPrice,
@@ -326,7 +321,7 @@
 
             var card = document.createElement("div");
             card.classList.add("card");
-            card.dataset.plantName = plantData.name;
+            card.dataset.plantId = plantData.id;
 
             card.innerHTML = `
             <button class="remove-btn" onclick="removePlant(this)">&times;</button>
@@ -341,7 +336,6 @@
         `;
 
             comparisonCards.appendChild(card);
-
         } else {
             alert("Du kannst maximal 3 Pflanzen vergleichen.");
         }
