@@ -17,6 +17,8 @@ public class CareTip {
     @GeneratedValue
     private Integer tipId;
 
+    private String plantName;
+
     private String irrigation;
 
     private String lightingConditions;
@@ -120,5 +122,13 @@ public class CareTip {
 
     public void setPlanting(String planting) {
         this.planting = planting;
+    }
+
+    public String getPlantName() {
+        return plantName;
+    }
+
+    public void setPlantName(String plantName) {
+        this.plantName = plantName;
     }
 }

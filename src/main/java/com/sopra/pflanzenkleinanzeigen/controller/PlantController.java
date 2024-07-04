@@ -1,11 +1,10 @@
 package com.sopra.pflanzenkleinanzeigen.controller;
 
 import com.sopra.pflanzenkleinanzeigen.entity.Benutzer;
+import com.sopra.pflanzenkleinanzeigen.entity.CareTip;
 import com.sopra.pflanzenkleinanzeigen.entity.Plant;
-import com.sopra.pflanzenkleinanzeigen.service.CategoryService;
-import com.sopra.pflanzenkleinanzeigen.service.ChatService;
-import com.sopra.pflanzenkleinanzeigen.service.PlantService;
-import com.sopra.pflanzenkleinanzeigen.service.UserService;
+import com.sopra.pflanzenkleinanzeigen.repository.PlantRepository;
+import com.sopra.pflanzenkleinanzeigen.service.*;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -41,6 +40,9 @@ public class PlantController {
 
     @Autowired
     private CategoryService categoryService;
+    @Autowired
+    private CareTipService careTipService;
+
 
     //TODO: brauchen wir für solche funktionen try and catch? Hier kann relativ wenig schief gehen
     /**
@@ -133,7 +135,7 @@ public class PlantController {
      */
     @PostMapping("/plants")
     public String addPlant(@Valid @ModelAttribute("newPlant") Plant newPlant, @RequestParam("imageFile") MultipartFile imageFile, BindingResult result, Model model,
-                           @RequestParam(value = "category", required = false) Integer categoryId ) {
+                           @RequestParam(value = "category", required = false) Integer categoryId) {
         if (result.hasErrors()) {
             //TODO: schauen warum es hier Beschreibung leer lassen als Fehler angenommen wird
             model.addAttribute("newPlant", newPlant);
@@ -141,8 +143,10 @@ public class PlantController {
         }
         try {
             newPlant.setSeller(userService.getCurrentUser());
+            CareTip careTip = careTipService.findCareTipByKeyName(newPlant.getName());
             newPlant.setAdIsActive(true);
             newPlant.setCategory(categoryService.findById(categoryId));
+            newPlant.setCareTip(careTip);
             plantService.savePlant(newPlant, imageFile);
         } catch (IOException e) {
             model.addAttribute("error", "Ein Fehler ist aufgetreten: " + e.getMessage());
@@ -150,6 +154,7 @@ public class PlantController {
         }
         return "redirect:/plants";
     }
+
 
     /**
      * This method displays the form for editing an existing plant.
