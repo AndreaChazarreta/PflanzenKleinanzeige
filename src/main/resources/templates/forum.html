@@ -7,11 +7,23 @@
     <title>FAQ</title>
     <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
     <style>
+        .header {
+            background-image: url('/plant-images/headerForum.png');
+            background-size: cover;
+            background-position: center;
+            height: 300px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-align: center;
+            font-size: 2rem;
+        }
         h1, h2, h3, h4, h5, h6 {
             color: black;
         }
         section {
-            padding: 60px;
+            padding: 20px 40px;
         }
         a, a:hover, a:focus, a:active {
             text-decoration: none;
@@ -23,7 +35,7 @@
             list-style: none;
         }
         .faq {
-            padding: 120px 0 90px;
+            padding: 30px 0 70px;
             background: #f7fbff;
             min-height: 100vh;
         }
@@ -112,15 +124,15 @@
 </head>
 <body>
 <th:block th:insert="~{fragments/htmlNavBar :: navbar}"></th:block>
+
+<div class="header"></div>
+
 <section class="faq">
     <div class="container" style="color:darkgreen">
-        <div style="background-color: darkgreen">
-            <div class="row justify-content-center">
-                <div class="col-xl-8 col-lg-8 text-center">
-                    <div class="section-title" style="color:white">
-                        <h1>FAQ's</h1>
-                        <h4>Frequently Asked <span>Questions</span></h4>
-                    </div>
+        <div class="row justify-content-center">
+            <div class="col-xl-8 col-lg-8 text-center">
+                <div class="section-title" style="color:white">
+                    <h4>Häufig gestellte Fragen</h4>
                 </div>
             </div>
         </div>
