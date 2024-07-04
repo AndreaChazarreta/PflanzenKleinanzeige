@@ -238,7 +238,7 @@ public class Plant {
         this.seed = seed;
     }
 
-    public String isLifespan() {
+    public String getLifespan() {
         return lifespan;
     }
 

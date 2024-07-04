@@ -58,31 +58,31 @@
                 <label for="name">Name:</label>
                 <input type="text" class="form-control" id="name" placeholder="Name" th:field="*{name}" required/>
                 <div class="invalid-feedback">
-                    Bitte geben Sie einen Namen ein.
+                    Bitte gebe einen Namen ein.
                 </div>
             </div>
             <div class="form-group">
                 <label for="price">Preis (€):</label>
                 <input type="number" class="form-control" id="price" placeholder="Preis in Euro" th:field="*{price}" step="any" min="0" required/>
                 <div class="invalid-feedback">
-                    Bitte geben Sie einen gültigen Preis ein.
+                    Bitte gebe einen gültigen Preis ein.
                 </div>
             </div>
             <div class="form-group">
                 <label for="height">Höhe (cm):</label>
                 <input type="number" class="form-control" id="height" placeholder="Höhe in Zentimeter" th:field="*{height}" step="any" min="0" required/>
                 <div class="invalid-feedback">
-                    Bitte geben Sie eine gültige Höhe ein.
+                    Bitte gebe eine gültige Höhe ein.
                 </div>
             </div>
             <div class="form-group">
                 <label for="description">Beschreibung:</label>
                 <textarea id="description" class="form-control" placeholder="Beschreibung" th:field="*{description}" required maxlength="5000" oninput="checkMaxLength(this)"></textarea>
                 <div class="invalid-feedback">
-                    Bitte geben Sie eine Beschreibung ein.
+                    Bitte gebe eine Beschreibung ein.
                 </div>
                 <div id="length-warning" class="invalid-feedback" style="display: none;">
-                    Sie haben die maximale Länge von 5000 Zeichen erreicht. Bitte kürzen Sie Ihre Nachricht.
+                    Du hast die maximale Länge von 5000 Zeichen erreicht. Bitte kürze deine Nachricht.
                 </div>
             </div>
             <div class="form-group">
@@ -100,7 +100,7 @@
                     </label>
                 </div>
                 <div class="invalid-feedback">
-                    Bitte wählen Sie aus, ob der Übertopf enthalten ist.
+                    Bitte wähle aus, ob der Übertopf enthalten ist.
                 </div>
             </div>
 
@@ -119,32 +119,172 @@
                     </label>
                 </div>
                 <div class="invalid-feedback">
-                    Bitte wählen Sie, ob ihre Pflanze Samen sind.
+                    Bitte wähle aus, ob deine Pflanze Samen sind.
                 </div>
-            </div>
-            <div th:if="*{seed}">
-                <p>Hallo </p>
-
             </div>
 
             <div class="form-group">
                 <label>Kategorie:</label>
-                <div>
-                    <select name ="category">
-                        <option value="1" th:text="Baum"></option>
-                        <option value="2" th:text="Zierpflanze"></option>
-                        <option value="3" th:text="Grünpflanze"></option>
-                        <option value="4" th:text="Draußenpflanze"></option>
-                        <option value="5" th:text="Kräuter"></option>
-                        <option value="6" th:text="Strauß"></option>
-                    </select>
-                </div>
+                <select class="form-select" name ="category" required>
+                    <option value="" disabled selected>Kategorie auswählen</option>
+                    <option value="1">Baum</option>
+                    <option value="2">Zierpflanze</option>
+                    <option value="3">Grünpflanze</option>
+                    <option value="4">Draußenpflanze</option>
+                    <option value="5">Kräuter</option>
+                    <option value="6">Strauß</option>
+                </select>
                 <div class="invalid-feedback">
-                    Bitte wählen Sie eine Kategorie.
+                    Bitte wähle eine Kategorie.
                 </div>
             </div>
 
+            <div class="form-group">
+                <label for="lifespan">Lebensdauer:</label>
+                <select class="form-select" id="lifespan" th:field="*{lifespan}" required>
+                    <option value="" disabled selected>Lebensdauer auswählen</option>
+                    <option value="immer">Immer</option>
+                    <option value="2 wochen">2 Wochen</option>
+                    <option value="3 wochen">3 Wochen</option>
+                </select>
+                <div class="invalid-feedback">
+                    Bitte wähle eine Lebensdauer.
+                </div>
+            </div>
 
+            <div class="form-group">
+                <label for="floweringTime">Blütezeit:</label>
+                <select class="form-select" id="floweringTime" th:field="*{floweringTime}" required>
+                    <option value="" disabled selected>Blütezeit auswählen</option>
+                    <option value="immer">Immer</option>
+                    <option value="2 wochen">2 Wochen</option>
+                    <option value="3 wochen">3 Wochen</option>
+                </select>
+                <div class="invalid-feedback">
+                    Bitte wähle eine Blütezeit.
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Giftig für Haustiere:</label>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="isToxicForPets" id="isToxicForPetsYes" th:field="*{isToxicForPets}" value="true" required>
+                    <label class="form-check-label" for="isToxicForPetsYes">
+                        Ja
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="isToxicForPets" id="isToxicForPetsNo" th:field="*{isToxicForPets}" value="false" required>
+                    <label class="form-check-label" for="isToxicForPetsNo">
+                        Nein
+                    </label>
+                </div>
+                <div class="invalid-feedback">
+                    Bitte wähle aus, ob die Pflanze giftig für Haustiere ist.
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Luftreinigend:</label>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="isAirPurifying" id="isAirPurifyingYes" th:field="*{isAirPurifying}" value="true" required>
+                    <label class="form-check-label" for="isAirPurifyingYes">
+                        Ja
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="isAirPurifying" id="isAirPurifyingNo" th:field="*{isAirPurifying}" value="false" required>
+                    <label class="form-check-label" for="isAirPurifyingNo">
+                        Nein
+                    </label>
+                </div>
+                <div class="invalid-feedback">
+                    Bitte wähle aus, ob die Pflanze luftreinigend ist.
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="usability">Nutzbarkeit:</label>
+                <select class="form-select" id="usability" th:field="*{usability}" required>
+                    <option value="" disabled selected>Nutzbarkeit auswählen</option>
+                    <option value="immer">Immer</option>
+                    <option value="2 wochen">2 Wochen</option>
+                    <option value="3 wochen">3 Wochen</option>
+                </select>
+                <div class="invalid-feedback">
+                    Bitte wähle eine Nutzbarkeit.
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="color">Farbe:</label>
+                <select class="form-select" id="color" th:field="*{color}" required>
+                    <option value="" disabled selected>Farbe auswählen</option>
+                    <option value="immer">Immer</option>
+                    <option value="2 wochen">2 Wochen</option>
+                    <option value="3 wochen">3 Wochen</option>
+                </select>
+                <div class="invalid-feedback">
+                    Bitte wähle eine Farbe.
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="leafShape">Blattform:</label>
+                <select class="form-select" id="leafShape" th:field="*{leafShape}" required>
+                    <option value="" disabled selected>Blattform auswählen</option>
+                    <option value="immer">Immer</option>
+                    <option value="2 wochen">2 Wochen</option>
+                    <option value="3 wochen">3 Wochen</option>
+                </select>
+                <div class="invalid-feedback">
+                    Bitte wähle eine Blattform.
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="growthRate">Wachstumsrate:</label>
+                <select class="form-select" id="growthRate" th:field="*{growthRate}" required>
+                    <option value="" disabled selected>Wachstumsrate auswählen</option>
+                    <option value="immer">Immer</option>
+                    <option value="2 wochen">2 Wochen</option>
+                    <option value="3 wochen">3 Wochen</option>
+                </select>
+                <div class="invalid-feedback">
+                    Bitte wähle eine Wachstumsrate.
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="standort">Lage:</label>
+                <select class="form-select" id="standort" th:field="*{standort}" required>
+                    <option value="" disabled selected>Lage auswählen</option>
+                    <option value="immer">Immer</option>
+                    <option value="2 wochen">2 Wochen</option>
+                    <option value="3 wochen">3 Wochen</option>
+                </select>
+                <div class="invalid-feedback">
+                    Bitte wähle eine Lage.
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="plantFamily">Pflanzenart:</label>
+                <select class="form-select" id="plantFamily" th:field="*{plantFamily}" required>
+                    <option value="" disabled selected>Pflanzenart auswählen</option>
+                    <option value="immer">Immer</option>
+                    <option value="2 wochen">2 Wochen</option>
+                    <option value="3 wochen">3 Wochen</option>
+                </select>
+                <div class="invalid-feedback">
+                    Bitte wähle eine Pflanzenart.
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="fruits">Früchte:</label>
+                <input type="text" class="form-control" id="fruits" placeholder="Obst" th:field="*{fruits}"/>
+            </div>
 
             <div class="form-group mb-3">
                 <label for="imageFile" class="form-label">Bild (jpeg, png): </label>
