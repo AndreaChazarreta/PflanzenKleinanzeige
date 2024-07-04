@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <th:block th:insert="~{fragments/htmlHead :: head}"></th:block>
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+    <title>FAQ</title>
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <style>
+        h1, h2, h3, h4, h5, h6 {
+            color: black;
+        }
+        section {
+            padding: 60px;
+        }
+        a, a:hover, a:focus, a:active {
+            text-decoration: none;
+            outline: none;
+        }
+        ul {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+        .faq {
+            padding: 120px 0 90px;
+            background: #f7fbff;
+            min-height: 100vh;
+        }
+        .faq .section-title {
+            margin-bottom: 54px;
+        }
+        .faq .section-title h2 {
+            margin-bottom: 22px;
+        }
+        .faq .accordion .card {
+            border: none;
+            margin-bottom: 30px;
+        }
+        .faq .accordion .card:not(:first-of-type) .card-header:first-child {
+            border-radius: 10px;
+        }
+        .faq .accordion .card .card-header {
+            border: none;
+            border-radius: 10px;
+            padding: 0;
+        }
+        .faq .accordion .card .card-header h5 {
+            padding: 0;
+        }
+        .faq .accordion .card .card-header h5 button {
+            color: black;
+            font-size: 18px;
+            font-weight: 500;
+            text-decoration: none;
+            padding: 0 30px 0 70px;
+            height: 80px;
+            display: block;
+            width: 100%;
+            color: rgba(0, 1, 4, 0.8);
+            text-align: left;
+            background: #fff;
+            -webkit-box-shadow: 0px -50px 140px 0px rgba(69, 81, 100, 0.1);
+            box-shadow: 0px -50px 140px 0px rgba(69, 81, 100, 0.1);
+            border-radius: 10px 10px 0 0;
+            position: relative;
+        }
+        .faq .accordion .card .card-header h5 button:after {
+            position: absolute;
+            left: 30px;
+            top: 50%;
+            margin-top: -10px;
+            width: 20px;
+            height: 20px;
+            background-color: transparent;
+            color: #1e5906;
+            text-align: center;
+            border: 1px solid #0e2b02;
+            border-radius: 50%;
+            line-height: 100%;
+            content: '\f067';
+            font-size: 10px;
+            line-height: 18px;
+            font-family: "Font Awesome 5 Free";
+            font-weight: 900;
+        }
+        .faq .accordion .card .card-header h5 button.collapsed {
+            background: #fff;
+            border-radius: 10px;
+            -webkit-box-shadow: none;
+            box-shadow: none;
+            border: 1px solid rgba(43, 66, 37, 0.58);
+        }
+        .faq .accordion .card .card-header h5 button[aria-expanded="true"]:after {
+            content: '\f068';
+            color: #fff;
+            background-image: -webkit-linear-gradient(-180deg, #204902 0%, #204703 30%, #173501 100%);
+        }
+        .faq .accordion .card .card-body {
+            -webkit-box-shadow: 0px 15px 140px 0px rgba(69, 81, 100, 0.1);
+            box-shadow: 0px 15px 140px 0px rgba(69, 81, 100, 0.1);
+            border-radius: 0 0 10px 10px;
+            padding-top: 0;
+            margin-top: -6px;
+            padding-left: 72px;
+            padding-right: 70px;
+            padding-bottom: 23px;
+            color: rgba(0, 1, 4, 0.8);
+            line-height: 30px;
+        }
+    </style>
+</head>
+<body>
+<th:block th:insert="~{fragments/htmlNavBar :: navbar}"></th:block>
+<section class="faq">
+    <div class="container" style="color:darkgreen">
+        <div style="background-color: darkgreen">
+            <div class="row justify-content-center">
+                <div class="col-xl-8 col-lg-8 text-center">
+                    <div class="section-title" style="color:white">
+                        <h1>FAQ's</h1>
+                        <h4>Frequently Asked <span>Questions</span></h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xl-12 col-lg-12">
+                <div class="accordion" id="accordionExample">
+                    <div class="row">
+                        <div class="col-xl-6 col-lg-6">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5 class="mb-0">
+                                        <button class="btn btn-link collapsed" type="button" data-bs-toggle="collapse"
+                                                data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                                            Wie kann ich eine Pflanze zum Verkauf anbieten?
+                                        </button>
+                                    </h5>
+                                </div>
+                                <div id="collapseOne" class="collapse" data-bs-parent="#accordionExample">
+                                    <div class="card-body">
+                                        Um eine Pflanze anzubieten, registrieren Sie sich bitte auf unserer Webseite und
+                                        klicken Sie auf "Anzeige erstellen". Füllen Sie die erforderlichen Felder aus und laden Sie ein Foto Ihrer Pflanze hoch. Nach der Überprüfung wird Ihre Anzeige veröffentlicht.
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5 class="mb-0">
+                                        <button class="btn btn-link collapsed" type="button" data-bs-toggle="collapse"
+                                                data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                            Wie kontaktiere ich den Verkäufer einer Pflanze?
+                                        </button>
+                                    </h5>
+                                </div>
+                                <div id="collapseTwo" class="collapse" data-bs-parent="#accordionExample">
+                                    <div class="card-body">
+                                        Wenn Sie an einer Pflanze interessiert sind, klicken Sie auf die entsprechende
+                                        Anzeige und nutzen Sie das Kontaktformular, um dem Verkäufer eine Nachricht zu senden.                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5 class="mb-0">
+                                        <button class="btn btn-link collapsed" type="button" data-bs-toggle="collapse"
+                                                data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                            Welche Pflanzenarten kann ich auf eurer Plattform kaufen oder verkaufen?
+                                        </button>
+                                    </h5>
+                                </div>
+                                <div id="collapseThree" class="collapse" data-bs-parent="#accordionExample">
+                                    <div class="card-body">
+                                        Sie können eine Vielzahl von Pflanzenarten kaufen oder verkaufen, einschließlich
+                                        Zimmerpflanzen, Gartenpflanzen, Sukkulenten, Kakteen, und seltene Pflanzenarten.
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5 class="mb-0">
+                                        <button class="btn btn-link collapsed" type="button" data-bs-toggle="collapse"
+                                                data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                                            Was sollte ich bei der Übergabe einer Pflanze beachten?
+                                        </button>
+                                    </h5>
+                                </div>
+                                <div id="collapseFour" class="collapse" data-bs-parent="#accordionExample">
+                                    <div class="card-body">
+                                        Achten Sie darauf, die Pflanze gut zu verpacken, um Schäden während des Transports
+                                        zu vermeiden. Stellen Sie sicher, dass die Pflanze gesund ist und keine Schädlinge
+                                        oder Krankheiten hat. Vereinbaren Sie einen sicheren Übergabeort.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-xl-6 col-lg-6">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5 class="mb-0">
+                                        <button class="btn btn-link collapsed" type="button" data-bs-toggle="collapse"
+                                                data-bs-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+                                            Wie kann ich eine Anzeige bearbeiten oder löschen?
+                                        </button>
+                                    </h5>
+                                </div>
+                                <div id="collapseFive" class="collapse" data-bs-parent="#accordionExample">
+                                    <div class="card-body">
+                                        Um eine Anzeige zu bearbeiten oder zu löschen, loggen Sie sich in Ihr Konto ein,
+                                        gehen Sie zu "Meine Anzeigen" und wählen Sie die entsprechende Aktion für die gewünschte Anzeige.
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5 class="mb-0">
+                                        <button class="btn btn-link collapsed" type="button" data-bs-toggle="collapse"
+                                                data-bs-target="#collapseSix" aria-expanded="false" aria-controls="collapseSix">
+                                            Fallen Gebühren für das Erstellen von Anzeigen an?
+                                        </button>
+                                    </h5>
+                                </div>
+                                <div id="collapseSix" class="collapse" data-bs-parent="#accordionExample">
+                                    <div class="card-body">
+                                        Das Erstellen von Standardanzeigen ist kostenlos. Für zusätzliche Funktionen wie
+                                        hervorgehobene Anzeigen oder längere Laufzeiten können jedoch Gebühren anfallen. Details finden Sie in unserem Preismodell.
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5 class="mb-0">
+                                        <button class="btn btn-link collapsed" type="button" data-bs-toggle="collapse"
+                                                data-bs-target="#collapseSeven" aria-expanded="false" aria-controls="collapseSeven">
+                                            Wie gehe ich vor, wenn ich ein Problem mit einem Verkäufer oder Käufer habe?
+                                        </button>
+                                    </h5>
+                                </div>
+                                <div id="collapseSeven" class="collapse" data-bs-parent="#accordionExample">
+                                    <div class="card-body">
+                                        Wenn Sie ein Problem mit einem Verkäufer oder Käufer haben, kontaktieren Sie uns
+                                        bitte über unser Support-Formular. Wir werden unser Bestes tun, um das Problem zu klären und eine Lösung zu finden.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5 class="mb-0">
+                                        <button class="btn btn-link collapsed" type="button" data-bs-toggle="collapse"
+                                                data-bs-target="#collapseEight" aria-expanded="false" aria-controls="collapseEight">
+                                            Wie kann ich sicherstellen, dass die Pflanzen, die ich kaufe, gesund sind?
+                                        </button>
+                                    </h5>
+                                </div>
+                                <div id="collapseEight" class="collapse" data-bs-parent="#accordionExample">
+                                    <div class="card-body">
+                                        Lesen Sie die Anzeigen sorgfältig und achten Sie auf detaillierte Beschreibungen
+                                        und Fotos der Pflanzen. Stellen Sie dem Verkäufer Fragen zur Pflege und zum Zustand
+                                        der Pflanze. Bei der Übergabe können Sie die Pflanze auch persönlich inspizieren,
+                                        bevor Sie den Kauf abschließen.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
