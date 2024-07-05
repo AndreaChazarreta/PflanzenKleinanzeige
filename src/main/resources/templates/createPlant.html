@@ -8,9 +8,22 @@
             max-width: 200px;
             max-height: 200px;
             object-fit: cover;
+            border-radius: 10px;
+            margin-bottom: 10px;
+        }
+        .image-preview-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .form-container img#preview,
+        .form-container img#upload {
+            max-width: 200px;
+            margin-top: 10px;
         }
         .form-container {
-            background-color: #f8f9fa;
+            margin-bottom: 40px;
+            background-color: #fcfaf6;
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -25,102 +38,375 @@
             margin-bottom: 20px;
         }
         .form-container form .btn {
-            background-color: #2e8b57;
+            background-color: #809d00;
+            border: none;
             color: white;
         }
         .form-container form .btn:hover {
-            background-color: #1d6b41;
+            background-color: #809d00;
+            box-shadow: 0 0 8px rgba(60, 107, 29, 0.63);
         }
-        .form-container img#preview,
-        .form-container img#upload {
-            max-width: 200px;
-            margin-top: 10px;
+        .form-group.mb-3 {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
         }
-        .back-link {
-            margin-top: 20px;
-            display: inline-block;
-            color: white;
-            text-decoration: none;
+        .form-group.mb-3 label,
+        .form-group.mb-3 input {
+            margin-bottom: 0px;
         }
-        .back-link:hover {
-            text-decoration: underline;
+        .btn-close:focus {
+            box-shadow: 0 0 0 0.25rem rgba(131, 185, 69, 0.5); /* Change to green shadow */
+        }
+        .form-control,
+        .form-select {
+            background-color: white !important;
+            border: 1px solid #9a8d71 !important;
+        }
+        .form-control:focus,
+        .form-select:focus {
+            box-shadow: 0 0 0 0.25rem rgba(217, 210, 186, 0.63);
+        }
+        .form-check-input {
+            border-color: #9a8d71 !important;
+        }
+        .form-check-input:checked {
+            background-color: #daa150 !important;
+            border-color: #daa150 !important;
+        }
+        .form-check-input:focus {
+            box-shadow: 0 0 0 0.25rem rgba(248, 208, 157, 0.7);
         }
     </style>
 </head>
-<body>
+<body style="background-color: #eae5db">
 <th:block th:insert="~{fragments/htmlNavBar :: navbar}"></th:block>
 
 <div class="container mt-5">
-    <div class="form-container">
-        <h1>Pflanzeanzeige erstellen</h1>
+    <div class="form-container position-relative">
+        <a th:href="@{/plants}" class="btn-close position-absolute top-0 end-0 m-3" aria-label="Close"></a>
+        <h1 style="color: #362a0b">Pflanzeanzeige erstellen</h1>
+        <br>
         <form class="needs-validation" th:action="@{/plants}" th:object="${newPlant}" method="post" enctype="multipart/form-data" novalidate>
-            <div class="form-group">
-                <label for="name">Name:</label>
-                <input type="text" class="form-control" id="name" placeholder="Name" th:field="*{name}" required/>
-                <div class="invalid-feedback">
-                    Bitte geben Sie einen Namen ein.
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <div class="form-group">
+                                <label for="name">Name:</label>
+                                <input type="text" class="form-control" id="name" placeholder="Name" th:field="*{name}" required />
+                                <div class="invalid-feedback">
+                                    Bitte gebe einen Namen ein.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>Kategorie:</label>
+                                <select class="form-select" name ="category" required>
+                                    <option value="" disabled selected>Kategorie auswählen</option>
+                                    <option value="1">Baum</option>
+                                    <option value="2">Zierpflanze</option>
+                                    <option value="3">Grünpflanze</option>
+                                    <option value="4">Draußenpflanze</option>
+                                    <option value="5">Kräuter</option>
+                                    <option value="6">Strauß</option>
+                                </select>
+                                <div class="invalid-feedback">
+                                    Bitte wähle eine Kategorie.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="price">Preis (€):</label>
+                                <input type="number" class="form-control" id="price" placeholder="Preis in Euro" th:field="*{price}" step="any" min="0" required />
+                                <div class="invalid-feedback">
+                                    Bitte gebe einen gültigen Preis ein.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="height">Höhe (cm):</label>
+                                <input type="number" class="form-control" id="height" placeholder="Höhe in Zentimeter" th:field="*{height}" step="any" min="0" required />
+                                <div class="invalid-feedback">
+                                    Bitte gebe eine gültige Höhe ein.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="description">Beschreibung:</label>
+                        <textarea id="description" class="form-control" placeholder="Beschreibung" th:field="*{description}" required maxlength="5000" oninput="checkMaxLength(this)"></textarea>
+                        <div class="invalid-feedback">
+                            Bitte gebe eine Beschreibung ein.
+                        </div>
+                        <div id="length-warning" class="invalid-feedback" style="display: none;">
+                            Du hast die maximale Länge von 5000 Zeichen erreicht. Bitte kürze deine Beschreibung.
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group mb-3">
+                        <label for="imageFile" class="form-label">Bild (jpeg, png): </label>
+                        <input class="form-control" type="file" id="imageFile" name="imageFile" accept="image/*" onchange="previewImage()" required>
+                        <div class="invalid-feedback">
+                            Bitte laden Sie ein Bild hoch.
+                        </div>
+                    </div>
+                    <div class="image-preview-container">
+                        <img id="preview"/>
+                        <img id="upload" src="/plant-images/imageUpload.png" alt="Plant image" class="me-3 rounded">
+                    </div>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label>Übertopf enthalten:</label>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="potIncluded" id="potIncludedYes" th:field="*{potIncluded}" value="true" required>
+                            <label class="form-check-label" for="potIncludedYes">
+                                Ja
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="potIncluded" id="potIncludedNo" th:field="*{potIncluded}" value="false" required>
+                            <label class="form-check-label" for="potIncludedNo">
+                                Nein
+                            </label>
+                        </div>
+                        <div class="invalid-feedback">
+                            Bitte wähle aus, ob der Übertopf enthalten ist.
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label>Verkaufst du Samen?:</label>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="seed" id="seedYes" th:field="*{seed}" value="true" required>
+                            <label class="form-check-label" for="seedYes">
+                                Ja
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="seed" id="seedNo" th:field="*{seed}" value="false" required>
+                            <label class="form-check-label" for="seedNo">
+                                Nein
+                            </label>
+                        </div>
+                        <div class="invalid-feedback">
+                            Bitte wähle aus, ob deine Pflanze Samen sind.
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label>Giftig für Haustiere:</label>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="toxicForPets" id="toxicForPetsYes" th:field="*{toxicForPets}" value="true" required>
+                            <label class="form-check-label" for="toxicForPetsYes">
+                                Ja
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="toxicForPets" id="toxicForPetsNo" th:field="*{toxicForPets}" value="false" required>
+                            <label class="form-check-label" for="toxicForPetsNo">
+                                Nein
+                            </label>
+                        </div>
+                        <div class="invalid-feedback">
+                            Bitte wähle aus, ob die Pflanze giftig für Haustiere ist.
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label>Luftreinigend:</label>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="airPurifying" id="airPurifyingYes" th:field="*{airPurifying}" value="true" required>
+                            <label class="form-check-label" for="airPurifyingYes">
+                                Ja
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="airPurifying" id="airPurifyingNo" th:field="*{airPurifying}" value="false" required>
+                            <label class="form-check-label" for="airPurifyingNo">
+                                Nein
+                            </label>
+                        </div>
+                        <div class="invalid-feedback">
+                            Bitte wähle aus, ob die Pflanze luftreinigend ist.
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="lifespan">Lebensdauer:</label>
+                        <select class="form-select" id="lifespan" th:field="*{lifespan}" required>
+                            <option value="" disabled selected>Lebensdauer auswählen</option>
+                            <option value="Einjährig">Einjährig</option>
+                            <option value="Zweijährig">Zweijährig</option>
+                            <option value="Mehrjährig">Mehrjährig</option>
+                        </select>
+                        <div class="invalid-feedback">
+                            Bitte wähle eine Lebensdauer.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label for="floweringTime">Blütezeit:</label>
+                        <select class="form-select" id="floweringTime" th:field="*{floweringTime}" required>
+                            <option value="" disabled selected>Blütezeit auswählen</option>
+                            <option value="Frühling">Frühling</option>
+                            <option value="Sommer">Sommer</option>
+                            <option value="Herbst">Herbst</option>
+                            <option value="Winter">Winter</option>
+                            <option value="Ganzjährig">Ganzjährig</option>
+                        </select>
+                        <div class="invalid-feedback">
+                            Bitte wähle eine Blütezeit.
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label for="growthRate">Wachstumsrate:</label>
+                        <select class="form-select" id="growthRate" th:field="*{growthRate}" required>
+                            <option value="" disabled selected>Wachstumsrate auswählen</option>
+                            <option value="Langsam">Langsam</option>
+                            <option value="Mittel">Mittel</option>
+                            <option value="Schnell">Schnell</option>
+                        </select>
+                        <div class="invalid-feedback">
+                            Bitte wähle eine Wachstumsrate.
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label for="usability">Nutzbarkeit:</label>
+                        <select class="form-select" id="usability" th:field="*{usability}" required>
+                            <option value="" disabled selected>Nutzbarkeit auswählen</option>
+                            <option value="Essbar">Essbar</option>
+                            <option value="Medizinisch ">Medizinisch </option>
+                            <option value="Dekorativ ">Dekorativ </option>
+                            <option value="Duftend  ">Duftend  </option>
+                        </select>
+                        <div class="invalid-feedback">
+                            Bitte wähle eine Nutzbarkeit.
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label for="color">Farbe:</label>
+                        <select class="form-select" id="color" th:field="*{color}" required>
+                            <option value="" disabled selected>Farbe auswählen</option>
+                            <option value="Blau">Blau</option>
+                            <option value="Grün">Grün</option>
+                            <option value="Gelb">Gelb</option>
+                            <option value="Rot">Rot</option>
+                            <option value="Lila">Lila</option>
+                            <option value="Pink">Pink</option>
+                            <option value="Orange">Orange</option>
+                            <option value="Braun">Braun</option>
+                            <option value="Mehrfarbig">Mehrfarbig</option>
+                        </select>
+                        <div class="invalid-feedback">
+                            Bitte wähle eine Farbe.
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label for="leafShape">Blattform:</label>
+                        <select class="form-select" id="leafShape" th:field="*{leafShape}" required>
+                            <option value="" disabled selected>Blattform auswählen</option>
+                            <option value="Oval">Oval</option>
+                            <option value="Lanzettlich">Lanzettlich</option>
+                            <option value="Herzförmig">Herzförmig</option>
+                            <option value="Rund">Rund</option>
+                            <option value="Nadelförmig">Nadelförmig</option>
+                            <option value="Linear">Linear</option>
+                        </select>
+                        <div class="invalid-feedback">
+                            Bitte wähle eine Blattform.
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label for="standort">Lage:</label>
+                        <select class="form-select" id="standort" th:field="*{standort}" required>
+                            <option value="" disabled selected>Lage auswählen</option>
+                            <option value="Sonne">Sonne</option>
+                            <option value="Indirektes Sonnenlicht">Indirektes Sonnenlicht</option>
+                            <option value="Halbschatten">Halbschatten</option>
+                        </select>
+                        <div class="invalid-feedback">
+                            Bitte wähle eine Lage.
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="form-group">
-                <label for="price">Preis (€):</label>
-                <input type="number" class="form-control" id="price" placeholder="Preis in Euro" th:field="*{price}" step="any" min="0" required/>
-                <div class="invalid-feedback">
-                    Bitte geben Sie einen gültigen Preis ein.
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="height">Höhe (cm):</label>
-                <input type="number" class="form-control" id="height" placeholder="Höhe in Zentimeter" th:field="*{height}" step="any" min="0" required/>
-                <div class="invalid-feedback">
-                    Bitte geben Sie eine gültige Höhe ein.
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="description">Beschreibung:</label>
-                <textarea id="description" class="form-control" placeholder="Beschreibung" th:field="*{description}" required maxlength="5000" oninput="checkMaxLength(this)"></textarea>
-                <div class="invalid-feedback">
-                    Bitte geben Sie eine Beschreibung ein.
-                </div>
-                <div id="length-warning" class="invalid-feedback" style="display: none;">
-                    Sie haben die maximale Länge von 5000 Zeichen erreicht. Bitte kürzen Sie Ihre Nachricht.
-                </div>
-            </div>
-            <div class="form-group">
-                <label>Übertopf enthalten:</label>
+                <label>Gibt deine Pflanze Obst:</label>
                 <div class="form-check">
-                    <input class="form-check-input" type="radio" name="potIncluded" id="potIncludedYes" th:field="*{potIncluded}" value="true" required>
-                    <label class="form-check-label" for="potIncludedYes">
+                    <input class="form-check-input" type="radio" name="fruits" id="fruitsYes" th:field="*{fruits}" value="true" required>
+                    <label class="form-check-label" for="fruitsYes">
                         Ja
                     </label>
                 </div>
                 <div class="form-check">
-                    <input class="form-check-input" type="radio" name="potIncluded" id="potIncludedNo" th:field="*{potIncluded}" value="false" required>
-                    <label class="form-check-label" for="potIncludedNo">
+                    <input class="form-check-input" type="radio" name="fruits" id="fruitsNo" th:field="*{fruits}" value="false" required>
+                    <label class="form-check-label" for="fruitsNo">
                         Nein
                     </label>
                 </div>
                 <div class="invalid-feedback">
-                    Bitte wählen Sie aus, ob der Übertopf enthalten ist.
+                    Bitte wähle aus, ob die Pflanze Obst gibt.
                 </div>
             </div>
-            <div class="form-group mb-3">
-                <label for="imageFile" class="form-label">Bild (jpeg, png): </label>
-                <input class="form-control" type="file" id="imageFile" name="imageFile" accept="image/*" onchange="previewImage()" required>
-                <div class="invalid-feedback">
-                    Bitte laden Sie ein Bild hoch.
-                </div>
+
+            <div class="form-group" id="fruitField" style="display:none;">
+                <label for="fruit">Früchte:</label>
+                <input type="text" class="form-control" id="fruit" placeholder="Obst" th:field="*{fruit}"/>
             </div>
-            <div>
-                <img id="preview"/>
-                <img id="upload" src="/plant-images/upload.png" alt="Plant image" class="me-3 rounded">
-            </div>
-            <button type="submit" class="btn btn-success mt-3">Erstellen</button>
+            <button type="submit" class="btn btn-success mt-3 col-md-12">Erstellen</button>
         </form>
-        <a th:href="@{/plants}" class="btn btn-secondary back-link">Alle Pflanzen anzeigen</a>
     </div>
 </div>
 
 <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const fruitsYes = document.getElementById('fruitsYes');
+        const fruitsNo = document.getElementById('fruitsNo');
+        const fruitField = document.getElementById('fruitField');
+
+        function toggleFruitField() {
+            if (fruitsYes.checked) {
+                fruitField.style.display = 'block';
+            } else {
+                fruitField.style.display = 'none';
+            }
+        }
+
+        fruitsYes.addEventListener('change', toggleFruitField);
+        fruitsNo.addEventListener('change', toggleFruitField);
+
+        toggleFruitField();
+    });
+
     function checkMaxLength(textarea) {
         const maxLength = textarea.maxLength;
         const currentLength = textarea.value.length;

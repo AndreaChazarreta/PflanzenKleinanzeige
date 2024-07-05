@@ -2,11 +2,15 @@ package com.sopra.pflanzenkleinanzeigen.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
+import org.hibernate.annotations.Cascade;
+
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.sql.Timestamp;
+
 
 /**
  * This class represents a plant in the system.
@@ -43,8 +47,10 @@ public class Plant {
 
     private boolean sold;
 
+    private Timestamp dateWished;
+    private boolean seed;
 
-    @ManyToMany(targetEntity = Benutzer.class, fetch = FetchType.EAGER)
+    @ManyToMany(targetEntity = com.sopra.pflanzenkleinanzeigen.entity.Benutzer.class, fetch = FetchType.EAGER)
     private Set<Benutzer> wishedBy = new HashSet<>();
 
     @ManyToOne
@@ -67,6 +73,28 @@ public class Plant {
     @ManyToOne
     @JoinColumn (name = "categoryId")
     private Category category;
+
+    private String lifespan;
+
+    private String floweringTime;
+
+    private boolean toxicForPets;
+
+    private boolean airPurifying;
+
+    private String usability;
+
+    private String color;
+
+    private String leafShape;
+
+    private String growthRate;
+
+    private String standort;
+
+    private String fruit;
+
+    private boolean fruits;
 
     /**
      * Default constructor for Hibernate.
@@ -205,4 +233,106 @@ public class Plant {
         this.category = category;
     }
 
+    public Timestamp getDateWished() {
+        return dateWished;
+    }
+
+    public void setDateWished(Timestamp dateWished) {
+        this.dateWished = dateWished;
+    }
+    public boolean isSeed() {
+        return seed;
+    }
+
+    public void setSeed(boolean seed) {
+        this.seed = seed;
+    }
+
+    public String getLifespan() {
+        return lifespan;
+    }
+
+    public void setLifespan(String lifespan) {
+        this.lifespan = lifespan;
+    }
+
+    public String getFloweringTime() {
+        return floweringTime;
+    }
+
+    public void setFloweringTime(String floweringTime) {
+        this.floweringTime = floweringTime;
+    }
+
+    public boolean isToxicForPets() {
+        return toxicForPets;
+    }
+
+    public void setToxicForPets(boolean toxicForPets) {
+        this.toxicForPets = toxicForPets;
+    }
+
+    public boolean isAirPurifying() {
+        return airPurifying;
+    }
+
+    public void setAirPurifying(boolean airPurifying) {
+        this.airPurifying = airPurifying;
+    }
+
+    public String getUsability() {
+        return usability;
+    }
+
+    public void setUsability(String usability) {
+        this.usability = usability;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
+    }
+
+    public String getLeafShape() {
+        return leafShape;
+    }
+
+    public void setLeafShape(String leafShape) {
+        this.leafShape = leafShape;
+    }
+
+    public String getGrowthRate() {
+        return growthRate;
+    }
+
+    public void setGrowthRate(String growthRate) {
+        this.growthRate = growthRate;
+    }
+
+    public String getStandort() {
+        return standort;
+    }
+
+    public void setStandort(String standort) {
+        this.standort = standort;
+    }
+
+    public String getFruit() {
+        return fruit;
+    }
+
+    public void setFruit(String fruit) {
+        this.fruit = fruit;
+    }
+
+    public boolean isFruits() {
+        return fruits;
+    }
+
+    public void setFruits(boolean fruits) {
+        this.fruits = fruits;
+    }
 }

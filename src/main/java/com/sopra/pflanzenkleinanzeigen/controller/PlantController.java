@@ -1,6 +1,7 @@
 package com.sopra.pflanzenkleinanzeigen.controller;
 
 import com.sopra.pflanzenkleinanzeigen.entity.Benutzer;
+import com.sopra.pflanzenkleinanzeigen.entity.CareTip;
 import com.sopra.pflanzenkleinanzeigen.entity.Plant;
 import com.sopra.pflanzenkleinanzeigen.service.ChatService;
 import com.sopra.pflanzenkleinanzeigen.service.PdfService;
@@ -10,6 +11,8 @@ import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import com.sopra.pflanzenkleinanzeigen.repository.PlantRepository;
+import com.sopra.pflanzenkleinanzeigen.service.*;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -46,6 +49,12 @@ public class PlantController {
     @Autowired
     private PdfService pdfService;
 
+    @Autowired
+    private CategoryService categoryService;
+    @Autowired
+    private CareTipService careTipService;
+
+
     //TODO: brauchen wir für solche funktionen try and catch? Hier kann relativ wenig schief gehen
     /**
      * This method retrieves all plants and displays them on the plants page if they are still active.
@@ -67,9 +76,11 @@ public class PlantController {
             model.addAttribute("currentUser", currentUser);
             List<Plant> plants = new ArrayList<>();
 
-            if(categories != null && !categories.isEmpty()){
+            if (name != null && !name.isEmpty()) {
+                plants = plantService.searchPlantsByName(name);
+            } else if (categories != null && !categories.isEmpty()) {
                 plants = plantService.findPlantsByFilters(name, minPrice, maxPrice, minHeight, maxHeight, potIncluded, categories, sortPrice);
-            } else{
+            } else {
                 plants = plantService.findPlantsByFiltersWithoutCategory(name, minPrice, maxPrice, minHeight, maxHeight, potIncluded, sortPrice);
             }
 
@@ -136,15 +147,18 @@ public class PlantController {
      * @return "redirect:/plants", the view with all plants, if the new plant is valid. Otherwise, it returns "createPlant", the view with the form for creating a new plant.
      */
     @PostMapping("/plants")
-    public String addPlant(@Valid @ModelAttribute("newPlant") Plant newPlant, @RequestParam("imageFile") MultipartFile imageFile, BindingResult result, Model model) {
+    public String addPlant(@Valid @ModelAttribute("newPlant") Plant newPlant, @RequestParam("imageFile") MultipartFile imageFile, BindingResult result, Model model,
+                           @RequestParam(value = "category", required = false) Integer categoryId) {
         if (result.hasErrors()) {
-            //TODO: schauen warum es hier Beschreibung leer lassen als Fehler angenommen wird
             model.addAttribute("newPlant", newPlant);
             return "createPlant";
         }
         try {
             newPlant.setSeller(userService.getCurrentUser());
+            CareTip careTip = careTipService.findCareTipByKeyName(newPlant.getName());
             newPlant.setAdIsActive(true);
+            newPlant.setCategory(categoryService.findById(categoryId));
+            newPlant.setCareTip(careTip);
             plantService.savePlant(newPlant, imageFile);
         } catch (IOException e) {
             model.addAttribute("error", "Ein Fehler ist aufgetreten: " + e.getMessage());
@@ -152,6 +166,7 @@ public class PlantController {
         }
         return "redirect:/plants";
     }
+
 
     /**
      * This method displays the form for editing an existing plant.
@@ -247,24 +262,32 @@ public class PlantController {
     }
 
     @GetMapping("/myWishlist")
-    public String getWishlistForUser(Model model, @RequestParam(value = "name", required = false) String name) {
+    public String getWishlistForUser(Model model) {
         Benutzer currentUser = userService.getCurrentUser();
-        List<Plant> wishlist;
+        List<Plant> wishlist = plantService.getWishlistForUser(currentUser);
 
-        if (name != null && !name.isEmpty()) {
-            wishlist = plantService.getWishlistForUser(currentUser);
-            model.addAttribute("name", name);
-        } else {
-            wishlist = plantService.getWishlistForUser(currentUser);
-        }
         List<Plant> sortedWishlist = wishlist.stream()
-                .sorted((p1, p2) -> Boolean.compare(p2.isAdIsActive(), p1.isAdIsActive()))
-                .collect(Collectors.toList());
+                .sorted((p1, p2) -> {
+                    if (p1.isAdIsActive() != p2.isAdIsActive()) {
+                        return Boolean.compare(p2.isAdIsActive(), p1.isAdIsActive());
+                    } else {
+                        return p2.getDateWished().compareTo(p1.getDateWished()); // Sort descending by dateWished
+                    }
+                }).collect(Collectors.toList());
 
         model.addAttribute("wishlist", sortedWishlist);
         return "myWishlist";
     }
 
+    @GetMapping("/searchWishlist")
+    public String searchWishlistPlants(Model model, @RequestParam(value = "name") String name) {
+        Benutzer currentUser = userService.getCurrentUser();
+        List<Plant> wishlist = plantService.searchWishlistPlantsByName(currentUser, name);
+
+        model.addAttribute("wishlist", wishlist);
+        model.addAttribute("name", name);
+        return "myWishlist";
+    }
     @GetMapping("/plants/pdf/{id}")
     public ResponseEntity<InputStreamResource> getPlantPdf(@PathVariable int id) {
         Plant plant = plantService.findPlantById(id);
