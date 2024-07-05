@@ -76,11 +76,9 @@ public class PlantController {
             model.addAttribute("currentUser", currentUser);
             List<Plant> plants = new ArrayList<>();
 
-            if (name != null && !name.isEmpty()) {
-                plants = plantService.searchPlantsByName(name);
-            } else if (categories != null && !categories.isEmpty()) {
+            if(categories != null && !categories.isEmpty()){
                 plants = plantService.findPlantsByFilters(name, minPrice, maxPrice, minHeight, maxHeight, potIncluded, categories, sortPrice);
-            } else {
+            } else{
                 plants = plantService.findPlantsByFiltersWithoutCategory(name, minPrice, maxPrice, minHeight, maxHeight, potIncluded, sortPrice);
             }
 
