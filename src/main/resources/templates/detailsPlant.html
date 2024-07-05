@@ -98,11 +98,6 @@
                 <p>Übertopf enthalten: <span th:text="${plant.potIncluded} ? 'Ja' : 'Nein'">Übertopf</span></p>
                 <p>Beschreibung: <span th:text="${plant.description}">Pflanzenbeschreibung</span></p>
             </div>
-            <form th:action="@{/plants/pdf/{id}(id=${plant.plantId})}" method="get">
-                <button class="btn btn-custom" type="submit">
-                    <i class="bi bi-file-earmark-pdf"></i> Download PDF
-                </button>
-            </form>
         </div>
     </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>

@@ -1,16 +1,9 @@
 package com.sopra.pflanzenkleinanzeigen.service;
 
-import com.itextpdf.text.Document;
-import com.itextpdf.text.DocumentException;
-import com.itextpdf.text.Element;
-import com.itextpdf.text.Font;
-import com.itextpdf.text.FontFactory;
-import com.itextpdf.text.Image;
-import com.itextpdf.text.Paragraph;
-import com.itextpdf.text.pdf.PdfPTable;
-import com.itextpdf.text.pdf.PdfPCell;
-import com.itextpdf.text.pdf.PdfWriter;
+import com.itextpdf.text.*;
+import com.itextpdf.text.pdf.*;
 import com.sopra.pflanzenkleinanzeigen.entity.Plant;
+import com.sopra.pflanzenkleinanzeigen.entity.CareTip;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 
@@ -31,16 +24,16 @@ public class PdfService {
             document.open();
 
             // Load image from classpath
-            ClassPathResource imgFile = new ClassPathResource("static/" + plant.getImagePath());
+            ClassPathResource imgFile = new ClassPathResource("static/plant-images/logoPlantHeart.png");
             InputStream imgStream = imgFile.getInputStream();
             Image img = Image.getInstance(imgStream.readAllBytes());
-            img.scaleToFit(250, 250);
-            img.setAlignment(Element.ALIGN_CENTER);
+            img.scaleToFit(50, 50);
+            img.setAlignment(Element.ALIGN_LEFT);
             document.add(img);
 
             // Title
             Font titleFont = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 20);
-            Paragraph title = new Paragraph("Plant Details", titleFont);
+            Paragraph title = new Paragraph("Care Tips for " + plant.getName(), titleFont);
             title.setAlignment(Element.ALIGN_CENTER);
             document.add(title);
 
@@ -54,23 +47,21 @@ public class PdfService {
             float[] columnWidths = {1f, 2f};
             table.setWidths(columnWidths);
 
-            // Add table header
-            PdfPCell cell1 = new PdfPCell(new Paragraph("Attribute"));
-            PdfPCell cell2 = new PdfPCell(new Paragraph("Value"));
-            table.addCell(cell1);
-            table.addCell(cell2);
+            // Add table header with no borders
+            Font headerFont = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 12);
 
-            // Add table rows
-            table.addCell("Name");
-            table.addCell(plant.getName());
-            table.addCell("Price");
-            table.addCell(plant.getPrice() + " €");
-            table.addCell("Height");
-            table.addCell(plant.getHeight() + " cm");
-            table.addCell("Description");
-            table.addCell(plant.getDescription());
-            table.addCell("Pot Included");
-            table.addCell(plant.isPotIncluded() ? "Yes" : "No");
+            // Retrieve CareTip associated with the plant
+            CareTip careTip = plant.getCareTip();
+
+            // Add care tips to table
+            addCareTipRow(table, "Plant Name", careTip.getPlantName());
+            addCareTipRow(table, "Irrigation", careTip.getIrrigation());
+            addCareTipRow(table, "Lighting Conditions", careTip.getLightingConditions());
+            addCareTipRow(table, "Fertilization", careTip.getFertilization());
+            addCareTipRow(table, "Repotting", careTip.getRepotting());
+            addCareTipRow(table, "Temperature", careTip.getTemperature());
+            addCareTipRow(table, "Other Tips", careTip.getOtherTips());
+            addCareTipRow(table, "Planting", careTip.getPlanting());
 
             document.add(table);
 
@@ -80,5 +71,22 @@ public class PdfService {
         }
 
         return new ByteArrayInputStream(out.toByteArray());
+    }
+
+    private void styleCell(PdfPCell cell) {
+        cell.setBorder(Rectangle.NO_BORDER);
+        cell.setPaddingBottom(10f);
+        cell.setBorderWidthBottom(1f);
+        cell.setBorderColorBottom(BaseColor.LIGHT_GRAY);
+    }
+
+    private void addCareTipRow(PdfPTable table, String attribute, String value) {
+        Font rowFont = FontFactory.getFont(FontFactory.HELVETICA, 12);
+        PdfPCell cell1 = new PdfPCell(new Paragraph(attribute, rowFont));
+        PdfPCell cell2 = new PdfPCell(new Paragraph(value, rowFont));
+        styleCell(cell1);
+        styleCell(cell2);
+        table.addCell(cell1);
+        table.addCell(cell2);
     }
 }

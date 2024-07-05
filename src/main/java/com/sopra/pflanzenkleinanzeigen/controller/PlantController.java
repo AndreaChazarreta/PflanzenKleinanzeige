@@ -298,7 +298,7 @@ public class PlantController {
         ByteArrayInputStream bis = pdfService.generatePlantPdf(plant);
 
         HttpHeaders headers = new HttpHeaders();
-        headers.add("Content-Disposition", "inline; filename=plant-details.pdf");
+        headers.add("Content-Disposition", "inline; filename=plant-pflegetipps.pdf");
 
         return ResponseEntity.ok()
                 .headers(headers)
