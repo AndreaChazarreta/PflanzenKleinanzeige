@@ -148,7 +148,10 @@ public class PlantController {
      */
     @PostMapping("/plants")
     public String addPlant(@Valid @ModelAttribute("newPlant") Plant newPlant, @RequestParam("imageFile") MultipartFile imageFile, BindingResult result, Model model,
-                           @RequestParam(value = "category", required = false) Integer categoryId) {
+                           @RequestParam(value = "category", required = false) Integer categoryId, @RequestParam(value = "lifespan", required = false) String lifespan,
+                           @RequestParam(value = "floweringTime", required = false) String floweringTime, @RequestParam(value = "growthRate", required = false) String growthRate,
+                           @RequestParam(value = "usability", required = false) String usability, @RequestParam(value = "color", required = false) String color,
+                           @RequestParam(value = "leafShape", required = false) String leafShape, @RequestParam(value = "standort", required = false) String standort){
         if (result.hasErrors()) {
             model.addAttribute("newPlant", newPlant);
             return "createPlant";
@@ -158,7 +161,14 @@ public class PlantController {
             CareTip careTip = careTipService.findCareTipByKeyName(newPlant.getName());
             newPlant.setAdIsActive(true);
             newPlant.setCategory(categoryService.findById(categoryId));
+            newPlant.setLifespan(lifespan);
+            newPlant.setFloweringTime(floweringTime);
+            newPlant.setGrowthRate(growthRate);
             newPlant.setCareTip(careTip);
+            newPlant.setUsability(usability);
+            newPlant.setColor(color);
+            newPlant.setLeafShape(leafShape);
+            newPlant.setStandort(standort);
             plantService.savePlant(newPlant, imageFile);
         } catch (IOException e) {
             model.addAttribute("error", "Ein Fehler ist aufgetreten: " + e.getMessage());
