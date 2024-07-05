@@ -4,6 +4,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import org.springframework.web.bind.annotation.GetMapping;
+
 /**
  * Controller for all requests that only render static HTML content and do not use ModelAttribute.
  */
@@ -19,5 +21,10 @@ public class StaticPagesController implements WebMvcConfigurer {
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
         registry.addViewController("/login").setViewName("login");
+    }
+
+    @GetMapping("/faq")
+    public String getFaq() {
+        return "forum";
     }
 }
