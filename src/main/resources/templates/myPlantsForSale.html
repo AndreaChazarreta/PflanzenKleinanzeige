@@ -88,11 +88,17 @@
         }
         .nav-underline {
             margin-bottom: 30px;
+            display: flex;
+            align-items: center;
         }
-        .custom-nav-link .nav-link{
+        .nav-underline .nav {
+            margin-bottom: 0;
+        }
+        .custom-nav-link .nav-link {
             color: #2e8b57 !important;
             font-size: 1.25rem;
             text-decoration: none;
+            margin-right: 20px; /* Add margin to separate links */
         }
         .custom-nav-link .nav-link.active {
             text-decoration: underline;
@@ -104,25 +110,22 @@
 <th:block th:insert="~{fragments/htmlNavBar :: navbar}"></th:block>
 
 <div class="container mt-5 mb-5">
-    <ul class="nav nav-underline">
-        <li class="nav-item custom-nav-link">
-            <a class="nav-link active" href="/myPlantsForSale">Pflanzen zum Verkauf</a>
-        </li>
-        <li class="nav-item custom-nav-link">
-            <a class="nav-link" href="/myPlants">Gekaufte Pflanzen</a>
-        </li>
-        <li class="nav-item custom-nav-link">
-            <a class="nav-link" href="/myWishlist">Meine Wunschliste</a>
-        </li>
-    </ul>
-
-    <div class="row mb-4">
-        <div class="col-12">
-            <form class="search-bar" th:action="@{/myPlantsForSale}" method="get" onsubmit="return checkSearch()">
-                <input class="form-control" id="name" name="name" label="Suche nach Name:" type="text" th:value="${name}" placeholder="Suche nach Name">
-                <button class="btn" type="submit"><i class="bi bi-search"></i></button>
-            </form>
-        </div>
+    <div class="nav-underline d-flex align-items-center">
+        <ul class="nav me-auto">
+            <li class="nav-item custom-nav-link">
+                <a class="nav-link active" href="/myPlantsForSale">Pflanzen zum Verkauf</a>
+            </li>
+            <li class="nav-item custom-nav-link">
+                <a class="nav-link" href="/myPlants">Gekaufte Pflanzen</a>
+            </li>
+            <li class="nav-item custom-nav-link">
+                <a class="nav-link" href="/myWishlist">Meine Wunschliste</a>
+            </li>
+        </ul>
+        <form class="search-bar" th:action="@{/myPlantsForSale}" method="get" onsubmit="return checkSearch()">
+            <input class="form-control" id="name" name="name" label="Suche nach Name:" type="text" th:value="${name}" placeholder="Suche nach Name">
+            <button class="btn" type="submit"><i class="bi bi-search"></i></button>
+        </form>
     </div>
 
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">

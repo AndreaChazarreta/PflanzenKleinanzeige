@@ -62,5 +62,11 @@ public interface PlantRepository extends JpaRepository<Plant, Integer> {
 
     @Query("SELECT MAX(p.price) FROM Plant p WHERE p.adIsActive = true")
     BigDecimal findMaxPrice();
+
+    @Query("SELECT p FROM Plant p WHERE LOWER(p.name) LIKE LOWER(CONCAT(:prefix, '%'))")
+    List<Plant> findByPrefix(@Param("prefix") String prefix);
+
+    @Query("SELECT p FROM Plant p WHERE LOWER(p.name) LIKE LOWER(CONCAT('%', :name, '%')) AND LOWER(p.name) NOT LIKE LOWER(CONCAT(:prefix, '%'))")
+    List<Plant> findByNameContaining(@Param("name") String name, @Param("prefix") String prefix);
 }
 
