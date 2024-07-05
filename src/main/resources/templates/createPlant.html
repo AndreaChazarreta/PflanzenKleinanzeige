@@ -11,17 +11,19 @@
             border-radius: 10px;
             margin-bottom: 10px;
         }
-
         .image-preview-container {
             display: flex;
             justify-content: center;
             align-items: center;
+        }
+        .form-container img#preview,
+        .form-container img#upload {
+            max-width: 200px;
             margin-top: 10px;
-            border-radius: 10px;
-            background-color: white;
         }
         .form-container {
-            background-color: #f8f9fa;
+            margin-bottom: 40px;
+            background-color: #fcfaf6;
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -36,44 +38,54 @@
             margin-bottom: 20px;
         }
         .form-container form .btn {
-            background-color: #2e8b57;
+            background-color: #809d00;
+            border: none;
             color: white;
         }
         .form-container form .btn:hover {
-            background-color: #1d6b41;
-        }
-        .form-container img#preview,
-        .form-container img#upload {
-            max-width: 200px;
-            margin-top: 10px;
-        }
-        .back-link {
-            margin-top: 20px;
-            display: inline-block;
-            color: white;
-            text-decoration: none;
-        }
-        .back-link:hover {
-            text-decoration: underline;
+            background-color: #809d00;
+            box-shadow: 0 0 8px rgba(60, 107, 29, 0.63);
         }
         .form-group.mb-3 {
             display: flex;
             flex-direction: column;
             align-items: flex-start;
         }
-
         .form-group.mb-3 label,
         .form-group.mb-3 input {
             margin-bottom: 0px;
         }
+        .btn-close:focus {
+            box-shadow: 0 0 0 0.25rem rgba(131, 185, 69, 0.5); /* Change to green shadow */
+        }
+        .form-control,
+        .form-select {
+            background-color: white !important;
+            border: 1px solid #9a8d71 !important;
+        }
+        .form-control:focus,
+        .form-select:focus {
+            box-shadow: 0 0 0 0.25rem rgba(217, 210, 186, 0.63);
+        }
+        .form-check-input {
+            border-color: #9a8d71 !important;
+        }
+        .form-check-input:checked {
+            background-color: #daa150 !important;
+            border-color: #daa150 !important;
+        }
+        .form-check-input:focus {
+            box-shadow: 0 0 0 0.25rem rgba(248, 208, 157, 0.7);
+        }
     </style>
 </head>
-<body>
+<body style="background-color: #eae5db">
 <th:block th:insert="~{fragments/htmlNavBar :: navbar}"></th:block>
 
 <div class="container mt-5">
-    <div class="form-container">
-        <h1>Pflanzeanzeige erstellen</h1>
+    <div class="form-container position-relative">
+        <a th:href="@{/plants}" class="btn-close position-absolute top-0 end-0 m-3" aria-label="Close"></a>
+        <h1 style="color: #362a0b">Pflanzeanzeige erstellen</h1>
         <br>
         <form class="needs-validation" th:action="@{/plants}" th:object="${newPlant}" method="post" enctype="multipart/form-data" novalidate>
             <div class="row">
@@ -370,10 +382,8 @@
                 <label for="fruit">Früchte:</label>
                 <input type="text" class="form-control" id="fruit" placeholder="Obst" th:field="*{fruit}"/>
             </div>
-
-            <button type="submit" class="btn btn-success mt-3">Erstellen</button>
+            <button type="submit" class="btn btn-success mt-3 col-md-12">Erstellen</button>
         </form>
-        <a th:href="@{/plants}" class="btn btn-secondary back-link">Alle Pflanzen anzeigen</a>
     </div>
 </div>
 
