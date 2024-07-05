@@ -139,7 +139,6 @@ public class PlantController {
     public String addPlant(@Valid @ModelAttribute("newPlant") Plant newPlant, @RequestParam("imageFile") MultipartFile imageFile, BindingResult result, Model model,
                            @RequestParam(value = "category", required = false) Integer categoryId) {
         if (result.hasErrors()) {
-            //TODO: schauen warum es hier Beschreibung leer lassen als Fehler angenommen wird
             model.addAttribute("newPlant", newPlant);
             return "createPlant";
         }

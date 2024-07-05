@@ -78,9 +78,9 @@ public class Plant {
 
     private String floweringTime;
 
-    private boolean isToxicForPets;
+    private boolean toxicForPets;
 
-    private boolean isAirPurifying;
+    private boolean airPurifying;
 
     private String usability;
 
@@ -92,9 +92,9 @@ public class Plant {
 
     private String standort;
 
-    private String plantFamily;
+    private String fruit;
 
-    private String fruits;
+    private boolean fruits;
 
     /**
      * Default constructor for Hibernate.
@@ -265,19 +265,19 @@ public class Plant {
     }
 
     public boolean isToxicForPets() {
-        return isToxicForPets;
+        return toxicForPets;
     }
 
     public void setToxicForPets(boolean toxicForPets) {
-        isToxicForPets = toxicForPets;
+        this.toxicForPets = toxicForPets;
     }
 
     public boolean isAirPurifying() {
-        return isAirPurifying;
+        return airPurifying;
     }
 
     public void setAirPurifying(boolean airPurifying) {
-        isAirPurifying = airPurifying;
+        this.airPurifying = airPurifying;
     }
 
     public String getUsability() {
@@ -320,19 +320,19 @@ public class Plant {
         this.standort = standort;
     }
 
-    public String getPlantFamily() {
-        return plantFamily;
+    public String getFruit() {
+        return fruit;
     }
 
-    public void setPlantFamily(String plantFamily) {
-        this.plantFamily = plantFamily;
+    public void setFruit(String fruit) {
+        this.fruit = fruit;
     }
 
-    public String getFruits() {
+    public boolean isFruits() {
         return fruits;
     }
 
-    public void setFruits(String fruits) {
+    public void setFruits(boolean fruits) {
         this.fruits = fruits;
     }
 }
