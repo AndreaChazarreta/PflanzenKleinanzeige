@@ -154,8 +154,11 @@
                                 </form>
                             </div>
                             <div class="btn-group">
-                                <form th:if="${plant.chatsAboutThisPlant.isEmpty() && plant.getWishedBy().isEmpty() && plant.getBuyer() == null}" th:action="@{/plants/delete/{id}(id=${plant.plantId})}" method="post" class="d-inline">
-                                    <button type="submit" class="btn btn-danger" onclick="return confirm('Sind Sie sicher, dass Sie diese Pflanze löschen möchten?');">Löschen</button>
+                                <form th:if="${plant.chatsAboutThisPlant.isEmpty() && plant.getWishedBy().isEmpty() && plant.getBuyer() == null}" method="post" class="d-inline">
+                                    <button type="button" class="btn btn-danger delete-button"
+                                            th:attr="data-id=${plant.plantId}"
+                                            th:attrappend="data-name=${plant.name}"
+                                            data-bs-toggle="modal" data-bs-target="#deleteModal">Löschen</button>
                                     <i class="bi bi-info-circle info-icon" data-bs-toggle="tooltip" data-bs-placement="top" title="Alle Daten zu dieser Pflanze, einschließlich Chats, werden unwiderruflich gelöscht."></i>
                                 </form>
                             </div>
@@ -166,36 +169,55 @@
         </th:block>
     </div>
 </div>
+<!-- Delete Confirmation Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteModalLabel">Bestätigung löschen</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!-- The content is updated by JavaScript -->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Abbrechen</button>
+                <form id="deleteForm" th:action="@{/plants/delete/{id}(id=0)}" method="post">
+                    <button type="submit" class="btn btn-danger" id="confirmDeleteButton">Löschen</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 <script>
-    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
-    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
-        return new bootstrap.Tooltip(tooltipTriggerEl)
-    })
-
-    document.querySelectorAll('.nav-link').forEach(link => {
-        link.addEventListener('click', function () {
-            document.querySelectorAll('.nav-link').forEach(nav => nav.classList.remove('active'));
-            this.classList.add('active');
-        });
-    });
-
-    function checkSearch() {
-        var searchField = document.getElementById("name").value;
-        if (searchField.trim() === "") {
-            window.location.href = "/myPlantsForSale";
-            return false;
-        }
-        return true;
-    }
-
     document.addEventListener('DOMContentLoaded', function () {
         var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
         var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
             return new bootstrap.Tooltip(tooltipTriggerEl);
         });
+
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', function () {
+                document.querySelectorAll('.nav-link').forEach(nav => nav.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+
+        document.querySelectorAll('.delete-button').forEach(button => {
+            button.addEventListener('click', function () {
+                var plantId = this.getAttribute('data-id');
+                var plantName = this.getAttribute('data-name');
+                var deleteForm = document.getElementById('deleteForm');
+                deleteForm.action = '/plants/delete/' + plantId;
+
+                var modalBody = document.querySelector('#deleteModal .modal-body');
+                modalBody.textContent = 'Bist du sicher, dass du die Pflanze ' + plantName + ' löschen möchtest?';
+            });
+        });
     });
 </script>
+
 </body>
 </html>
