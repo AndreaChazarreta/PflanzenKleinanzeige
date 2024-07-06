@@ -31,7 +31,7 @@ public class CareTipService {
         return careTipRepository.findById(id).orElse(null);
     }
 
-    public CareTip findCareTipByKeyName ( String plantName) {
+    public List<CareTip> findCareTipByKeyName ( String plantName) {
         return careTipRepository.findByKeywordPlantName(plantName);
     }
 }

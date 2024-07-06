@@ -168,7 +168,7 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         careTip1.setPlantName("Rose");
         careTip1.setLightingConditions("high");
         careTip1.setFertilization("Nein");
-        careTip1.setIrrigation("viel");
+        careTip1.setIrrigation("low");
         careTip1.setOtherTips("keine");
         careTip1.setRepotting("Ja");
         careTip1.setTemperature("20 Grad");

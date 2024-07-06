@@ -52,4 +52,11 @@ public class CareTipController {
         model.addAttribute("careTip", careTip);
         return "careTip";
     }
+
+    @GetMapping("/plants/careTip")
+    public String getCareTips(Model model, @RequestParam(value = "plantName", required = false) String name) {
+        List<CareTip> careTips = careTipService.findCareTipByKeyName(name);
+        model.addAttribute("careTips", careTips);
+        return "redirect:/plants/new";
+    }
 }
