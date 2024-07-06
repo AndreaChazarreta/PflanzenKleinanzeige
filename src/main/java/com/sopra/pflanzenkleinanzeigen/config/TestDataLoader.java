@@ -144,15 +144,15 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         categoryService.saveCategory(category1);
 
         Category category2 = new Category();
-        category2.setName("Zierpflanze");
+        category2.setName("Blume");
         categoryService.saveCategory(category2);
 
         Category category3 = new Category();
-        category3.setName("Grünpflanze");
+        category3.setName("Busch");
         categoryService.saveCategory(category3);
 
         Category category4 = new Category();
-        category4.setName("Draußenpflanze");
+        category4.setName("Gräser");
         categoryService.saveCategory(category4);
 
         Category category5 = new Category();
@@ -160,8 +160,12 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         categoryService.saveCategory(category5);
 
         Category category6 = new Category();
-        category6.setName("Strauß");
+        category6.setName("Gemüse");
         categoryService.saveCategory(category6);
+
+        Category category7 = new Category();
+        category7.setName("Sonstiges");
+        categoryService.saveCategory(category7);
 
         CareTip careTip1 = new CareTip();
         careTip1.setCategory(category6);
