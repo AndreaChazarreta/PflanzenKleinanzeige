@@ -145,12 +145,12 @@
                                 <label>Kategorie:</label>
                                 <select class="form-select" name ="category" required>
                                     <option value="" disabled selected>Kategorie auswählen</option>
-                                    <option value="1">Baum</option>
-                                    <option value="2">Zierpflanze</option>
-                                    <option value="3">Grünpflanze</option>
-                                    <option value="4">Draußenpflanze</option>
-                                    <option value="5">Kräuter</option>
-                                    <option value="6">Strauß</option>
+                                    <option value="1" th:selected="*{category.categoryId == null}">Baum</option>
+                                    <option value="2" th:selected="*{category.categoryId == 2}">Zierpflanze</option>
+                                    <option value="3" th:selected="*{category.categoryId == 3}">Grünpflanze</option>
+                                    <option value="4" th:selected="*{category.categoryId == 4}">Draußenpflanze</option>
+                                    <option value="5" th:selected="*{category.categoryId == 5}">Kräuter</option>
+                                    <option value="6" th:selected="*{category.categoryId == 6}">Strauß</option>
                                 </select>
                                 <div class="invalid-feedback">
                                     Bitte wähle eine Kategorie.
