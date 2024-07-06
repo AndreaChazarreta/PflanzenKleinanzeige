@@ -29,13 +29,31 @@ public class PdfService {
             Image img = Image.getInstance(imgStream.readAllBytes());
             img.scaleToFit(50, 50);
             img.setAlignment(Element.ALIGN_LEFT);
-            document.add(img);
 
             // Title
             Font titleFont = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 20);
-            Paragraph title = new Paragraph("Care Tips for " + plant.getName(), titleFont);
+            Paragraph title = new Paragraph("Pflegehinweise für " + plant.getName(), titleFont);
             title.setAlignment(Element.ALIGN_CENTER);
-            document.add(title);
+
+            // Create a table with 2 columns for the image and title
+            PdfPTable titleTable = new PdfPTable(2);
+            titleTable.setWidthPercentage(100);
+            float[] titleTableWidths = {1f, 4f}; // Adjust the widths as needed
+            titleTable.setWidths(titleTableWidths);
+
+            // Add the image and title to the table
+            PdfPCell imgCell = new PdfPCell(img);
+            imgCell.setBorder(Rectangle.NO_BORDER);
+            imgCell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+
+            PdfPCell titleCell = new PdfPCell(title);
+            titleCell.setBorder(Rectangle.NO_BORDER);
+            titleCell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+
+            titleTable.addCell(imgCell);
+            titleTable.addCell(titleCell);
+
+            document.add(titleTable);
 
             // Add a table
             PdfPTable table = new PdfPTable(2); // 2 columns
@@ -47,21 +65,18 @@ public class PdfService {
             float[] columnWidths = {1f, 2f};
             table.setWidths(columnWidths);
 
-            // Add table header with no borders
-            Font headerFont = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 12);
-
             // Retrieve CareTip associated with the plant
             CareTip careTip = plant.getCareTip();
 
             // Add care tips to table
-            addCareTipRow(table, "Plant Name", careTip.getPlantName());
-            addCareTipRow(table, "Irrigation", careTip.getIrrigation());
-            addCareTipRow(table, "Lighting Conditions", careTip.getLightingConditions());
-            addCareTipRow(table, "Fertilization", careTip.getFertilization());
-            addCareTipRow(table, "Repotting", careTip.getRepotting());
-            addCareTipRow(table, "Temperature", careTip.getTemperature());
-            addCareTipRow(table, "Other Tips", careTip.getOtherTips());
-            addCareTipRow(table, "Planting", careTip.getPlanting());
+            addCareTipRow(table, "Pflanzenname", careTip.getPlantName());
+            addCareTipRow(table, "Bewässerung", careTip.getIrrigation());
+            addCareTipRow(table, "Düngung", careTip.getFertilization());
+            addCareTipRow(table, "Lichtverhältnisse", careTip.getLightingConditions());
+            addCareTipRow(table, "Temperatur", careTip.getTemperature());
+            addCareTipRow(table, "Pflanzung", careTip.getPlanting());
+            addCareTipRow(table, "Umtopfen", careTip.getRepotting());
+            addCareTipRow(table, "Weitere Tipps", careTip.getOtherTips());
 
             document.add(table);
 

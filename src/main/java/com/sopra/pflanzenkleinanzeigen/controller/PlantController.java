@@ -2,6 +2,7 @@ package com.sopra.pflanzenkleinanzeigen.controller;
 
 import com.sopra.pflanzenkleinanzeigen.entity.Benutzer;
 import com.sopra.pflanzenkleinanzeigen.entity.CareTip;
+import com.sopra.pflanzenkleinanzeigen.entity.Category;
 import com.sopra.pflanzenkleinanzeigen.entity.Plant;
 import com.sopra.pflanzenkleinanzeigen.service.ChatService;
 import com.sopra.pflanzenkleinanzeigen.service.PdfService;
@@ -134,6 +135,10 @@ public class PlantController {
     @GetMapping("/plants/new")
     public String createPlantForm(Model model) {
         model.addAttribute("newPlant", new Plant());
+        List<CareTip> allCaretips = careTipService.findAllCareTips();
+        model.addAttribute("allCaretips", allCaretips);
+        List<Category> allCategories = categoryService.findAllCategories();
+        model.addAttribute("allCategories", allCategories);
         return "createPlant";
     }
 
@@ -149,14 +154,15 @@ public class PlantController {
                            @RequestParam(value = "category", required = false) Integer categoryId, @RequestParam(value = "lifespan", required = false) String lifespan,
                            @RequestParam(value = "floweringTime", required = false) String floweringTime, @RequestParam(value = "growthRate", required = false) String growthRate,
                            @RequestParam(value = "usability", required = false) String usability, @RequestParam(value = "color", required = false) String color,
-                           @RequestParam(value = "leafShape", required = false) String leafShape, @RequestParam(value = "standort", required = false) String standort){
+                           @RequestParam(value = "leafShape", required = false) String leafShape, @RequestParam(value = "standort", required = false) String standort,
+                           @RequestParam(value = "selectedCaretip", required = false) String caretipName){
         if (result.hasErrors()) {
             model.addAttribute("newPlant", newPlant);
             return "createPlant";
         }
         try {
             newPlant.setSeller(userService.getCurrentUser());
-            CareTip careTip = careTipService.findCareTipByKeyName(newPlant.getName());
+            CareTip careTip = careTipService.findCareTipByKeyName(caretipName);
             newPlant.setAdIsActive(true);
             newPlant.setCategory(categoryService.findById(categoryId));
             newPlant.setLifespan(lifespan);
