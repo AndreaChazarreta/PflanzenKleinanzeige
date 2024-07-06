@@ -76,14 +76,25 @@ public class PlantController {
         try {
             Benutzer currentUser = userService.getCurrentUser();
             model.addAttribute("currentUser", currentUser);
-            List<Plant> plants = new ArrayList<>();
+            List<Plant> plants;
 
-            if(categories != null && !categories.isEmpty()){
-                plants = plantService.findPlantsByFilters(name, minPrice, maxPrice, minHeight, maxHeight, potIncluded, categories, sortPrice);
-            } else if(categories != null && categories.isEmpty()){
-                plants = plantService.findPlantsByFiltersWithoutCategory(name, minPrice, maxPrice, minHeight, maxHeight, potIncluded, sortPrice);
-            } else {
+            boolean isEmpty = (name == null || name.isEmpty()) &&
+                    minPrice == null &&
+                    maxPrice == null &&
+                    minHeight == null &&
+                    maxHeight == null &&
+                    potIncluded == null &&
+                    (categories == null || categories.isEmpty()) &&
+                    (sortPrice == null || sortPrice.isEmpty());
+
+            if (isEmpty) {
                 plants = plantService.findAllActivePlants();
+            } else {
+                if (categories != null && !categories.isEmpty()) {
+                    plants = plantService.findPlantsByFilters(name, minPrice, maxPrice, minHeight, maxHeight, potIncluded, categories, sortPrice);
+                } else {
+                    plants = plantService.findPlantsByFiltersWithoutCategory(name, minPrice, maxPrice, minHeight, maxHeight, potIncluded, sortPrice);
+                }
             }
 
             BigDecimal highestPrice = plantService.findMaxPrice();
@@ -102,7 +113,7 @@ public class PlantController {
             model.addAttribute("sortPrice", sortPrice);
             model.addAttribute("highestPrice", highestPrice);
 
-        } catch (Exception getPlantException ) {
+        } catch (Exception getPlantException) {
             logger.error("Fehler beim Abrufen der Pflanzen", getPlantException);
             model.addAttribute("error", "Ein Fehler ist aufgetreten. Bitte versuchen Sie es später erneut.");
             return "error";
