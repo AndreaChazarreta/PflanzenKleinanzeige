@@ -77,6 +77,25 @@
         .form-check-input:focus {
             box-shadow: 0 0 0 0.25rem rgba(248, 208, 157, 0.7);
         }
+        .accordion-button:not(.collapsed) {
+            background-color: transparent;
+            color: inherit;
+            box-shadow: none;
+        }
+        .accordion-button {
+            background-color: transparent;
+            color: inherit;
+            box-shadow: none;
+        }
+        .accordion-button::after {
+            filter: invert(1);
+            box-shadow: none;
+        }
+        .accordion-button:focus {
+            box-shadow: none;
+            outline: none;
+            border-color: transparent;
+        }
     </style>
 </head>
 <body style="background-color: #eae5db">
@@ -377,10 +396,77 @@
                     Bitte wähle aus, ob die Pflanze Obst gibt.
                 </div>
             </div>
-
             <div class="form-group" id="fruitField" style="display:none;">
                 <label for="fruit">Früchte:</label>
                 <input type="text" class="form-control" id="fruit" placeholder="Obst" th:field="*{fruit}"/>
+            </div>
+            <div class="accordion" id="accordionPflegetipps">
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                            Pflegehinweise
+                        </button>
+                    </h2>
+                    <div id="collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionPflegetipps">
+                        <div class="accordion-body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="accordion" id="accordionCategory">
+                                        <th:block th:each="category : ${allCategories}">
+                                            <div class="accordion-item">
+                                                <h2 class="accordion-header">
+                                                    <button class="accordion-button" type="button" data-bs-toggle="collapse" th:data-bs-target="'#collapseCategory' + ${category.name}" aria-expanded="true" th:aria-controls="'collapseCategory' + ${category.name}">
+                                                        <span th:text="${category.name}">Category Name</span>
+                                                    </button>
+                                                </h2>
+                                                <div th:id="'collapseCategory' + ${category.name}" class="accordion-collapse collapse" data-bs-parent="#accordionCategory">
+                                                <div class="accordion-body">
+                                                        <div class="row">
+                                                            <th:block th:each="caretip : ${allCaretips}" th:if="${caretip.category.name} == ${category.name}">
+                                                                <div class="col-12 col-sm-6 col-lg-4">
+                                                                    <div class="form-check">
+                                                                        <input class="form-check-input" type="radio" name="caretipRadio" id="caretip-[[${caretip.tipId}]]"
+                                                                               th:value="${caretip.plantName}"
+                                                                               th:data-irrigation="${caretip.irrigation}"
+                                                                               th:data-lighting-conditions="${caretip.lightingConditions}"
+                                                                               th:data-fertilization="${caretip.fertilization}"
+                                                                               th:data-repotting="${caretip.repotting}"
+                                                                               th:data-temperature="${caretip.temperature}"
+                                                                               th:data-other-tips="${caretip.otherTips}"
+                                                                               th:data-planting="${caretip.planting}"
+                                                                               onchange="updateCaretipDetails(this)" required>
+                                                                        <label class="form-check-label" th:for="|caretip-${caretip.tipId}|">
+                                                                            <span th:text="${caretip.plantName}">Plant Name</span>
+                                                                        </label>
+                                                                        <div class="invalid-feedback">
+                                                                            Bitte wähle ein Pflegetipp aus.
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </th:block>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </th:block>
+                                    </div>
+                                </div>
+                                <div class="col-md-6" id="caretipDetails" style="display:none;">
+                                    <h6>Pflegehinweise Details</h6>
+                                    <p>Bewässerung: <span id="irrigationDetail"></span></p>
+                                    <p>Lichtverhältnisse: <span id="lightingConditionsDetail"></span></p>
+                                    <p>Düngung: <span id="fertilizationDetail"></span></p>
+                                    <p>Umtopfen: <span id="repottingDetail"></span></p>
+                                    <p>Temperatur: <span id="temperatureDetail"></span></p>
+                                    <p>Weitere Tipps: <span id="otherTipsDetail"></span></p>
+                                    <p>Pflanzung: <span id="plantingDetail"></span></p>
+                                </div>
+
+                            </div>
+                        </div>
+                        <input type="hidden" name="selectedCaretip" id="selectedCaretip">
+                    </div>
+                </div>
             </div>
             <button type="submit" class="btn btn-success mt-3 col-md-12">Erstellen</button>
         </form>
@@ -457,6 +543,31 @@
             }, false)
         })
     })()
+
+    function updateCaretipValue(radio) {
+        document.getElementById('selectedCaretip').value = radio.value;
+        updateCaretipDetails(radio);
+    }
+
+    function updateCaretipDetails(radio) {
+        const caretipDetails = document.getElementById('caretipDetails');
+        if (radio.checked) {
+            caretipDetails.style.display = 'block';
+        } else {
+            caretipDetails.style.display = 'none';
+        }
+
+        document.getElementById('irrigationDetail').textContent = radio.getAttribute('data-irrigation');
+        document.getElementById('lightingConditionsDetail').textContent = radio.getAttribute('data-lighting-conditions');
+        document.getElementById('fertilizationDetail').textContent = radio.getAttribute('data-fertilization');
+        document.getElementById('repottingDetail').textContent = radio.getAttribute('data-repotting');
+        document.getElementById('temperatureDetail').textContent = radio.getAttribute('data-temperature');
+        document.getElementById('otherTipsDetail').textContent = radio.getAttribute('data-other-tips');
+        document.getElementById('plantingDetail').textContent = radio.getAttribute('data-planting');
+        document.getElementById('selectedCaretip').value = radio.value;
+    }
+
+
 </script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>

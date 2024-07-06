@@ -16,4 +16,6 @@ import java.util.List;
 public interface CareTipRepository extends JpaRepository<CareTip, Integer> {
     @Query("SELECT c FROM CareTip c WHERE LOWER(c.plantName) LIKE LOWER(CONCAT('%', :plantName, '%'))")
     CareTip findByKeywordPlantName(@Param("plantName") String plantName);
+
+    List<CareTip> findAllByOrderByPlantNameAsc();
 }

@@ -24,7 +24,7 @@ public class CareTipService {
     }
 
     public List<CareTip> findAllCareTips() {
-        return careTipRepository.findAll();
+        return careTipRepository.findAllByOrderByPlantNameAsc();
     }
 
     public CareTip findCareTipById(Integer id) {
