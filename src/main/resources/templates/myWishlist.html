@@ -8,10 +8,10 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         .navbar-custom {
-            background-color: #e9f5e9;
+            background-color: #e7e2d8;
         }
         .navbar-custom .nav-link {
-            color: #2e8b57 !important;
+            color: #f7f2ea !important;
             font-size: 1.25rem;
             text-decoration: none;
         }
@@ -83,7 +83,7 @@
         }
 
         .droppable {
-            border: 2px dashed #2e8b57;
+            border: 2px dashed #6e793c;
             border-radius: 10px;
             padding: 20px;
             text-align: center;
@@ -164,7 +164,7 @@
 
     </style>
 </head>
-<body>
+<body style="background-color: #f9f4ec">
 <th:block th:insert="~{fragments/htmlNavBar :: navbar}"></th:block>
 
 <nav class="navbar navbar-expand-lg navbar-custom">
@@ -186,7 +186,7 @@
                 </li>
             </ul>
             <label for="compare-checkbox" class="btn btn-outline-secondary">
-                <i class="fa-regular fa-table-columns"></i> Vergleich
+                <i class="fa-solid fa-table-columns"></i> Vergleich
             </label>
             <form class="search-bar" th:action="@{/searchWishlist}" method="get" onsubmit="return checkSearch()">
                 <input class="form-control" id="name" name="name" label="Suche nach Name:" type="text" th:value="${name}" placeholder="Suche nach Name">
@@ -198,7 +198,7 @@
 
 <div class="container mt-5 mb-5">
     <input type="checkbox" id="compare-checkbox">
-    <div id="drop-container" class="droppable" ondrop="drop(event)" ondragover="allowDrop(event)">
+    <div id="drop-container" class="droppable" ondrop="drop(event)" ondragover="allowDrop(event)" style="display: flex; justify-content: center;">
         <p id="drag-instruction">Ziehe Pflanzen hierher, um sie zu vergleichen</p>
         <div id="comparison-cards" class="card-container" data-sortable="true">
         </div>
@@ -386,6 +386,7 @@
                     <p>Preis: ${plantData.price}</p>
                     <p>Topf inklusive: ${plantData.potIncluded}</p>
                 </div>
+                <hr>
                 <div class="card-section">
                     <h6>Physische Merkmale</h6>
                     <p>Höhe: ${plantData.height} cm</p>
