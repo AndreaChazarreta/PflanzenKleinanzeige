@@ -168,26 +168,26 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         categoryService.saveCategory(category7);
 
         CareTip careTip1 = new CareTip();
-        careTip1.setCategory(category6);
+        careTip1.setCategory(category2);
         careTip1.setPlantName("Rose");
-        careTip1.setLightingConditions("high");
-        careTip1.setFertilization("Nein");
-        careTip1.setIrrigation("viel");
+        careTip1.setLightingConditions("Mittel");
+        careTip1.setFertilization("Wenig");
+        careTip1.setIrrigation("Viel");
         careTip1.setOtherTips("keine");
-        careTip1.setRepotting("Ja");
-        careTip1.setTemperature("20 Grad");
-        careTip1.setPlanting("Direkt in die Erde");
+        careTip1.setRepotting("Ja, nach 4 Wochen");
+        careTip1.setTemperature("20");
+        careTip1.setPlanting("Kann direkt in die Erde");
         careTipService.saveCareTip(careTip1);
 
         CareTip careTip2 = new CareTip();
         careTip2.setCategory(category3);
         careTip2.setPlantName("Kaktus");
-        careTip2.setLightingConditions("medium");
-        careTip2.setFertilization("Nein");
-        careTip2.setIrrigation("wenig");
-        careTip2.setOtherTips("keine");
-        careTip2.setRepotting("Ja");
-        careTip2.setTemperature("15 Grad");
+        careTip2.setLightingConditions("Mittel");
+        careTip2.setFertilization("Wenig");
+        careTip2.setIrrigation("Mittel");
+        careTip2.setOtherTips("Es muss beachtet werden das die Pflanze Stacheln hat");
+        careTip2.setRepotting("Nach 5 Wochen");
+        careTip2.setTemperature("15");
         careTip2.setPlanting("Vorzüchten");
         careTipService.saveCareTip(careTip2);
 
@@ -345,6 +345,8 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         kaktus.setCategory(category3);
         kaktus.setCareTip(careTip2);
         kaktus.setPotIncluded(true);
+        kaktus.setBuyer(andrea);
+        kaktus.setSeed(true);
         plantService.savePlantDataLoader(kaktus);
 
         Plant rose = new Plant();
