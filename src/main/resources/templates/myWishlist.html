@@ -210,7 +210,6 @@
                      th:data-plant-id="${plant.plantId}"
                      th:data-plant-height="${plant.height}"
                      th:data-plant-potIncluded="${plant.potIncluded}"
-                     th:data-plant-description="${plant.description}"
                      th:data-plant-category="${plant.category.name}"
                      th:data-plant-lifespan="${plant.lifespan}"
                      th:data-plant-floweringTime="${plant.floweringTime}"
@@ -339,7 +338,6 @@
             var plantImageSrc = draggedElement.querySelector("img").src;
             var plantHeight = draggedElement.getAttribute('data-plant-height');
             var plantPotIncluded = draggedElement.getAttribute('data-plant-potIncluded') === 'true' ? 'Ja' : 'Nein';
-            var plantDescription = draggedElement.getAttribute('data-plant-description');
             var plantCategory = draggedElement.getAttribute('data-plant-category');
             var plantLifespan = draggedElement.getAttribute('data-plant-lifespan');
             var plantFloweringTime = draggedElement.getAttribute('data-plant-floweringTime');
@@ -350,6 +348,7 @@
             var plantLeafShape = draggedElement.getAttribute('data-plant-leafShape');
             var plantGrowthRate = draggedElement.getAttribute('data-plant-growthRate');
             var plantStandort = draggedElement.getAttribute('data-plant-standort');
+            var plantFruit = draggedElement.getAttribute('data-plant-fruit');
             var plantFruits = draggedElement.getAttribute('data-plant-fruits') === 'true' ? 'Ja' : 'Nein';
 
             var plantData = {
@@ -359,7 +358,6 @@
                 price: plantPrice,
                 height: plantHeight,
                 potIncluded: plantPotIncluded,
-                description: plantDescription,
                 category: plantCategory,
                 lifespan: plantLifespan,
                 floweringTime: plantFloweringTime,
@@ -370,6 +368,7 @@
                 leafShape: plantLeafShape,
                 growthRate: plantGrowthRate,
                 standort: plantStandort,
+                fruit: plantFruit,
                 fruits: plantFruits
             };
 
@@ -382,21 +381,36 @@
             <img src="${plantData.image}" class="card-img-top" alt="Pflanzenbild" style="max-width: 100px; height: auto;">
             <div class="card-body">
                 <h5 class="card-title">${plantData.name}</h5>
-                <p class="card-text">${plantData.price}</p>
-                <p class="card-text">Höhe: ${plantData.height} cm</p>
-                <p class="card-text">Topf inklusive: ${plantData.potIncluded}</p>
-                <p class="card-text">${plantData.description}</p>
-                <p class="card-text">Kategorie: ${plantData.category}</p>
-                <p class="card-text">Lebensdauer: ${plantData.lifespan}</p>
-                <p class="card-text">Blütezeit: ${plantData.floweringTime}</p>
-                <p class="card-text">Giftig für Haustiere: ${plantData.toxicForPets}</p>
-                <p class="card-text">Luftreinigend: ${plantData.airPurifying}</p>
-                <p class="card-text">Verwendbarkeit: ${plantData.usability}</p>
-                <p class="card-text">Farbe: ${plantData.color}</p>
-                <p class="card-text">Blattform: ${plantData.leafShape}</p>
-                <p class="card-text">Wachstumsrate: ${plantData.growthRate}</p>
-                <p class="card-text">Standort: ${plantData.standort}</p>
-                <p class="card-text">Früchte: ${plantData.fruits}</p>
+                <div class="card-section">
+                    <h6>Preis und Verfügbarkeit</h6>
+                    <p>Preis: ${plantData.price}</p>
+                    <p>Topf inklusive: ${plantData.potIncluded}</p>
+                </div>
+                <div class="card-section">
+                    <h6>Physische Merkmale</h6>
+                    <p>Höhe: ${plantData.height} cm</p>
+                    <p>Farbe: ${plantData.color}</p>
+                    <p>Blattform: ${plantData.leafShape}</p>
+                </div>
+                <div class="card-section">
+                    <h6>Kategorisierung</h6>
+                    <p>Kategorie: ${plantData.category}</p>
+                    <p>Standort: ${plantData.standort}</p>
+                </div>
+                <div class="card-section">
+                    <h6>Wachstum und Lebensdauer</h6>
+                    <p>Lebensdauer: ${plantData.lifespan}</p>
+                    <p>Wachstumsrate: ${plantData.growthRate}</p>
+                    <p>Blütezeit: ${plantData.floweringTime}</p>
+                </div>
+                <div class="card-section">
+                    <h6>Spezielle Eigenschaften</h6>
+                    <p>Giftig für Haustiere: ${plantData.toxicForPets}</p>
+                    <p>Luftreinigend: ${plantData.airPurifying}</p>
+                    <p>Verwendbarkeit: ${plantData.usability}</p>
+                    <p>Frucht: ${plantData.fruit}</p>
+                    <p>Früchte: ${plantData.fruits}</p>
+                </div>
             </div>
         `;
 
