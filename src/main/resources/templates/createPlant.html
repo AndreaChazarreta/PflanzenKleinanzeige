@@ -400,6 +400,9 @@
                 <label for="fruit">Früchte:</label>
                 <input type="text" class="form-control" id="fruit" placeholder="Obst" th:field="*{fruit}"/>
             </div>
+            <div id="caretipError" class="invalid-feedback" style="display: none;">
+                Bitte wähle ein Pflegetipp aus.
+            </div>
             <div class="accordion" id="accordionPflegetipps">
                 <div class="accordion-item">
                     <h2 class="accordion-header">
@@ -452,16 +455,17 @@
                                     </div>
                                 </div>
                                 <div class="col-md-6" id="caretipDetails" style="display:none;">
-                                    <h6>Pflegehinweise Details</h6>
-                                    <p>Bewässerung: <span id="irrigationDetail"></span></p>
-                                    <p>Lichtverhältnisse: <span id="lightingConditionsDetail"></span></p>
-                                    <p>Düngung: <span id="fertilizationDetail"></span></p>
-                                    <p>Umtopfen: <span id="repottingDetail"></span></p>
-                                    <p>Temperatur: <span id="temperatureDetail"></span></p>
-                                    <p>Weitere Tipps: <span id="otherTipsDetail"></span></p>
-                                    <p>Pflanzung: <span id="plantingDetail"></span></p>
+                                    <div style="margin-left:60px">
+                                        <h6 id="caretipHeading"></h6>
+                                        <p>Bewässerung: <span id="irrigationDetail"></span></p>
+                                        <p>Lichtverhältnisse: <span id="lightingConditionsDetail"></span></p>
+                                        <p>Düngung: <span id="fertilizationDetail"></span></p>
+                                        <p>Umtopfen: <span id="repottingDetail"></span></p>
+                                        <p>Temperatur: <span id="temperatureDetail"></span></p>
+                                        <p>Weitere Tipps: <span id="otherTipsDetail"></span></p>
+                                        <p>Pflanzung: <span id="plantingDetail"></span></p>
+                                    </div>
                                 </div>
-
                             </div>
                         </div>
                         <input type="hidden" name="selectedCaretip" id="selectedCaretip">
@@ -478,6 +482,8 @@
         const fruitsYes = document.getElementById('fruitsYes');
         const fruitsNo = document.getElementById('fruitsNo');
         const fruitField = document.getElementById('fruitField');
+        const caretipError = document.getElementById('caretipError');
+        const caretipRadios = document.querySelectorAll('input[name="caretipRadio"]');
 
         function toggleFruitField() {
             if (fruitsYes.checked) {
@@ -491,6 +497,37 @@
         fruitsNo.addEventListener('change', toggleFruitField);
 
         toggleFruitField();
+
+        (() => {
+            'use strict'
+
+            const forms = document.querySelectorAll('.needs-validation')
+
+            Array.from(forms).forEach(form => {
+                form.addEventListener('submit', event => {
+                    let caretipSelected = false;
+                    caretipRadios.forEach(radio => {
+                        if (radio.checked) {
+                            caretipSelected = true;
+                        }
+                    });
+
+                    if (!form.checkValidity() || !caretipSelected) {
+                        event.preventDefault()
+                        event.stopPropagation()
+                        caretipError.style.display = 'block';
+                        const collapseOne = new bootstrap.Collapse(document.getElementById('collapseOne'), {
+                            toggle: false
+                        });
+                        collapseOne.show();
+                    } else {
+                        caretipError.style.display = 'none';
+                    }
+
+                    form.classList.add('was-validated')
+                }, false)
+            })
+        })()
     });
 
     function checkMaxLength(textarea) {
@@ -565,6 +602,8 @@
         document.getElementById('otherTipsDetail').textContent = radio.getAttribute('data-other-tips');
         document.getElementById('plantingDetail').textContent = radio.getAttribute('data-planting');
         document.getElementById('selectedCaretip').value = radio.value;
+
+        document.getElementById('caretipHeading').textContent = `Pflegehinweise für ${radio.value}`;
     }
 
 
