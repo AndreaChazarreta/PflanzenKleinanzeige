@@ -211,6 +211,17 @@
                      th:data-plant-height="${plant.height}"
                      th:data-plant-potIncluded="${plant.potIncluded}"
                      th:data-plant-description="${plant.description}"
+                     th:data-plant-category="${plant.category.name}"
+                     th:data-plant-lifespan="${plant.lifespan}"
+                     th:data-plant-floweringTime="${plant.floweringTime}"
+                     th:data-plant-toxicForPets="${plant.toxicForPets}"
+                     th:data-plant-airPurifying="${plant.airPurifying}"
+                     th:data-plant-usability="${plant.usability}"
+                     th:data-plant-color="${plant.color}"
+                     th:data-plant-leafShape="${plant.leafShape}"
+                     th:data-plant-growthRate="${plant.growthRate}"
+                     th:data-plant-standort="${plant.standort}"
+                     th:data-plant-fruits="${plant.fruits}"
                      ondragstart="drag(event)">
                     <th:block th:if="${plant.adIsActive}">
                         <a th:href="@{/plants/{id}(id=${plant.plantId})}">
@@ -278,21 +289,6 @@
                 console.error('Fehler:', error);
             });
     }
-    document.addEventListener('DOMContentLoaded', function () {
-        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
-        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
-            return new bootstrap.Tooltip(tooltipTriggerEl);
-        });
-    });
-
-    function checkSearch() {
-        var searchField = document.getElementById("name").value;
-        if (searchField.trim() === "") {
-            window.location.href = "/myWishlist";
-            return false;
-        }
-        return true;
-    }
 
     document.addEventListener('DOMContentLoaded', function () {
         var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
@@ -326,7 +322,6 @@
 
         var comparisonCards = document.getElementById("comparison-cards");
 
-        // Check if the plant is already in the comparison list using plantId
         var alreadyAdded = Array.from(comparisonCards.children).some(card => card.dataset.plantId === plantId);
 
         if (alreadyAdded) {
@@ -345,6 +340,17 @@
             var plantHeight = draggedElement.getAttribute('data-plant-height');
             var plantPotIncluded = draggedElement.getAttribute('data-plant-potIncluded') === 'true' ? 'Ja' : 'Nein';
             var plantDescription = draggedElement.getAttribute('data-plant-description');
+            var plantCategory = draggedElement.getAttribute('data-plant-category');
+            var plantLifespan = draggedElement.getAttribute('data-plant-lifespan');
+            var plantFloweringTime = draggedElement.getAttribute('data-plant-floweringTime');
+            var plantToxicForPets = draggedElement.getAttribute('data-plant-toxicForPets') === 'true' ? 'Ja' : 'Nein';
+            var plantAirPurifying = draggedElement.getAttribute('data-plant-airPurifying') === 'true' ? 'Ja' : 'Nein';
+            var plantUsability = draggedElement.getAttribute('data-plant-usability');
+            var plantColor = draggedElement.getAttribute('data-plant-color');
+            var plantLeafShape = draggedElement.getAttribute('data-plant-leafShape');
+            var plantGrowthRate = draggedElement.getAttribute('data-plant-growthRate');
+            var plantStandort = draggedElement.getAttribute('data-plant-standort');
+            var plantFruits = draggedElement.getAttribute('data-plant-fruits') === 'true' ? 'Ja' : 'Nein';
 
             var plantData = {
                 id: plantId,
@@ -353,7 +359,18 @@
                 price: plantPrice,
                 height: plantHeight,
                 potIncluded: plantPotIncluded,
-                description: plantDescription
+                description: plantDescription,
+                category: plantCategory,
+                lifespan: plantLifespan,
+                floweringTime: plantFloweringTime,
+                toxicForPets: plantToxicForPets,
+                airPurifying: plantAirPurifying,
+                usability: plantUsability,
+                color: plantColor,
+                leafShape: plantLeafShape,
+                growthRate: plantGrowthRate,
+                standort: plantStandort,
+                fruits: plantFruits
             };
 
             var card = document.createElement("div");
@@ -365,10 +382,21 @@
             <img src="${plantData.image}" class="card-img-top" alt="Pflanzenbild" style="max-width: 100px; height: auto;">
             <div class="card-body">
                 <h5 class="card-title">${plantData.name}</h5>
-                <p class="card-text">Preis: ${plantData.price}</p>
+                <p class="card-text">${plantData.price}</p>
                 <p class="card-text">Höhe: ${plantData.height} cm</p>
                 <p class="card-text">Topf inklusive: ${plantData.potIncluded}</p>
                 <p class="card-text">${plantData.description}</p>
+                <p class="card-text">Kategorie: ${plantData.category}</p>
+                <p class="card-text">Lebensdauer: ${plantData.lifespan}</p>
+                <p class="card-text">Blütezeit: ${plantData.floweringTime}</p>
+                <p class="card-text">Giftig für Haustiere: ${plantData.toxicForPets}</p>
+                <p class="card-text">Luftreinigend: ${plantData.airPurifying}</p>
+                <p class="card-text">Verwendbarkeit: ${plantData.usability}</p>
+                <p class="card-text">Farbe: ${plantData.color}</p>
+                <p class="card-text">Blattform: ${plantData.leafShape}</p>
+                <p class="card-text">Wachstumsrate: ${plantData.growthRate}</p>
+                <p class="card-text">Standort: ${plantData.standort}</p>
+                <p class="card-text">Früchte: ${plantData.fruits}</p>
             </div>
         `;
 
