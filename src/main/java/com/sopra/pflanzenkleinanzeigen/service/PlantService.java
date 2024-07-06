@@ -68,6 +68,7 @@ public class PlantService {
         return plantRepository.findAll();
     }
 
+
     public List<Plant> findAllActivePlants() {
         return plantRepository.findAllActivePlants();
     }

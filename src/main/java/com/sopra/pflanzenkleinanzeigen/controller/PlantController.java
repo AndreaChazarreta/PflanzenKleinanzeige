@@ -27,6 +27,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -79,8 +80,10 @@ public class PlantController {
 
             if(categories != null && !categories.isEmpty()){
                 plants = plantService.findPlantsByFilters(name, minPrice, maxPrice, minHeight, maxHeight, potIncluded, categories, sortPrice);
-            } else{
+            } else if(categories != null && categories.isEmpty()){
                 plants = plantService.findPlantsByFiltersWithoutCategory(name, minPrice, maxPrice, minHeight, maxHeight, potIncluded, sortPrice);
+            } else {
+                plants = plantService.findAllActivePlants();
             }
 
             BigDecimal highestPrice = plantService.findMaxPrice();
@@ -164,6 +167,7 @@ public class PlantController {
             newPlant.setSeller(userService.getCurrentUser());
             CareTip careTip = careTipService.findCareTipByKeyName(caretipName);
             newPlant.setAdIsActive(true);
+            newPlant.setCreatedAt(Instant.now());
             newPlant.setCategory(categoryService.findById(categoryId));
             newPlant.setLifespan(lifespan);
             newPlant.setFloweringTime(floweringTime);
