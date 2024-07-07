@@ -11,7 +11,7 @@
             background-color: #e7e2d8;
         }
         .navbar-custom .nav-link {
-            color: #f7f2ea !important;
+            color: #211804 !important;
             font-size: 1.25rem;
             text-decoration: none;
         }
@@ -23,6 +23,7 @@
             align-items: center;
             border: 1px solid grey;
             border-radius: 25px;
+            background-color: #faf8f4;
             padding: 5px 10px;
             width: 400px;
             height: 40px;
@@ -33,7 +34,7 @@
             outline: none;
             flex: 1;
             height: 100%;
-            background-color: #e9f5e9;
+            background-color: transparent;
         }
 
         .search-bar input:focus {
@@ -41,7 +42,7 @@
         }
         .search-bar button {
             border: none;
-            background-color: rgba(10, 114, 63, 0.75);
+            background-color: rgb(191, 220, 99);
             border-radius: 25px;
             padding: 0 10px;
             cursor: pointer;
@@ -83,7 +84,7 @@
         }
 
         .droppable {
-            border: 2px dashed #6e793c;
+            border: 2px dashed #797168;
             border-radius: 10px;
             padding: 20px;
             text-align: center;
@@ -161,7 +162,16 @@
             color: #333;
             font-size: 1.5rem;
         }
-
+        .btn-dark-brown {
+            background-color: #797168;
+            color: white;
+            border: none;
+        }
+        .btn-dark-brown:hover {
+            background-color: #594c42;
+            color: white;
+            border: none;;
+        }
     </style>
 </head>
 <body style="background-color: #f9f4ec">
@@ -185,9 +195,6 @@
                     <a class="nav-link active" href="/myWishlist">Meine Wunschliste</a>
                 </li>
             </ul>
-            <label for="compare-checkbox" class="btn btn-outline-secondary">
-                <i class="fa-solid fa-table-columns"></i> Vergleich
-            </label>
             <form class="search-bar" th:action="@{/searchWishlist}" method="get" onsubmit="return checkSearch()">
                 <input class="form-control" id="name" name="name" label="Suche nach Name:" type="text" th:value="${name}" placeholder="Suche nach Name">
                 <button class="btn" type="submit"><i class="bi bi-search"></i></button>
@@ -197,6 +204,14 @@
 </nav>
 
 <div class="container mt-5 mb-5">
+    <div class="row">
+        <div class="col-12">
+            <label for="compare-checkbox" class="btn btn-dark-brown w-100 text-center">
+                <i class="fa-solid fa-table-columns"></i> Vergleich
+            </label>
+        </div>
+    </div>
+    <br>
     <input type="checkbox" id="compare-checkbox">
     <div id="drop-container" class="droppable" ondrop="drop(event)" ondragover="allowDrop(event)">
         <p id="drag-instruction">Ziehe Pflanzen hierher, um sie zu vergleichen</p>
