@@ -3,6 +3,9 @@
 <head>
     <th:block th:insert="~{fragments/htmlHead :: head}"></th:block>
     <style>
+        body{
+            background-color: #fdfcf8;
+        }
         img {
             max-width: 100%;
             max-height: 200px;
@@ -10,6 +13,8 @@
         }
         .card {
             border: none;
+            background-color: #fdf8f0;
+
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             transition: transform 0.2s;
         }
@@ -28,18 +33,24 @@
             padding: 8px;
             margin-bottom: 20px;
             margin-top: 10px;
+            background-color: #fdfcf8;
+
         }
         .search-bar input {
             border: none;
             outline: none;
             flex: 1;
+            background-color: #fdfcf8;
+
         }
         .search-bar input:focus {
             box-shadow: none;
+            background-color: #fdfcf8;
+
         }
         .search-bar button {
             border: none;
-            background-color: #ffffff;
+            background-color: #fdfcf8;
             border-radius: 25px 25px 25px 25px;
             padding: 8px 10px;
             cursor: pointer;

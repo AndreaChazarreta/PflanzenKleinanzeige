@@ -6,6 +6,9 @@
     <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.5.0/nouislider.min.css" />
     <style>
+        body{
+            background-color: #fdfcf8;
+        }
         .header-container {
             display: flex;
             align-items: center;
@@ -67,7 +70,7 @@
             border: none;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             transition: transform 0.2s;
-            background-color: #fdfcf8;
+            background-color: #fdf8f0;
         }
         .card:hover {
             transform: scale(1.05);
@@ -197,7 +200,7 @@
     </style>
     <title>Plants</title>
 </head>
-<body style="background-color: #fdf8f0">
+<body>
 <th:block th:insert="~{fragments/htmlNavBar :: navbar}"></th:block>
 <div class="header-container">
     <div class="header-title">
