@@ -271,6 +271,20 @@
         </th:block>
     </div>
 </div>
+<div class="modal fade" id="alertModal" tabindex="-1" aria-labelledby="alertModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="alertModalLabel">Information</h5>
+            </div>
+            <div class="modal-body" id="alertModalBody">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Schließen</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 <script>
     function checkSearch() {
@@ -349,7 +363,7 @@
         var alreadyAdded = Array.from(comparisonCards.children).some(card => card.dataset.plantId === plantId);
 
         if (alreadyAdded) {
-            alert("Diese Pflanze wurde bereits hinzugefügt.");
+            showModal("Diese Pflanze wurde bereits hinzugefügt.");
             return;
         }
 
@@ -444,7 +458,7 @@
 
             comparisonCards.appendChild(card);
         } else {
-            alert("Du kannst maximal 3 Pflanzen vergleichen.");
+            showModal("Du kannst maximal 3 Pflanzen vergleichen.");
         }
     }
 
@@ -456,6 +470,13 @@
         if (document.getElementById("comparison-cards").children.length === 0) {
             document.getElementById("drag-instruction").hidden = false;
         }
+    }
+
+    function showModal(message) {
+        var modalBody = document.getElementById('alertModalBody');
+        modalBody.textContent = message;
+        var alertModal = new bootstrap.Modal(document.getElementById('alertModal'));
+        alertModal.show();
     }
 
 </script>
