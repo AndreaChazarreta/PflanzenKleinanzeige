@@ -172,6 +172,16 @@
             color: white;
             border: none;;
         }
+
+        .boolean-icon {
+            font-size: 1.25rem;
+        }
+        .boolean-true {
+            color: green;
+        }
+        .boolean-false {
+            color: red;
+        }
     </style>
 </head>
 <body style="background-color: #f9f4ec">
@@ -235,7 +245,7 @@
                      th:data-plant-leafShape="${plant.leafShape}"
                      th:data-plant-growthRate="${plant.growthRate}"
                      th:data-plant-standort="${plant.standort}"
-                     th:data-plant-fruits="${plant.fruits}"
+                     th:data-plant-fruit="${plant.fruit}"
                      ondragstart="drag(event)">
                     <th:block th:if="${plant.adIsActive}">
                         <a th:href="@{/plants/{id}(id=${plant.plantId})}">
@@ -364,7 +374,6 @@
             var plantGrowthRate = draggedElement.getAttribute('data-plant-growthRate');
             var plantStandort = draggedElement.getAttribute('data-plant-standort');
             var plantFruit = draggedElement.getAttribute('data-plant-fruit');
-            var plantFruits = draggedElement.getAttribute('data-plant-fruits') === 'true' ? 'Ja' : 'Nein';
 
             var plantData = {
                 id: plantId,
@@ -384,7 +393,6 @@
                 growthRate: plantGrowthRate,
                 standort: plantStandort,
                 fruit: plantFruit,
-                fruits: plantFruits
             };
 
             var card = document.createElement("div");
@@ -394,38 +402,42 @@
             card.innerHTML = `
             <button class="remove-btn" onclick="removePlant(this)">&times;</button>
             <img src="${plantData.image}" class="card-img-top" alt="Pflanzenbild" style="max-width: 100px; height: auto;">
+            <hr>
             <div class="card-body">
-                <h5 class="card-title">${plantData.name}</h5>
+                <h4 class="card-title" style="font-size: 1.75rem">${plantData.name}</h4>
+                <hr>
                 <div class="card-section">
-                    <h6>Preis und Verfügbarkeit</h6>
-                    <p>Preis: ${plantData.price}</p>
-                    <p>Topf inklusive: ${plantData.potIncluded}</p>
+                    <h6 style="color: dimgrey; font-size: 1.25rem">Preis und Verfügbarkeit</h6>
+                    <p>${plantData.price}</p>
+                     <p>Topf inklusive: ${plantData.potIncluded === 'Ja' ? '<i class="fas fa-check boolean-true"></i>' : '<i class="fas fa-times boolean-false"></i>'}</p>
                 </div>
                 <hr>
                 <div class="card-section">
-                    <h6>Physische Merkmale</h6>
+                    <h6 style="color: dimgrey; font-size: 1.25rem">Physische Merkmale</h6>
                     <p>Höhe: ${plantData.height} cm</p>
                     <p>Farbe: ${plantData.color}</p>
                     <p>Blattform: ${plantData.leafShape}</p>
                 </div>
+                <hr>
                 <div class="card-section">
-                    <h6>Kategorisierung</h6>
+                    <h6 style="color: dimgrey; font-size: 1.25rem">Kategorisierung</h6>
                     <p>Kategorie: ${plantData.category}</p>
                     <p>Standort: ${plantData.standort}</p>
                 </div>
+                <hr>
                 <div class="card-section">
-                    <h6>Wachstum und Lebensdauer</h6>
+                    <h6 style="color: dimgrey; font-size: 1.25rem">Wachstum und Lebensdauer</h6>
                     <p>Lebensdauer: ${plantData.lifespan}</p>
                     <p>Wachstumsrate: ${plantData.growthRate}</p>
                     <p>Blütezeit: ${plantData.floweringTime}</p>
                 </div>
+                <hr>
                 <div class="card-section">
-                    <h6>Spezielle Eigenschaften</h6>
-                    <p>Giftig für Haustiere: ${plantData.toxicForPets}</p>
-                    <p>Luftreinigend: ${plantData.airPurifying}</p>
+                    <h6 style="color: dimgrey; font-size: 1.25rem">Spezielle Eigenschaften</h6>
+                    <p>Giftig für Haustiere: ${plantData.toxicForPets === 'Ja' ? '<i class="fas fa-check boolean-true"></i>' : '<i class="fas fa-times boolean-false"></i>'}</p>
+                    <p>Luftreinigend: ${plantData.airPurifying === 'Ja' ? '<i class="fas fa-check boolean-true"></i>' : '<i class="fas fa-times boolean-false"></i>'}</p>
                     <p>Verwendbarkeit: ${plantData.usability}</p>
                     <p>Frucht: ${plantData.fruit}</p>
-                    <p>Früchte: ${plantData.fruits}</p>
                 </div>
             </div>
         `;
