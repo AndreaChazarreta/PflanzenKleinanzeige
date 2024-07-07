@@ -194,6 +194,19 @@
             outline: none;
             border-color: transparent;
         }
+        #ghost-page {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .body{
+            overflow-x: hidden;
+        }
     </style>
     <title>Plants</title>
 </head>
@@ -313,6 +326,9 @@
                     <button type="submit" class="btn btn-primary w-100" style="background-color: rgb(129, 158, 0); border:none; margin-top: 10px">Filtern</button>
                 </form>
             </div>
+        </div>
+        <div th:if="${plants.isEmpty()}" id="ghost-page" class="ghost-page">
+            <div th:replace="fragments/ghostPage.html"></div>
         </div>
         <div class="col-lg-9">
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-3">
