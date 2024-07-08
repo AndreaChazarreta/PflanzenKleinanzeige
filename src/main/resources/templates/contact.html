@@ -28,6 +28,19 @@
             width: 100px;
             height: auto;
         }
+        .notification {
+            display: none;
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 15px;
+            background-color: #4CAF50;
+            color: white;
+            text-align: center;
+            border-radius: 5px;
+            z-index: 1000;
+        }
         @media (max-width: 900px) {
             section {
                 padding: 50px 20px;
@@ -67,7 +80,7 @@
                                 <g id="Page-1" transform="translate(591.000000, 2187.000000)">
                                     <g class="stems">
                                         <path class="main-stem" d="M133.4414,160.118 L133.4414,31.451" id="Stroke-7"></path>
-                                        <path class="outer-stems" style="-webkit-transition-delay: 2s; transition-delay: 2s;" d="M133.4416,146.522 L72.3706,85.451" id="Stroke-15"></path>
+                                        <path class="outer-stems" style="-webkit-transition-delay: 0.5s; transition-delay: 0.5s;" d="M133.4416,146.522 L72.3706,85.451" id="Stroke-15"></path>
                                         <path class="outer-stems" d="M133.8455,146.522 194.9165,85.451" id="Stroke-13"></path>
                                     </g>
                                     <g class="leaves">
@@ -99,7 +112,7 @@
                 </div>
             </div>
             <div class="col-md-6">
-                <form action="/submitContactForm" method="post">
+                <form id="contactForm" action="/submitContactForm" method="post">
                     <div class="form-group">
                         <input type="text" class="form-control" name="name" placeholder="Dein Name" required>
                     </div>
@@ -119,6 +132,8 @@
     </div>
 </section>
 
+<div class="notification" id="notification">Deine Nachricht wurde erfolgreich gesendet!</div>
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
@@ -132,7 +147,7 @@
             path.style.strokeDasharray = length + ' ' + length;
             path.style.strokeDashoffset = length;
             path.getBoundingClientRect();
-            path.style.transition = path.style.WebkitTransition = 'stroke-dashoffset 4s 0s ease-in-out';
+            path.style.transition = path.style.WebkitTransition = 'stroke-dashoffset 1s 0s ease-in-out';
             path.style.strokeDashoffset = '0';
         }
     }
@@ -146,7 +161,7 @@
             path.style.strokeDasharray = length + ' ' + length;
             path.style.strokeDashoffset = length;
             path.getBoundingClientRect();
-            path.style.transition = path.style.WebkitTransition = 'stroke-dashoffset 3s 1s ease-in-out';
+            path.style.transition = path.style.WebkitTransition = 'stroke-dashoffset 0.75s 0.25s ease-in-out';
             path.style.strokeDashoffset = '0';
         }
     }
@@ -160,20 +175,29 @@
             path.style.strokeDasharray = length + ' ' + length;
             path.style.strokeDashoffset = length;
             path.getBoundingClientRect();
-            path.style.transition = path.style.WebkitTransition = 'stroke-dashoffset 4s 2.5s ease-in-out';
+            path.style.transition = path.style.WebkitTransition = 'stroke-dashoffset 3s ease-in-out';
             path.style.strokeDashoffset = '0';
         }
     }
 
-    drawMainStem();
-    drawStems();
-    drawLeaves();
-
-    document.body.onclick = function() {
+    window.onload = function() {
         drawMainStem();
         drawStems();
         drawLeaves();
     };
+
+    document.getElementById('contactForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        var notification = document.getElementById('notification');
+        notification.style.display = 'block';
+
+        setTimeout(function() {
+            notification.style.display = 'none';
+        }, 3000);
+
+        document.getElementById('contactForm').reset();
+    });
 </script>
 </body>
 </html>
