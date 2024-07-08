@@ -144,13 +144,16 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav me-auto">
                 <li class="nav-item">
-                    <a class="nav-link active" style="font-weight: bold;" href="/myPlantsForSale">Pflanzen zum Verkauf</a>
+                    <a class="nav-link active" style="font-weight: bold;" href="/myPlantsForSale">Meine Inserate</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/myPlants">Gekaufte Pflanzen</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/myWishlist">Meine Wunschliste</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/mySelledPlants">Verkaufte Pflanzen</a>
                 </li>
             </ul>
             <form class="search-bar" th:action="@{/myPlantsForSale}" method="get" onsubmit="return checkSearch()">
@@ -160,7 +163,7 @@
         </div>
     </div>
 </nav>
-<div>
+<div class="container mt-5 mb-5">
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
         <div class="col">
             <div class="card add-card" onclick="window.location.href='/plants/new'">

@@ -47,6 +47,9 @@ public class Benutzer {
     @OneToMany(mappedBy = "buyer")
     private List<Plant> purchasedPlants = new ArrayList<>();
 
+    @OneToMany(mappedBy = "seller")
+    private List<Plant> selledPlants = new ArrayList<>();
+
     @ManyToMany(mappedBy = "wishedBy", fetch = FetchType.EAGER)
     private Set<Plant> wishedPlants = new HashSet<>();
 
@@ -147,6 +150,10 @@ public class Benutzer {
 
     public List<Plant> getPurchasedPlants() {
         return purchasedPlants;
+    }
+
+    public List<Plant> getSelledPlants(){
+        return selledPlants;
     }
 
     public void setPurchasedPlants(List<Plant> purchasedPlants) {

@@ -173,5 +173,14 @@ public class UserService implements UserDetailsService {
             return new ArrayList<>();
         }
     }
+
+    public List<Plant> findSelledPlantsByNameAndBuyer(String name, Integer sellerId) {
+        Benutzer seller = userRepository.findById(sellerId).orElse(null);
+        if (seller != null) {
+            return plantRepository.findPurchasedPlantsByNameAndBuyer(name, seller);
+        } else {
+            return new ArrayList<>();
+        }
+    }
 }
 
