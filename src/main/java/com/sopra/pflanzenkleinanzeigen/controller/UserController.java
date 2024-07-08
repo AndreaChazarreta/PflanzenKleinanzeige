@@ -86,20 +86,14 @@ public class UserController {
         return "myPlants";
     }
 
-    @GetMapping("/mySelledPlants")
-    public String mySelledPlantsOverview(@RequestParam(value = "name", required = false) String name, Model model) {
+    @GetMapping("/mySoldPlants")
+    public String mySoldPlantsOverview(Model model) {
         Benutzer currentUser = userService.getCurrentUser();
         if (currentUser == null) {
             return "redirect:/";
         }
-        List<Plant> selledPlants;
-        if (name != null && !name.isEmpty()) {
-            selledPlants = userService.findPlantsByNameAndSeller(name, currentUser.getUserId());
-            model.addAttribute("name", name);
-        } else {
-            selledPlants = currentUser.getSelledPlants();
-        }
-        model.addAttribute("selledPlants", selledPlants);
-        return "mySelledPlants";
+        List<Plant> soldPlants = userService.findSoldPlantsBySeller(currentUser.getUserId());
+        model.addAttribute("soldPlants", soldPlants);
+        return "mySoldPlants";
     }
 }
