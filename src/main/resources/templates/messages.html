@@ -16,6 +16,11 @@
             overflow: hidden;
             border: none;
         }
+        .chat-name-container {
+            padding: 27px;
+            box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
+            background-color: #e5e1d7;
+        }
         .chat-list {
             width: 30%;
             border-right: 1px solid #ddd;
@@ -46,12 +51,11 @@
             width: 70%;
             display: flex;
             flex-direction: column;
-
         }
         .header {
-            background-color: #f8f9fa;
             padding: 10px;
             flex-shrink: 0;
+            box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
         }
         .message-container {
             flex-grow: 1;
@@ -96,6 +100,7 @@
             padding: 10px;
             border-top: 1px solid #e9ecef;
             z-index: 1040;
+            background-color: #e5e1d7;
         }
 
         .message-input-container form {
@@ -160,8 +165,8 @@
         }
         .plant-image-header {
             border-radius: 100%;
-            width: 150px;
-            height: 150px;
+            width: 60px;
+            height: 60px;
         }
         .alert.alert-success {
             background-color: #eceaea;
@@ -182,11 +187,13 @@
         }
     </style>
 </head>
-<body>
+<body style="background-color: #faf8f4">
 <th:block th:insert="~{fragments/htmlNavBar :: navbar}"></th:block>
 <div class="main-content">
     <div class="chat-list">
-        <h1 class="text-center">Chats</h1>
+        <div class="chat-name-container">
+            <h1 class="text-center">Chats</h1>
+        </div>
         <ul>
             <li th:each="chat : ${allChats}">
                 <a th:href="@{/chats/{id}(id=${chat.chatId})}">
@@ -202,19 +209,18 @@
     </div>
 
     <div th:if="${!allChats.isEmpty()}" class="message-area">
-        <div class="header bg-white p-3 d-flex align-items-center">
+        <div class="header p-3 d-flex align-items-center" style="background-color: #e5e1d7;">
             <img class="plant-image-header" th:src="@{${chat.plant.imagePath}}" alt="Plant Image">
-            <div class="text-center ml-3">
-                <h1>Nachrichten</h1>
-                <h2 th:text="${chat.plant.name}"></h2>
-                <h3 th:if="${currentUser.username == chat.possibleBuyer.username}">
+            <div class="text-center ml-3" style="color:black;">
+                <h3 th:text="${chat.plant.name}"></h3>
+                <h4 th:if="${currentUser.username == chat.possibleBuyer.username}">
                     <small>@</small>
                     <span th:text="${chat.plant.seller.username}"></span>
-                </h3>
-                <h3 th:if="${currentUser.username != chat.possibleBuyer.username}">
+                </h4>
+                <h4 th:if="${currentUser.username != chat.possibleBuyer.username}">
                     <small>@</small>
                     <span th:text="${chat.possibleBuyer.username}"></span>
-                </h3>
+                </h4>
             </div>
         </div>
         <div th:if="${chat.plant.isSold()}">
@@ -256,23 +262,31 @@
                 </button>
             </form>
             <div th:if="${currentUser.username != chat.possibleBuyer.username}">
-                <form th:action="@{/chats/markSold/{id}(id=${chat.chatId})}" th:object="${plant}" method="post" class="d-flex" style="flex-grow: 0;">
-                    <button class="btn">
-                        Verkauft
-                    </button>
+                <form th:object="${plant}" method="post" class="d-flex" style="flex-grow: 0;">
+                    <button type="button" class="btn btn-success sell-button"
+                            th:attr="data-id=${chat.chatId}"
+                            th:attrappend="data-name=${chat.plant.name}"
+                            data-bs-toggle="modal" data-bs-target="#sellModal">Verkauft</button>
                 </form>
             </div>
         </div>
     </div>
-
-    <div th:if="${allChats.isEmpty()}" class="no-messages">
-        <div class="center-content">
-            <img th:src="@{/plant-images/ghost_green.jpg}" alt="Keine Nachrichten" class="responsive-image"/>
-            <p>Bei uns auf der Pflanzenanzeigenseite ist es ganz einfach, in Kontakt zu treten! Hier sind zwei Tipps:</p>
-            <ul style="text-align: left; display: inline-block;">
-                <li><strong>Gib eine Pflanzenanzeige auf:</strong> Lass andere wissen, was du suchst oder was du anbietest. So wirst du sicher interessante Nachrichten erhalten!</li>
-                <li><strong>Schreib andere Nutzer an:</strong> Hast du eine Pflanze entdeckt, die dich interessiert? Zögere nicht, dem Besitzer eine Nachricht zu senden und mehr darüber zu erfahren!</li>
-            </ul>
+</div>
+<div class="modal fade" id="sellModal" tabindex="-1" aria-labelledby="sellModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="sellModalLabel">Bestätigung verkaufen</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Abbrechen</button>
+                <form id="sellForm" th:action="@{/chats/markSold/{id}(id=0)}" method="post">
+                    <button type="submit" class="btn btn-success" id="confirmSellButton">Verkaufen</button>
+                </form>
+            </div>
         </div>
     </div>
 </div>
@@ -284,7 +298,20 @@
         if (messageContainer) {
             messageContainer.scrollTop = messageContainer.scrollHeight;
         }
+
+        document.querySelectorAll('.sell-button').forEach(button => {
+            button.addEventListener('click', function () {
+                var chatId = this.getAttribute('data-id');
+                var plantName = this.getAttribute('data-name');
+                var sellForm = document.getElementById('sellForm');
+                sellForm.action = '/chats/markSold/' + chatId;
+
+                var modalBody = document.querySelector('#sellModal .modal-body');
+                modalBody.textContent = 'Bist du sicher, dass du die Pflanze ' + plantName + ' als verkauft markieren möchtest?';
+            });
+        });
     });
 </script>
+
 </body>
 </html>
