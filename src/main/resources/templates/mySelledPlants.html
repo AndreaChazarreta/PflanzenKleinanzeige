@@ -3,6 +3,20 @@
 <head>
     <th:block th:insert="~{fragments/htmlHead :: head}"></th:block>
     <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+        }
+        body {
+            display: flex;
+            flex-direction: column;
+        }
+        .content {
+            flex: 1;
+        }
+        footer {
+            flex-shrink: 0;
+        }
         img {
             max-width: 100%;
             max-height: 200px;
@@ -153,7 +167,7 @@
         </div>
     </div>
 </nav>
-<div class="container mt-5 mb-5">
+<div class="container mt-5 mb-5 content">
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
         <th:block th:each="plant : ${selledPlants}">
             <div class="col">
@@ -202,4 +216,5 @@
     });
 </script>
 </body>
+<th:block th:insert="~{fragments/footer :: footer}"></th:block>
 </html>

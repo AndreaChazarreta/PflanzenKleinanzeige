@@ -7,6 +7,20 @@
     <title>Meine Wunschliste</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+        }
+        body {
+            display: flex;
+            flex-direction: column;
+        }
+        .content {
+            flex: 1;
+        }
+        footer {
+            flex-shrink: 0;
+        }
         .navbar-custom {
             background-color: #e7e2d8;
         }
@@ -137,7 +151,7 @@
             display: flex;
         }
 
-       #drag-instruction {
+        #drag-instruction {
             margin: 0;
             display: flex;
             justify-content: center;
@@ -216,7 +230,7 @@
     </div>
 </nav>
 
-<div class="container mt-5 mb-5">
+<div class="container mt-5 mb-5 content">
     <div class="row">
         <div class="col-12">
             <label for="compare-checkbox" class="btn btn-dark-brown w-100 text-center">
