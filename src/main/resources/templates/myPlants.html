@@ -143,7 +143,7 @@
                     <a class="nav-link" href="/myWishlist">Meine Wunschliste</a>
                 </li>
             </ul>
-            <form class="search-bar" th:action="@{/searchMyPlants}" method="get" onsubmit="return checkSearch()">
+            <form class="search-bar" th:action="@{/myPlants}" method="get" onsubmit="return checkSearch()">
                 <input class="form-control" id="name" name="name" label="Suche nach Name:" type="text" th:value="${name}" placeholder="Suche nach Name">
                 <button class="btn" type="submit"><i class="bi bi-search"></i></button>
             </form>
