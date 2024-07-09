@@ -30,6 +30,9 @@ public class Chat {
 
     private Instant lastActivity;
 
+    @Transient
+    private int unreadCount;
+
     /**
      * Default constructor for Hibernate.
      */
@@ -75,5 +78,13 @@ public class Chat {
 
     public void setLastActivity(Instant lastActivity) {
         this.lastActivity = lastActivity;
+    }
+
+    public int getUnreadCount() {
+        return unreadCount;
+    }
+
+    public void setUnreadCount(int unreadCount) {
+        this.unreadCount = unreadCount;
     }
 }

@@ -394,6 +394,7 @@
                     <span th:if="${currentUser.username != chat.possibleBuyer.username}" th:text="'@' + ${chat.possibleBuyer.username}"></span>
                     <span th:if="${chat.plant.adIsActive}" style="color: green;">Anzeige aktiv</span>
                     <span th:if="${!chat.plant.adIsActive}" style="color: red;">Anzeige nicht aktiv</span>
+                    <span th:if="${chat.unreadCount > 0}" class="badge rounded-circle" style="background-color: #ee7b3d" th:text="${chat.unreadCount}"></span>
                 </a>
             </li>
         </ul>

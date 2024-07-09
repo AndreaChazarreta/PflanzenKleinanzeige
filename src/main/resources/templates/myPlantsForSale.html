@@ -157,7 +157,7 @@
         }
 
         .custom-btn:hover {
-            background-color: #7e7d7d;
+            background-color: #c1bebe;
             box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
         }
 
@@ -219,13 +219,13 @@
         <th:block th:each="plant : ${userPlants}">
             <div class="col">
                 <div class="card">
-                    <a th:href="@{/plants/{id}(id=${plant.plantId})}" class="stretched-link">
+                    <a th:href="@{/plants/{id}(id=${plant.plantId})}">
                         <img th:src="@{${plant.imagePath}}" class="card-img-top" alt="Pflanzenbild">
-                        <div class="card-body">
-                            <h5 class="card-title" th:text="${plant.name}">Plant Name</h5>
-                            <p class="card-text" th:text="'Preis: ' + ${plant.price} + '€'">Plant Price</p>
-                        </div>
                     </a>
+                    <div class="card-body">
+                        <h5 class="card-title" th:text="${plant.name}">Plant Name</h5>
+                        <p class="card-text" th:text="'Preis: ' + ${plant.price} + '€'">Plant Price</p>
+                    </div>
                     <div class="card-body d-flex justify-content-between">
                         <a th:href="@{/plants/edit/{id}(id=${plant.plantId})}" class="btn btn-link custom-btn">
                             <i class="fa-regular fa-pen-to-square"></i> Bearbeiten
@@ -325,7 +325,8 @@
                 deleteForm.action = '/plants/delete/' + plantId;
 
                 var modalBody = document.querySelector('#deleteModal .modal-body');
-                modalBody.textContent = 'Bist du sicher, dass du die Pflanze ' + plantName + ' löschen möchtest?';
+                modalBody.textContent = 'Möchtest du wirklich die Pflanze "' + plantName + '" entfernen? Diese Aktion kann nicht rückgängig gemacht werden, aber alle zugehörigen Chats bleiben erhalten.';
+
             });
         });
 
@@ -337,7 +338,8 @@
                 deactivateForm.action = '/plants/delete/' + plantId;
 
                 var modalBody = document.querySelector('#deactivateModal .modal-body');
-                modalBody.textContent = 'Bist du sicher, dass du die Pflanze ' + plantName + ' deaktivieren möchtest?';
+                modalBody.textContent = 'Möchtest du wirklich die Pflanze "' + plantName + '" entfernen? Diese Aktion kann nicht rückgängig gemacht werden, aber alle zugehörigen Chats bleiben erhalten.';
+
             });
         });
     });
