@@ -43,7 +43,8 @@ public interface PlantRepository extends JpaRepository<Plant, Integer> {
             "AND (:toxicForPets IS NULL OR p.toxicForPets = :toxicForPets) " +
             "AND p.adIsActive = true " +
             "ORDER BY CASE WHEN :sortPrice = 'asc' THEN p.price END ASC, " +
-            "CASE WHEN :sortPrice = 'desc' THEN p.price END DESC")
+            "CASE WHEN :sortPrice = 'desc' THEN p.price END DESC, " +
+            "p.createdAt DESC")
     List<Plant> findByFilters(@Param("name") String name, @Param("minPrice") BigDecimal minPrice,
                               @Param("maxPrice") BigDecimal maxPrice, @Param("minHeight") BigDecimal minHeight,
                               @Param("maxHeight") BigDecimal maxHeight, @Param("potIncluded") Boolean potIncluded,
@@ -65,7 +66,8 @@ public interface PlantRepository extends JpaRepository<Plant, Integer> {
             "AND (:toxicForPets IS NULL OR p.toxicForPets = :toxicForPets) " +
             "AND p.adIsActive = true " +
             "ORDER BY CASE WHEN :sortPrice = 'asc' THEN p.price END ASC, " +
-            "CASE WHEN :sortPrice = 'desc' THEN p.price END DESC")
+            "CASE WHEN :sortPrice = 'desc' THEN p.price END DESC, " +
+            "p.createdAt DESC")
     List<Plant> findByFiltersWithoutCategory(@Param("name") String name, @Param("minPrice") BigDecimal minPrice,
                               @Param("maxPrice") BigDecimal maxPrice, @Param("minHeight") BigDecimal minHeight,
                               @Param("maxHeight") BigDecimal maxHeight, @Param("potIncluded") Boolean potIncluded,

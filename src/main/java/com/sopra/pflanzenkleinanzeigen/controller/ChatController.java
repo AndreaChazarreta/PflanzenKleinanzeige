@@ -147,6 +147,7 @@ public class ChatController {
 
             newChat.setPossibleBuyer(currentBenutzer);
             newChat.setPlant(interestedPlant);
+            newChat.setLastActivity(Instant.now());
             chatService.saveChat(newChat);
             return "redirect:/chats/" + newChat.getChatId();
         } catch (Exception cannotCreateChatException) {
@@ -204,7 +205,9 @@ public class ChatController {
             }
 
             newMessage.setSentAt(Instant.now());
+            chat.setLastActivity(Instant.now());
             messageService.saveMessage(newMessage);
+            chatService.saveChat(chat);
             return "redirect:/chats/" + chatId;
         } catch (Exception cannotCreateMessageException){
             logger.error("Fehler beim Senden einer neuen Nachricht", cannotCreateMessageException);

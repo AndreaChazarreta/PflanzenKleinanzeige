@@ -27,6 +27,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -172,6 +173,7 @@ public class PlantController {
             newPlant.setSeller(userService.getCurrentUser());
             CareTip careTip = careTipService.findCareTipByKeyName(caretipName);
             newPlant.setAdIsActive(true);
+            newPlant.setCreatedAt(Instant.now());
             newPlant.setCategory(categoryService.findById(categoryId));
             newPlant.setLifespan(lifespan);
             newPlant.setFloweringTime(floweringTime);
@@ -226,6 +228,8 @@ public class PlantController {
         plantToUpdate.setPlantId(id);
         Plant oldPlant = plantService.findPlantById(id);
         plantToUpdate.setSeller(oldPlant.getSeller());
+        plantToUpdate.setCareTip(oldPlant.getCareTip());
+        plantToUpdate.setCreatedAt(Instant.now());
         if(imageFile == null || imageFile.isEmpty()) {
             plantToUpdate.setImagePath(oldPlant.getImagePath());
         }

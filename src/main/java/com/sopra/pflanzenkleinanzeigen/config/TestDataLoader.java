@@ -431,18 +431,6 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         careTip22.setPlanting("Vorzüchten");
         careTipService.saveCareTip(careTip22);
 
-        CareTip careTip23 = new CareTip();
-        careTip23.setCategory(category7);
-        careTip23.setPlantName("Kaktus");
-        careTip23.setLightingConditions("Viel");
-        careTip23.setFertilization("Wenig");
-        careTip23.setIrrigation("Wenig");
-        careTip23.setOtherTips("Kakteen sind sehr pflegeleicht und brauchen wenig Wasser.");
-        careTip23.setRepotting("Nach 6 Monaten");
-        careTip23.setTemperature("20");
-        careTip23.setPlanting("Direkt in die Erde");
-        careTipService.saveCareTip(careTip23);
-
         CareTip careTip24 = new CareTip();
         careTip24.setCategory(category1);
         careTip24.setPlantName("Ahornbaum");
@@ -456,6 +444,18 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         careTipService.saveCareTip(careTip24);
 
 
+        Instant anInstantPlant1 = Instant.ofEpochSecond(1717251489);
+        Instant anInstantPlant2 = Instant.ofEpochSecond(1717337889);
+        Instant anInstantPlant3 = Instant.ofEpochSecond(1717424289);
+        Instant anInstantPlant4 = Instant.ofEpochSecond(1717510689);
+        Instant anInstantPlant5 = Instant.ofEpochSecond(1717597089);
+        Instant anInstantPlant6 = Instant.ofEpochSecond(1717683489);
+        Instant anInstantPlant7 = Instant.ofEpochSecond(1717769889);
+        Instant anInstantPlant8 = Instant.ofEpochSecond(1717856289);
+        Instant anInstantPlant9 = Instant.ofEpochSecond(1717942689);
+        Instant anInstantPlant10 = Instant.ofEpochSecond(1718029089);
+        Instant anInstantPlant11 = Instant.ofEpochSecond(1718115489);
+        Instant anInstantPlant12 = Instant.ofEpochSecond(1718201889);
 
         Plant kaktus = new Plant();
         kaktus.setName("Kaktus");
@@ -483,6 +483,7 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         rose.setCategory(category2);
         rose.setCareTip(careTip1);
         rose.setPotIncluded(true);
+        rose.setCreatedAt(anInstantPlant1);
         plantService.savePlantDataLoader(rose);
 
         Plant testVerkauft = new Plant();
@@ -506,16 +507,18 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         testNoBeziehungen.setImagePath("/plant-images/Tulpen.jpg");
         testNoBeziehungen.setCategory(category6);
         testNoBeziehungen.setCareTip(careTip3);
+        testNoBeziehungen.setCreatedAt(anInstantPlant2);
         plantService.savePlantDataLoader(testNoBeziehungen);
 
         Plant orangenbaum = new Plant();
         orangenbaum.setName("Orangenbaum");
-        orangenbaum.setPrice(new BigDecimal("25.00"));
+        orangenbaum.setPrice(new BigDecimal("234.00"));
         orangenbaum.setHeight(new BigDecimal("60.00"));
         orangenbaum.setDescription("hat leckere Orangen");
         orangenbaum.setSeller(admin);
         orangenbaum.setImagePath("/plant-images/orangenbaum.JPG");
         orangenbaum.setCategory(category1);
+        orangenbaum.setCreatedAt(anInstantPlant3);
         plantService.savePlantDataLoader(orangenbaum);
 
         Plant monstera = new Plant();
@@ -527,6 +530,7 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         monstera.setImagePath("/plant-images/monstera.JPG");
         monstera.setCategory(category2);
         monstera.setPotIncluded(true);
+        monstera.setCreatedAt(anInstantPlant4);
         plantService.savePlantDataLoader(monstera);
 
         Plant testData1 = new Plant();
@@ -539,6 +543,7 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         testData1.setCategory(category3);
         testData1.setCareTip(careTip2);
         testData1.setPotIncluded(true);
+        testData1.setCreatedAt(anInstantPlant5);
         plantService.savePlantDataLoader(testData1);
 
         Plant testData2 = new Plant();
@@ -550,6 +555,7 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         testData2.setImagePath("/plant-images/testData2.JPG");
         testData2.setCategory(category3);
         testData2.setCareTip(careTip2);
+        testData2.setCreatedAt(anInstantPlant6);
         plantService.savePlantDataLoader(testData2);
 
         Plant testData3 = new Plant();
@@ -562,6 +568,7 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         testData3.setCategory(category4);
         testData3.setCareTip(careTip1);
         testData3.setPotIncluded(true);
+        testData3.setCreatedAt(anInstantPlant7);
         plantService.savePlantDataLoader(testData3);
 
         Plant testData4 = new Plant();
@@ -572,6 +579,7 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         testData4.setSeller(sena);
         testData4.setImagePath("/plant-images/testData4.JPG");
         testData4.setCategory(category1);
+        testData4.setCreatedAt(anInstantPlant8);
         plantService.savePlantDataLoader(testData4);
 
         Plant testData5 = new Plant();
@@ -583,6 +591,7 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         testData5.setImagePath("/plant-images/testData5.JPG");
         testData5.setPotIncluded(true);
         testData5.setCategory(category2);
+        testData5.setCreatedAt(anInstantPlant9);
         plantService.savePlantDataLoader(testData5);
 
         Plant testData6 = new Plant();
@@ -594,6 +603,7 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         testData6.setImagePath("/plant-images/testData6.JPG");
         testData6.setCategory(category4);
         testData6.setCareTip(careTip2);
+        testData6.setCreatedAt(anInstantPlant10);
         plantService.savePlantDataLoader(testData6);
 
         Plant testData7 = new Plant();
@@ -604,6 +614,7 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         testData7.setSeller(sena);
         testData7.setImagePath("/plant-images/testData7.JPG");
         testData7.setCategory(category6);
+        testData7.setCreatedAt(anInstantPlant11);
         plantService.savePlantDataLoader(testData7);
 
         Plant testData8 = new Plant();
@@ -614,6 +625,7 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         testData8.setSeller(natti);
         testData8.setImagePath("/plant-images/Graspflanze.jpeg");
         testData8.setCategory(category4);
+        testData8.setCreatedAt(anInstantPlant12);
         plantService.savePlantDataLoader(testData8);
 
         Plant testData9 = new Plant();
