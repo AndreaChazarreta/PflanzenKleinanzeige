@@ -191,30 +191,32 @@
         <th:block th:each="plant : ${userPlants}">
             <div class="col">
                 <div class="card">
-                    <img th:src="@{${plant.imagePath}}" class="card-img-top" alt="Pflanzenbild">
-                    <div class="card-body">
-                        <h5 class="card-title" th:text="${plant.name}">Plant Name</h5>
-                        <p class="card-text" th:text="'Preis: ' + ${plant.price} + '€'">Plant Price</p>
-                        <div class="d-flex justify-content-between">
-                            <a th:href="@{/plants/edit/{id}(id=${plant.plantId})}" class="btn btn-success">Bearbeiten</a>
-                            <div class="btn-group">
-                                <form th:if="${!(plant.chatsAboutThisPlant.isEmpty() && plant.getWishedBy().isEmpty() && plant.getBuyer() == null)}"  method="post" class="d-inline">
-                                    <button type="button" class="btn btn-warning deactivate-button"
-                                            th:attr="data-id=${plant.plantId}"
-                                            th:attrappend="data-name=${plant.name}"
-                                            data-bs-toggle="modal" data-bs-target="#deactivateModal">Deaktivieren</button>
-                                    <i class="bi bi-info-circle info-icon" data-bs-toggle="tooltip" data-bs-placement="top" title="Die Pflanze wird auf allen Anzeigeseiten entfernt, aber die zugehörigen Chats bleiben erhalten."></i>
-                                </form>
-                            </div>
-                            <div class="btn-group">
-                                <form th:if="${plant.chatsAboutThisPlant.isEmpty() && plant.getWishedBy().isEmpty() && plant.getBuyer() == null}" method="post" class="d-inline">
-                                    <button type="button" class="btn btn-danger delete-button"
-                                            th:attr="data-id=${plant.plantId}"
-                                            th:attrappend="data-name=${plant.name}"
-                                            data-bs-toggle="modal" data-bs-target="#deleteModal">Löschen</button>
-                                    <i class="bi bi-info-circle info-icon" data-bs-toggle="tooltip" data-bs-placement="top" title="Alle Daten zu dieser Pflanze, einschließlich Chats, werden unwiderruflich gelöscht."></i>
-                                </form>
-                            </div>
+                    <a th:href="@{/plants/{id}(id=${plant.plantId})}" class="stretched-link">
+                        <img th:src="@{${plant.imagePath}}" class="card-img-top" alt="Pflanzenbild">
+                        <div class="card-body">
+                            <h5 class="card-title" th:text="${plant.name}">Plant Name</h5>
+                            <p class="card-text" th:text="'Preis: ' + ${plant.price} + '€'">Plant Price</p>
+                        </div>
+                    </a>
+                    <div class="card-body d-flex justify-content-between">
+                        <a th:href="@{/plants/edit/{id}(id=${plant.plantId})}" class="btn btn-success">Bearbeiten</a>
+                        <div class="btn-group">
+                            <form th:if="${!(plant.chatsAboutThisPlant.isEmpty() && plant.getWishedBy().isEmpty() && plant.getBuyer() == null)}" method="post" class="d-inline">
+                                <button type="button" class="btn btn-warning deactivate-button"
+                                        th:attr="data-id=${plant.plantId}"
+                                        th:attrappend="data-name=${plant.name}"
+                                        data-bs-toggle="modal" data-bs-target="#deactivateModal">Deaktivieren</button>
+                                <i class="bi bi-info-circle info-icon" data-bs-toggle="tooltip" data-bs-placement="top" title="Die Pflanze wird auf allen Anzeigeseiten entfernt, aber die zugehörigen Chats bleiben erhalten."></i>
+                            </form>
+                        </div>
+                        <div class="btn-group">
+                            <form th:if="${plant.chatsAboutThisPlant.isEmpty() && plant.getWishedBy().isEmpty() && plant.getBuyer() == null}" method="post" class="d-inline">
+                                <button type="button" class="btn btn-danger delete-button"
+                                        th:attr="data-id=${plant.plantId}"
+                                        th:attrappend="data-name=${plant.name}"
+                                        data-bs-toggle="modal" data-bs-target="#deleteModal">Löschen</button>
+                                <i class="bi bi-info-circle info-icon" data-bs-toggle="tooltip" data-bs-placement="top" title="Alle Daten zu dieser Pflanze, einschließlich Chats, werden unwiderruflich gelöscht."></i>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -222,7 +224,6 @@
         </th:block>
     </div>
 </div>
-<!-- Delete Confirmation Modal -->
 <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -231,7 +232,6 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <!-- The content is updated by JavaScript -->
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Abbrechen</button>
@@ -242,7 +242,6 @@
         </div>
     </div>
 </div>
-<!-- Deactivate Confirmation Modal -->
 <div class="modal fade" id="deactivateModal" tabindex="-1" aria-labelledby="deactivateModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -251,7 +250,6 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <!-- The content is updated by JavaScript -->
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Abbrechen</button>
