@@ -874,236 +874,99 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         plantService.savePlantDataLoader(gummibaum);
 
         Chat chat1 = new Chat();
-        chat1.setPlant(kaktus);
-        chat1.setPossibleBuyer(normalUser);
+        chat1.setPlant(rundkaktus);
+        chat1.setPossibleBuyer(sena);
         chatService.saveChat(chat1);
 
         Chat chat2 = new Chat();
-        chat2.setPlant(rose);
-        chat2.setPossibleBuyer(normalUser);
+        chat2.setPlant(narzisse);
+        chat2.setPossibleBuyer(natti);
         chatService.saveChat(chat2);
 
-        Instant anInstant1 = Instant.ofEpochSecond(1715324919);
-        Instant anInstant2 = Instant.ofEpochSecond(1715843319);
-        Instant anInstant3 = Instant.ofEpochSecond(1716188919);
+        Chat chat3 = new Chat();
+        chat3.setPlant(kaktussammlung);
+        chat3.setPossibleBuyer(sharon);
+        chatService.saveChat(chat3);
+
+        Instant anInstant1 = Instant.ofEpochSecond(1719998236);
+        Instant anInstant2 = Instant.ofEpochSecond(1720001776);
+        Instant anInstant3 = Instant.ofEpochSecond(1720001896);
+        Instant anInstant4 = Instant.ofEpochSecond(1720009096);
+        Instant anInstant5 = Instant.ofEpochSecond(1720183036);
+        Instant anInstant6 = Instant.ofEpochSecond(1720185556);
+        Instant anInstant7 = Instant.ofEpochSecond(1720187356);
 
         Message message1 = new Message();
         message1.setChat(chat1);
-        message1.setSender(normalUser);
-        message1.setMessageContent("Hallo");
+        message1.setSender(sena);
+        message1.setMessageContent("Hallo, ich würde sehr sehr gerne dein Kaktus kaufen");
         message1.setSentAt(anInstant1);
         messageService.saveMessage(message1);
 
         Message message2 = new Message();
         message2.setChat(chat1);
-        message2.setSender(normalUser);
-        message2.setMessageContent("Ich möchte deine Pflanze gerne kaufen");
+        message2.setSender(andrea);
+        message2.setMessageContent("Zu beachten ist, dass es ein Rundkaktus ist. der wächst anders als normale Kakteen");
         message2.setSentAt(anInstant2);
         messageService.saveMessage(message2);
 
         Message message3 = new Message();
-        message3.setChat(chat2);
-        message3.setSender(normalUser);
-        message3.setMessageContent("Hallo");
+        message3.setChat(chat1);
+        message3.setSender(sena);
+        message3.setMessageContent("Ok, den würde ich dann gerne kaufen!");
         message3.setSentAt(anInstant3);
         messageService.saveMessage(message3);
 
+
         Message message4 = new Message();
         message4.setChat(chat1);
-        message4.setSender(normalUser);
-        message4.setMessageContent("Sharon war hier!");
-        message4.setSentAt(anInstant2);
+        message4.setSender(andrea);
+        message4.setMessageContent("Alles klar, du kann sie heute Abend, gegen 19 Uhr, abholen und bringst einfach das Geld in bar mit.");
+        message4.setSentAt(anInstant4);
         messageService.saveMessage(message4);
 
+
         Message message5 = new Message();
-        message5.setChat(chat1);
-        message5.setSender(normalUser);
-        message5.setMessageContent("Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.");
-        message5.setSentAt(anInstant2);
+        message5.setChat(chat2);
+        message5.setSender(natti);
+        message5.setMessageContent("Hallo :)");
+        message5.setSentAt(anInstant5);
         messageService.saveMessage(message5);
 
         Message message6 = new Message();
-        message6.setChat(chat1);
-        message6.setSender(normalUser);
-        message6.setMessageContent("Sharon war hier!");
-        message6.setSentAt(anInstant2);
+        message6.setChat(chat2);
+        message6.setSender(natti);
+        message6.setMessageContent("Ich habe deine Pflanzenanzeige gesehen und suche genau diese Pflanze. Ich würde sie also gerne kaufen");
+        message6.setSentAt(anInstant5);
         messageService.saveMessage(message6);
 
         Message message7 = new Message();
-        message7.setChat(chat1);
-        message7.setSender(normalUser);
-        message7.setMessageContent("Sharon war hier!");
-        message7.setSentAt(anInstant2);
+        message7.setChat(chat2);
+        message7.setSender(andrea);
+        message7.setMessageContent("Das freut mich, möchtest du lieber bar oder per paypal zahlen?");
+        message7.setSentAt(anInstant6);
         messageService.saveMessage(message7);
 
         Message message8 = new Message();
-        message8.setChat(chat1);
-        message8.setSender(normalUser);
-        message8.setMessageContent("Sharon war hier!");
-        message8.setSentAt(anInstant2);
+        message8.setChat(chat2);
+        message8.setSender(natti);
+        message8.setMessageContent("Ich würde es gerne bar zahlen wenn ich es abhole. Passt es gleich heute bei dir?");
+        message8.setSentAt(anInstant7);
         messageService.saveMessage(message8);
 
         Message message9 = new Message();
-        message9.setChat(chat1);
-        message9.setSender(normalUser);
-        message9.setMessageContent("Sharon war hier!");
-        message9.setSentAt(anInstant2);
+        message9.setChat(chat2);
+        message9.setSender(andrea);
+        message9.setMessageContent("Heute passt, jedoch erst ab 17 Uhr. Klingel einfach bei Chazarreta. :)");
+        message9.setSentAt(anInstant7);
         messageService.saveMessage(message9);
 
         Message message10 = new Message();
-        message10.setChat(chat1);
-        message10.setSender(normalUser);
-        message10.setMessageContent("Sharon war hier!");
-        message10.setSentAt(anInstant2);
+        message10.setChat(chat3);
+        message10.setSender(sharon);
+        message10.setMessageContent("Hallo Andrea, aus welchen Kakteen besteht denn die Sammlung?");
+        message10.setSentAt(anInstant6);
         messageService.saveMessage(message10);
-
-        Message message11 = new Message();
-        message11.setChat(chat1);
-        message11.setSender(normalUser);
-        message11.setMessageContent("Sharon war hier!");
-        message11.setSentAt(anInstant2);
-        messageService.saveMessage(message11);
-
-        Message message12 = new Message();
-        message12.setChat(chat1);
-        message12.setSender(normalUser);
-        message12.setMessageContent("Sharon war hier!");
-        message12.setSentAt(anInstant2);
-        messageService.saveMessage(message12);
-
-        Message message13 = new Message();
-        message13.setChat(chat1);
-        message13.setSender(normalUser);
-        message13.setMessageContent("Sharon war hier!");
-        message13.setSentAt(anInstant2);
-        messageService.saveMessage(message13);
-
-        Message message14 = new Message();
-        message14.setChat(chat1);
-        message14.setSender(normalUser);
-        message14.setMessageContent("Sharon war hier!");
-        message14.setSentAt(anInstant2);
-        messageService.saveMessage(message14);
-
-        Message message15 = new Message();
-        message15.setChat(chat1);
-        message15.setSender(normalUser);
-        message15.setMessageContent("Sharon war hier!");
-        message15.setSentAt(anInstant2);
-        messageService.saveMessage(message15);
-
-        Message message16 = new Message();
-        message16.setChat(chat1);
-        message16.setSender(normalUser);
-        message16.setMessageContent("Sharon war hier!");
-        message16.setSentAt(anInstant2);
-        messageService.saveMessage(message16);
-
-        Message message17 = new Message();
-        message17.setChat(chat1);
-        message17.setSender(normalUser);
-        message17.setMessageContent("Sharon war hier!");
-        message17.setSentAt(anInstant2);
-        messageService.saveMessage(message17);
-
-
-        Message message18 = new Message();
-        message18.setChat(chat1);
-        message18.setSender(normalUser);
-        message18.setMessageContent("Sharon war hier!");
-        message18.setSentAt(anInstant2);
-        messageService.saveMessage(message18);
-
-        Message message19 = new Message();
-        message19.setChat(chat1);
-        message19.setSender(normalUser);
-        message19.setMessageContent("Sharon war hier!");
-        message19.setSentAt(anInstant2);
-        messageService.saveMessage(message19);
-
-        Message message20 = new Message();
-        message20.setChat(chat1);
-        message20.setSender(normalUser);
-        message20.setMessageContent("Sharon war hier!");
-        message20.setSentAt(anInstant2);
-        messageService.saveMessage(message20);
-
-        Message message21 = new Message();
-        message21.setChat(chat1);
-        message21.setSender(normalUser);
-        message21.setMessageContent("Sharon war hier!");
-        message21.setSentAt(anInstant2);
-        messageService.saveMessage(message21);
-
-        Message message22 = new Message();
-        message22.setChat(chat1);
-        message22.setSender(normalUser);
-        message22.setMessageContent("Sharon war hier!");
-        message22.setSentAt(anInstant2);
-        messageService.saveMessage(message22);
-
-        Message message23 = new Message();
-        message23.setChat(chat1);
-        message23.setSender(normalUser);
-        message23.setMessageContent("Sharon war hier!");
-        message23.setSentAt(anInstant2);
-        messageService.saveMessage(message23);
-
-        Message message24 = new Message();
-        message24.setChat(chat1);
-        message24.setSender(normalUser);
-        message24.setMessageContent("Sharon war hier!");
-        message24.setSentAt(anInstant2);
-        messageService.saveMessage(message24);
-
-        Message message25 = new Message();
-        message25.setChat(chat1);
-        message25.setSender(normalUser);
-        message25.setMessageContent("Sharon war hier!");
-        message25.setSentAt(anInstant2);
-        messageService.saveMessage(message25);
-
-        Message message26 = new Message();
-        message26.setChat(chat1);
-        message26.setSender(normalUser);
-        message26.setMessageContent("Sharon war hier!");
-        message26.setSentAt(anInstant2);
-        messageService.saveMessage(message26);
-
-        Message message27 = new Message();
-        message27.setChat(chat1);
-        message27.setSender(normalUser);
-        message27.setMessageContent("Sharon war hier!");
-        message27.setSentAt(anInstant2);
-        messageService.saveMessage(message27);
-
-        Message message28 = new Message();
-        message28.setChat(chat1);
-        message28.setSender(normalUser);
-        message28.setMessageContent("Sharon war hier!");
-        message28.setSentAt(anInstant2);
-        messageService.saveMessage(message28);
-
-        Message message29 = new Message();
-        message29.setChat(chat1);
-        message29.setSender(normalUser);
-        message29.setMessageContent("Sharon war hier!");
-        message29.setSentAt(anInstant2);
-        messageService.saveMessage(message29);
-
-        Message message30 = new Message();
-        message30.setChat(chat1);
-        message30.setSender(normalUser);
-        message30.setMessageContent("Sharon war hier!");
-        message30.setSentAt(anInstant2);
-        messageService.saveMessage(message30);
-
-        Message message31 = new Message();
-        message31.setChat(chat1);
-        message31.setSender(normalUser);
-        message31.setMessageContent("Sharon war hier!");
-        message31.setSentAt(anInstant2);
-        messageService.saveMessage(message31);
 
     }
 }
