@@ -383,6 +383,79 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         careTip18.setPlanting("Direkt in die Erde");
         careTipService.saveCareTip(careTip18);
 
+        CareTip careTip19 = new CareTip();
+        careTip19.setCategory(category3);
+        careTip19.setPlantName("Rosmarin");
+        careTip19.setLightingConditions("Viel");
+        careTip19.setFertilization("Wenig");
+        careTip19.setIrrigation("Mittel");
+        careTip19.setOtherTips("Rosmarin ist ein sehr widerstandsfähiger Strauch, der wenig Pflege benötigt.");
+        careTip19.setRepotting("Nach 6 Monaten");
+        careTip19.setTemperature("15");
+        careTip19.setPlanting("Vorzüchten");
+        careTipService.saveCareTip(careTip19);
+
+        CareTip careTip20 = new CareTip();
+        careTip20.setCategory(category4);
+        careTip20.setPlantName("Schilfgras");
+        careTip20.setLightingConditions("Mittel");
+        careTip20.setFertilization("Mittel");
+        careTip20.setIrrigation("Viel");
+        careTip20.setOtherTips("Schilfgras eignet sich hervorragend für die Uferbepflanzung.");
+        careTip20.setRepotting("Nach 6 Monaten");
+        careTip20.setTemperature("18");
+        careTip20.setPlanting("Direkt in die Erde");
+        careTipService.saveCareTip(careTip20);
+
+        CareTip careTip21 = new CareTip();
+        careTip21.setCategory(category5);
+        careTip21.setPlantName("Petersilie");
+        careTip21.setLightingConditions("Mittel");
+        careTip21.setFertilization("Mittel");
+        careTip21.setIrrigation("Mittel");
+        careTip21.setOtherTips("Petersilie ist ein bienenfreundliches Kraut, das regelmäßig geerntet werden sollte.");
+        careTip21.setRepotting("Nach 6 Monaten");
+        careTip21.setTemperature("15");
+        careTip21.setPlanting("Direkt in die Erde");
+        careTipService.saveCareTip(careTip21);
+
+        CareTip careTip22 = new CareTip();
+        careTip22.setCategory(category6);
+        careTip22.setPlantName("Salat");
+        careTip22.setLightingConditions("Mittel");
+        careTip22.setFertilization("Mittel");
+        careTip22.setIrrigation("Viel");
+        careTip22.setOtherTips("Salat sollte regelmäßig geerntet werden, um neues Wachstum zu fördern.");
+        careTip22.setRepotting("Nicht nötig");
+        careTip22.setTemperature("18");
+        careTip22.setPlanting("Vorzüchten");
+        careTipService.saveCareTip(careTip22);
+
+        CareTip careTip23 = new CareTip();
+        careTip23.setCategory(category7);
+        careTip23.setPlantName("Kaktus");
+        careTip23.setLightingConditions("Viel");
+        careTip23.setFertilization("Wenig");
+        careTip23.setIrrigation("Wenig");
+        careTip23.setOtherTips("Kakteen sind sehr pflegeleicht und brauchen wenig Wasser.");
+        careTip23.setRepotting("Nach 6 Monaten");
+        careTip23.setTemperature("20");
+        careTip23.setPlanting("Direkt in die Erde");
+        careTipService.saveCareTip(careTip23);
+
+        CareTip careTip24 = new CareTip();
+        careTip24.setCategory(category1);
+        careTip24.setPlantName("Ahornbaum");
+        careTip24.setLightingConditions("Mittel");
+        careTip24.setFertilization("Mittel");
+        careTip24.setIrrigation("Mittel");
+        careTip24.setOtherTips("Ahornbäume sind robust und farbenprächtig im Herbst.");
+        careTip24.setRepotting("Nicht nötig");
+        careTip24.setTemperature("15");
+        careTip24.setPlanting("Direkt in die Erde");
+        careTipService.saveCareTip(careTip24);
+
+
 
         Plant kaktus = new Plant();
         kaktus.setName("Kaktus");
