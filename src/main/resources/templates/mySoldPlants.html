@@ -171,13 +171,13 @@
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
         <th:block th:each="plant : ${soldPlants}">
             <div class="col">
-                <div class="card">
+                <div class="card" style="min-height: 350px">
                     <a th:href="@{/plants/{id}(id=${plant.plantId})}">
                         <img th:src="@{${plant.imagePath}}" class="card-img-top" alt="Pflanzenbild">
                     </a>
                     <div class="card-body">
                         <h5 class="card-title" th:text="${plant.name}">Plant Name</h5>
-                        <p class="card-text" th:text="'Preis: ' + ${plant.price} + '€'">Plant Price</p>
+                        <p class="card-text" th:text="'Käufer: ' + ${plant.buyer.username}">Plant Buyer</p>
                     </div>
                 </div>
             </div>
