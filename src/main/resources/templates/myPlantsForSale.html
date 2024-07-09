@@ -143,6 +143,34 @@
             overflow-x: hidden;
         }
 
+        .custom-btn {
+            background-color: white;
+            border: 1px solid #ddd;
+            color: #000;
+            text-decoration: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            transition: background-color 0.3s, box-shadow 0.3s;
+        }
+
+        .custom-btn:hover {
+            background-color: #7e7d7d;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .custom-btn i {
+            margin-right: 5px;
+        }
+
+        .custom-btn:active {
+            background-color: white;
+            box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+
     </style>
 
 </head>
@@ -199,23 +227,27 @@
                         </div>
                     </a>
                     <div class="card-body d-flex justify-content-between">
-                        <a th:href="@{/plants/edit/{id}(id=${plant.plantId})}" class="btn btn-success">Bearbeiten</a>
+                        <a th:href="@{/plants/edit/{id}(id=${plant.plantId})}" class="btn btn-link custom-btn">
+                            <i class="fa-regular fa-pen-to-square"></i> Bearbeiten
+                        </a>
                         <div class="btn-group">
                             <form th:if="${!(plant.chatsAboutThisPlant.isEmpty() && plant.getWishedBy().isEmpty() && plant.getBuyer() == null)}" method="post" class="d-inline">
-                                <button type="button" class="btn btn-warning deactivate-button"
+                                <button type="button" class="btn btn-link custom-btn deactivate-button"
                                         th:attr="data-id=${plant.plantId}"
                                         th:attrappend="data-name=${plant.name}"
-                                        data-bs-toggle="modal" data-bs-target="#deactivateModal">Deaktivieren</button>
-                                <i class="bi bi-info-circle info-icon" data-bs-toggle="tooltip" data-bs-placement="top" title="Die Pflanze wird auf allen Anzeigeseiten entfernt, aber die zugehörigen Chats bleiben erhalten."></i>
+                                        data-bs-toggle="modal" data-bs-target="#deactivateModal">
+                                    <i class="fa-solid fa-trash"></i> Entfernen
+                                </button>
                             </form>
                         </div>
                         <div class="btn-group">
                             <form th:if="${plant.chatsAboutThisPlant.isEmpty() && plant.getWishedBy().isEmpty() && plant.getBuyer() == null}" method="post" class="d-inline">
-                                <button type="button" class="btn btn-danger delete-button"
+                                <button type="button" class="btn btn-link custom-btn delete-button"
                                         th:attr="data-id=${plant.plantId}"
                                         th:attrappend="data-name=${plant.name}"
-                                        data-bs-toggle="modal" data-bs-target="#deleteModal">Löschen</button>
-                                <i class="bi bi-info-circle info-icon" data-bs-toggle="tooltip" data-bs-placement="top" title="Alle Daten zu dieser Pflanze, einschließlich Chats, werden unwiderruflich gelöscht."></i>
+                                        data-bs-toggle="modal" data-bs-target="#deleteModal">
+                                    <i class="fa-solid fa-trash"></i> Entfernen
+                                </button>
                             </form>
                         </div>
                     </div>
