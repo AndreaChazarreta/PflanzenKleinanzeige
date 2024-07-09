@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="de" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:insert="~{fragments/htmlHead :: head}"></th:block>
+    <title>Datenschutz</title>
+    <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+            line-height: 180%;
+            color: #212529;
+            text-align: center;
+        }
+        .header-background {
+            background: url("/plant-images/aboutUsBackground.png") no-repeat center center;
+            background-size: cover;
+            height: 300px;
+        }
+        section {
+            padding: 50px 80px;
+            background-color: #fbf6ee;
+        }
+        .two-col {
+            display: inline-block;
+            vertical-align: top;
+            width: 45%;
+            margin: 2.5%;
+            text-align: left;
+        }
+        @media (max-width: 900px) {
+            .two-col {
+                width: 100%;
+                margin: 0;
+                padding: 0 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+<th:block th:insert="~{fragments/htmlNavBar :: navbar}"></th:block>
+
+<div class="header-background"></div>
+
+<section>
+    <h1 style="font-size: 36px;">Datenschutz</h1>
+    <div style="display: flex; flex-wrap: wrap; justify-content: space-between;">
+        <div class="two-col">
+            <p><strong>Datenschutz auf einen Blick</strong><br>
+                Der Schutz Ihrer Daten ist uns sehr wichtig. In dieser Datenschutzerklärung informieren wir Sie darüber, welche Daten wir erheben, wie wir sie nutzen und welche Rechte Sie bezüglich Ihrer Daten haben.</p>
+
+            <p><strong>Datenerfassung auf unserer Website</strong><br>
+                Die Datenverarbeitung auf dieser Website erfolgt durch den Websitebetreiber. Die Kontaktdaten können Sie dem Impressum dieser Website entnehmen. Ihre Daten werden zum einen dadurch erhoben, dass Sie uns diese mitteilen. Hierbei kann es sich z.B. um Daten handeln, die Sie in ein Kontaktformular eingeben.</p>
+
+            <p><strong>Analyse-Tools und Tools von Drittanbietern</strong><br>
+                Beim Besuch unserer Website kann Ihr Surf-Verhalten statistisch ausgewertet werden. Das geschieht vor allem mit Cookies und mit sogenannten Analyseprogrammen. Die Analyse Ihres Surf-Verhaltens erfolgt in der Regel anonym; das Surf-Verhalten kann nicht zu Ihnen zurückverfolgt werden.</p>
+        </div>
+        <div class="two-col">
+            <p><strong>Ihre Rechte</strong><br>
+                Sie haben jederzeit das Recht, unentgeltlich Auskunft über Herkunft, Empfänger und Zweck Ihrer gespeicherten personenbezogenen Daten zu erhalten. Sie haben außerdem ein Recht, die Berichtigung, Sperrung oder Löschung dieser Daten zu verlangen.</p>
+
+            <p><strong>Rechtsgrundlagen der Datenverarbeitung</strong><br>
+                Die Verarbeitung Ihrer Daten erfolgt auf Grundlage gesetzlicher Vorschriften, insbesondere der Datenschutz-Grundverordnung (DSGVO) und des Bundesdatenschutzgesetzes (BDSG).</p>
+
+            <p><strong>Datensicherheit</strong><br>
+                Wir verwenden geeignete technische und organisatorische Sicherheitsmaßnahmen, um Ihre Daten vor Manipulation, Verlust, Zerstörung oder dem Zugriff unberechtigter Personen zu schützen.</p>
+        </div>
+    </div>
+</section>
+</body>
+<th:block th:insert="~{fragments/footer :: footer}"></th:block>
+</html>
