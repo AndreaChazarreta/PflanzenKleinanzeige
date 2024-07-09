@@ -375,22 +375,22 @@
         }
 
         if (comparisonCards.children.length < 3) {
-            var plantName = draggedElement.querySelector(".card-title").textContent;
-            var plantPrice = draggedElement.querySelector(".card-text").textContent;
-            var plantImageSrc = draggedElement.querySelector("img").src;
-            var plantHeight = draggedElement.getAttribute('data-plant-height');
-            var plantPotIncluded = draggedElement.getAttribute('data-plant-potIncluded') === 'true' ? 'Ja' : 'Nein';
-            var plantCategory = draggedElement.getAttribute('data-plant-category');
-            var plantLifespan = draggedElement.getAttribute('data-plant-lifespan');
-            var plantFloweringTime = draggedElement.getAttribute('data-plant-floweringTime');
-            var plantToxicForPets = draggedElement.getAttribute('data-plant-toxicForPets') === 'true' ? 'Ja' : 'Nein';
-            var plantAirPurifying = draggedElement.getAttribute('data-plant-airPurifying') === 'true' ? 'Ja' : 'Nein';
-            var plantUsability = draggedElement.getAttribute('data-plant-usability');
-            var plantColor = draggedElement.getAttribute('data-plant-color');
-            var plantLeafShape = draggedElement.getAttribute('data-plant-leafShape');
-            var plantGrowthRate = draggedElement.getAttribute('data-plant-growthRate');
-            var plantStandort = draggedElement.getAttribute('data-plant-standort');
-            var plantFruit = draggedElement.getAttribute('data-plant-fruit');
+            var plantName = getSafeValue(draggedElement.querySelector(".card-title").textContent);
+            var plantPrice = getSafeValue(draggedElement.querySelector(".card-text").textContent);
+            var plantImageSrc = getSafeValue(draggedElement.querySelector("img").src);
+            var plantHeight = getSafeValue(draggedElement.getAttribute('data-plant-height'));
+            var plantPotIncluded = getSafeValue(draggedElement.getAttribute('data-plant-potIncluded') === 'true' ? 'Ja' : 'Nein');
+            var plantCategory = getSafeValue(draggedElement.getAttribute('data-plant-category'));
+            var plantLifespan = getSafeValue(draggedElement.getAttribute('data-plant-lifespan'));
+            var plantFloweringTime = getSafeValue(draggedElement.getAttribute('data-plant-floweringTime'));
+            var plantToxicForPets = getSafeValue(draggedElement.getAttribute('data-plant-toxicForPets') === 'true' ? 'Ja' : 'Nein');
+            var plantAirPurifying = getSafeValue(draggedElement.getAttribute('data-plant-airPurifying') === 'true' ? 'Ja' : 'Nein');
+            var plantUsability = getSafeValue(draggedElement.getAttribute('data-plant-usability'));
+            var plantColor = getSafeValue(draggedElement.getAttribute('data-plant-color'));
+            var plantLeafShape = getSafeValue(draggedElement.getAttribute('data-plant-leafShape'));
+            var plantGrowthRate = getSafeValue(draggedElement.getAttribute('data-plant-growthRate'));
+            var plantStandort = getSafeValue(draggedElement.getAttribute('data-plant-standort'));
+            var plantFruit = getSafeValue(draggedElement.getAttribute('data-plant-fruit'));
 
             var plantData = {
                 id: plantId,
@@ -463,6 +463,10 @@
         } else {
             showModal("Du kannst maximal 3 Pflanzen vergleichen.");
         }
+    }
+
+    function getSafeValue(value) {
+        return value ? value : '-';
     }
 
     function removePlant(button) {
