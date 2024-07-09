@@ -6,6 +6,17 @@
     <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.5.0/nouislider.min.css" />
     <style>
+        .no-results {
+            text-align: center;
+        }
+
+        .no-results img {
+            width: auto;
+            max-width: 60%;
+            height: auto;
+            max-height: 60%;
+        }
+
         .header-container {
             display: flex;
             align-items: center;
@@ -208,7 +219,6 @@
             box-shadow: none;
             border-color: #9a8d71;
         }
-        /* Hide the up and down arrows in number input fields */
         input[type="number"]::-webkit-outer-spin-button,
         input[type="number"]::-webkit-inner-spin-button {
             -webkit-appearance: none;
@@ -403,6 +413,19 @@
             </div>
         </div>
         <div class="col-lg-9">
+            <div th:if="${plants.isEmpty()}" class="no-results">
+                <h2>Es wurden leider keine passenden Pflanzen gefunden</h2>
+                <img src="/plant-images/No_result.png" alt="No Results">
+            </div>
+            <div th:unless="${plants.isEmpty()}" class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-3">
+                <th:block th:each="plant : ${plants}">
+                    <div th:if="${plant.isSold() == false}">
+                        <th:block th:insert="~{fragments/cardPlantsOverview :: cardFragment(plant=${plant}, currentUser=${currentUser})}"></th:block>
+                    </div>
+                </th:block>
+            </div>
+        </div>
+        <div class="col-lg-9">
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-3">
                 <th:block th:each="plant : ${plants}">
                     <div th:if="${plant.isSold() == false}">
@@ -535,7 +558,6 @@
             }
         }
 
-        // Add event listeners to update localStorage when accordion is toggled
         var accordionItems = document.querySelectorAll('.accordion-collapse');
         accordionItems.forEach(function(item) {
             item.addEventListener('shown.bs.collapse', function () {
