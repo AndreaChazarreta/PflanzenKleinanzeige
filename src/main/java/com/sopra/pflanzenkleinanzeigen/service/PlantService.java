@@ -79,14 +79,16 @@ public class PlantService {
     public List<Plant> findPlantsByFilters(String name, BigDecimal minPrice, BigDecimal maxPrice,
                                            BigDecimal minHeight, BigDecimal maxHeight,
                                            Boolean potIncluded, List<String> categories,
-                                           Boolean excludeCurrentUser, Benutzer currentUser, String sortPrice) {
-        return plantRepository.findByFilters(name, minPrice, maxPrice, minHeight, maxHeight, potIncluded, categories, excludeCurrentUser, currentUser, sortPrice);
+                                           Boolean excludeCurrentUser, Benutzer currentUser,
+                                           Boolean fruits, Boolean airPurifying, Boolean toxicForPets, String sortPrice) {
+        return plantRepository.findByFilters(name, minPrice, maxPrice, minHeight, maxHeight, potIncluded, categories, excludeCurrentUser, currentUser, fruits,  airPurifying,  toxicForPets, sortPrice);
     }
 
     public List<Plant> findPlantsByFiltersWithoutCategory(String name, BigDecimal minPrice, BigDecimal maxPrice,
                                            BigDecimal minHeight, BigDecimal maxHeight, Boolean potIncluded,
-                                           Boolean excludeCurrentUser, Benutzer currentUser, String sortPrice) {
-        return plantRepository.findByFiltersWithoutCategory(name, minPrice, maxPrice, minHeight, maxHeight, potIncluded, excludeCurrentUser, currentUser, sortPrice);
+                                           Boolean excludeCurrentUser, Benutzer currentUser,
+                                           Boolean fruits, Boolean airPurifying, Boolean toxicForPets, String sortPrice) {
+        return plantRepository.findByFiltersWithoutCategory(name, minPrice, maxPrice, minHeight, maxHeight, potIncluded, excludeCurrentUser, currentUser, fruits,  airPurifying,  toxicForPets, sortPrice);
     }
 
     public BigDecimal findMaxPrice() {

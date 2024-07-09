@@ -115,7 +115,7 @@
             box-shadow: none !important;
         }
         .noUi-connect {
-            background: darkgreen;
+            background: #809d00;
         }
         .noUi-horizontal {
             height: 8px;
@@ -124,8 +124,8 @@
             width: 18px !important;
             height: 18px !important;
             border-radius: 50%;
-            background: darkgreen;
-            border: 2px solid darkgreen;
+            background: #809d00;
+            border: 2px solid #809d00;
             box-shadow: none !important;
         }
         .noUi-handle:before, .noUi-handle:after {
@@ -204,6 +204,10 @@
         .form-check-input:focus {
             box-shadow: 0 0 0 0.25rem rgba(248, 208, 157, 0.7);
         }
+        .form-control:focus{
+            box-shadow: none;
+            border-color: #9a8d71;
+        }
         /* Hide the up and down arrows in number input fields */
         input[type="number"]::-webkit-outer-spin-button,
         input[type="number"]::-webkit-inner-spin-button {
@@ -271,7 +275,7 @@
                             </h2>
                             <div id="collapsePrice" class="accordion-collapse collapse" aria-labelledby="headingPrice">
                                 <div class="accordion-body">
-                                    <div id="price-container" class="d-flex justify-content-between align-items-center mb-2">
+                                    <div id="price-container" class="d-flex justify-content-end align-items-end mb-2">
                                         <span class="button-clear" onclick="clearPriceFilter()">Löschen</span>
                                     </div>
                                     <div>
@@ -351,6 +355,46 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="Sonstiges">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSonstiges" aria-expanded="false" aria-controls="collapseSonstiges">
+                                    Sonstige Filter
+                                </button>
+                            </h2>
+                            <div id="collapseSonstiges" class="accordion-collapse collapse" aria-labelledby="headingSonstiges">
+                                <div class="accordion-body">
+                                    <h6> Obst? </h6>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" id="fruitsTrue" name="fruits" value="true" th:checked="${fruits == true}" onchange="buildUrl()">
+                                        <label class="form-check-label" for="fruitsTrue"> Mit Obst </label>
+                                        <br>
+                                        <input class="form-check-input" type="radio" id="fruitsFalse" name="fruits" value="false" th:checked="${fruits == false}" onchange="buildUrl()">
+                                        <label class="form-check-label" for="fruitsFalse"> Ohne Obst</label>
+                                        <br>
+                                        <input class="form-check-input" type="radio" id="fruitsNull" name="fruits" value="" th:checked="${fruits == null}" onchange="buildUrl()">
+                                        <label class="form-check-label" for="fruitsNull"> Alle anzeigen</label>
+                                    </div>
+                                    <hr>
+                                    <h6> Luftreiniger? </h6>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" id="airPurifyingTrue" name="airPurifying" value="true" th:checked="${airPurifying == true}" onchange="buildUrl()">
+                                        <label class="form-check-label" for="airPurifyingTrue"> Luftreiniger </label>
+                                        <br>
+                                        <input class="form-check-input" type="radio" id="airPurifyingNull" name="airPurifying" value="" th:checked="${airPurifying == null}" onchange="buildUrl()">
+                                        <label class="form-check-label" for="airPurifyingNull"> Alle anzeigen</label>
+                                    </div>
+                                    <hr>
+                                    <h6> Tierfreundlich? </h6>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" id="toxicForPetsFalse" name="toxicForPets" value="false" th:checked="${toxicForPets == false}" onchange="buildUrl()">
+                                        <label class="form-check-label" for="toxicForPetsFalse"> Nicht giftig für Tiere</label>
+                                        <br>
+                                        <input class="form-check-input" type="radio" id="toxicForPetsNull" name="toxicForPets" value="" th:checked="${toxicForPets == null}" onchange="buildUrl()">
+                                        <label class="form-check-label" for="toxicForPetsNull"> Alle anzeigen</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <button type="submit" class="btn btn-primary w-100" style="background-color: rgb(129, 158, 0); border:none; margin-top: 10px">Filtern</button>
                 </form>
@@ -416,9 +460,12 @@
             const potIncluded = document.querySelector('input[name="potIncluded"]:checked') ? document.querySelector('input[name="potIncluded"]:checked').value : '';
             const categories = Array.from(document.querySelectorAll('input[name="category"]:checked')).map(checkbox => checkbox.value);
             const excludeCurrentUser = document.querySelector('input[name="excludeCurrentUser"]:checked') ? document.querySelector('input[name="excludeCurrentUser"]:checked').value : '';
+            const fruits = document.querySelector('input[name="fruits"]:checked') ? document.querySelector('input[name="fruits"]:checked').value : '';
+            const airPurifying = document.querySelector('input[name="airPurifying"]:checked') ? document.querySelector('input[name="airPurifying"]:checked').value : '';
+            const toxicForPets = document.querySelector('input[name="toxicForPets"]:checked') ? document.querySelector('input[name="toxicForPets"]:checked').value : '';
             const sortPrice = document.getElementById('sortPrice').value;
 
-            const params = { name, minHeight, maxHeight, potIncluded, category: categories.join(','), excludeCurrentUser, sortPrice };
+            const params = { name, minHeight, maxHeight, potIncluded, category: categories.join(','), excludeCurrentUser, fruits, airPurifying, toxicForPets, sortPrice };
 
             if (minPrice !== minPriceDefault.toFixed(2)) params.minPrice = minPrice;
             if (maxPrice !== maxPriceDefault.toFixed(2)) params.maxPrice = maxPrice;
