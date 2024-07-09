@@ -210,7 +210,9 @@
 
     <div th:if="${!allChats.isEmpty()}" class="message-area">
         <div class="header p-3 d-flex align-items-center" style="background-color: #e5e1d7;">
-            <img class="plant-image-header" th:src="@{${chat.plant.imagePath}}" alt="Plant Image">
+            <a th:href="@{/plants/{id}(id=${chat.plant.plantId})}">
+                <img class="plant-image-header" th:src="@{${chat.plant.imagePath}}" alt="Plant Image">
+            </a>
             <div class="text-center ml-3" style="color:black;">
                 <h3 th:text="${chat.plant.name}"></h3>
                 <h4 th:if="${currentUser.username == chat.possibleBuyer.username}">
@@ -261,12 +263,13 @@
                     <i class="fa fa-send" aria-hidden="true"></i>
                 </button>
             </form>
-            <div th:if="${currentUser.username != chat.possibleBuyer.username}">
+            <div th:if="${currentUser.username != chat.possibleBuyer.username and !chat.plant.isSold()}">
                 <form th:object="${plant}" method="post" class="d-flex" style="flex-grow: 0;">
                     <button type="button" class="btn btn-success sell-button"
                             th:attr="data-id=${chat.chatId}"
                             th:attrappend="data-name=${chat.plant.name}"
-                            data-bs-toggle="modal" data-bs-target="#sellModal">Verkauft</button>
+                            th:attrprepend="data-buyer-name=${chat.possibleBuyer.username}"
+                            data-bs-toggle="modal" data-bs-target="#sellModal">Verkaufen</button>
                 </form>
             </div>
         </div>
@@ -277,7 +280,6 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="sellModalLabel">Bestätigung verkaufen</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
             </div>
@@ -304,10 +306,11 @@
                 var chatId = this.getAttribute('data-id');
                 var plantName = this.getAttribute('data-name');
                 var sellForm = document.getElementById('sellForm');
+                var buyerName = this.getAttribute('data-buyer-name');
                 sellForm.action = '/chats/markSold/' + chatId;
 
                 var modalBody = document.querySelector('#sellModal .modal-body');
-                modalBody.textContent = 'Bist du sicher, dass du die Pflanze ' + plantName + ' als verkauft markieren möchtest?';
+                modalBody.textContent = 'Bist du sicher, dass du die Pflanze ' + plantName + ' an den User @' + buyerName + ' verkaufen möchtest?';
             });
         });
     });
