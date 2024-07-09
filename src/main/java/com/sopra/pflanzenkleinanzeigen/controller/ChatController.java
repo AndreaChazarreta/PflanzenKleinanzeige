@@ -88,7 +88,15 @@ public class ChatController {
                 model.addAttribute("error", "Sie sind nicht berechtigt, Nachrichten in diesem Chat zu sehen, da Sie kein Teilnehmer sind.");
                 return "error";
             }
-            model.addAttribute("allChats", chatService.findUserChats(currentUser.getUserId()));
+
+            chat.getMessages().forEach(message -> {
+                if (!message.getSender().equals(currentUser) && !message.isRead()) {
+                    message.setRead(true);
+                    messageService.saveMessage(message);
+                }
+            });
+
+            model.addAttribute("allChats", chatService.findUserChatsWithUnreadCount(currentUser.getUserId()));
             model.addAttribute("chat", chat);
             model.addAttribute("allMessages", chat.getMessages());
             model.addAttribute("newMessage", new Message());

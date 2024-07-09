@@ -26,6 +26,8 @@ public class Message {
 
     private Instant sentAt;
 
+    private boolean read;
+
     @ManyToOne
     @JoinColumn (name = "chatId")
     private Chat chat;
@@ -59,6 +61,14 @@ public class Message {
 
     public void setSentAt(Instant sentAt) {
         this.sentAt = sentAt;
+    }
+
+    public boolean isRead() {
+        return read;
+    }
+
+    public void setRead(boolean read) {
+        this.read = read;
     }
 
     public Chat getChat() {
