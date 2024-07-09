@@ -134,6 +134,7 @@
             justify-content: center;
             align-items: center;
             width: 100%;
+            flex-direction: column;
         }
         .center-content {
             display: flex;
@@ -190,11 +191,11 @@
             max-width: 100%;
             height: auto;
             margin: 0 auto;
-            transform: scale(.5);
+            transform: scale(1.1);
         }
         p {
-            margin-top: 2em;
-            margin-bottom: -3.5em;
+            margin-top: 1em;
+            margin-bottom: 2em;
             line-height: 1.5;
             font-size: 1.5em;
         }
@@ -393,6 +394,7 @@
                     <span th:if="${currentUser.username != chat.possibleBuyer.username}" th:text="'@' + ${chat.possibleBuyer.username}"></span>
                     <span th:if="${chat.plant.adIsActive}" style="color: green;">Anzeige aktiv</span>
                     <span th:if="${!chat.plant.adIsActive}" style="color: red;">Anzeige nicht aktiv</span>
+                    <span th:if="${chat.unreadCount > 0}" class="badge rounded-circle" style="background-color: #ee7b3d" th:text="${chat.unreadCount}"></span>
                 </a>
             </li>
         </ul>
