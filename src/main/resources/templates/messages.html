@@ -120,7 +120,7 @@
             padding: 10px 20px;
             border-radius: 20px;
             border: none;
-            background-color: #55d808;
+            background-color: #489f04;
             color: #ffffff;
             margin-left: 5px;
         }
@@ -550,7 +550,7 @@
                 sellForm.action = '/chats/markSold/' + chatId;
 
                 var modalBody = document.querySelector('#sellModal .modal-body');
-                modalBody.textContent = 'Bist du sicher, dass du die Pflanze ' + plantName + ' an den User @' + buyerName + ' verkaufen möchtest?';
+                modalBody.textContent = 'Bist du sicher, dass du die Pflanze „' + plantName + '" an den Benutzer @' + buyerName + ' verkaufen möchtest? Diese Aktion kann man nicht rückgängig machen.';
             });
         });
     });
