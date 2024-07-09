@@ -37,13 +37,20 @@ public interface PlantRepository extends JpaRepository<Plant, Integer> {
             "AND (:maxHeight IS NULL OR p.height <= :maxHeight) " +
             "AND (:potIncluded IS NULL OR p.potIncluded = :potIncluded) " +
             "AND (:categories IS NULL OR p.category.name IN :categories) " +
+            "AND (:excludeCurrentUser IS NULL OR p.seller <> :currentUser) " +
+            "AND (:fruits IS NULL OR p.fruits = :fruits) " +
+            "AND (:airPurifying IS NULL OR p.airPurifying = :airPurifying) " +
+            "AND (:toxicForPets IS NULL OR p.toxicForPets = :toxicForPets) " +
             "AND p.adIsActive = true " +
             "ORDER BY CASE WHEN :sortPrice = 'asc' THEN p.price END ASC, " +
             "CASE WHEN :sortPrice = 'desc' THEN p.price END DESC")
     List<Plant> findByFilters(@Param("name") String name, @Param("minPrice") BigDecimal minPrice,
                               @Param("maxPrice") BigDecimal maxPrice, @Param("minHeight") BigDecimal minHeight,
                               @Param("maxHeight") BigDecimal maxHeight, @Param("potIncluded") Boolean potIncluded,
-                              @Param("categories") List<String> categories, @Param("sortPrice") String sortPrice);
+                              @Param("categories") List<String> categories,  @Param("excludeCurrentUser") Boolean excludeCurrentUser,
+                              @Param("currentUser") Benutzer currentUser,  @Param("fruits") Boolean fruits,
+                              @Param("airPurifying") Boolean airPurifying, @Param("toxicForPets") Boolean toxicForPets,
+                              @Param("sortPrice") String sortPrice);
 
 
     @Query("SELECT p FROM Plant p WHERE (:name IS NULL OR LOWER(p.name) LIKE LOWER(CONCAT('%', :name, '%'))) " +
@@ -52,13 +59,19 @@ public interface PlantRepository extends JpaRepository<Plant, Integer> {
             "AND (:minHeight IS NULL OR p.height >= :minHeight) " +
             "AND (:maxHeight IS NULL OR p.height <= :maxHeight) " +
             "AND (:potIncluded IS NULL OR p.potIncluded = :potIncluded) " +
+            "AND (:excludeCurrentUser IS NULL OR p.seller <> :currentUser) " +
+            "AND (:fruits IS NULL OR p.fruits = :fruits) " +
+            "AND (:airPurifying IS NULL OR p.airPurifying = :airPurifying) " +
+            "AND (:toxicForPets IS NULL OR p.toxicForPets = :toxicForPets) " +
             "AND p.adIsActive = true " +
             "ORDER BY CASE WHEN :sortPrice = 'asc' THEN p.price END ASC, " +
             "CASE WHEN :sortPrice = 'desc' THEN p.price END DESC")
     List<Plant> findByFiltersWithoutCategory(@Param("name") String name, @Param("minPrice") BigDecimal minPrice,
                               @Param("maxPrice") BigDecimal maxPrice, @Param("minHeight") BigDecimal minHeight,
                               @Param("maxHeight") BigDecimal maxHeight, @Param("potIncluded") Boolean potIncluded,
-                              @Param("sortPrice") String sortPrice);
+                              @Param("excludeCurrentUser") Boolean excludeCurrentUser, @Param("currentUser") Benutzer currentUser,
+                              @Param("fruits") Boolean fruits, @Param("airPurifying") Boolean airPurifying,
+                              @Param("toxicForPets") Boolean toxicForPets, @Param("sortPrice") String sortPrice);
 
     @Query("SELECT MAX(p.price) FROM Plant p WHERE p.adIsActive = true")
     BigDecimal findMaxPrice();

@@ -16,6 +16,7 @@ public class StaticPagesController implements WebMvcConfigurer {
      * This method adds view controllers to the registry.
      * Currently, it adds a view controller for the "/login" endpoint, which displays the "login" view.
      * Additional view controllers for other endpoints that do not require ModelAttributes can be added here.
+     *
      * @param registry The registry to which view controllers are added.
      */
     @Override
@@ -26,5 +27,16 @@ public class StaticPagesController implements WebMvcConfigurer {
     @GetMapping("/faq")
     public String getFaq() {
         return "forum";
+    }
+
+    @GetMapping("/aboutUs")
+    public String getAboutUs() {
+        return "aboutUs";
+    }
+
+
+    @GetMapping("/contact")
+    public String getContact() {
+        return "contact";
     }
 }

@@ -4,9 +4,12 @@
     <th:block th:insert="~{fragments/htmlHead :: head}"></th:block>
     <title>Pflegehinweise</title>
     <style>
+        body {
+            background-color: #eae5db;
+        }
         .container-custom {
-            max-width: 600px;
-            background-color: #f9f9f9;
+            max-width: 800px;
+            background-color: #fcfaf6;
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             padding: 20px;
@@ -62,6 +65,25 @@
                 margin-top: 20px;
             }
         }
+        .accordion-button:not(.collapsed) {
+            background-color: transparent;
+            color: inherit;
+            box-shadow: none;
+        }
+        .accordion-button {
+            background-color: transparent;
+            color: inherit;
+            box-shadow: none;
+        }
+        .accordion-button::after {
+            filter: invert(1);
+            box-shadow: none;
+        }
+        .accordion-button:focus {
+            box-shadow: none;
+            outline: none;
+            border-color: transparent;
+        }
     </style>
 </head>
 <body>
@@ -75,18 +97,54 @@
             </div>
             <div class="col-md-6 right-column d-flex flex-column justify-content-center">
                 <h1 th:text="${plant.name}">Pflanzenname</h1>
-                <p>Dünung: <span th:text="${careTip.getFertilization()}">Dünung: </span></p>
-                <p>Bewässerung: <span th:text="${careTip.getIrrigation()}">Bewässerung: </span></p>
-                <p>Licht: <span th:text="${careTip.getLightingConditions()}">Licht: </span></p>
-                <p>Weitere Tips: <span th:text="${careTip.getOtherTips()}">Weitere Tips: </span></p>
-                <p>Umpflanzung: <span th:text="${careTip.getPlanting()}">Umpflanzen: </span></p>
-                <p>Temperatur: <span th:text="${careTip.getTemperature()}">Temperatur: </span></p>
+                <div>
+
+                    <b>Licht:</b>
+                    <p th:if="${careTip.getLightingConditions()} == Wenig"><i class="fa-regular fa-sun" style="color: #ffd43b;"></i> Die Pflanze kann im Schatten stehen</p>
+                    <p th:if="${careTip.getLightingConditions()} == Mittel"><i class="fa-regular fa-sun" style="color: #ffd43b;"></i> <i class="fa-regular fa-sun" style="color: #ffd43b;"></i> Die Pflanze sollte im Halbschatten stehen</p>
+                    <p th:if="${careTip.getLightingConditions()} == Viel"><i class="fa-regular fa-sun" style="color: #ffd43b;"></i> <i class="fa-regular fa-sun" style="color: #ffd43b;"></i> <i class="fa-regular fa-sun" style="color: #ffd43b;"></i>
+                        Die Pflanze braucht viel Sonne</p>
+                </div>
+                <div>
+                    <b>Bewässerung:</b>
+                    <p th:if="${careTip.getIrrigation()} == Wenig"><i class="fa-solid fa-droplet" style="color: #74C0FC;"></i> Die Pflanze braucht wenig Wasser, ungefähr einmal im Monat gießen</p>
+                    <p th:if="${careTip.getIrrigation()} == Mittel"><i class="fa-solid fa-droplet" style="color: #74C0FC;"></i> <i class="fa-solid fa-droplet" style="color: #74C0FC;"></i>
+                        Die Pflanze sollte einmal die Woche gegoßen werden</p>
+                    <p th:if="${careTip.getIrrigation()} == Viel"><i class="fa-solid fa-droplet" style="color: #74C0FC;"></i> <i class="fa-solid fa-droplet" style="color: #74C0FC;"></i> <i class="fa-solid fa-droplet" style="color: #74C0FC;"></i>
+                        Die Pflanze muss Täglich gegoßen werden</p>
+                </div>
+                <div>
+                    <b>Düngung:</b>
+                    <p th:if="${careTip.getFertilization()} == Wenig"><i class="fa-solid fa-plant-wilt" style="color: #618911;"></i> Die Pflanze brauch keinen Dünger</p>
+                    <p th:if="${careTip.getFertilization()} == Mittel"><i class="fa-solid fa-plant-wilt" style="color: #618911;"></i> <i class="fa-solid fa-plant-wilt" style="color: #618911;"></i>
+                        Die Pflanze sollte einmal im Monat Dünger bekommen</p>
+                    <p th:if="${careTip.getFertilization()} == Viel"><i class="fa-solid fa-plant-wilt" style="color: #618911;"></i> <i class="fa-solid fa-plant-wilt" style="color: #618911;"></i> <i class="fa-solid fa-plant-wilt" style="color: #618911;"></i>
+                        Die Pflanze sollte einmal die Woche gedüngt werden</p>
+                </div>
+                <p><b>Temperatur: </b><span th:text="${careTip.getTemperature()}">Temperatur: </span>°C</p>
+                <p><b>Umpflanzen: </b><span th:text="${careTip.getRepotting()}">Umpflanzen: </span></p>
+                <p th:if="${plant.seed == true}"><b>Einpflanzung: </b><span th:text="${careTip.getPlanting()}">Einpflanzen: </span></p>
+            </div>
+        </div>
+        <br>
+        <div class="accordion" id="accordionExample">
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                        Weitere Tips
+                    </button>
+                </h2>
+                <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                        <p><span th:text="${careTip.otherTips}">Hinweise</span></p>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="additional-info">
-            <p>Größe: <span th:text="${plant.height}">Höhe</span> cm</p>
-            <p>Übertopf enthalten: <span th:text="${plant.potIncluded} ? 'Ja' : 'Nein'">Übertopf</span></p>
-            <p>Beschreibung: <span th:text="${plant.description}">Pflanzenbeschreibung</span></p>
+            <p><b>Größe: </b><span th:text="${plant.height}">Höhe</span> cm</p>
+            <p><b>Übertopf enthalten: </b><span th:text="${plant.potIncluded} ? 'Ja' : 'Nein'">Übertopf</span></p>
+            <p><b>Beschreibung: </b><span th:text="${plant.description}">Pflanzenbeschreibung</span></p>
         </div>
         <form th:action="@{/plants/pdf/{id}(id=${plant.plantId})}" method="get">
             <button class="btn btn-custom" type="submit">
