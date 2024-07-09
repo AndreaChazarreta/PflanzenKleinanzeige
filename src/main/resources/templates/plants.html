@@ -194,6 +194,26 @@
             outline: none;
             border-color: transparent;
         }
+        .form-check-input {
+            border-color: #9a8d71 !important;
+        }
+        .form-check-input:checked {
+            background-color: #daa150 !important;
+            border-color: #daa150 !important;
+        }
+        .form-check-input:focus {
+            box-shadow: 0 0 0 0.25rem rgba(248, 208, 157, 0.7);
+        }
+        /* Hide the up and down arrows in number input fields */
+        input[type="number"]::-webkit-outer-spin-button,
+        input[type="number"]::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        input[type="number"] {
+            -moz-appearance: textfield;
+        }
     </style>
     <title>Plants</title>
 </head>
@@ -233,10 +253,12 @@
                             </h2>
                             <div id="collapseExcludeCurrentUser" class="accordion-collapse collapse" aria-labelledby="headingExcludeCurrentUser">
                                 <div class="accordion-body">
-                                    <div class="mb-2">
-                                        <input type="radio" id="excludeCurrentUserTrue" name="excludeCurrentUser" value="true" th:checked="${excludeCurrentUser == true}" onchange="buildUrl()"><label for="excludeCurrentUserTrue"> Ja </label>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" id="excludeCurrentUserTrue" name="excludeCurrentUser" value="true" th:checked="${excludeCurrentUser == true}" onchange="buildUrl()">
+                                        <label class="form-check-label" for="excludeCurrentUserTrue"> Ja </label>
                                         <br>
-                                        <input type="radio" id="excludeCurrentUserNull" name="excludeCurrentUser" value="" th:checked="${excludeCurrentUser == null}" onchange="buildUrl()"><label for="excludeCurrentUserNull"> Nein </label>
+                                        <input class="form-check-input" type="radio" id="excludeCurrentUserNull" name="excludeCurrentUser" value="" th:checked="${excludeCurrentUser == null}" onchange="buildUrl()">
+                                        <label class="form-check-label" for="excludeCurrentUserNull"> Nein </label>
                                     </div>
                                 </div>
                             </div>
@@ -272,11 +294,11 @@
                                     <div class="d-flex">
                                         <div class="me-2">
                                             <label for="minHeight">Min</label>
-                                            <input class="form-control" id="minHeight" name="minHeight" type="number" th:value="${minHeight}" step="0.01" onchange="buildUrl()">
+                                            <input class="form-control" id="minHeight" name="minHeight" type="number" th:value="${minHeight}" min="0" step="0.01" onchange="buildUrl()">
                                         </div>
                                         <div>
                                             <label for="maxHeight">Max</label>
-                                            <input class="form-control" id="maxHeight" name="maxHeight" type="number" th:value="${maxHeight}" step="0.01" onchange="buildUrl()">
+                                            <input class="form-control" id="maxHeight" name="maxHeight" type="number" th:value="${maxHeight}" min="0" step="0.01" onchange="buildUrl()">
                                         </div>
                                     </div>
                                 </div>
@@ -290,12 +312,15 @@
                             </h2>
                             <div id="collapsePot" class="accordion-collapse collapse" aria-labelledby="headingPot">
                                 <div class="accordion-body">
-                                    <div class="mb-2">
-                                        <input type="radio" id="potIncludedTrue" name="potIncluded" value="true" th:checked="${potIncluded == true}" onchange="buildUrl()"><label for="potIncludedTrue"> Mit Übertopf</label>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" id="potIncludedTrue" name="potIncluded" value="true" th:checked="${potIncluded == true}" onchange="buildUrl()">
+                                        <label class="form-check-label" for="potIncludedTrue"> Mit Übertopf</label>
                                         <br>
-                                        <input type="radio" id="potIncludedFalse" name="potIncluded" value="false" th:checked="${potIncluded == false}" onchange="buildUrl()"><label for="potIncludedFalse"> Ohne Übertopf</label>
+                                        <input class="form-check-input" type="radio" id="potIncludedFalse" name="potIncluded" value="false" th:checked="${potIncluded == false}" onchange="buildUrl()">
+                                        <label class="form-check-label" for="potIncludedFalse"> Ohne Übertopf</label>
                                         <br>
-                                        <input type="radio" id="potIncludedNull" name="potIncluded" value="" th:checked="${potIncluded == null}" onchange="buildUrl()"><label for="potIncludedNull"> Alle anzeigen</label>
+                                        <input class="form-check-input" type="radio" id="potIncludedNull" name="potIncluded" value="" th:checked="${potIncluded == null}" onchange="buildUrl()">
+                                        <label class="form-check-label" for="potIncludedNull"> Alle anzeigen</label>
                                     </div>
                                 </div>
                             </div>
