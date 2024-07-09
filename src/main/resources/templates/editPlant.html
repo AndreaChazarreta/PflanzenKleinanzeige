@@ -193,7 +193,7 @@
                 <div class="col-md-4">
                     <div class="form-group mb-3">
                         <label for="imageFile" class="form-label">Bild (jpeg, png): </label>
-                        <input class="form-control" type="file" id="imageFile" name="imageFile" accept="image/*" onchange="previewImage()" required>
+                        <input class="form-control" type="file" id="imageFile" name="imageFile" accept="image/*" onchange="previewImage()">
                         <div class="invalid-feedback">
                             Bitte laden Sie ein Bild hoch.
                         </div>
@@ -433,6 +433,32 @@
 </div>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
+        const forms = document.querySelectorAll('.needs-validation');
+
+        Array.from(forms).forEach(form => {
+            form.addEventListener('submit', event => {
+                const imageFileInput = form.querySelector('#imageFile');
+                const existingImageWrapper = document.getElementById('existingImageWrapper');
+
+                if (!existingImageWrapper || existingImageWrapper.style.display === 'none') {
+                    if (imageFileInput.files.length === 0) {
+                        imageFileInput.setCustomValidity("Bitte laden Sie ein Bild hoch.");
+                    } else {
+                        imageFileInput.setCustomValidity("");
+                    }
+                } else {
+                    imageFileInput.setCustomValidity("");
+                }
+
+                if (!form.checkValidity()) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                }
+
+                form.classList.add('was-validated');
+            }, false);
+        });
+
         const fruitsYes = document.getElementById('fruitsYes');
         const fruitsNo = document.getElementById('fruitsNo');
         const fruitField = document.getElementById('fruitField');
@@ -462,23 +488,6 @@
             warningMessage.style.display = 'none';
         }
     }
-
-    (() => {
-        'use strict'
-
-        const forms = document.querySelectorAll('.needs-validation')
-
-        Array.from(forms).forEach(form => {
-            form.addEventListener('submit', event => {
-                if (!form.checkValidity()) {
-                    event.preventDefault()
-                    event.stopPropagation()
-                }
-
-                form.classList.add('was-validated')
-            }, false)
-        })
-    })()
 
     function previewImage() {
         const imageFile = document.getElementById('imageFile').files[0];
