@@ -243,17 +243,6 @@
             </div>
         </div>
 
-        <div th:if="${allChats.isEmpty()}" class="no-messages">
-            <div class="center-content">
-                <img th:src="@{/plant-images/ghost_green.jpg}" alt="Keine Nachrichten" class="responsive-image"/>
-                <p>Bei uns auf der Pflanzenanzeigenseite ist es ganz einfach, in Kontakt zu treten! Hier sind zwei Tipps:</p>
-                <ul style="text-align: left; display: inline-block;">
-                    <li><strong>Gib eine Pflanzenanzeige auf:</strong> Lass andere wissen, was du suchst oder was du anbietest. So wirst du sicher interessante Nachrichten erhalten!</li>
-                    <li><strong>Schreib andere Nutzer an:</strong> Hast du eine Pflanze entdeckt, die dich interessiert? Zögere nicht, dem Besitzer eine Nachricht zu senden und mehr darüber zu erfahren!</li>
-                </ul>
-            </div>
-        </div>
-
         <div class="message-input-container">
             <form th:action="@{/chats/{chatId}(chatId=${chat.chatId})}" th:object="${newMessage}" method="post" class="d-flex" style="flex-grow: 1; ">
                 <textarea type="text" th:field="*{messageContent}" class="form-control mr-2" placeholder="Nachricht eingeben" required maxlength="5000"/>
@@ -269,6 +258,16 @@
                             data-bs-toggle="modal" data-bs-target="#sellModal">Verkauft</button>
                 </form>
             </div>
+        </div>
+    </div>
+    <div th:if="${allChats.isEmpty()}" class="no-messages">
+        <div class="center-content">
+            <img th:src="@{/plant-images/ghost_green.jpg}" alt="Keine Nachrichten" class="responsive-image"/>
+            <p>Bei uns auf der Pflanzenanzeigenseite ist es ganz einfach, in Kontakt zu treten! Hier sind zwei Tipps:</p>
+            <ul style="text-align: left; display: inline-block;">
+                <li><strong>Gib eine Pflanzenanzeige auf:</strong> Lass andere wissen, was du suchst oder was du anbietest. So wirst du sicher interessante Nachrichten erhalten!</li>
+                <li><strong>Schreib andere Nutzer an:</strong> Hast du eine Pflanze entdeckt, die dich interessiert? Zögere nicht, dem Besitzer eine Nachricht zu senden und mehr darüber zu erfahren!</li>
+            </ul>
         </div>
     </div>
 </div>
