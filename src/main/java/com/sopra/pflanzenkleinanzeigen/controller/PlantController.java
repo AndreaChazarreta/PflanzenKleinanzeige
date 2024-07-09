@@ -72,6 +72,9 @@ public class PlantController {
                             @RequestParam(value = "potIncluded", required = false) Boolean potIncluded,
                             @RequestParam(value = "category", required = false) List<String> categories,
                             @RequestParam(value = "excludeCurrentUser", required = false) Boolean excludeCurrentUser,
+                            @RequestParam(value = "fruits", required = false) Boolean fruits,
+                            @RequestParam(value = "airPurifying", required = false) Boolean airPurifying,
+                            @RequestParam(value = "toxicForPets", required = false) Boolean toxicForPets,
                             @RequestParam(value = "sortPrice", required = false) String sortPrice) {
         try {
             Benutzer currentUser = userService.getCurrentUser();
@@ -79,9 +82,9 @@ public class PlantController {
             List<Plant> plants = new ArrayList<>();
 
             if(categories != null && !categories.isEmpty()){
-                plants = plantService.findPlantsByFilters(name, minPrice, maxPrice, minHeight, maxHeight, potIncluded, categories, excludeCurrentUser, currentUser, sortPrice);
+                plants = plantService.findPlantsByFilters(name, minPrice, maxPrice, minHeight, maxHeight, potIncluded, categories, excludeCurrentUser, currentUser,  fruits, airPurifying, toxicForPets, sortPrice);
             } else{
-                plants = plantService.findPlantsByFiltersWithoutCategory(name, minPrice, maxPrice, minHeight, maxHeight, potIncluded, excludeCurrentUser, currentUser, sortPrice);
+                plants = plantService.findPlantsByFiltersWithoutCategory(name, minPrice, maxPrice, minHeight, maxHeight, potIncluded, excludeCurrentUser, currentUser,  fruits, airPurifying, toxicForPets, sortPrice);
             }
 
             BigDecimal highestPrice = plantService.findMaxPrice();
@@ -100,7 +103,9 @@ public class PlantController {
             model.addAttribute("sortPrice", sortPrice);
             model.addAttribute("highestPrice", highestPrice);
             model.addAttribute("excludeCurrentUser", excludeCurrentUser);
-
+            model.addAttribute("fruits", fruits);
+            model.addAttribute("airPurifying", airPurifying);
+            model.addAttribute("toxicForPets", toxicForPets);
 
         } catch (Exception getPlantException ) {
             logger.error("Fehler beim Abrufen der Pflanzen", getPlantException);
