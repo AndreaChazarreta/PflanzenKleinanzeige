@@ -2,6 +2,7 @@ package com.sopra.pflanzenkleinanzeigen.entity;
 
 import jakarta.persistence.*;
 
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,6 +27,8 @@ public class Chat {
 
     @OneToMany(mappedBy = "chat")
     private List<Message> messages = new ArrayList<>();
+
+    private Instant lastActivity;
 
     /**
      * Default constructor for Hibernate.
@@ -64,5 +67,13 @@ public class Chat {
 
     public void setMessages(List<Message> messages) {
         this.messages = messages;
+    }
+
+    public Instant getLastActivity() {
+        return lastActivity;
+    }
+
+    public void setLastActivity(Instant lastActivity) {
+        this.lastActivity = lastActivity;
     }
 }
