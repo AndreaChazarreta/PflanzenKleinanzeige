@@ -4,9 +4,12 @@
     <th:block th:insert="~{fragments/htmlHead :: head}"></th:block>
     <title>Pflegehinweise</title>
     <style>
+        body {
+            background-color: #eae5db;
+        }
         .container-custom {
             max-width: 800px;
-            background-color: #f9f9f9;
+            background-color: #fcfaf6;
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             padding: 20px;
@@ -139,9 +142,9 @@
             </div>
         </div>
         <div class="additional-info">
-            <p>Größe: <span th:text="${plant.height}">Höhe</span> cm</p>
-            <p>Übertopf enthalten: <span th:text="${plant.potIncluded} ? 'Ja' : 'Nein'">Übertopf</span></p>
-            <p>Beschreibung: <span th:text="${plant.description}">Pflanzenbeschreibung</span></p>
+            <p><b>Größe: </b><span th:text="${plant.height}">Höhe</span> cm</p>
+            <p><b>Übertopf enthalten: </b><span th:text="${plant.potIncluded} ? 'Ja' : 'Nein'">Übertopf</span></p>
+            <p><b>Beschreibung: </b><span th:text="${plant.description}">Pflanzenbeschreibung</span></p>
         </div>
         <form th:action="@{/plants/pdf/{id}(id=${plant.plantId})}" method="get">
             <button class="btn btn-custom" type="submit">

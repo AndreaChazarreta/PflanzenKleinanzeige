@@ -3,6 +3,18 @@
 <head>
     <th:block th:insert="~{fragments/htmlHead :: head}"></th:block>
     <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+        }
+        .content {
+            flex: 1;
+        }
+        footer {
+            flex-shrink: 0;
+        }
         body {
             background-color: #e9e4da;
             font-family: Arial, sans-serif;
@@ -64,19 +76,21 @@
 <body>
 <th:block th:insert="~{fragments/htmlNavBar :: navbar}"></th:block>
 
-<div class="card">
-    <div class="row g-0">
-        <div class="col-md-4 img-container">
-            <img th:src="@{${user.getImagePath()}}" alt="User image">
-        </div>
-        <div class="col-md-8">
-            <div class="card-body">
-                <h2 class="card-title"><strong th:text="${user.getUsername()}"></strong></h2>
-                <p class="card-text"><strong>Name:</strong>
-                    <span th:text="${user.getFirstname()}"></span>
-                    <span th:text="${user.getLastname()}"></span>
-                </p>
-                <p class="card-text"><strong>E-Mail: </strong><span th:text="${user.getEmail()}"></span></p>
+<div class="content">
+    <div class="card">
+        <div class="row g-0">
+            <div class="col-md-4 img-container">
+                <img th:src="@{${user.getImagePath()}}" alt="User image">
+            </div>
+            <div class="col-md-8">
+                <div class="card-body">
+                    <h2 class="card-title"><strong th:text="${user.getUsername()}"></strong></h2>
+                    <p class="card-text"><strong>Name:</strong>
+                        <span th:text="${user.getFirstname()}"></span>
+                        <span th:text="${user.getLastname()}"></span>
+                    </p>
+                    <p class="card-text"><strong>E-Mail: </strong><span th:text="${user.getEmail()}"></span></p>
+                </div>
             </div>
         </div>
     </div>

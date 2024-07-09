@@ -194,6 +194,26 @@
             outline: none;
             border-color: transparent;
         }
+        .form-check-input {
+            border-color: #9a8d71 !important;
+        }
+        .form-check-input:checked {
+            background-color: #daa150 !important;
+            border-color: #daa150 !important;
+        }
+        .form-check-input:focus {
+            box-shadow: 0 0 0 0.25rem rgba(248, 208, 157, 0.7);
+        }
+        /* Hide the up and down arrows in number input fields */
+        input[type="number"]::-webkit-outer-spin-button,
+        input[type="number"]::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        input[type="number"] {
+            -moz-appearance: textfield;
+        }
     </style>
     <title>Plants</title>
 </head>
@@ -218,13 +238,31 @@
                     </div>
                     <div>
                         <label for="sortPrice">Sortieren nach Preis:</label>
-                        <select class="form-select mb-3" id="sortPrice" name="sortPrice" style="box-shadow: none; outline: none;">
+                        <select class="form-select mb-3" id="sortPrice" name="sortPrice" style="box-shadow: none; outline: none;" onchange="buildUrl()">
                             <option value="" th:selected="${sortPrice == null}">Keine Sortierung</option>
                             <option value="asc" th:selected="${sortPrice == 'asc'}">Preis aufsteigend</option>
                             <option value="desc" th:selected="${sortPrice == 'desc'}">Preis absteigend</option>
                         </select>
                     </div>
                     <div class="accordion" id="filterAccordion">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingExcludeCurrentUser">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExcludeCurrentUser" aria-expanded="false" aria-controls="collapseExcludeCurrentUser">
+                                    Eigene Pflanzen ausschließen
+                                </button>
+                            </h2>
+                            <div id="collapseExcludeCurrentUser" class="accordion-collapse collapse" aria-labelledby="headingExcludeCurrentUser">
+                                <div class="accordion-body">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" id="excludeCurrentUserTrue" name="excludeCurrentUser" value="true" th:checked="${excludeCurrentUser == true}" onchange="buildUrl()">
+                                        <label class="form-check-label" for="excludeCurrentUserTrue"> Ja </label>
+                                        <br>
+                                        <input class="form-check-input" type="radio" id="excludeCurrentUserNull" name="excludeCurrentUser" value="" th:checked="${excludeCurrentUser == null}" onchange="buildUrl()">
+                                        <label class="form-check-label" for="excludeCurrentUserNull"> Nein </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <div class="accordion-item">
                             <h2 class="accordion-header" id="headingPrice">
                                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapsePrice" aria-expanded="false" aria-controls="collapsePrice">
@@ -256,11 +294,11 @@
                                     <div class="d-flex">
                                         <div class="me-2">
                                             <label for="minHeight">Min</label>
-                                            <input class="form-control" id="minHeight" name="minHeight" type="number" th:value="${minHeight}" step="0.01">
+                                            <input class="form-control" id="minHeight" name="minHeight" type="number" th:value="${minHeight}" min="0" step="0.01" onchange="buildUrl()">
                                         </div>
                                         <div>
                                             <label for="maxHeight">Max</label>
-                                            <input class="form-control" id="maxHeight" name="maxHeight" type="number" th:value="${maxHeight}" step="0.01">
+                                            <input class="form-control" id="maxHeight" name="maxHeight" type="number" th:value="${maxHeight}" min="0" step="0.01" onchange="buildUrl()">
                                         </div>
                                     </div>
                                 </div>
@@ -274,13 +312,15 @@
                             </h2>
                             <div id="collapsePot" class="accordion-collapse collapse" aria-labelledby="headingPot">
                                 <div class="accordion-body">
-                                    <div style="display: flex; justify-content: space-between; align-items: center;">
-                                        <button type="button" class="button-clear" onclick="clearPotIncluded()">Löschen</button>
-                                    </div>
-                                    <div class="mb-2">
-                                        <input type="radio" id="potIncludedTrue" name="potIncluded" value="true" th:checked="${potIncluded == true}"><label for="potIncludedTrue"> Mit Übertopf</label>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" id="potIncludedTrue" name="potIncluded" value="true" th:checked="${potIncluded == true}" onchange="buildUrl()">
+                                        <label class="form-check-label" for="potIncludedTrue"> Mit Übertopf</label>
                                         <br>
-                                        <input type="radio" id="potIncludedFalse" name="potIncluded" value="false" th:checked="${potIncluded == false}"><label for="potIncludedFalse"> Ohne Übertopf</label>
+                                        <input class="form-check-input" type="radio" id="potIncludedFalse" name="potIncluded" value="false" th:checked="${potIncluded == false}" onchange="buildUrl()">
+                                        <label class="form-check-label" for="potIncludedFalse"> Ohne Übertopf</label>
+                                        <br>
+                                        <input class="form-check-input" type="radio" id="potIncludedNull" name="potIncluded" value="" th:checked="${potIncluded == null}" onchange="buildUrl()">
+                                        <label class="form-check-label" for="potIncludedNull"> Alle anzeigen</label>
                                     </div>
                                 </div>
                             </div>
@@ -294,17 +334,19 @@
                             <div id="collapseCategory" class="accordion-collapse collapse" aria-labelledby="headingCategory">
                                 <div class="accordion-body">
                                     <div class="mb-2">
-                                        <label><input type="checkbox" name="category" value="Baum" th:checked="${categories != null && categories.contains('Baum')}"> Baum</label>
+                                        <label><input type="checkbox" name="category" value="Baum" th:checked="${categories != null && categories.contains('Baum')}" onchange="buildUrl()"> Baum</label>
                                         <br>
-                                        <label><input type="checkbox" name="category" value="Zierpflanze" th:checked="${categories != null && categories.contains('Zierpflanze')}"> Zierpflanze</label>
+                                        <label><input type="checkbox" name="category" value="Blume" th:checked="${categories != null && categories.contains('Blume')}" onchange="buildUrl()"> Blume</label>
                                         <br>
-                                        <label><input type="checkbox" name="category" value="Grünpflanze" th:checked="${categories != null && categories.contains('Grünpflanze')}"> Grünpflanze</label>
+                                        <label><input type="checkbox" name="category" value="Busch" th:checked="${categories != null && categories.contains('Busch')}" onchange="buildUrl()"> Busch</label>
                                         <br>
-                                        <label><input type="checkbox" name="category" value="Draußenpflanze" th:checked="${categories != null && categories.contains('Draußenpflanze')}"> Draußenpflanze</label>
+                                        <label><input type="checkbox" name="category" value="Gräser" th:checked="${categories != null && categories.contains('Gräser')}" onchange="buildUrl()"> Gräser</label>
                                         <br>
-                                        <label><input type="checkbox" name="category" value="Kräuter" th:checked="${categories != null && categories.contains('Kräuter')}"> Kräuter</label>
+                                        <label><input type="checkbox" name="category" value="Kräuter" th:checked="${categories != null && categories.contains('Kräuter')}" onchange="buildUrl()"> Kräuter</label>
                                         <br>
-                                        <label><input type="checkbox" name="category" value="Strauß" th:checked="${categories != null && categories.contains('Strauß')}"> Strauß</label>
+                                        <label><input type="checkbox" name="category" value="Gemüse" th:checked="${categories != null && categories.contains('Gemüse')}" onchange="buildUrl()"> Gemüse</label>
+                                        <br>
+                                        <label><input type="checkbox" name="category" value="Sonstiges" th:checked="${categories != null && categories.contains('Sonstiges')}" onchange="buildUrl()"> Sonstiges</label>
                                     </div>
                                 </div>
                             </div>
@@ -361,6 +403,10 @@
             document.getElementById('maxPrice').value = values[1];
         });
 
+        slider.noUiSlider.on('set', function() {
+            buildUrl();
+        });
+
         function buildUrl() {
             const name = document.getElementById('name').value.trim();
             const minPrice = document.getElementById('minPrice').value;
@@ -369,9 +415,10 @@
             const maxHeight = document.getElementById('maxHeight').value;
             const potIncluded = document.querySelector('input[name="potIncluded"]:checked') ? document.querySelector('input[name="potIncluded"]:checked').value : '';
             const categories = Array.from(document.querySelectorAll('input[name="category"]:checked')).map(checkbox => checkbox.value);
+            const excludeCurrentUser = document.querySelector('input[name="excludeCurrentUser"]:checked') ? document.querySelector('input[name="excludeCurrentUser"]:checked').value : '';
             const sortPrice = document.getElementById('sortPrice').value;
 
-            const params = { name, minHeight, maxHeight, potIncluded, category: categories.join(','), sortPrice };
+            const params = { name, minHeight, maxHeight, potIncluded, category: categories.join(','), excludeCurrentUser, sortPrice };
 
             if (minPrice !== minPriceDefault.toFixed(2)) params.minPrice = minPrice;
             if (maxPrice !== maxPriceDefault.toFixed(2)) params.maxPrice = maxPrice;
@@ -393,15 +440,7 @@
             buildUrl();
         }
 
-        function clearPotIncluded() {
-            // Entfernt die Auswahl der Radio-Buttons
-            document.getElementById('potIncludedTrue').checked = false;
-            document.getElementById('potIncludedFalse').checked = false;
-            buildUrl(); // Aktualisiert die Ansicht, um alle Pflanzen anzuzeigen
-        }
-
         window.buildUrl = buildUrl;
-        window.clearPotIncluded = clearPotIncluded;
         window.clearPriceFilter = clearPriceFilter;
 
         // Restore accordion state from localStorage

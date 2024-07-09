@@ -3,6 +3,20 @@
 <head>
     <th:block th:insert="~{fragments/htmlHead :: head}"></th:block>
     <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+        }
+        body {
+            display: flex;
+            flex-direction: column;
+        }
+        .content {
+            flex: 1;
+        }
+        footer {
+            flex-shrink: 0;
+        }
         img {
             max-width: 100%;
             max-height: 200px;
@@ -143,19 +157,19 @@
                     <a class="nav-link" href="/myWishlist">Meine Wunschliste</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" style="font-weight: bold;" href="/mySelledPlants">Verkaufte Pflanzen</a>
+                    <a class="nav-link active" style="font-weight: bold;" href="/mySoldPlants">Verkaufte Pflanzen</a>
                 </li>
             </ul>
-            <form class="search-bar" th:action="@{/myPlants}" method="get" onsubmit="return checkSearch()">
+            <form class="search-bar" th:action="@{/mySoldPlants}" method="get" onsubmit="return checkSearch()">
                 <input class="form-control" id="name" name="name" label="Suche nach Name:" type="text" th:value="${name}" placeholder="Suche nach Name">
                 <button class="btn" type="submit"><i class="bi bi-search"></i></button>
             </form>
         </div>
     </div>
 </nav>
-<div class="container mt-5 mb-5">
+<div class="container mt-5 mb-5 content">
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
-        <th:block th:each="plant : ${selledPlants}">
+        <th:block th:each="plant : ${soldPlants}">
             <div class="col">
                 <div class="card">
                     <a th:href="@{/plants/{id}(id=${plant.plantId})}">
@@ -188,7 +202,7 @@
     function checkSearch() {
         var searchField = document.getElementById("name").value;
         if (searchField.trim() === "") {
-            window.location.href = "/mySelledPlants";
+            window.location.href = "/mySoldPlants";
             return false;
         }
         return true;
@@ -202,4 +216,5 @@
     });
 </script>
 </body>
+<th:block th:insert="~{fragments/footer :: footer}"></th:block>
 </html>
