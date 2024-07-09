@@ -226,6 +226,22 @@
                     </div>
                     <div class="accordion" id="filterAccordion">
                         <div class="accordion-item">
+                            <h2 class="accordion-header" id="headingExcludeCurrentUser">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExcludeCurrentUser" aria-expanded="false" aria-controls="collapseExcludeCurrentUser">
+                                    Eigene Pflanzen ausschließen
+                                </button>
+                            </h2>
+                            <div id="collapseExcludeCurrentUser" class="accordion-collapse collapse" aria-labelledby="headingExcludeCurrentUser">
+                                <div class="accordion-body">
+                                    <div class="mb-2">
+                                        <input type="radio" id="excludeCurrentUserTrue" name="excludeCurrentUser" value="true" th:checked="${excludeCurrentUser == true}"><label for="excludeCurrentUserTrue"> Ja </label>
+                                        <br>
+                                        <input type="radio" id="excludeCurrentUserNull" name="excludeCurrentUser" value="" th:checked="${excludeCurrentUser == null}"><label for="excludeCurrentUserNull"> Nein </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
                             <h2 class="accordion-header" id="headingPrice">
                                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapsePrice" aria-expanded="false" aria-controls="collapsePrice">
                                     Preis in €
@@ -369,9 +385,10 @@
             const maxHeight = document.getElementById('maxHeight').value;
             const potIncluded = document.querySelector('input[name="potIncluded"]:checked') ? document.querySelector('input[name="potIncluded"]:checked').value : '';
             const categories = Array.from(document.querySelectorAll('input[name="category"]:checked')).map(checkbox => checkbox.value);
+            const excludeCurrentUser = document.querySelector('input[name="excludeCurrentUser"]:checked') ? document.querySelector('input[name="excludeCurrentUser"]:checked').value : '';
             const sortPrice = document.getElementById('sortPrice').value;
 
-            const params = { name, minHeight, maxHeight, potIncluded, category: categories.join(','), sortPrice };
+            const params = { name, minHeight, maxHeight, potIncluded, category: categories.join(','), excludeCurrentUser, sortPrice };
 
             if (minPrice !== minPriceDefault.toFixed(2)) params.minPrice = minPrice;
             if (maxPrice !== maxPriceDefault.toFixed(2)) params.maxPrice = maxPrice;
