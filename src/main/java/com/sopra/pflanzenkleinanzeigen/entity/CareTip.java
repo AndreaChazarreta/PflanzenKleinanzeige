@@ -40,7 +40,6 @@ public class CareTip {
     @JoinColumn (name = "categoryId")
     private Category category;
 
-
     public CareTip() {
     }
 

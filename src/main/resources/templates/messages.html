@@ -102,12 +102,10 @@
             z-index: 1040;
             background-color: #e5e1d7;
         }
-
         .message-input-container form {
             display: flex;
             flex-grow: 1;
         }
-
         .message-input-container input {
             flex-grow: 1;
             padding: 10px;
@@ -115,7 +113,6 @@
             border: 1px solid #e9ecef;
             margin-right: 10px;
         }
-
         .message-input-container button {
             padding: 10px 20px;
             border-radius: 20px;
@@ -124,11 +121,9 @@
             color: #ffffff;
             margin-left: 5px;
         }
-
         .message-input-container div form {
             margin-left: 10px;
         }
-
         .no-messages {
             display: flex;
             justify-content: center;
@@ -205,19 +200,15 @@
         [id^="plant-leaf-"] {
             animation: leaf 2s infinite ease-in-out;
         }
-
         #plant-leaf-2 {
             animation-delay: .5s;
         }
-
         #plant-leaf-3 {
             animation-delay: .75s;
         }
-
         #plant-leaf-4 {
             animation-delay: 1s;
         }
-
         @keyframes leaf {
             0%, 100% {
                 transform-origin: 100% 100%;
@@ -228,119 +219,96 @@
                 transform: translateX(-129.4999px) translateY(-59.99983px) rotate(6deg);
             }
         }
-
         #bb1 {
             animation: chat1 12s infinite ease-in-out;
         }
-
         #bb2 {
             animation: chat2 12s infinite ease-in-out;
         }
-
         #bb3 {
             animation: chat3 12s infinite ease-in-out;
         }
-
         #bb4 {
             animation: chat4 12s infinite ease-in-out;
         }
-
         @keyframes chat1 {
             0%, 90% {
                 transform: translateY(0);
                 opacity: 1;
             }
-
             10%, 20% {
                 transform: translateY(-150px);
                 opacity: 0;
             }
-
             21% {
                 transform: translateY(450px);
                 opacity: 0;
             }
-
             30%, 40% {
                 transform: translateY(350px);
                 opacity: 1;
             }
-
             50%, 60% {
                 transform: translateY(176px);
                 opacity: 1;
             }
-
             70%, 80% {
                 transform: translateY(176px);
                 opacity: 1;
             }
         }
-
         @keyframes chat2 {
             0%, 90% {
                 transform: translateY(0);
                 opacity: 1;
             }
-
             10%, 20% {
                 transform: translateY(-176px);
                 opacity: 1;
             }
-
             30%, 40% {
                 transform: translateY(-356px);
                 opacity: 0;
             }
-
             41% {
                 transform: translateY(274px);
                 opacity: 0;
             }
-
             50%, 60% {
                 transform: translateY(174px);
                 opacity: 1;
             }
-
             70%, 80% {
                 transform: translateY(174px);
                 opacity: 1;
             }
         }
-
         @keyframes chat3 {
             0%, 90% {
                 transform: translateY(0);
                 opacity: 1;
             }
-
             10%, 20% {
                 transform: translateY(-176px);
                 opacity: 1;
             }
-
             30%, 40% {
                 transform: translateY(-342px);
                 opacity: 1;
             }
-
             50%, 60%  {
                 transform: translateY(-528px);
                 opacity: 0;
             }
-
             61% {
                 transform: translateY(274px);
                 opacity: 0;
             }
-
             70%, 80% {
                 transform: translateY(174px);
                 opacity: 0;
             }
         }
-
         @keyframes chat4 {
             0%, 100% {
                 transform: translateY(-704px);
@@ -350,27 +318,22 @@
                 transform: translateY(0);
                 opacity: 0;
             }
-
             10%, 20% {
                 transform: translateY(-176px);
                 opacity: 1;
             }
-
             30%, 40% {
                 transform: translateY(-342px);
                 opacity: 1;
             }
-
             50%, 60%  {
                 transform: translateY(-528px);
                 opacity: 1;
             }
-
             70%, 80% {
                 transform: translateY(-528px);
                 opacity: 1;
             }
-
             90% {
                 transform: translateY(-704px);
                 opacity: 0;
@@ -399,7 +362,6 @@
             </li>
         </ul>
     </div>
-
     <div th:if="${!allChats.isEmpty()}" class="message-area">
         <div class="header p-3 d-flex align-items-center" style="background-color: #e5e1d7;">
             <a th:href="@{/plants/{id}(id=${chat.plant.plantId})}">
@@ -423,7 +385,6 @@
                 <p th:if="${currentUser.username != chat.possibleBuyer.username}" class="alert-heading">Sie haben diese Pflanze verkauft</p>
             </div>
         </div>
-
         <div th:if="${!allChats.isEmpty()}" class="message-container" id="messageContainer">
             <div th:each="message: ${allMessages}">
                 <div th:if="${message.sender.username == currentUser.username}" class="message-wrapper sender">
@@ -436,7 +397,6 @@
                 </div>
             </div>
         </div>
-
         <div class="message-input-container">
             <form th:action="@{/chats/{chatId}(chatId=${chat.chatId})}" th:object="${newMessage}" method="post" class="d-flex" style="flex-grow: 1; ">
                 <textarea type="text" th:field="*{messageContent}" class="form-control mr-2" placeholder="Nachricht eingeben" required maxlength="5000"/>
@@ -562,6 +522,5 @@
         });
     });
 </script>
-
 </body>
 </html>

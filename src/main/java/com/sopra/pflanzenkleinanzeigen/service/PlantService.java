@@ -144,7 +144,6 @@ public class PlantService {
     public List<Plant> searchWishlistPlantsByName(Benutzer user, String name) {
         List<Plant> wishlist = getWishlistForUser(user);
 
-        // Filter results to ensure they are in the user's wishlist
         List<Plant> prefixResults = plantRepository.findByPrefix(name).stream()
                 .filter(wishlist::contains)
                 .collect(Collectors.toList());
@@ -153,7 +152,6 @@ public class PlantService {
                 .filter(wishlist::contains)
                 .collect(Collectors.toList());
 
-        // Sort the final results: first by prefix, then by name
         List<Plant> finalResults = new ArrayList<>(prefixResults);
         finalResults.addAll(containsResults);
 

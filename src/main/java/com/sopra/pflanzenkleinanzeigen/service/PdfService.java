@@ -23,25 +23,21 @@ public class PdfService {
             PdfWriter.getInstance(document, out);
             document.open();
 
-            // Load image from classpath
             ClassPathResource imgFile = new ClassPathResource("static/plant-images/logoPlantHeart.png");
             InputStream imgStream = imgFile.getInputStream();
             Image img = Image.getInstance(imgStream.readAllBytes());
             img.scaleToFit(50, 50);
             img.setAlignment(Element.ALIGN_LEFT);
 
-            // Title
             Font titleFont = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 20);
             Paragraph title = new Paragraph("Pflegehinweise für " + plant.getName(), titleFont);
             title.setAlignment(Element.ALIGN_CENTER);
 
-            // Create a table with 2 columns for the image and title
             PdfPTable titleTable = new PdfPTable(2);
             titleTable.setWidthPercentage(100);
             float[] titleTableWidths = {1f, 4f}; // Adjust the widths as needed
             titleTable.setWidths(titleTableWidths);
 
-            // Add the image and title to the table
             PdfPCell imgCell = new PdfPCell(img);
             imgCell.setBorder(Rectangle.NO_BORDER);
             imgCell.setVerticalAlignment(Element.ALIGN_MIDDLE);
@@ -55,20 +51,16 @@ public class PdfService {
 
             document.add(titleTable);
 
-            // Add a table
             PdfPTable table = new PdfPTable(2); // 2 columns
             table.setWidthPercentage(100);
             table.setSpacingBefore(10f);
             table.setSpacingAfter(10f);
 
-            // Set Column widths
             float[] columnWidths = {1f, 2f};
             table.setWidths(columnWidths);
 
-            // Retrieve CareTip associated with the plant
             CareTip careTip = plant.getCareTip();
 
-            // Add care tips to table
             addCareTipRow(table, "Bewässerung", careTip.getIrrigation(), generateIrrigationDescription(careTip.getIrrigation()));
             addCareTipRow(table, "Düngung", careTip.getFertilization(), generateFertilizationDescription(careTip.getFertilization()));
             addCareTipRow(table, "Lichtverhältnisse", careTip.getLightingConditions(), generateLightingDescription(careTip.getLightingConditions()));
