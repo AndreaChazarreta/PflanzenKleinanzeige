@@ -883,7 +883,7 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
 
         Chat chat2 = new Chat();
         chat2.setPlant(narzisse);
-        chat2.setPossibleBuyer(natti);
+        chat2.setPossibleBuyer(sharon);
         chatService.saveChat(chat2);
 
         Chat chat3 = new Chat();
@@ -970,5 +970,82 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         message10.setMessageContent("Hallo Andrea, aus welchen Kakteen besteht denn die Sammlung?");
         message10.setSentAt(anInstant6);
         messageService.saveMessage(message10);
+
+        Instant anInstant8 = Instant.ofEpochSecond(1720190000);
+        Instant anInstant9 = Instant.ofEpochSecond(1720190600);
+        Instant anInstant10 = Instant.ofEpochSecond(1720191200);
+        Instant anInstant11 = Instant.ofEpochSecond(1720191800);
+
+        Message message11 = new Message();
+        message11.setChat(chat2);
+        message11.setSender(sharon);
+        message11.setMessageContent("Hallo Andrea, ich bin sehr an deiner Narzisse interessiert. Ist sie noch zu haben?");
+        message11.setSentAt(anInstant8);
+        messageService.saveMessage(message11);
+
+        Message message12 = new Message();
+        message12.setChat(chat2);
+        message12.setSender(andrea);
+        message12.setMessageContent("Hallo Sharon, ja, die Narzisse ist noch verfügbar. Sie ist in einem sehr guten Zustand.");
+        message12.setSentAt(anInstant9);
+        messageService.saveMessage(message12);
+
+        Message message13 = new Message();
+        message13.setChat(chat2);
+        message13.setSender(sharon);
+        message13.setMessageContent("Super! Ich habe gelesen, dass sie giftig für Haustiere sein kann. Ich habe eine Katze, wäre das ein Problem?");
+        message13.setSentAt(anInstant10);
+        messageService.saveMessage(message13);
+
+        Message message14 = new Message();
+        message14.setChat(chat2);
+        message14.setSender(andrea);
+        message14.setMessageContent("Ja, das stimmt. Narzissen können für Haustiere giftig sein. Vielleicht wäre eine andere Pflanze besser geeignet?");
+        message14.setSentAt(anInstant11);
+        messageService.saveMessage(message14);
+
+        Message message15 = new Message();
+        message15.setChat(chat2);
+        message15.setSender(sharon);
+        message15.setMessageContent("Danke für den Hinweis. Hast du andere Pflanzen, die für Haustiere sicher sind?");
+        message15.setSentAt(anInstant11);
+        messageService.saveMessage(message15);
+
+        Message message16 = new Message();
+        message16.setChat(chat2);
+        message16.setSender(andrea);
+        message16.setMessageContent("Ja, ich habe einige andere Pflanzen, die für Haustiere sicher sind. Zum Beispiel habe ich eine schöne Sammlung von Kakteen.");
+        message16.setSentAt(anInstant11);
+        messageService.saveMessage(message16);
+
+        Message message17 = new Message();
+        message17.setChat(chat2);
+        message17.setSender(sharon);
+        message17.setMessageContent("Das klingt interessant. Kannst du mir mehr über die Kaktussammlung erzählen?");
+        message17.setSentAt(anInstant11);
+        messageService.saveMessage(message17);
+
+        Message message18 = new Message();
+        message18.setChat(chat2);
+        message18.setSender(andrea);
+        message18.setMessageContent("Die Kaktussammlung besteht aus verschiedenen Arten von Kakteen, alle sind pflegeleicht und ungiftig für Haustiere.");
+        message18.setSentAt(anInstant11);
+        messageService.saveMessage(message18);
+
+        Message message19 = new Message();
+        message19.setChat(chat2);
+        message19.setSender(sharon);
+        message19.setMessageContent("Das ist toll, danke! Wann kann ich es abholen?");
+        message19.setSentAt(anInstant11);
+        messageService.saveMessage(message19);
+
+        Message message20 = new Message();
+        message20.setChat(chat2);
+        message20.setSender(andrea);
+        message20.setMessageContent("Würde es am Wochenende passen?");
+        message20.setSentAt(anInstant11);
+        messageService.saveMessage(message20);
+
     }
+
 }
