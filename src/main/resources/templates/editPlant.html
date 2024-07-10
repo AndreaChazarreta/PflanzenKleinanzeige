@@ -71,18 +71,15 @@
         .btn-success {
             margin-top: 20px;
         }
-
         .image-preview-container {
             position: relative;
             display: inline-block;
         }
-
         .image-preview-container img {
             display: block;
             max-width: 200px;
             height: auto;
         }
-
         .image-preview-container .remove-image::before {
             content: "×";
             display: block;
@@ -90,7 +87,6 @@
             font-weight: 400;
             line-height: 30px;
         }
-
         .image-preview-container:hover .remove-image {
             display: block;
         }
@@ -98,13 +94,11 @@
             position: relative;
             display: inline-block;
         }
-
         .image-preview-container img {
             display: block;
             max-width: 200px;
             height: auto;
         }
-
         .image-preview-container .remove-image {
             position: absolute;
             top: 0;
@@ -123,7 +117,6 @@
             font-weight: normal;
             padding: 0;
         }
-
         .image-preview-container .remove-image::before {
             content: "×";
             display: block;
@@ -131,20 +124,17 @@
             font-weight: 400;
             line-height: 30px;
         }
-
         .image-preview-container:hover .remove-image {
             display: block;
         }
-.row {
-    display: flex;
-    align-items: center;
-}
-
+        .row {
+            display: flex;
+            align-items: center;
+        }
     </style>
 </head>
 <body style="background-color: #eae5db">
 <th:block th:insert="~{fragments/htmlNavBar :: navbar}"></th:block>
-
 <div class="container mt-5">
     <div class="form-container position-relative">
         <a th:href="@{/plants}" class="btn-close position-absolute top-0 end-0 m-3" aria-label="Close"></a>
@@ -327,7 +317,6 @@
                     </div>
                 </div>
             </div>
-
             <div class="row">
                 <div class="col-md-2">
                     <div class="form-group">
@@ -444,7 +433,6 @@
                     Bitte wähle aus, ob die Pflanze Obst gibt.
                 </div>
             </div>
-
             <div class="form-group" id="fruitField" style="display:none;">
                 <label for="fruit">Früchte:</label>
                 <input type="text" class="form-control" id="fruit" placeholder="Obst" th:field="*{fruit}"/>
@@ -547,7 +535,6 @@
         document.getElementById('imageFile').value = "";
     }
 </script>
-
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>
