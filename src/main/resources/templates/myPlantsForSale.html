@@ -263,7 +263,7 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Abbrechen</button>
                 <form id="deleteForm" th:action="@{/plants/delete/{id}(id=0)}" method="post">
-                    <button type="submit" class="btn btn-btn-secondary" id="confirmDeleteButton">Entfernen</button>
+                    <button type="submit" class="btn btn-btn-secondary" id="confirmDeleteButton" style="background-color:#eec548">Entfernen</button>
                 </form>
             </div>
         </div>
@@ -281,7 +281,7 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Abbrechen</button>
                 <form id="deactivateForm" th:action="@{/plants/deactivate/{id}(id=0)}" method="post">
-                    <button type="submit" class="btn btn-warning" id="confirmDeactivateButton">Entfernen</button>
+                    <button type="submit" class="btn btn-btn-secondary" id="confirmDeactivateButton" style="background-color:#eec548">Entfernen</button>
                 </form>
             </div>
         </div>
