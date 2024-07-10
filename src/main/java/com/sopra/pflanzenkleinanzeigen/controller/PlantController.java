@@ -56,6 +56,7 @@ public class PlantController {
     @Autowired
     private CareTipService careTipService;
 
+    private Boolean created = false;
 
     //TODO: brauchen wir für solche funktionen try and catch? Hier kann relativ wenig schief gehen
     /**
@@ -108,6 +109,11 @@ public class PlantController {
             model.addAttribute("airPurifying", airPurifying);
             model.addAttribute("toxicForPets", toxicForPets);
 
+            if(created){
+                model.addAttribute("created", created);
+                created = false;
+            }
+
         } catch (Exception getPlantException ) {
             logger.error("Fehler beim Abrufen der Pflanzen", getPlantException);
             model.addAttribute("error", "Ein Fehler ist aufgetreten. Bitte versuchen Sie es später erneut.");
@@ -151,6 +157,7 @@ public class PlantController {
         return "createPlant";
     }
 
+
     /**
      * This method adds a new plant.
      * @param newPlant The new plant to be added.
@@ -188,6 +195,7 @@ public class PlantController {
             model.addAttribute("error", "Ein Fehler ist aufgetreten: " + e.getMessage());
             return "createPlant";
         }
+        created = true;
         return "redirect:/plants";
     }
 
