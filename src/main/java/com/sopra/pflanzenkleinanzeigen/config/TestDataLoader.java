@@ -557,7 +557,7 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         orangenbaum.setPrice(new BigDecimal("55.00"));
         orangenbaum.setHeight(new BigDecimal("150.00"));
         orangenbaum.setDescription("Ein Orangenbaum, der süße Früchte trägt.");
-        orangenbaum.setSeller(natti);
+        orangenbaum.setSeller(andrea);
         orangenbaum.setImagePath("/plant-images/orangenbaum.JPG");
         orangenbaum.setCategory(category1);
         orangenbaum.setCareTip(careTip4);
@@ -876,6 +876,127 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         gummibaum.setToxicForPets(false);
         plantService.savePlantDataLoader(gummibaum);
 
+        Plant mandarine = new Plant();
+        mandarine.setName("Mandarine");
+        mandarine.setPrice(new BigDecimal("30.00"));
+        mandarine.setHeight(new BigDecimal("150.00"));
+        mandarine.setDescription("Ein Mandarinenbaum, der süße Früchte trägt.");
+        mandarine.setSeller(natti);
+        mandarine.setImagePath("/plant-images/Mandarine.jpeg");
+        mandarine.setCategory(category1);
+        mandarine.setCareTip(careTip4);
+        mandarine.setPotIncluded(true);
+        mandarine.setSeed(false);
+        mandarine.setLifespan("Mehrjährig");
+        mandarine.setColor("Grün");
+        mandarine.setAirPurifying(false);
+        mandarine.setFloweringTime("Ganzjährig");
+        mandarine.setGrowthRate("Langsam");
+        mandarine.setUsability("Essbar");
+        mandarine.setLeafShape("Oval");
+        mandarine.setStandort("Sonne");
+        mandarine.setFruits(true);
+        mandarine.setFruit("Mandarine");
+        mandarine.setToxicForPets(false);
+        plantService.savePlantDataLoader(mandarine);
+
+        Plant blutorange = new Plant();
+        blutorange.setName("Blutorange");
+        blutorange.setPrice(new BigDecimal("35.00"));
+        blutorange.setHeight(new BigDecimal("150.00"));
+        blutorange.setDescription("Ein Blutorangenbaum, der süße Früchte trägt.");
+        blutorange.setSeller(sharon);
+        blutorange.setImagePath("/plant-images/Blutorange.jpeg");
+        blutorange.setCategory(category1);
+        blutorange.setCareTip(careTip4);
+        blutorange.setPotIncluded(true);
+        blutorange.setSeed(false);
+        blutorange.setLifespan("Mehrjährig");
+        blutorange.setColor("Grün");
+        blutorange.setAirPurifying(false);
+        blutorange.setFloweringTime("Ganzjährig");
+        blutorange.setGrowthRate("Langsam");
+        blutorange.setUsability("Essbar");
+        blutorange.setLeafShape("Oval");
+        blutorange.setStandort("Sonne");
+        blutorange.setFruits(true);
+        blutorange.setFruit("Blutorange");
+        blutorange.setToxicForPets(false);
+        plantService.savePlantDataLoader(blutorange);
+
+        Plant limette = new Plant();
+        limette.setName("Limette");
+        limette.setPrice(new BigDecimal("28.00"));
+        limette.setHeight(new BigDecimal("140.00"));
+        limette.setDescription("Ein Limettenbaum, der saftige Früchte trägt.");
+        limette.setSeller(andrea);
+        limette.setImagePath("/plant-images/Limette.jpeg");
+        limette.setCategory(category1);
+        limette.setCareTip(careTip4);
+        limette.setPotIncluded(true);
+        limette.setSeed(false);
+        limette.setLifespan("Mehrjährig");
+        limette.setColor("Grün");
+        limette.setAirPurifying(false);
+        limette.setFloweringTime("Ganzjährig");
+        limette.setGrowthRate("Langsam");
+        limette.setUsability("Essbar");
+        limette.setLeafShape("Oval");
+        limette.setStandort("Sonne");
+        limette.setFruits(true);
+        limette.setFruit("Limette");
+        limette.setToxicForPets(false);
+        plantService.savePlantDataLoader(limette);
+
+        Plant apfelbaum = new Plant();
+        apfelbaum.setName("Apfelbaum");
+        apfelbaum.setPrice(new BigDecimal("40.00"));
+        apfelbaum.setHeight(new BigDecimal("200.00"));
+        apfelbaum.setDescription("Ein Apfelbaum, der köstliche Früchte trägt.");
+        apfelbaum.setSeller(sena);
+        apfelbaum.setImagePath("/plant-images/Apfel.jpeg");
+        apfelbaum.setCategory(category1);
+        apfelbaum.setCareTip(careTip4);
+        apfelbaum.setPotIncluded(true);
+        apfelbaum.setSeed(false);
+        apfelbaum.setLifespan("Mehrjährig");
+        apfelbaum.setColor("Grün");
+        apfelbaum.setAirPurifying(false);
+        apfelbaum.setFloweringTime("Frühling");
+        apfelbaum.setGrowthRate("Mittel");
+        apfelbaum.setUsability("Essbar");
+        apfelbaum.setLeafShape("Oval");
+        apfelbaum.setStandort("Sonne");
+        apfelbaum.setFruits(true);
+        apfelbaum.setFruit("Apfel");
+        apfelbaum.setToxicForPets(false);
+        plantService.savePlantDataLoader(apfelbaum);
+
+        Plant mangobaum = new Plant();
+        mangobaum.setName("Mangobaum");
+        mangobaum.setPrice(new BigDecimal("50.00"));
+        mangobaum.setHeight(new BigDecimal("300.00"));
+        mangobaum.setDescription("Ein Mangobaum, der süße Früchte trägt.");
+        mangobaum.setSeller(andrea);
+        mangobaum.setImagePath("/plant-images/Mango.jpeg");
+        mangobaum.setCategory(category1);
+        mangobaum.setCareTip(careTip4);
+        mangobaum.setPotIncluded(true);
+        mangobaum.setSeed(false);
+        mangobaum.setLifespan("Mehrjährig");
+        mangobaum.setColor("Grün");
+        mangobaum.setAirPurifying(false);
+        mangobaum.setFloweringTime("Ganzjährig");
+        mangobaum.setGrowthRate("Langsam");
+        mangobaum.setUsability("Essbar");
+        mangobaum.setLeafShape("Oval");
+        mangobaum.setStandort("Sonne");
+        mangobaum.setFruits(true);
+        mangobaum.setFruit("Mango");
+        mangobaum.setToxicForPets(false);
+        plantService.savePlantDataLoader(mangobaum);
+
+
         Chat chat1 = new Chat();
         chat1.setPlant(rundkaktus);
         chat1.setPossibleBuyer(sena);
@@ -1045,6 +1166,8 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         message20.setMessageContent("Würde es am Wochenende passen?");
         message20.setSentAt(anInstant11);
         messageService.saveMessage(message20);
+
+
 
     }
 
