@@ -88,7 +88,15 @@ public class ChatController {
                 model.addAttribute("error", "Sie sind nicht berechtigt, Nachrichten in diesem Chat zu sehen, da Sie kein Teilnehmer sind.");
                 return "error";
             }
-            model.addAttribute("allChats", chatService.findUserChats(currentUser.getUserId()));
+
+            chat.getMessages().forEach(message -> {
+                if (!message.getSender().equals(currentUser) && !message.isRead()) {
+                    message.setRead(true);
+                    messageService.saveMessage(message);
+                }
+            });
+
+            model.addAttribute("allChats", chatService.findUserChatsWithUnreadCount(currentUser.getUserId()));
             model.addAttribute("chat", chat);
             model.addAttribute("allMessages", chat.getMessages());
             model.addAttribute("newMessage", new Message());
@@ -147,6 +155,7 @@ public class ChatController {
 
             newChat.setPossibleBuyer(currentBenutzer);
             newChat.setPlant(interestedPlant);
+            newChat.setLastActivity(Instant.now());
             chatService.saveChat(newChat);
             return "redirect:/chats/" + newChat.getChatId();
         } catch (Exception cannotCreateChatException) {
@@ -204,7 +213,9 @@ public class ChatController {
             }
 
             newMessage.setSentAt(Instant.now());
+            chat.setLastActivity(Instant.now());
             messageService.saveMessage(newMessage);
+            chatService.saveChat(chat);
             return "redirect:/chats/" + chatId;
         } catch (Exception cannotCreateMessageException){
             logger.error("Fehler beim Senden einer neuen Nachricht", cannotCreateMessageException);

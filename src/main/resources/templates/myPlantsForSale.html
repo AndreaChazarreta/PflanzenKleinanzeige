@@ -3,6 +3,20 @@
 <head>
     <th:block th:insert="~{fragments/htmlHead :: head}"></th:block>
     <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+        }
+        body {
+            display: flex;
+            flex-direction: column;
+        }
+        .content {
+            flex: 1;
+        }
+        footer {
+            flex-shrink: 0;
+        }
         img {
             max-width: 100%;
             max-height: 200px;
@@ -20,28 +34,46 @@
             text-decoration: none;
             color: inherit;
         }
+        .navbar-custom {
+            background-color: #e7e2d8;
+        }
+        .navbar-custom .nav-link {
+            color: #211804 !important;
+            font-size: 1.25rem;
+            text-decoration: none;
+        }
+        .navbar-custom .nav-link.active {
+            text-decoration: underline;
+        }
         .search-bar {
             display: flex;
             align-items: center;
             border: 1px solid grey;
             border-radius: 25px;
-            padding: 8px;
-            margin-bottom: 20px;
+            background-color: #faf8f4;
+            padding: 5px 10px;
+            width: 400px;
+            height: 40px;
+            margin-left: auto;
         }
         .search-bar input {
             border: none;
             outline: none;
             flex: 1;
+            height: 100%;
+            background-color: transparent;
         }
+
         .search-bar input:focus {
             box-shadow: none;
         }
         .search-bar button {
             border: none;
-            background-color: #ffffff;
-            border-radius: 25px 25px 25px 25px;
-            padding: 8px 10px;
+            background-color: rgb(191, 220, 99);
+            border-radius: 25px;
+            padding: 0 10px;
             cursor: pointer;
+            height: 100%;
         }
         .search-bar button i {
             color: #000;
@@ -50,19 +82,19 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            border: 2px dashed #2e8b57;
-            background-color: #f8f9fa;
+            border: 2px dashed #594c42;
+            background-color: transparent;
             cursor: pointer;
             height: 100%;
             transition: all 0.3s ease;
         }
         .add-card:hover {
-            background-color: #e9ecef;
-            border-color: #1d6b41;
+            background-color: #fffffd;
+            border-color: #4b3f34;
         }
         .add-card .content {
             text-align: center;
-            color: #2e8b57;
+            color: #594c42;
         }
         .add-card .content h3 {
             font-size: 4rem;
@@ -87,48 +119,98 @@
         }
         .nav-underline {
             margin-bottom: 30px;
+            display: flex;
+            align-items: center;
         }
-        .custom-nav-link .nav-link{
+        .nav-underline .nav {
+            margin-bottom: 0;
+        }
+        .custom-nav-link .nav-link {
             color: #2e8b57 !important;
             font-size: 1.25rem;
             text-decoration: none;
+            margin-right: 20px; /* Add margin to separate links */
         }
         .custom-nav-link .nav-link.active {
             text-decoration: underline;
         }
+        .modal-dialog {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .body {
+            overflow-x: hidden;
+        }
+
+        .custom-btn {
+            background-color: white;
+            border: 1px solid #ddd;
+            color: #000;
+            text-decoration: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            transition: background-color 0.3s, box-shadow 0.3s;
+        }
+
+        .custom-btn:hover {
+            background-color: #e0ddda;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            color: #4b3f34 !important;
+        }
+
+        .custom-btn i {
+            margin-right: 5px;
+        }
+
+        .custom-btn:active {
+            background-color: white;
+            box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+
     </style>
 
-    <title>Profilübersicht</title>
 </head>
-<body>
+<body style="background-color: #f9f4ec">
 <th:block th:insert="~{fragments/htmlNavBar :: navbar}"></th:block>
 
-<div class="container mt-5 mb-5">
-    <ul class="nav nav-underline">
-        <li class="nav-item custom-nav-link">
-            <a class="nav-link active" href="/myPlantsForSale">Meine Verkäufe</a>
-        </li>
-        <li class="nav-item custom-nav-link">
-            <a class="nav-link" href="/myPlants">Meine Pflanzen</a>
-        </li>
-        <li class="nav-item custom-nav-link">
-            <a class="nav-link" href="/myWishlist">Meine Wunschliste</a>
-        </li>
-    </ul>
-
-    <div class="row mb-4">
-        <div class="col-12">
+<nav class="navbar navbar-expand-lg navbar-custom">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#"></a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item">
+                    <a class="nav-link active" style="font-weight: bold;" href="/myPlantsForSale">Meine Inserate</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/myPlants">Gekaufte Pflanzen</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/myWishlist">Meine Wunschliste</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/mySoldPlants">Verkaufte Pflanzen</a>
+                </li>
+            </ul>
             <form class="search-bar" th:action="@{/myPlantsForSale}" method="get" onsubmit="return checkSearch()">
+                <input class="form-control" id="name" name="name" label="Suche nach Name:" type="text" th:value="${name}" placeholder="Suche nach Name" style="background-color: transparent">
                 <button class="btn" type="submit"><i class="bi bi-search"></i></button>
-                <input class="form-control" name="name" placeholder="Suche nach Name" type="text" th:value="${param.name}">
             </form>
         </div>
     </div>
-
+</nav>
+<div class="container mt-5 mb-5 content">
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
         <div class="col">
-            <div class="card add-card" onclick="window.location.href='/plants/new'">
-                <div class="content">
+            <div class="card add-card" onclick="window.location.href='/plants/new'" style="min-height: 350px; display: flex; align-items: center; justify-content: center;">
+                <div class="content" style="text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center;">
                     <h3>+</h3>
                     <p>Neue Pflanze hinzufügen</p>
                 </div>
@@ -138,24 +220,36 @@
         <th:block th:each="plant : ${userPlants}">
             <div class="col">
                 <div class="card">
-                    <img th:src="@{${plant.imagePath}}" class="card-img-top" alt="Pflanzenbild">
-                    <div class="card-body">
-                        <h5 class="card-title" th:text="${plant.name}">Plant Name</h5>
-                        <p class="card-text" th:text="'Preis: ' + ${plant.price} + '€'">Plant Price</p>
-                        <div class="d-flex justify-content-between">
-                            <a th:href="@{/plants/edit/{id}(id=${plant.plantId})}" class="btn btn-success">Bearbeiten</a>
-                            <div class="btn-group">
-                                <form th:if="${!(plant.chatsAboutThisPlant.isEmpty() && plant.getWishedBy().isEmpty() && plant.getBuyer() == null)}" th:action="@{/plants/delete/{id}(id=${plant.plantId})}" method="post" class="d-inline">
-                                    <button type="submit" class="btn btn-warning" onclick="return confirm('Sind Sie sicher, dass Sie diese Pflanze deaktivieren möchten?');">Deakt.</button>
-                                    <i class="bi bi-info-circle info-icon" data-bs-toggle="tooltip" data-bs-placement="top" title="Die Pflanze wird auf allen Anzeigeseiten entfernt, aber die zugehörigen Chats bleiben erhalten."></i>
-                                </form>
-                            </div>
-                            <div class="btn-group">
-                                <form th:if="${plant.chatsAboutThisPlant.isEmpty() && plant.getWishedBy().isEmpty() && plant.getBuyer() == null}" th:action="@{/plants/delete/{id}(id=${plant.plantId})}" method="post" class="d-inline">
-                                    <button type="submit" class="btn btn-danger" onclick="return confirm('Sind Sie sicher, dass Sie diese Pflanze löschen möchten?');">Löschen</button>
-                                    <i class="bi bi-info-circle info-icon" data-bs-toggle="tooltip" data-bs-placement="top" title="Alle Daten zu dieser Pflanze, einschließlich Chats, werden unwiderruflich gelöscht."></i>
-                                </form>
-                            </div>
+                    <a th:href="@{/plants/{id}(id=${plant.plantId})}" style="text-decoration: none; color: inherit;">
+                        <img th:src="@{${plant.imagePath}}" class="card-img-top" alt="Pflanzenbild">
+                        <div class="card-body">
+                            <h5 class="card-title" th:text="${plant.name}">Plant Name</h5>
+                            <p class="card-text" th:text="'Preis: ' + ${plant.price} + '€'">Plant Price</p>
+                        </div>
+                    </a>
+                    <div class="card-body d-flex justify-content-between">
+                        <a th:href="@{/plants/edit/{id}(id=${plant.plantId})}" class="btn btn-link custom-btn">
+                            <i class="fa-regular fa-pen-to-square"></i> Bearbeiten
+                        </a>
+                        <div class="btn-group">
+                            <form th:if="${!(plant.chatsAboutThisPlant.isEmpty() && plant.getWishedBy().isEmpty() && plant.getBuyer() == null)}" method="post" class="d-inline">
+                                <button type="button" class="btn btn-link custom-btn deactivate-button"
+                                        th:attr="data-id=${plant.plantId}"
+                                        th:attrappend="data-name=${plant.name}"
+                                        data-bs-toggle="modal" data-bs-target="#deactivateModal">
+                                    <i class="fa-solid fa-trash"></i> Entfernen
+                                </button>
+                            </form>
+                        </div>
+                        <div class="btn-group">
+                            <form th:if="${plant.chatsAboutThisPlant.isEmpty() && plant.getWishedBy().isEmpty() && plant.getBuyer() == null}" method="post" class="d-inline">
+                                <button type="button" class="btn btn-link custom-btn delete-button"
+                                        th:attr="data-id=${plant.plantId}"
+                                        th:attrappend="data-name=${plant.name}"
+                                        data-bs-toggle="modal" data-bs-target="#deleteModal">
+                                    <i class="fa-solid fa-trash"></i> Entfernen
+                                </button>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -163,20 +257,94 @@
         </th:block>
     </div>
 </div>
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteModalLabel">Bestätigung löschen</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Abbrechen</button>
+                <form id="deleteForm" th:action="@{/plants/delete/{id}(id=0)}" method="post">
+                    <button type="submit" class="btn btn-danger" id="confirmDeleteButton">Löschen</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="deactivateModal" tabindex="-1" aria-labelledby="deactivateModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deactivateModalLabel">Bestätigung deaktivieren</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Abbrechen</button>
+                <form id="deactivateForm" th:action="@{/plants/deactivate/{id}(id=0)}" method="post">
+                    <button type="submit" class="btn btn-warning" id="confirmDeactivateButton">Deaktivieren</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 <script>
-    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
-    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
-        return new bootstrap.Tooltip(tooltipTriggerEl)
-    })
+    function checkSearch() {
+        var searchField = document.getElementById("name").value;
+        if (searchField.trim() === "") {
+            window.location.href = "/myPlantsForSale";
+            return false;
+        }
+        return true;
+    }
 
-    document.querySelectorAll('.nav-link').forEach(link => {
-        link.addEventListener('click', function () {
-            document.querySelectorAll('.nav-link').forEach(nav => nav.classList.remove('active'));
-            this.classList.add('active');
+    document.addEventListener('DOMContentLoaded', function () {
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+            return new bootstrap.Tooltip(tooltipTriggerEl);
+        });
+
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', function () {
+                document.querySelectorAll('.nav-link').forEach(nav => nav.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+
+        document.querySelectorAll('.delete-button').forEach(button => {
+            button.addEventListener('click', function () {
+                var plantId = this.getAttribute('data-id');
+                var plantName = this.getAttribute('data-name');
+                var deleteForm = document.getElementById('deleteForm');
+                deleteForm.action = '/plants/delete/' + plantId;
+
+                var modalBody = document.querySelector('#deleteModal .modal-body');
+                modalBody.textContent = 'Möchtest du wirklich die Pflanze "' + plantName + '" entfernen? Diese Aktion kann nicht rückgängig gemacht werden, aber alle zugehörigen Chats bleiben erhalten.';
+
+            });
+        });
+
+        document.querySelectorAll('.deactivate-button').forEach(button => {
+            button.addEventListener('click', function () {
+                var plantId = this.getAttribute('data-id');
+                var plantName = this.getAttribute('data-name');
+                var deactivateForm = document.getElementById('deactivateForm');
+                deactivateForm.action = '/plants/delete/' + plantId;
+
+                var modalBody = document.querySelector('#deactivateModal .modal-body');
+                modalBody.textContent = 'Möchtest du wirklich die Pflanze "' + plantName + '" entfernen? Diese Aktion kann nicht rückgängig gemacht werden, aber alle zugehörigen Chats bleiben erhalten.';
+
+            });
         });
     });
 </script>
 </body>
+<th:block th:insert="~{fragments/footer :: footer}"></th:block>
 </html>

@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <th:block th:insert="~{fragments/htmlHead :: head}"></th:block>
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+    <title>FAQ</title>
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <style>
+        .header {
+            background-image: url('/plant-images/headerForum.png');
+            background-size: cover;
+            background-position: center;
+            height: 300px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-align: center;
+            font-size: 2rem;
+        }
+        h1, h2, h3, h4, h5, h6 {
+            color: black;
+        }
+        section {
+            padding: 20px 40px;
+        }
+        a, a:hover, a:focus, a:active {
+            text-decoration: none;
+            outline: none;
+        }
+        ul {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+        .faq {
+            padding: 30px 0 70px;
+            background: #f7fbff;
+            min-height: 100vh;
+        }
+        .faq .section-title {
+            margin-bottom: 54px;
+        }
+        .faq .section-title h2 {
+            margin-bottom: 22px;
+        }
+        .faq .accordion .card {
+            border: none;
+            margin-bottom: 30px;
+        }
+        .faq .accordion .card:not(:first-of-type) .card-header:first-child {
+            border-radius: 10px;
+        }
+        .faq .accordion .card .card-header {
+            border: none;
+            border-radius: 10px;
+            padding: 0;
+        }
+        .faq .accordion .card .card-header h5 {
+            padding: 0;
+        }
+        .faq .accordion .card .card-header h5 button {
+            color: black;
+            font-size: 18px;
+            font-weight: 500;
+            text-decoration: none;
+            padding: 0 30px 0 70px;
+            height: 80px;
+            display: block;
+            width: 100%;
+            color: rgba(0, 1, 4, 0.8);
+            text-align: left;
+            background: #fff;
+            -webkit-box-shadow: 0px -50px 140px 0px rgba(69, 81, 100, 0.1);
+            box-shadow: 0px -50px 140px 0px rgba(69, 81, 100, 0.1);
+            border-radius: 10px 10px 0 0;
+            position: relative;
+        }
+        .faq .accordion .card .card-header h5 button:after {
+            position: absolute;
+            left: 30px;
+            top: 50%;
+            margin-top: -10px;
+            width: 20px;
+            height: 20px;
+            background-color: transparent;
+            color: #1e5906;
+            text-align: center;
+            border: 1px solid #0e2b02;
+            border-radius: 50%;
+            line-height: 100%;
+            content: '\f067';
+            font-size: 10px;
+            line-height: 18px;
+            font-family: "Font Awesome 5 Free";
+            font-weight: 900;
+        }
+        .faq .accordion .card .card-header h5 button.collapsed {
+            background: #fff;
+            border-radius: 10px;
+            -webkit-box-shadow: none;
+            box-shadow: none;
+            border: 1px solid rgba(43, 66, 37, 0.58);
+        }
+        .faq .accordion .card .card-header h5 button[aria-expanded="true"]:after {
+            content: '\f068';
+            color: #fff;
+            background-image: -webkit-linear-gradient(-180deg, #204902 0%, #204703 30%, #173501 100%);
+        }
+        .faq .accordion .card .card-body {
+            -webkit-box-shadow: 0px 15px 140px 0px rgba(69, 81, 100, 0.1);
+            box-shadow: 0px 15px 140px 0px rgba(69, 81, 100, 0.1);
+            border-radius: 0 0 10px 10px;
+            padding-top: 0;
+            margin-top: -6px;
+            padding-left: 72px;
+            padding-right: 70px;
+            padding-bottom: 23px;
+            color: rgba(0, 1, 4, 0.8);
+            line-height: 30px;
+        }
+    </style>
+</head>
+<body >
+<th:block th:insert="~{fragments/htmlNavBar :: navbar}"></th:block>
+
+<div class="header"></div>
+
+<section class="faq" style="background-color: #e9e4da">
+    <div class="container" style="color:#e9e4da">
+        <div class="row justify-content-center">
+            <div class="col-xl-8 col-lg-8 text-center">
+                <div class="section-title" style="color:white">
+                    <h4>Häufig gestellte Fragen</h4>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xl-12 col-lg-12">
+                <div class="accordion" id="accordionExample">
+                    <div class="row">
+                        <div class="col-xl-6 col-lg-6">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5 class="mb-0">
+                                        <button class="btn btn-link collapsed" type="button" data-bs-toggle="collapse"
+                                                data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                                            Wie kann ich eine Pflanze zum Verkauf anbieten?
+                                        </button>
+                                    </h5>
+                                </div>
+                                <div id="collapseOne" class="collapse" data-bs-parent="#accordionExample">
+                                    <div class="card-body">
+                                        Um eine Pflanze anzubieten, melde dich bitte an und klicke auf "Anbieten" in der
+                                        Navigationsleiste. Alternativ kannst du auch über "Meins > Meine Inserate" eine
+                                        Pflanze hochladen. Fülle hierfür alle angezeigten Felder aus und klicke auf "Erstellen".
+                                        Wichtig ist, dass du anhand der gewählten Kategorie Pflegetipps auswählst.
+                                        Nach der Überprüfung deiner Daten wird die Pflanze hochgeladen.
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5 class="mb-0">
+                                        <button class="btn btn-link collapsed" type="button" data-bs-toggle="collapse"
+                                                data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                            Wie kontaktiere ich den Verkäufer einer Pflanze?
+                                        </button>
+                                    </h5>
+                                </div>
+                                <div id="collapseTwo" class="collapse" data-bs-parent="#accordionExample">
+                                    <div class="card-body">
+                                        Wenn du an einer Pflanze interessiert bist, klicke auf die entsprechende Anzeige
+                                        und starte einen Chat, indem du auf "Anfragen" klickst. Der Verkäufer wird benachrichtigt
+                                        und kann auf deine Anfrage antworten. Achte darauf, dass deine Nachrichten höflich
+                                        und klar formuliert sind, um Missverständnisse zu vermeiden.
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5 class="mb-0">
+                                        <button class="btn btn-link collapsed" type="button" data-bs-toggle="collapse"
+                                                data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                            Welche Pflanzenarten kann ich auf der Plattform kaufen oder verkaufen?
+                                        </button>
+                                    </h5>
+                                </div>
+                                <div id="collapseThree" class="collapse" data-bs-parent="#accordionExample">
+                                    <div class="card-body">
+                                        Du kannst eine Vielzahl von Pflanzenarten kaufen oder verkaufen, einschließlich
+                                        Blumen, Sträuchern, Bäumen, Gemüsepflanzen und Kräutern.
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5 class="mb-0">
+                                        <button class="btn btn-link collapsed" type="button" data-bs-toggle="collapse"
+                                                data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                                            Was sollte ich bei der Übergabe einer Pflanze beachten?
+                                        </button>
+                                    </h5>
+                                </div>
+                                <div id="collapseFour" class="collapse" data-bs-parent="#accordionExample">
+                                    <div class="card-body">
+                                        Achte darauf, die Pflanze sorgfältig zu verpacken, um Schäden während des Transports
+                                        zu vermeiden. Bestätige, dass die Pflanze gesund ist und keine Schädlinge oder Krankheiten
+                                        aufweist. Vereinbare einen sicheren Übergabeort und halte dich an die vereinbarten Bedingungen
+                                        bezüglich der Abholung oder des Versands sowie der Zahlungsmethoden. Bitte beachte, dass
+                                        Transaktionen außerhalb der Plattform privat zwischen den Kunden abgewickelt werden.
+                                        Wir übernehmen keine Verantwortung für diese Transaktionen.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-xl-6 col-lg-6">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5 class="mb-0">
+                                        <button class="btn btn-link collapsed" type="button" data-bs-toggle="collapse"
+                                                data-bs-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+                                            Wie kann ich eine Anzeige bearbeiten oder löschen?
+                                        </button>
+                                    </h5>
+                                </div>
+                                <div id="collapseFive" class="collapse" data-bs-parent="#accordionExample">
+                                    <div class="card-body">
+                                        Um eine Anzeige zu bearbeiten oder zu löschen, gehe zu "Meins" > "Meine Inserate"
+                                        und wähle die entsprechende Aktion für die gewünschte Anzeige.
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5 class="mb-0">
+                                        <button class="btn btn-link collapsed" type="button" data-bs-toggle="collapse"
+                                                data-bs-target="#collapseSix" aria-expanded="false" aria-controls="collapseSix">
+                                            Wie kann ich Pflanzen miteinander vergleichen?
+                                        </button>
+                                    </h5>
+                                </div>
+                                <div id="collapseSix" class="collapse" data-bs-parent="#accordionExample">
+                                    <div class="card-body">
+                                        Um Pflanzen miteinander zu vergleichen, füge sie zunächst deiner Merkliste hinzu.
+                                        Nachdem du die gewünschten Pflanzen gespeichert hast, kannst du sie unter
+                                        "Meins" > "Meine Wunschliste" einsehen. Klicke dort auf "Vergleichen", um das
+                                        Drop-Down-Menü zu öffnen. Ziehe nun bis zu drei Pflanzen in das Vergleichsfeld und
+                                        vergleiche ihre Eigenschaften miteinander.
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5 class="mb-0">
+                                        <button class="btn btn-link collapsed" type="button" data-bs-toggle="collapse"
+                                                data-bs-target="#collapseSeven" aria-expanded="false" aria-controls="collapseSeven">
+                                            Wie kann ich Pflegetipps einsehen?
+                                        </button>
+                                    </h5>
+                                </div>
+                                <div id="collapseSeven" class="collapse" data-bs-parent="#accordionExample">
+                                    <div class="card-body">
+                                        Nachdem du eine Pflanze eingekauft hast, kannst du die Pflegetipps für die Pflanze
+                                        in deinem Profil unter "Meins" > "Gekaufte Pflanzen" einsehen. Dafür musst du nur
+                                        auf der jeweiligen Pflanze auf den Button "Pflegetipps" klicken.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5 class="mb-0">
+                                        <button class="btn btn-link collapsed" type="button" data-bs-toggle="collapse"
+                                                data-bs-target="#collapseEight" aria-expanded="false" aria-controls="collapseEight">
+                                            Wie kann ich sicherstellen, dass die Pflanzen, die ich kaufe, gesund sind?
+                                        </button>
+                                    </h5>
+                                </div>
+                                <div id="collapseEight" class="collapse" data-bs-parent="#accordionExample">
+                                    <div class="card-body">
+                                        Lese dir die Anzeigen sorgfältig und achte auf detaillierte Beschreibungen
+                                        und Fotos der Pflanzen. Stelle dem Verkäufer Fragen zur Pflege und zum Zustand
+                                        der Pflanze. Bei der Übergabe kannst du die Pflanze auch persönlich inspizieren,
+                                        bevor der Kauf abgeschlossen wird.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+<th:block th:insert="~{fragments/footer :: footer}"></th:block>
+</html>

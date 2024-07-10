@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="de" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:insert="~{fragments/htmlHead :: head}"></th:block>
+    <title>Über uns</title>
+    <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+            line-height: 180%;
+            color: #212529;
+            text-align: center;
+        }
+        .header-background {
+            background: url("/plant-images/aboutUsBackground.png") no-repeat center center;
+            background-size: cover;
+            height: 300px;
+        }
+        section {
+            padding: 50px 80px;
+            background-color: #fbf6ee;
+        }
+        .two-col {
+            display: inline-block;
+            vertical-align: top;
+            width: 45%;
+            margin: 2.5%;
+            text-align: left;
+        }
+        @media (max-width: 900px) {
+            .two-col {
+                width: 100%;
+                margin: 0;
+                padding: 0 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+<th:block th:insert="~{fragments/htmlNavBar :: navbar}"></th:block>
+
+<div class="header-background"></div>
+
+<section>
+    <h1 style="font-size: 36px;">Über uns</h1>
+    <div style="display: flex; flex-wrap: wrap; justify-content: space-between;">
+        <div class="two-col">
+            <p>Die grüne Ecke ist deine erste Anlaufstelle für den Kauf und Verkauf von Pflanzen. Egal ob du eine seltene Zimmerpflanze, eine robuste Gartenpflanze oder Sukkulenten suchst, bei uns wirst du fündig. Wir bieten eine Plattform, auf der Pflanzenliebhaber ihre Schätze anbieten und neue Pflanzen für ihre Sammlung entdecken können. Unser Ziel ist es, eine lebendige Community von Pflanzenfreunden zu schaffen, die ihre Leidenschaft und ihr Wissen teilen.</p>
+        </div>
+        <div class="two-col">
+            <p>Die grüne Ecke wird von einem Team engagierter Pflanzenenthusiasten betrieben, die sich der Förderung von Nachhaltigkeit und der Liebe zur Natur verschrieben haben. Unsere Mission ist es, den Pflanzenhandel einfacher und zugänglicher zu machen und gleichzeitig die Umwelt zu schonen. Wir glauben an den Wert jeder Pflanze und möchten dazu beitragen, dass Pflanzen ein Zuhause finden, in dem sie gedeihen können. Offene Kommunikation und ein fairer Handel sind für uns von größter Bedeutung. Wir laden alle Pflanzenfreunde ein, Teil unserer Gemeinschaft zu werden und das Grün in die Welt zu tragen!</p>
+        </div>
+    </div>
+</section>
+</body>
+<th:block th:insert="~{fragments/footer :: footer}"></th:block>
+</html>

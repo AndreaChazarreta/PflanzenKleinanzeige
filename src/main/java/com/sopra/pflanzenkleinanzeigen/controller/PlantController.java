@@ -1,11 +1,19 @@
 package com.sopra.pflanzenkleinanzeigen.controller;
 
 import com.sopra.pflanzenkleinanzeigen.entity.Benutzer;
-import com.sopra.pflanzenkleinanzeigen.entity.Chat;
+import com.sopra.pflanzenkleinanzeigen.entity.CareTip;
+import com.sopra.pflanzenkleinanzeigen.entity.Category;
 import com.sopra.pflanzenkleinanzeigen.entity.Plant;
 import com.sopra.pflanzenkleinanzeigen.service.ChatService;
+import com.sopra.pflanzenkleinanzeigen.service.PdfService;
 import com.sopra.pflanzenkleinanzeigen.service.PlantService;
 import com.sopra.pflanzenkleinanzeigen.service.UserService;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import com.sopra.pflanzenkleinanzeigen.repository.PlantRepository;
+import com.sopra.pflanzenkleinanzeigen.service.*;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,8 +24,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.time.Instant;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * The PlantController class handles web requests related to plant operations.
@@ -35,18 +48,15 @@ public class PlantController {
     private UserService userService;
     @Autowired
     private ChatService chatService;
+    @Autowired
+    private PdfService pdfService;
 
+    @Autowired
+    private CategoryService categoryService;
+    @Autowired
+    private CareTipService careTipService;
 
-    //TODO: FRAGEN: wie sollen wir "Get all Plants" implementieren? mit @ModelAttribute
-    // oder mit @GetMapping und dann model.Attribute?
-    /**
-     * This method retrieves all plants.
-     * @return A list of all plants.
-     */
-    @ModelAttribute("plantsNOTUSED")
-    public List<Plant> getAllPlants() {
-        return plantService.findAllPlants();
-    }
+    private Boolean created = false;
 
     //TODO: brauchen wir für solche funktionen try and catch? Hier kann relativ wenig schief gehen
     /**
@@ -55,19 +65,55 @@ public class PlantController {
      * @return "plants", the view with all plants.
      */
     @GetMapping("/plants")
-    public String getPlants(Model model, @RequestParam(value = "name", required = false) String name) {
+    public String getPlants(Model model,
+                            @RequestParam(value = "name", required = false) String name,
+                            @RequestParam(value = "minPrice", required = false) BigDecimal minPrice,
+                            @RequestParam(value = "maxPrice", required = false) BigDecimal maxPrice,
+                            @RequestParam(value = "minHeight", required = false) BigDecimal minHeight,
+                            @RequestParam(value = "maxHeight", required = false) BigDecimal maxHeight,
+                            @RequestParam(value = "potIncluded", required = false) Boolean potIncluded,
+                            @RequestParam(value = "category", required = false) List<String> categories,
+                            @RequestParam(value = "excludeCurrentUser", required = false) Boolean excludeCurrentUser,
+                            @RequestParam(value = "fruits", required = false) Boolean fruits,
+                            @RequestParam(value = "airPurifying", required = false) Boolean airPurifying,
+                            @RequestParam(value = "toxicForPets", required = false) Boolean toxicForPets,
+                            @RequestParam(value = "sortPrice", required = false) String sortPrice) {
         try {
             Benutzer currentUser = userService.getCurrentUser();
             model.addAttribute("currentUser", currentUser);
+            List<Plant> plants = new ArrayList<>();
 
-            if(name != null && !name.isEmpty()){
-                List<Plant> plantsByName = plantService.findByKeywordName(name);
-                plantsByName.removeIf(plant -> !plant.isAdIsActive());
-                model.addAttribute("plantsByName", plantsByName);
-                model.addAttribute("name", name);
-            } else {
-                model.addAttribute("allPlants", plantService.findAllActivePlants());
+            if(categories != null && !categories.isEmpty()){
+                plants = plantService.findPlantsByFilters(name, minPrice, maxPrice, minHeight, maxHeight, potIncluded, categories, excludeCurrentUser, currentUser,  fruits, airPurifying, toxicForPets, sortPrice);
+            } else{
+                plants = plantService.findPlantsByFiltersWithoutCategory(name, minPrice, maxPrice, minHeight, maxHeight, potIncluded, excludeCurrentUser, currentUser,  fruits, airPurifying, toxicForPets, sortPrice);
             }
+
+            BigDecimal highestPrice = plantService.findMaxPrice();
+            if (highestPrice.compareTo(new BigDecimal(200)) > 0) {
+                highestPrice = new BigDecimal(200);
+            }
+
+            model.addAttribute("plants", plants);
+            model.addAttribute("name", name);
+            model.addAttribute("minPrice", minPrice);
+            model.addAttribute("maxPrice", maxPrice);
+            model.addAttribute("minHeight", minHeight);
+            model.addAttribute("maxHeight", maxHeight);
+            model.addAttribute("potIncluded", potIncluded);
+            model.addAttribute("categories", categories);
+            model.addAttribute("sortPrice", sortPrice);
+            model.addAttribute("highestPrice", highestPrice);
+            model.addAttribute("excludeCurrentUser", excludeCurrentUser);
+            model.addAttribute("fruits", fruits);
+            model.addAttribute("airPurifying", airPurifying);
+            model.addAttribute("toxicForPets", toxicForPets);
+
+            if(created){
+                model.addAttribute("created", created);
+                created = false;
+            }
+
         } catch (Exception getPlantException ) {
             logger.error("Fehler beim Abrufen der Pflanzen", getPlantException);
             model.addAttribute("error", "Ein Fehler ist aufgetreten. Bitte versuchen Sie es später erneut.");
@@ -75,6 +121,7 @@ public class PlantController {
         }
         return "plants";
     }
+
 
     /**
      * This method retrieves a specific plant by its ID and displays its details.
@@ -85,9 +132,11 @@ public class PlantController {
     @GetMapping("/plants/{id}")
     public String getPlantDetails(@PathVariable int id, Model model) {
         Plant plant = plantService.findPlantById(id);
+        Benutzer currentUser = userService.getCurrentUser();
         if (plant == null) {
             return "redirect:/plants";
         }
+        model.addAttribute("currentUser", currentUser);
         model.addAttribute("plant", plant);
         return "detailsPlant";
     }
@@ -101,8 +150,13 @@ public class PlantController {
     @GetMapping("/plants/new")
     public String createPlantForm(Model model) {
         model.addAttribute("newPlant", new Plant());
+        List<CareTip> allCaretips = careTipService.findAllCareTips();
+        model.addAttribute("allCaretips", allCaretips);
+        List<Category> allCategories = categoryService.findAllCategories();
+        model.addAttribute("allCategories", allCategories);
         return "createPlant";
     }
+
 
     /**
      * This method adds a new plant.
@@ -112,22 +166,39 @@ public class PlantController {
      * @return "redirect:/plants", the view with all plants, if the new plant is valid. Otherwise, it returns "createPlant", the view with the form for creating a new plant.
      */
     @PostMapping("/plants")
-    public String addPlant(@Valid @ModelAttribute("newPlant") Plant newPlant, @RequestParam("imageFile") MultipartFile imageFile, BindingResult result, Model model) {
+    public String addPlant(@Valid @ModelAttribute("newPlant") Plant newPlant, @RequestParam("imageFile") MultipartFile imageFile, BindingResult result, Model model,
+                           @RequestParam(value = "category", required = false) Integer categoryId, @RequestParam(value = "lifespan", required = false) String lifespan,
+                           @RequestParam(value = "floweringTime", required = false) String floweringTime, @RequestParam(value = "growthRate", required = false) String growthRate,
+                           @RequestParam(value = "usability", required = false) String usability, @RequestParam(value = "color", required = false) String color,
+                           @RequestParam(value = "leafShape", required = false) String leafShape, @RequestParam(value = "standort", required = false) String standort,
+                           @RequestParam(value = "selectedCaretip", required = false) String caretipName){
         if (result.hasErrors()) {
-            //TODO: schauen warum es hier Beschreibung leer lassen als Fehler angenommen wird
             model.addAttribute("newPlant", newPlant);
             return "createPlant";
         }
         try {
             newPlant.setSeller(userService.getCurrentUser());
+            CareTip careTip = careTipService.findCareTipByKeyName(caretipName);
             newPlant.setAdIsActive(true);
+            newPlant.setCreatedAt(Instant.now());
+            newPlant.setCategory(categoryService.findById(categoryId));
+            newPlant.setLifespan(lifespan);
+            newPlant.setFloweringTime(floweringTime);
+            newPlant.setGrowthRate(growthRate);
+            newPlant.setCareTip(careTip);
+            newPlant.setUsability(usability);
+            newPlant.setColor(color);
+            newPlant.setLeafShape(leafShape);
+            newPlant.setStandort(standort);
             plantService.savePlant(newPlant, imageFile);
         } catch (IOException e) {
             model.addAttribute("error", "Ein Fehler ist aufgetreten: " + e.getMessage());
             return "createPlant";
         }
+        created = true;
         return "redirect:/plants";
     }
+
 
     /**
      * This method displays the form for editing an existing plant.
@@ -151,7 +222,6 @@ public class PlantController {
         return "editPlant";
     }
 
-    //TODO: schauen ob wir hier @PathVariable (ich glaube das ist bestPractice) benutzen oder @RequestParam (sowie in die Vorlesung)
     /**
      * This method updates an existing plant.
      * @param id The ID of the plant to be updated.
@@ -166,6 +236,8 @@ public class PlantController {
         plantToUpdate.setPlantId(id);
         Plant oldPlant = plantService.findPlantById(id);
         plantToUpdate.setSeller(oldPlant.getSeller());
+        plantToUpdate.setCareTip(oldPlant.getCareTip());
+        plantToUpdate.setCreatedAt(Instant.now());
         if(imageFile == null || imageFile.isEmpty()) {
             plantToUpdate.setImagePath(oldPlant.getImagePath());
         }
@@ -202,9 +274,70 @@ public class PlantController {
         return "redirect:/myPlantsForSale";
     }
 
+
+    @PostMapping("/plants/wishlist/{id}")
+    @ResponseBody
+    public void markPlantAsWished(@PathVariable int id) {
+        Benutzer currentUser = userService.getCurrentUser();
+        Plant plant = plantService.findPlantById(id);
+        if (plant != null && !plant.getWishedBy().contains(currentUser)) {
+            plantService.markPlantAsWished(currentUser, plant);
+        }
+    }
+
+    @PostMapping("/plants/wishlist/remove/{id}")
+    @ResponseBody
+    public void unmarkPlantAsWished(@PathVariable int id) {
+        Benutzer currentUser = userService.getCurrentUser();
+        Plant plant = plantService.findPlantById(id);
+        if (plant != null && plant.getWishedBy().contains(currentUser)) {
+            plantService.unmarkPlantAsWished(currentUser, plant);
+        }
+    }
+
     @GetMapping("/myWishlist")
-    public String myWishlist(Model model) {
-        //TODO: Hier die Logik noch für die Anzeige der Wunschliste des Benutzers
+    public String getWishlistForUser(Model model) {
+        Benutzer currentUser = userService.getCurrentUser();
+        List<Plant> wishlist = plantService.getWishlistForUser(currentUser);
+
+        List<Plant> sortedWishlist = wishlist.stream()
+                .sorted((p1, p2) -> {
+                    if (p1.isAdIsActive() != p2.isAdIsActive()) {
+                        return Boolean.compare(p2.isAdIsActive(), p1.isAdIsActive());
+                    } else {
+                        return p2.getDateWished().compareTo(p1.getDateWished()); // Sort descending by dateWished
+                    }
+                }).collect(Collectors.toList());
+
+        model.addAttribute("wishlist", sortedWishlist);
         return "myWishlist";
     }
+
+    @GetMapping("/searchWishlist")
+    public String searchWishlistPlants(Model model, @RequestParam(value = "name") String name) {
+        Benutzer currentUser = userService.getCurrentUser();
+        List<Plant> wishlist = plantService.searchWishlistPlantsByName(currentUser, name);
+
+        model.addAttribute("wishlist", wishlist);
+        model.addAttribute("name", name);
+        return "myWishlist";
+    }
+    @GetMapping("/plants/pdf/{id}")
+    public ResponseEntity<InputStreamResource> getPlantPdf(@PathVariable int id) {
+        Plant plant = plantService.findPlantById(id);
+        if (plant == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        ByteArrayInputStream bis = pdfService.generatePlantPdf(plant);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Disposition", "inline; filename=plant-pflegetipps.pdf");
+
+        return ResponseEntity.ok()
+                .headers(headers)
+                .contentType(MediaType.APPLICATION_PDF)
+                .body(new InputStreamResource(bis));
+    }
+
 }
