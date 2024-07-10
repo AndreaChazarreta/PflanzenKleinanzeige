@@ -22,6 +22,7 @@
             border-radius: 8px;
             max-width: 100%;
             height: auto;
+            max-height: 350px;
         }
 
         .additional-info {
@@ -37,8 +38,8 @@
             align-items: center;
             justify-content: center;
             margin: 10px 1%;
-            font-size: 1rem;
-            padding: 0.5rem 1rem;
+            font-size: 1.2rem;
+            padding: 0.7rem 1rem;
             background: none;
             border: none;
             color: inherit;
@@ -90,26 +91,20 @@
 </head>
 <body>
     <th:block th:insert="~{fragments/htmlNavBar :: navbar}"></th:block>
-
     <div class="container">
         <div class="container-custom">
             <div class="row plant-details">
                 <div class="col-md-6 left-column text-center">
                     <img class="existingImage" id="existingImage" th:src="@{${plant.getImagePath()}}" alt="Plant image"/>
                 </div>
-                <div class="col-md-6 right-column d-flex flex-column justify-content-center">
-                    <h1 th:text="${plant.name}">Pflanzenname</h1>
-                    <p><b>Preis:</b> <span th:text="${plant.price}">Preis</span> €</p>
-                    <p><b>Größe: </b><span th:text="${plant.height}">Höhe</span> cm</p>
-                    <p><b>Übertopf enthalten: </b><span th:text="${plant.potIncluded} ? 'Ja' : 'Nein'">Übertopf</span></p>
-                    <p><b>Beschreibung: </b><span th:text="${plant.description}">Pflanzenbeschreibung</span></p>
-                    <div class="container-buttons d-flex justify-content-center">
+                <div class="col-md-6 right-column d-flex flex-column">
+                    <div class="container-buttons d-flex justify-content-end">
                         <button class="btn btn-custom" type="button" th:unless="${plant.seller.userId == currentUser.userId}"
                                 th:data-plant-id="${plant.plantId}"
                                 th:data-action="${#lists.contains(currentUser.wishedPlants, plant) ? 'remove' : 'add'}"
                                 onclick="toggleWishlist(this)">
                             <img th:src="@{${#lists.contains(currentUser.wishedPlants, plant) ? '/plant-images/wishListButtonColoured.png' : '/plant-images/wishListButtonBlack.png'}}"
-                                 alt="Merkliste Icon" style="width: 20px"> Merken
+                                 alt="Merkliste Icon" style="width: 30px"> Merken
                         </button>
                         <form th:action="@{/plants/edit/{id}(id=${plant.plantId})}">
                             <button class="btn btn-custom" type="submit" th:if="${(plant.seller.userId == currentUser.userId) && (plant.sold == false)}">
@@ -122,6 +117,11 @@
                             </button>
                         </form>
                     </div>
+                    <h1 th:text="${plant.name}" style="margin-top: 20px">Pflanzenname</h1>
+                    <p><b>Preis:</b> <span th:text="${plant.price}">Preis</span> €</p>
+                    <p><b>Größe: </b><span th:text="${plant.height}">Höhe</span> cm</p>
+                    <p><b>Übertopf enthalten: </b><span th:text="${plant.potIncluded} ? 'Ja' : 'Nein'">Übertopf</span></p>
+                    <p><b>Beschreibung: </b><span th:text="${plant.description}">Pflanzenbeschreibung</span></p>
                 </div>
             </div>
             <br>
@@ -134,23 +134,50 @@
                     </h2>
                     <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
                         <div class="accordion-body">
-                            <p><b>Lebensspanne: </b><span th:text="${plant.lifespan}"></span> Jahre</p>
-                            <p><b>Giftig für Tiere: </b><span th:text="${plant.toxicForPets} ? 'Ja' : 'Nein'"></span></p>
-                            <p><b>Luftreinigend: </b><span th:text="${plant.airPurifying} ? 'Ja' : 'Nein'"></span></p>
-                            <p><b>Standort: </b><span th:text="${plant.standort}"></span></p>
-                            <p th:if="${plant.fruits} == true"><b>Früchte: </b><span th:text="${plant.fruit}"></span></p>
-
-                            <p><b>Blütezeit: </b><span th:text="${plant.floweringTime}"></span></p>
-                            <p><b>Nutzbarkeit: </b><span th:text="${plant.usability}"></span></p>
-                            <p><b>Farbe: </b><span th:text="${plant.color}"></span></p>
-                            <p><b>Blattform: </b><span th:text="${plant.leafShape}"></span></p>
-                            <p><b>Wachstumsrate: </b><span th:text="${plant.growthRate}"></span></p>
-
+                            <div class="row">
+                                <div class="col-sm-12 col-md-6 col-lg-6">
+                                    <p><b>Lebensspanne: </b><span th:text="${plant.lifespan}"></span> Jahre</p>
+                                </div>
+                                <div class="col-sm-12 col-md-6 col-lg-6">
+                                    <p><b>Giftig für Tiere: </b><span th:text="${plant.toxicForPets} ? 'Ja' : 'Nein'"></span></p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12 col-md-6 col-lg-6">
+                                    <p><b>Wachstumsrate: </b><span th:text="${plant.growthRate}"></span></p>
+                                </div>
+                                <div class="col-sm-12 col-md-6 col-lg-6">
+                                    <p><b>Blattform: </b><span th:text="${plant.leafShape}"></span></p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12 col-md-6 col-lg-6">
+                                    <p><b>Luftreinigend: </b><span th:text="${plant.airPurifying} ? 'Ja' : 'Nein'"></span></p>
+                                </div>
+                                <div class="col-sm-12 col-md-6 col-lg-6">
+                                    <p><b>Farbe: </b><span th:text="${plant.color}"></span></p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12 col-md-6 col-lg-6">
+                                    <p><b>Nutzbarkeit: </b><span th:text="${plant.usability}"></span></p>
+                                </div>
+                                <div class="col-sm-12 col-md-6 col-lg-6">
+                                    <p><b>Blütezeit: </b><span th:text="${plant.floweringTime}"></span></p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12 col-md-6 col-lg-6">
+                                    <p><b>Standort: </b><span th:text="${plant.standort}"></span></p>
+                                </div>
+                                <div class="col-sm-12 col-md-6 col-lg-6">
+                                    <p th:if="${plant.fruits} == true"><b>Früchte: </b><span th:text="${plant.fruit}"></span></p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
