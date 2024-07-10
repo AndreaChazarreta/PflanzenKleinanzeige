@@ -26,7 +26,7 @@ public class StaticPagesController implements WebMvcConfigurer {
 
     @GetMapping("/faq")
     public String getFaq() {
-        return "forum";
+        return "faq";
     }
 
     @GetMapping("/aboutUs")
