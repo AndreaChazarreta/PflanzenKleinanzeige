@@ -527,6 +527,9 @@
         const caretipError = document.getElementById('caretipError');
         const caretipRadios = document.querySelectorAll('input[name="caretipRadio"]');
 
+        /**
+         * Toggles the fruit field based on the selected radio button.
+         */
         function toggleFruitField() {
             if (fruitsYes.checked) {
                 fruitField.style.display = 'block';
@@ -572,6 +575,10 @@
         })()
     });
 
+    /**
+     * Checks the length of the textarea and displays a warning message if the maximum length is reached.
+     * @param textarea
+     */
     function checkMaxLength(textarea) {
         const maxLength = textarea.maxLength;
         const currentLength = textarea.value.length;
@@ -583,6 +590,10 @@
             warningMessage.style.display = 'none';
         }
     }
+
+    /**
+     * Previews the selected image.
+     */
     function previewImage() {
         const imageFile = document.getElementById('imageFile').files[0];
 
@@ -623,11 +634,19 @@
         })
     })()
 
+    /**
+     * Updates the selected caretip value.
+     * @param radio
+     */
     function updateCaretipValue(radio) {
         document.getElementById('selectedCaretip').value = radio.value;
         updateCaretipDetails(radio);
     }
 
+    /**
+     * Updates the caretips details based on the selected radio button.
+     * @param radio
+     */
     function updateCaretipDetails(radio) {
         const caretipDetails = document.getElementById('caretipDetails');
         if (radio.checked) {
@@ -648,13 +667,18 @@
         document.getElementById('caretipHeading').textContent = `Pflegehinweise für ${radio.value}`;
     }
 
-
+    /**
+     * Removes the preview image.
+     */
     function removeImage() {
         document.getElementById('preview').src = "";
         document.getElementById('preview').style.display = 'none';
         document.getElementById('imageFile').value = "";
     }
 
+    /**
+     * Removes the existing image.
+     */
     function removeExistingImage() {
         document.getElementById('existingImage').src = "";
         document.getElementById('existingImageWrapper').style.display = 'none';
