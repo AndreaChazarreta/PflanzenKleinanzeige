@@ -91,7 +91,7 @@
                     <img class="existingImage" id="existingImage" th:src="@{${plant.getImagePath()}}" alt="Plant image"/>
                 </div>
                 <div class="col-md-6 right-column d-flex flex-column">
-                    <div class="container-buttons d-flex justify-content-end">
+                    <div class="container-buttons d-flex justify-content-end" th:if="${(plant.sold == false)}">
                         <button class="btn btn-custom" type="button" th:unless="${plant.seller.userId == currentUser.userId}"
                                 th:data-plant-id="${plant.plantId}"
                                 th:data-action="${#lists.contains(currentUser.wishedPlants, plant) ? 'remove' : 'add'}"
@@ -100,7 +100,7 @@
                                  alt="Merkliste Icon" style="width: 30px"> Merken
                         </button>
                         <form th:action="@{/plants/edit/{id}(id=${plant.plantId})}">
-                            <button class="btn btn-custom" type="submit" th:if="${(plant.seller.userId == currentUser.userId) && (plant.sold == false)}">
+                            <button class="btn btn-custom" type="submit" th:if="${plant.seller.userId == currentUser.userId}">
                                 <i class="bi bi-pencil"></i> Bearbeiten
                             </button>
                         </form>
