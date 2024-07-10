@@ -396,7 +396,7 @@
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4">
         <th:block th:each="plant : ${wishlist}">
             <div class="col mb-4">
-                <div class="card h-100 draggable" draggable="true"
+                <div class="card h-100"
                      th:data-plant-id="${plant.plantId}"
                      th:data-plant-height="${plant.height}"
                      th:data-plant-potIncluded="${plant.potIncluded}"
@@ -410,8 +410,7 @@
                      th:data-plant-leafShape="${plant.leafShape}"
                      th:data-plant-growthRate="${plant.growthRate}"
                      th:data-plant-standort="${plant.standort}"
-                     th:data-plant-fruit="${plant.fruit}"
-                     ondragstart="drag(event)">
+                     th:data-plant-fruit="${plant.fruit}">
                     <th:block th:if="${plant.adIsActive}">
                         <a th:href="@{/plants/{id}(id=${plant.plantId})}">
                             <img th:src="@{${plant.imagePath}}" class="card-img-top" alt="Pflanzenbild">
@@ -429,6 +428,13 @@
                                  th:data-action="'remove'"
                                  class="wishlist-image"
                                  onclick="toggleWishlist(this)">
+                        </div>
+                        <div class="container-buttons d-flex justify-content-center">
+                            <button class="drag-handle"
+                                    onmousedown="enableDrag(this)"
+                                    onmouseup="disableDrag(this)">
+                                <i class="fa-solid fa-bars"></i>
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -504,6 +510,18 @@
             ghostClass: 'sortable-ghost',
         });
     });
+
+    function enableDrag(button) {
+        var card = button.closest('.card');
+        card.setAttribute('draggable', 'true');
+        card.ondragstart = drag;
+    }
+
+    function disableDrag(button) {
+        var card = button.closest('.card');
+        card.removeAttribute('draggable');
+        card.ondragstart = null;
+    }
 
     function drag(event) {
         event.dataTransfer.setData("plantId", event.target.getAttribute('data-plant-id'));
