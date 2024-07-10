@@ -15,13 +15,11 @@
             padding: 20px;
             margin: 20px auto;
         }
-
         .plant-details img {
             border-radius: 8px;
             max-width: 100%;
             height: auto;
         }
-
         .additional-info {
             background-color: #ffffff;
             border-radius: 8px;
@@ -29,7 +27,6 @@
             padding: 20px;
             margin-top: 20px;
         }
-
         .btn-custom {
             display: flex;
             align-items: center;
@@ -45,21 +42,17 @@
             transition: background-color 0.3s ease;
             border-radius: 8px;
         }
-
         .btn-custom img, .btn-custom i {
             margin-right: 8px;
         }
-
         .btn-custom:hover {
             background-color: #f0f0f0;
         }
-
         .container-buttons {
             display: flex;
             justify-content: center;
             width: 100%;
         }
-
         @media (max-width: 768px) {
             .right-column {
                 margin-top: 20px;
@@ -98,7 +91,6 @@
             <div class="col-md-6 right-column d-flex flex-column justify-content-center">
                 <h1 th:text="${plant.name}">Pflanzenname</h1>
                 <div>
-
                     <b>Licht:</b>
                     <p th:if="${careTip.getLightingConditions()} == Wenig"><i class="fa-regular fa-sun" style="color: #ffd43b;"></i> Die Pflanze kann im Schatten stehen.</p>
                     <p th:if="${careTip.getLightingConditions()} == Mittel"><i class="fa-regular fa-sun" style="color: #ffd43b;"></i> <i class="fa-regular fa-sun" style="color: #ffd43b;"></i> Die Pflanze sollte im Halbschatten stehen.</p>
