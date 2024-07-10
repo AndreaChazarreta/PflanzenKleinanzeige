@@ -607,7 +607,7 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         kaktus2.setSeller(sharon);
         kaktus2.setImagePath("/plant-images/testData1.JPG");
         kaktus2.setCategory(category7);
-        kaktus2.setCareTip(careTip23);
+        kaktus2.setCareTip(careTip2);
         kaktus2.setPotIncluded(false);
         kaktus2.setSeed(true);
         kaktus2.setLifespan("Mehrjährig");
@@ -630,7 +630,7 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         kaktus3.setSeller(sena);
         kaktus3.setImagePath("/plant-images/testData2.JPG");
         kaktus3.setCategory(category7);
-        kaktus3.setCareTip(careTip23);
+        kaktus3.setCareTip(careTip2);
         kaktus3.setPotIncluded(false);
         kaktus3.setSeed(true);
         kaktus3.setLifespan("Mehrjährig");
@@ -723,7 +723,7 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         rundkaktus.setSeller(andrea);
         rundkaktus.setImagePath("/plant-images/testData6.JPG");
         rundkaktus.setCategory(category7); // Sonstiges
-        rundkaktus.setCareTip(careTip23); // Kaktus
+        rundkaktus.setCareTip(careTip2); // Kaktus
         rundkaktus.setPotIncluded(true);
         rundkaktus.setSeed(true);
         rundkaktus.setLifespan("Mehrjährig");
@@ -838,7 +838,7 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         kaktussammlung.setSeller(andrea);
         kaktussammlung.setImagePath("/plant-images/testData11.JPG");
         kaktussammlung.setCategory(category7); // Sonstiges
-        kaktussammlung.setCareTip(careTip23); // Kaktus
+        kaktussammlung.setCareTip(careTip2); // Kaktus
         kaktussammlung.setPotIncluded(true);
         kaktussammlung.setSeed(true);
         kaktussammlung.setLifespan("Mehrjährig");
