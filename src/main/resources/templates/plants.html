@@ -447,7 +447,6 @@
         var minPriceDefault = 0;
         var maxPriceDefault = [[${highestPrice}]];
 
-        // Get the current min and max price values from the hidden inputs
         var currentMinPrice = parseFloat(document.getElementById('minPrice').value || minPriceDefault);
         var currentMaxPrice = parseFloat(document.getElementById('maxPrice').value || maxPriceDefault);
 
@@ -554,7 +553,6 @@
         window.clearPriceFilter = clearPriceFilter;
         window.clearAllFilters = clearAllFilters;
 
-        // Restore accordion state from localStorage
         var accordionState = JSON.parse(localStorage.getItem('accordionState')) || {};
         for (var key in accordionState) {
             if (accordionState[key]) {
