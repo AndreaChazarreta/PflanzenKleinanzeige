@@ -23,9 +23,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
-//TODO: "SaveUser" nochmal überprüfen, brauchen wir überhaupt try and catch sowie fehlermeldungen? Ich glaube es ist nicht nötigt.
-// Außerdem diese Funktion wurde uns in die wiki so gegeben wie es war, daher denke ich auch das es nicht nötig ist zu ändern.
-
 /**
  * This class encapsulates access to the UserRepository. It provides methods for managing User entities
  * without exposing direct access to the repository from outside the service layer.
@@ -41,7 +38,6 @@ public class UserService implements UserDetailsService {
 
     private static final Logger logger = LoggerFactory.getLogger(UserService.class);
 
-    //TODO: Exceptions testen bei der Registrierung von Benutzern
     /**
      * Saves a user to the repository.
      * If the username is already taken, an IllegalArgumentException is thrown.
@@ -62,11 +58,9 @@ public class UserService implements UserDetailsService {
             }
         } catch (IllegalArgumentException e) {
             logger.error("Fehler beim Speichern des Benutzers: " + e.getMessage(), e);
-            //TODO: Weiterleitung zu einer Fehlerseite oder Anzeige einer Fehlermeldung auf der aktuellen Seite
             throw e;
         } catch (Exception e) {
             logger.error("Unbekannter Fehler beim Speichern des Benutzers", e);
-            //TODO: Weiterleitung zu einer Fehlerseite oder Anzeige einer Fehlermeldung auf der aktuellen Seite
             throw new RuntimeException("Ein unerwarteter Fehler ist aufgetreten. Bitte versuchen Sie es später erneut.");
         }
     }
@@ -182,6 +176,5 @@ public class UserService implements UserDetailsService {
            return new ArrayList<>();
        }
     }
-
 }
 

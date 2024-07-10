@@ -47,7 +47,6 @@ public class CareTipController {
         if (careTip == null) {
             return "redirect:/myPlants";
         }
-
         model.addAttribute("plant", plant);
         model.addAttribute("careTip", careTip);
         return "careTip";
