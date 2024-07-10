@@ -261,7 +261,7 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="deleteModalLabel">Bestätigung löschen</h5>
+                <h5 class="modal-title" id="deleteModalLabel">Bestätigung zum Entfernen</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -269,7 +269,7 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Abbrechen</button>
                 <form id="deleteForm" th:action="@{/plants/delete/{id}(id=0)}" method="post">
-                    <button type="submit" class="btn btn-danger" id="confirmDeleteButton">Löschen</button>
+                    <button type="submit" class="btn btn-btn-secondary" id="confirmDeleteButton">Entfernen</button>
                 </form>
             </div>
         </div>
@@ -279,7 +279,7 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="deactivateModalLabel">Bestätigung deaktivieren</h5>
+                <h5 class="modal-title" id="deactivateModalLabel">Bestätigung zum Entfernen</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -287,7 +287,7 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Abbrechen</button>
                 <form id="deactivateForm" th:action="@{/plants/deactivate/{id}(id=0)}" method="post">
-                    <button type="submit" class="btn btn-warning" id="confirmDeactivateButton">Deaktivieren</button>
+                    <button type="submit" class="btn btn-warning" id="confirmDeactivateButton">Entfernen</button>
                 </form>
             </div>
         </div>
