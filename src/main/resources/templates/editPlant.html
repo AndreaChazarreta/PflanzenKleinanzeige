@@ -442,6 +442,9 @@
     </div>
 </div>
 <script>
+    /**
+     * Initializes form validation, fruit field toggling, and image preview functionality after the DOM content is fully loaded.
+     */
     document.addEventListener('DOMContentLoaded', function() {
         const forms = document.querySelectorAll('.needs-validation');
 
@@ -473,6 +476,9 @@
         const fruitsNo = document.getElementById('fruitsNo');
         const fruitField = document.getElementById('fruitField');
 
+        /**
+         * Toggles the display of the fruit field based on the selection of the fruit radio buttons.
+         */
         function toggleFruitField() {
             if (fruitsYes.checked) {
                 fruitField.style.display = 'block';
@@ -487,6 +493,11 @@
         toggleFruitField();
     });
 
+    /**
+     * Checks the length of the text in the textarea and displays a warning if the max length is exceeded.
+     *
+     * @param {HTMLTextAreaElement} textarea - The textarea element being checked.
+     */
     function checkMaxLength(textarea) {
         const maxLength = textarea.maxLength;
         const currentLength = textarea.value.length;
@@ -499,6 +510,9 @@
         }
     }
 
+    /**
+     * Previews the uploaded image file by displaying it in the preview element.
+     */
     function previewImage() {
         const imageFile = document.getElementById('imageFile').files[0];
 
@@ -523,12 +537,18 @@
         }
     }
 
+    /**
+     * Removes the previewed image and clears the image file input.
+     */
     function removeImage() {
         document.getElementById('preview').src = "";
         document.getElementById('preview').style.display = 'none';
         document.getElementById('imageFile').value = "";
     }
 
+    /**
+     * Removes the existing image and clears the image file input.
+     */
     function removeExistingImage() {
         document.getElementById('existingImage').src = "";
         document.getElementById('existingImageWrapper').style.display = 'none';

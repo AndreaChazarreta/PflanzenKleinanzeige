@@ -437,6 +437,9 @@
 </div>
 
 <script>
+    /**
+     * Initializes the price slider and other UI components when the document is fully loaded.
+     */
     document.addEventListener('DOMContentLoaded', function() {
         var slider = document.getElementById('price-slider');
         var minPriceDefault = 0;
@@ -474,6 +477,9 @@
             buildUrl();
         });
 
+        /**
+         * Builds the URL with the current filter parameters and navigates to it.
+         */
         function buildUrl() {
             const name = document.getElementById('name').value.trim();
             const minPrice = document.getElementById('minPrice').value;
@@ -503,6 +509,9 @@
             return false;
         }
 
+        /**
+         * Clears the price filter to the default values.
+         */
         function clearPriceFilter() {
             slider.noUiSlider.set([minPriceDefault, maxPriceDefault]);
             document.getElementById('minPrice').value = minPriceDefault.toFixed(2);
@@ -510,6 +519,9 @@
             buildUrl();
         }
 
+        /**
+         * Clears all filters to their default values.
+         */
         function clearAllFilters() {
             document.getElementById('name').value = '';
             document.getElementById('sortPrice').selectedIndex = 0;
@@ -575,6 +587,11 @@
         }
     });
 
+    /**
+     * Toggles the wishlist status of a plant.
+     *
+     * @param {HTMLImageElement} imageElement - The image element clicked to toggle the wishlist status.
+     */
     function toggleWishlist(imageElement) {
         const plantId = imageElement.getAttribute('data-plant-id');
         const action = imageElement.getAttribute('data-action');

@@ -174,13 +174,18 @@
         </div>
     </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-<script>
     function toggleWishlist(buttonElement) {
-        console.log('toggleWishlist called');
-        const plantId = buttonElement.getAttribute('data-plant-id');
-        const action = buttonElement.getAttribute('data-action');
-        console.log('Plant ID:', plantId, 'Action:', action);
-        const url = action === 'add' ? `/plants/wishlist/${plantId}` : `/plants/wishlist/remove/${plantId}`;
+    <script>
+        /**
+         * Toggles the wishlist icon and adds or removes the plant from the wishlist.
+         * @param buttonElement
+         */
+        function toggleWishlist(buttonElement) {
+            console.log('toggleWishlist called');
+            const plantId = buttonElement.getAttribute('data-plant-id');
+            const action = buttonElement.getAttribute('data-action');
+            console.log('Plant ID:', plantId, 'Action:', action);
+            const url = action === 'add' ? `/plants/wishlist/${plantId}` : `/plants/wishlist/remove/${plantId}`;
 
         const csrfToken = document.querySelector('meta[name="_csrf"]').getAttribute('content');
         const csrfHeader = document.querySelector('meta[name="_csrf_header"]').getAttribute('content');

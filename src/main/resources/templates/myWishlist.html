@@ -441,6 +441,10 @@
 </div>
 
 <script>
+    /**
+     * Redirects to wishlist page if the search field is empty.
+     * @returns {boolean} - False if redirected to wishlist page, true otherwise.
+     */
     function checkSearch() {
         var searchField = document.getElementById("name").value;
         if (searchField.trim() === "") {
@@ -450,6 +454,10 @@
         return true;
     }
 
+    /**
+     * Toggles a plant's wishlist status (add/remove) and updates the wishlist button icon.
+     * @param {HTMLElement} imageElement - The image element clicked to toggle wishlist status.
+     */
     function toggleWishlist(imageElement) {
         const plantId = imageElement.getAttribute('data-plant-id');
         const action = imageElement.getAttribute('data-action');
@@ -482,6 +490,9 @@
             });
     }
 
+    /**
+     * Initializes tooltips and sortable elements after the DOM is loaded.
+     */
     document.addEventListener('DOMContentLoaded', function () {
         var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
         var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
@@ -494,26 +505,47 @@
         });
     });
 
+    /**
+     * Enables drag functionality for a card.
+     * @param {HTMLButtonElement} button - The button element clicked to enable drag.
+     */
     function enableDrag(button) {
         var card = button.closest('.card');
         card.setAttribute('draggable', 'true');
         card.ondragstart = drag;
     }
 
+    /**
+     * Disables drag functionality for a card.
+     * @param {HTMLButtonElement} button - The button element clicked to disable drag.
+     */
     function disableDrag(button) {
         var card = button.closest('.card');
         card.removeAttribute('draggable');
         card.ondragstart = null;
     }
 
+
+    /**
+     * Handles the drag start event by setting the plant ID in the data transfer.
+     * @param {DragEvent} event - The drag start event.
+     */
     function drag(event) {
         event.dataTransfer.setData("plantId", event.target.getAttribute('data-plant-id'));
     }
 
+    /**
+     * Allows drop by preventing the default handling of the event.
+     * @param {DragEvent} event - The drag over event.
+     */
     function allowDrop(event) {
         event.preventDefault();
     }
 
+    /**
+     * Handles the drop event by adding the dragged plant to the comparison cards.
+     * @param {DragEvent} event - The drop event.
+     */
     function drop(event) {
         event.preventDefault();
         var plantId = event.dataTransfer.getData("plantId");
@@ -627,10 +659,19 @@
         }
     }
 
+    /**
+     * Returns a safe value or a default if the value is falsy.
+     * @param {string} value - The value to be checked.
+     * @returns {string} - The original value or a default.
+     */
     function getSafeValue(value) {
         return value ? value : '-';
     }
 
+    /**
+     * Removes a plant card from the comparison list.
+     * @param {HTMLButtonElement} button - The button element clicked to remove the plant card.
+     */
     function removePlant(button) {
         var cardToRemove = button.closest(".card");
         if (cardToRemove) {
@@ -641,13 +682,16 @@
         }
     }
 
+    /**
+     * Displays a modal with a custom message.
+     * @param {string} message - The message to display in the modal.
+     */
     function showModal(message) {
         var modalBody = document.getElementById('alertModalBody');
         modalBody.textContent = message;
         var alertModal = new bootstrap.Modal(document.getElementById('alertModal'));
         alertModal.show();
     }
-
 </script>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
