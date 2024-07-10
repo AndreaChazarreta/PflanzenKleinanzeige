@@ -39,4 +39,14 @@ public class StaticPagesController implements WebMvcConfigurer {
     public String getContact() {
         return "contact";
     }
+
+    @GetMapping("/imprint")
+    public String getImprint() {
+        return "imprint";
+    }
+
+    @GetMapping("/dataSecurity")
+    public String getDataSecurity() {
+        return "dataSecurity";
+    }
 }

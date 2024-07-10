@@ -431,18 +431,6 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         careTip22.setPlanting("Vorzüchten");
         careTipService.saveCareTip(careTip22);
 
-        CareTip careTip23 = new CareTip();
-        careTip23.setCategory(category7);
-        careTip23.setPlantName("Kaktus");
-        careTip23.setLightingConditions("Viel");
-        careTip23.setFertilization("Wenig");
-        careTip23.setIrrigation("Wenig");
-        careTip23.setOtherTips("Kakteen sind sehr pflegeleicht und brauchen wenig Wasser.");
-        careTip23.setRepotting("Nach 6 Monaten");
-        careTip23.setTemperature("20");
-        careTip23.setPlanting("Direkt in die Erde");
-        careTipService.saveCareTip(careTip23);
-
         CareTip careTip24 = new CareTip();
         careTip24.setCategory(category1);
         careTip24.setPlantName("Ahornbaum");
@@ -454,6 +442,20 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         careTip24.setTemperature("15");
         careTip24.setPlanting("Direkt in die Erde");
         careTipService.saveCareTip(careTip24);
+
+
+        Instant anInstantPlant1 = Instant.ofEpochSecond(1717251489);
+        Instant anInstantPlant2 = Instant.ofEpochSecond(1717337889);
+        Instant anInstantPlant3 = Instant.ofEpochSecond(1717424289);
+        Instant anInstantPlant4 = Instant.ofEpochSecond(1717510689);
+        Instant anInstantPlant5 = Instant.ofEpochSecond(1717597089);
+        Instant anInstantPlant6 = Instant.ofEpochSecond(1717683489);
+        Instant anInstantPlant7 = Instant.ofEpochSecond(1717769889);
+        Instant anInstantPlant8 = Instant.ofEpochSecond(1717856289);
+        Instant anInstantPlant9 = Instant.ofEpochSecond(1717942689);
+        Instant anInstantPlant10 = Instant.ofEpochSecond(1718029089);
+        Instant anInstantPlant11 = Instant.ofEpochSecond(1718115489);
+        Instant anInstantPlant12 = Instant.ofEpochSecond(1718201889);
 
         Plant kaktus = new Plant();
         kaktus.setName("Kaktus");
@@ -500,6 +502,7 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         rose.setStandort("Sonne");
         rose.setFruits(false);
         rose.setToxicForPets(true);
+        rose.setCreatedAt(anInstantPlant1);
         plantService.savePlantDataLoader(rose);
 
         Plant tulpe = new Plant();

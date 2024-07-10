@@ -27,6 +27,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -72,6 +73,9 @@ public class PlantController {
                             @RequestParam(value = "potIncluded", required = false) Boolean potIncluded,
                             @RequestParam(value = "category", required = false) List<String> categories,
                             @RequestParam(value = "excludeCurrentUser", required = false) Boolean excludeCurrentUser,
+                            @RequestParam(value = "fruits", required = false) Boolean fruits,
+                            @RequestParam(value = "airPurifying", required = false) Boolean airPurifying,
+                            @RequestParam(value = "toxicForPets", required = false) Boolean toxicForPets,
                             @RequestParam(value = "sortPrice", required = false) String sortPrice) {
         try {
             Benutzer currentUser = userService.getCurrentUser();
@@ -79,9 +83,9 @@ public class PlantController {
             List<Plant> plants = new ArrayList<>();
 
             if(categories != null && !categories.isEmpty()){
-                plants = plantService.findPlantsByFilters(name, minPrice, maxPrice, minHeight, maxHeight, potIncluded, categories, excludeCurrentUser, currentUser, sortPrice);
+                plants = plantService.findPlantsByFilters(name, minPrice, maxPrice, minHeight, maxHeight, potIncluded, categories, excludeCurrentUser, currentUser,  fruits, airPurifying, toxicForPets, sortPrice);
             } else{
-                plants = plantService.findPlantsByFiltersWithoutCategory(name, minPrice, maxPrice, minHeight, maxHeight, potIncluded, excludeCurrentUser, currentUser, sortPrice);
+                plants = plantService.findPlantsByFiltersWithoutCategory(name, minPrice, maxPrice, minHeight, maxHeight, potIncluded, excludeCurrentUser, currentUser,  fruits, airPurifying, toxicForPets, sortPrice);
             }
 
             BigDecimal highestPrice = plantService.findMaxPrice();
@@ -100,7 +104,9 @@ public class PlantController {
             model.addAttribute("sortPrice", sortPrice);
             model.addAttribute("highestPrice", highestPrice);
             model.addAttribute("excludeCurrentUser", excludeCurrentUser);
-
+            model.addAttribute("fruits", fruits);
+            model.addAttribute("airPurifying", airPurifying);
+            model.addAttribute("toxicForPets", toxicForPets);
 
         } catch (Exception getPlantException ) {
             logger.error("Fehler beim Abrufen der Pflanzen", getPlantException);
@@ -167,6 +173,7 @@ public class PlantController {
             newPlant.setSeller(userService.getCurrentUser());
             CareTip careTip = careTipService.findCareTipByKeyName(caretipName);
             newPlant.setAdIsActive(true);
+            newPlant.setCreatedAt(Instant.now());
             newPlant.setCategory(categoryService.findById(categoryId));
             newPlant.setLifespan(lifespan);
             newPlant.setFloweringTime(floweringTime);
@@ -221,6 +228,8 @@ public class PlantController {
         plantToUpdate.setPlantId(id);
         Plant oldPlant = plantService.findPlantById(id);
         plantToUpdate.setSeller(oldPlant.getSeller());
+        plantToUpdate.setCareTip(oldPlant.getCareTip());
+        plantToUpdate.setCreatedAt(Instant.now());
         if(imageFile == null || imageFile.isEmpty()) {
             plantToUpdate.setImagePath(oldPlant.getImagePath());
         }

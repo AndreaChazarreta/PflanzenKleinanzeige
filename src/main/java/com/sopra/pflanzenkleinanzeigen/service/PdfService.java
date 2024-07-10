@@ -69,14 +69,13 @@ public class PdfService {
             CareTip careTip = plant.getCareTip();
 
             // Add care tips to table
-            addCareTipRow(table, "Pflanzenname", careTip.getPlantName());
-            addCareTipRow(table, "Bewässerung", careTip.getIrrigation());
-            addCareTipRow(table, "Düngung", careTip.getFertilization());
-            addCareTipRow(table, "Lichtverhältnisse", careTip.getLightingConditions());
-            addCareTipRow(table, "Temperatur", careTip.getTemperature());
-            addCareTipRow(table, "Pflanzung", careTip.getPlanting());
-            addCareTipRow(table, "Umtopfen", careTip.getRepotting());
-            addCareTipRow(table, "Weitere Tipps", careTip.getOtherTips());
+            addCareTipRow(table, "Bewässerung", careTip.getIrrigation(), generateIrrigationDescription(careTip.getIrrigation()));
+            addCareTipRow(table, "Düngung", careTip.getFertilization(), generateFertilizationDescription(careTip.getFertilization()));
+            addCareTipRow(table, "Lichtverhältnisse", careTip.getLightingConditions(), generateLightingDescription(careTip.getLightingConditions()));
+            addCareTipRow(table, "Temperatur", careTip.getTemperature(), careTip.getTemperature() + " °C");
+            addCareTipRow(table, "Pflanzung", careTip.getPlanting(), careTip.getPlanting());
+            addCareTipRow(table, "Umtopfen", careTip.getRepotting(), careTip.getRepotting());
+            addCareTipRow(table, "Weitere Tipps", careTip.getOtherTips(), careTip.getOtherTips());
 
             document.add(table);
 
@@ -95,13 +94,52 @@ public class PdfService {
         cell.setBorderColorBottom(BaseColor.LIGHT_GRAY);
     }
 
-    private void addCareTipRow(PdfPTable table, String attribute, String value) {
+    private void addCareTipRow(PdfPTable table, String attribute, String value, String description) {
         Font rowFont = FontFactory.getFont(FontFactory.HELVETICA, 12);
         PdfPCell cell1 = new PdfPCell(new Paragraph(attribute, rowFont));
-        PdfPCell cell2 = new PdfPCell(new Paragraph(value, rowFont));
+        PdfPCell cell2 = new PdfPCell(new Paragraph(description, rowFont));
         styleCell(cell1);
         styleCell(cell2);
         table.addCell(cell1);
         table.addCell(cell2);
+    }
+
+    private String generateIrrigationDescription(String irrigation) {
+        switch (irrigation) {
+            case "Wenig":
+                return "Die Pflanze braucht wenig Wasser, ungefähr einmal im Monat gießen";
+            case "Mittel":
+                return "Die Pflanze sollte einmal die Woche gegossen werden";
+            case "Viel":
+                return "Die Pflanze muss täglich gegossen werden";
+            default:
+                return irrigation;
+        }
+    }
+
+    private String generateFertilizationDescription(String fertilization) {
+        switch (fertilization) {
+            case "Wenig":
+                return "Die Pflanze braucht keinen Dünger";
+            case "Mittel":
+                return "Die Pflanze sollte einmal im Monat Dünger bekommen";
+            case "Viel":
+                return "Die Pflanze sollte einmal die Woche gedüngt werden";
+            default:
+                return fertilization;
+        }
+    }
+
+    private String generateLightingDescription(String lightingConditions) {
+        switch (lightingConditions) {
+            case "Wenig":
+                return "Die Pflanze kann im Schatten stehen";
+            case "Mittel":
+                return "Die Pflanze sollte im Halbschatten stehen";
+            case "Viel":
+                return "Die Pflanze braucht viel Sonne";
+            default:
+                return lightingConditions;
+        }
     }
 }

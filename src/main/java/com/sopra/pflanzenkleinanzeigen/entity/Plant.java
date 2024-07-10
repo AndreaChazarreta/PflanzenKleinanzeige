@@ -5,6 +5,7 @@ import jakarta.validation.constraints.*;
 import org.hibernate.annotations.Cascade;
 
 import java.math.BigDecimal;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -62,6 +63,8 @@ public class Plant {
     private Benutzer buyer;
 
     private boolean adIsActive = true;
+
+    private Instant createdAt;
 
     @ManyToOne
     @JoinColumn (name = "careTipId")
@@ -199,6 +202,14 @@ public class Plant {
 
     public void setAdIsActive(boolean adIsActive) {
         this.adIsActive = adIsActive;
+    }
+
+    public Instant getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Instant createdAt) {
+        this.createdAt = createdAt;
     }
 
     public CareTip getCareTip() {
