@@ -228,6 +228,13 @@
         input[type="number"] {
             -moz-appearance: textfield;
         }
+        .alert-top-right {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1050; /* Ensure the alert is above other elements */
+        }
+
     </style>
     <title>Plants</title>
 </head>
@@ -427,6 +434,12 @@
         </div>
     </div>
 </div>
+<div th:if="${created == true}">
+    <div id="success-alert" class="alert alert-success alert-dismissible fade show alert-top-right" role="alert">
+        <strong>Die Pflanze wurde erfolgreich erstellt!</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+</div>
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
@@ -560,6 +573,14 @@
                 localStorage.setItem('accordionState', JSON.stringify(accordionState));
             });
         });
+
+        var successAlert = document.getElementById('success-alert');
+        if (successAlert) {
+            setTimeout(function() {
+                var alert = new bootstrap.Alert(successAlert);
+                alert.close();
+            }, 2000); // 2000 milliseconds = 2 seconds
+        }
     });
 
     function toggleWishlist(imageElement) {
