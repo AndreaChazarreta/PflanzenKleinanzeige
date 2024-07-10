@@ -106,7 +106,7 @@
                             <img src="/plant-images/merkzettel_icon.png" alt="Merkliste Icon" style="width: 20px"> Merken
                         </button>
                         <form th:action="@{/plants/edit/{id}(id=${plant.plantId})}">
-                            <button class="btn btn-custom" type="submit" th:if="${plant.seller.userId == currentUser.userId}">
+                            <button class="btn btn-custom" type="submit" th:if="${(plant.seller.userId == currentUser.userId) && (plant.sold == false)}">
                                 <i class="bi bi-pencil"></i> Bearbeiten
                             </button>
                         </form>
