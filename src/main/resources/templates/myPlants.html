@@ -262,6 +262,33 @@
             display: flex;
             justify-content: center;
         }
+        .custom-btn {
+            background-color: white;
+            border: 1px solid #ddd;
+            color: #000;
+            text-decoration: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            transition: background-color 0.3s, box-shadow 0.3s;
+        }
+
+        .custom-btn:hover {
+            background-color: #e0ddda;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            color: #4b3f34 !important;
+        }
+
+        .custom-btn i {
+            margin-right: 5px;
+        }
+
+        .custom-btn:active {
+            background-color: white;
+            box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+        }
     </style>
 </head>
 <body style="background-color: #f9f4ec">
@@ -289,7 +316,7 @@
                 </li>
             </ul>
             <form class="search-bar" th:action="@{/myPlants}" method="get" onsubmit="return checkSearch()">
-                <input class="form-control" id="name" name="name" label="Suche nach Name:" type="text" th:value="${name}" placeholder="Suche nach Name">
+                <input class="form-control" id="name" name="name" label="Suche nach Name:" type="text" th:value="${name}" placeholder="Suche nach Name" style="background-color: transparent">
                 <button class="btn" type="submit"><i class="bi bi-search"></i></button>
             </form>
         </div>
@@ -328,18 +355,18 @@
         <th:block th:each="plant : ${boughtPlants}">
             <div class="col">
                 <div class="card">
-                    <a th:href="@{/plants/{id}(id=${plant.plantId})}">
+                    <a th:href="@{/plants/{id}(id=${plant.plantId})}" style="text-decoration: none; color: inherit;">
                         <img th:src="@{${plant.imagePath}}" class="card-img-top" alt="Pflanzenbild">
+                        <div class="card-body">
+                            <h5 class="card-title" th:text="${plant.name}">Plant Name</h5>
+                            <p class="card-text" th:text="'Preis: ' + ${plant.price} + '€'">Plant Price</p>
+                        </div>
                     </a>
-                    <div class="card-body">
-                        <h5 class="card-title" th:text="${plant.name}">Plant Name</h5>
-                        <p class="card-text" th:text="'Preis: ' + ${plant.price} + '€'">Plant Price</p>
-                        <form th:action="@{/plants/careTip/{id}(id=${plant.plantId})}" th:object="${plant}" method="get" class="d-flex" style="flex-grow: 0;">
-                            <button class="btn">
-                                Pflegehinweise
-                            </button>
-                        </form>
-                    </div>
+                    <form th:action="@{/plants/careTip/{id}(id=${plant.plantId})}" th:object="${plant}" method="get" class="d-flex" style="flex-grow: 0; justify-content: center">
+                        <button class="btn btn-link custom-btn" style="margin-bottom: 20px">
+                            Pflegehinweise
+                        </button>
+                    </form>
                 </div>
             </div>
         </th:block>

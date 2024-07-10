@@ -280,10 +280,6 @@
                     <a class="nav-link active" style="font-weight: bold;" href="/mySoldPlants">Verkaufte Pflanzen</a>
                 </li>
             </ul>
-            <form class="search-bar" th:action="@{/mySoldPlants}" method="get" onsubmit="return checkSearch()">
-                <input class="form-control" id="name" name="name" label="Suche nach Name:" type="text" th:value="${name}" placeholder="Suche nach Name">
-                <button class="btn" type="submit"><i class="bi bi-search"></i></button>
-            </form>
         </div>
     </div>
 </nav>

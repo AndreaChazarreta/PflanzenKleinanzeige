@@ -344,7 +344,7 @@
                 </li>
             </ul>
             <form class="search-bar" th:action="@{/searchWishlist}" method="get" onsubmit="return checkSearch()">
-                <input class="form-control" id="name" name="name" label="Suche nach Name:" type="text" th:value="${name}" placeholder="Suche nach Name">
+                <input class="form-control" id="name" name="name" label="Suche nach Name:" type="text" th:value="${name}" placeholder="Suche nach Name" style="background-color: transparent">
                 <button class="btn" type="submit"><i class="bi bi-search"></i></button>
             </form>
         </div>
