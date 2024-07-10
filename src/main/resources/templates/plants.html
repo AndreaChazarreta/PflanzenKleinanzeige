@@ -9,14 +9,12 @@
         .no-results {
             text-align: center;
         }
-
         .no-results img {
             width: auto;
             max-width: 60%;
             height: auto;
             max-height: 60%;
         }
-
         .header-container {
             display: flex;
             align-items: center;
@@ -47,7 +45,6 @@
             margin-top: 5px;
             font-weight: 400;
         }
-        /* Media Queries für Mobilgeräte */
         @media (max-width: 768px) {
             .header-container {
                 flex-direction: column;
@@ -224,7 +221,6 @@
             -webkit-appearance: none;
             margin: 0;
         }
-
         input[type="number"] {
             -moz-appearance: textfield;
         }
@@ -232,9 +228,8 @@
             position: fixed;
             top: 20px;
             right: 20px;
-            z-index: 1050; /* Ensure the alert is above other elements */
+            z-index: 1050;
         }
-
     </style>
     <title>Plants</title>
 </head>
@@ -447,7 +442,6 @@
         var minPriceDefault = 0;
         var maxPriceDefault = [[${highestPrice}]];
 
-        // Get the current min and max price values from the hidden inputs
         var currentMinPrice = parseFloat(document.getElementById('minPrice').value || minPriceDefault);
         var currentMaxPrice = parseFloat(document.getElementById('maxPrice').value || maxPriceDefault);
 
@@ -549,12 +543,10 @@
             buildUrl();
         }
 
-
         window.buildUrl = buildUrl;
         window.clearPriceFilter = clearPriceFilter;
         window.clearAllFilters = clearAllFilters;
 
-        // Restore accordion state from localStorage
         var accordionState = JSON.parse(localStorage.getItem('accordionState')) || {};
         for (var key in accordionState) {
             if (accordionState[key]) {

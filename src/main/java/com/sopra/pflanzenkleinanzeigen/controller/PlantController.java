@@ -43,22 +43,24 @@ public class PlantController {
     @Autowired
     private PlantService plantService;
 
-    private static final Logger logger = LoggerFactory.getLogger(PlantController.class);
     @Autowired
     private UserService userService;
+
     @Autowired
     private ChatService chatService;
+
     @Autowired
     private PdfService pdfService;
 
     @Autowired
     private CategoryService categoryService;
+
     @Autowired
     private CareTipService careTipService;
 
     private Boolean created = false;
+    private static final Logger logger = LoggerFactory.getLogger(PlantController.class);
 
-    //TODO: brauchen wir für solche funktionen try and catch? Hier kann relativ wenig schief gehen
     /**
      * This method retrieves all plants and displays them on the plants page if they are still active.
      * @param model The model that is sent to the view.
@@ -93,7 +95,6 @@ public class PlantController {
             if (highestPrice.compareTo(new BigDecimal(200)) > 0) {
                 highestPrice = new BigDecimal(200);
             }
-
             model.addAttribute("plants", plants);
             model.addAttribute("name", name);
             model.addAttribute("minPrice", minPrice);
@@ -122,7 +123,6 @@ public class PlantController {
         return "plants";
     }
 
-
     /**
      * This method retrieves a specific plant by its ID and displays its details.
      * @param id The ID of the plant to be retrieved.
@@ -141,7 +141,6 @@ public class PlantController {
         return "detailsPlant";
     }
 
-    //TODO: FRAGEN: warum braucht man diesen zwischenschritt
     /**
      * This method displays the form for creating a new plant.
      * @param model The model that is sent to the view.
@@ -156,7 +155,6 @@ public class PlantController {
         model.addAttribute("allCategories", allCategories);
         return "createPlant";
     }
-
 
     /**
      * This method adds a new plant.
@@ -199,7 +197,6 @@ public class PlantController {
         return "redirect:/plants";
     }
 
-
     /**
      * This method displays the form for editing an existing plant.
      * @param id The ID of the plant to be edited.
@@ -241,10 +238,8 @@ public class PlantController {
         if(imageFile == null || imageFile.isEmpty()) {
             plantToUpdate.setImagePath(oldPlant.getImagePath());
         }
-        //TODO: das kann man löschen sobald man es richtig in frontend implementiert hat
         plantToUpdate.setAdIsActive(oldPlant.isAdIsActive());
         if (result.hasErrors()) {
-            //TODO: schauen warum es hier Beschreibung leer lassen als Fehler angenommen wird
             return "editPlant";
         }
         try{
@@ -261,7 +256,6 @@ public class PlantController {
      * @param id The ID of the plant to be deleted.
      * @return "redirect:/plants", the view with all plants.
      */
-    //TODO: Post oder get?
    @PostMapping("/plants/delete/{id}")
     public String deletePlant(@PathVariable int id, Model model) {
         Plant plant = plantService.findPlantById(id);
@@ -274,7 +268,18 @@ public class PlantController {
         return "redirect:/myPlantsForSale";
     }
 
-
+    /**
+     * Diese Methode markiert eine Pflanze als gewünscht für den aktuellen Benutzer.
+     * Sie wird aufgerufen, wenn eine POST-Anforderung an "/plants/wishlist/{id}" gesendet wird.
+     *
+     * @param id Die ID der Pflanze, die als gewünscht markiert werden soll.
+     *
+     * Der aktuelle Benutzer wird durch den Aufruf von userService.getCurrentUser() ermittelt.
+     * Die Pflanze wird durch den Aufruf von plantService.findPlantById(id) ermittelt.
+     *
+     * Wenn die Pflanze existiert und der aktuelle Benutzer sie noch nicht als gewünscht markiert hat,
+     * wird die Pflanze durch den Aufruf von plantService.markPlantAsWished(currentUser, plant) als gewünscht markiert.
+     */
     @PostMapping("/plants/wishlist/{id}")
     @ResponseBody
     public void markPlantAsWished(@PathVariable int id) {
@@ -285,6 +290,18 @@ public class PlantController {
         }
     }
 
+    /**
+     * This method unmarks a plant as wished for the current user.
+     * It is invoked when a POST request is sent to "/plants/wishlist/remove/{id}".
+     *
+     * @param id The ID of the plant to be unmarked as wished.
+     *
+     * The current user is determined by calling userService.getCurrentUser().
+     * The plant is determined by calling plantService.findPlantById(id).
+     *
+     * If the plant exists and the current user has marked it as wished,
+     * the plant is unmarked as wished by calling plantService.unmarkPlantAsWished(currentUser, plant).
+     */
     @PostMapping("/plants/wishlist/remove/{id}")
     @ResponseBody
     public void unmarkPlantAsWished(@PathVariable int id) {
@@ -295,6 +312,19 @@ public class PlantController {
         }
     }
 
+    /**
+     * This method retrieves the wishlist of the current user.
+     * It is invoked when a GET request is sent to "/myWishlist".
+     *
+     * The current user is determined by calling userService.getCurrentUser().
+     * The wishlist is retrieved by calling plantService.getWishlistForUser(currentUser).
+     *
+     * The wishlist is then sorted based on whether the plant ad is active and the date the plant was wished for.
+     * The sorted wishlist is added to the model and sent to the view.
+     *
+     * @param model The Model object used to pass attributes to the view.
+     * @return "myWishlist", the view displaying the user's wishlist.
+     */
     @GetMapping("/myWishlist")
     public String getWishlistForUser(Model model) {
         Benutzer currentUser = userService.getCurrentUser();
@@ -313,6 +343,19 @@ public class PlantController {
         return "myWishlist";
     }
 
+    /**
+     * This method searches for plants in the wishlist of the current user by name.
+     * It is invoked when a GET request is sent to "/searchWishlist".
+     *
+     * @param model The Model object used to pass attributes to the view.
+     * @param name The name of the plant to search for in the wishlist.
+     * @return "myWishlist", the view displaying the user's wishlist.
+     *
+     * The current user is determined by calling userService.getCurrentUser().
+     * The wishlist is retrieved by calling plantService.searchWishlistPlantsByName(currentUser, name).
+     *
+     * The wishlist and the name of the plant are then added to the model and sent to the view.
+     */
     @GetMapping("/searchWishlist")
     public String searchWishlistPlants(Model model, @RequestParam(value = "name") String name) {
         Benutzer currentUser = userService.getCurrentUser();
@@ -322,13 +365,26 @@ public class PlantController {
         model.addAttribute("name", name);
         return "myWishlist";
     }
+
+    /**
+     * This method generates a PDF for a specific plant and returns it as a response entity.
+     * It is invoked when a GET request is sent to "/plants/pdf/{id}".
+     *
+     * @param id The ID of the plant for which the PDF is to be generated.
+     * @return ResponseEntity<InputStreamResource> This returns a response entity containing the PDF as an input stream resource.
+     * If the plant does not exist, it returns a not found response entity.
+     *
+     * The plant is determined by calling plantService.findPlantById(id).
+     * If the plant exists, a PDF is generated by calling pdfService.generatePlantPdf(plant).
+     *
+     * The PDF is then added to the response entity with the appropriate headers and content type.
+     */
     @GetMapping("/plants/pdf/{id}")
     public ResponseEntity<InputStreamResource> getPlantPdf(@PathVariable int id) {
         Plant plant = plantService.findPlantById(id);
         if (plant == null) {
             return ResponseEntity.notFound().build();
         }
-
         ByteArrayInputStream bis = pdfService.generatePlantPdf(plant);
 
         HttpHeaders headers = new HttpHeaders();
@@ -339,5 +395,4 @@ public class PlantController {
                 .contentType(MediaType.APPLICATION_PDF)
                 .body(new InputStreamResource(bis));
     }
-
 }

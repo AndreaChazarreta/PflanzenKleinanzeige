@@ -173,7 +173,7 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         careTip1.setLightingConditions("Mittel");
         careTip1.setFertilization("Wenig");
         careTip1.setIrrigation("Viel");
-        careTip1.setOtherTips("Die Pflanze ist ehrer für erfahrene Gärtner geeignet. Sie sollt nach jeder Blühzeit beschnitten werden. Zu beachten ist das sie Dornen hat.");
+        careTip1.setOtherTips("Die Pflanze ist eher für erfahrene Gärtner geeignet. Sie sollt nach jeder Blühzeit beschnitten werden. Zu beachten ist das sie Dornen hat.");
         careTip1.setRepotting("Ja, nach 4 Wochen");
         careTip1.setTemperature("20");
         careTip1.setPlanting("Kann direkt in die Erde");
@@ -185,7 +185,7 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         careTip2.setLightingConditions("Mittel");
         careTip2.setFertilization("Wenig");
         careTip2.setIrrigation("Wenig");
-        careTip2.setOtherTips("Die Pflanze ist sehr gut für Anfänger geeignet, da sie auch wenn man sie vergisst nicht gleich eingeht. Außerdem ist zu beachten das sie stacheln hat. ");
+        careTip2.setOtherTips("Diese Pflanze ist ideal für Anfänger geeignet, da sie auch bei gelegentlicher Vernachlässigung nicht sofort eingeht. Allerdings sollte man beachten, dass sie Dornen hat.");
         careTip2.setRepotting("Nach 5 Wochen");
         careTip2.setTemperature("15");
         careTip2.setPlanting("Vorzüchten");
@@ -209,7 +209,7 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         careTip4.setLightingConditions("Viel");
         careTip4.setFertilization("Viel");
         careTip4.setIrrigation("Wenig");
-        careTip4.setOtherTips("Ein Rückschnitt im Frühjahr fördert die Fruchtbildung. Im Sommer am besten ein Netz drüber werfen, damit Vögel die Früchte nicht fressen.");
+        careTip4.setOtherTips("Ein Rückschnitt im Frühjahr fördert die Fruchtbildung. Im Sommer empfiehlt es sich, ein Netz über die Pflanze zu spannen, um die Früchte vor Vögeln zu schützen.");
         careTip4.setRepotting("Nach 6 Monaten");
         careTip4.setTemperature("20");
         careTip4.setPlanting("Vorzüchten");
@@ -341,7 +341,7 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         careTip15.setLightingConditions("Viel");
         careTip15.setFertilization("Mittel");
         careTip15.setIrrigation("Mittel");
-        careTip15.setOtherTips("Karotten brauchen lockeren Boden, um gerade zu wachsen.");
+        careTip15.setOtherTips("Karotten brauchen einen lockeren Boden, um gerade zu wachsen.");
         careTip15.setRepotting("Nicht nötig");
         careTip15.setTemperature("15");
         careTip15.setPlanting("Direkt in die Erde");
@@ -535,8 +535,8 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         strauss.setDescription("Ein schöner Strauß mit einer Mischung aus verschiedenen Blumen, ideal als Geschenk oder zur Dekoration.");
         strauss.setSeller(admin);
         strauss.setImagePath("/plant-images/mixBlumen.jpg");
-        strauss.setCategory(category2); // Blume
-        strauss.setCareTip(careTip18); // Sonnenblume
+        strauss.setCategory(category2);
+        strauss.setCareTip(careTip18);
         strauss.setPotIncluded(false);
         strauss.setBuyer(andrea);
         strauss.setSeed(false);
@@ -699,8 +699,8 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         elefantenohr.setDescription("Ich verkaufe eine Elefantenohr Pflanze. Das Elefantenohr ist eine beeindruckende Pflanze mit großen, dekorativen Blättern. Sie eignet sich hervorragend als Zimmerpflanze und verleiht jedem Raum eine exotische Note.");
         elefantenohr.setSeller(natti);
         elefantenohr.setImagePath("/plant-images/testData5.JPG");
-        elefantenohr.setCategory(category7); // Sonstiges
-        elefantenohr.setCareTip(careTip24); // Ahornbaum
+        elefantenohr.setCategory(category7);
+        elefantenohr.setCareTip(careTip24);
         elefantenohr.setPotIncluded(true);
         elefantenohr.setSeed(false);
         elefantenohr.setLifespan("Mehrjährig");
@@ -722,8 +722,8 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         rundkaktus.setDescription("Ein kleiner, runder Kaktus, der durch seine einzigartige Form und seine pflegeleichte Natur besticht.");
         rundkaktus.setSeller(andrea);
         rundkaktus.setImagePath("/plant-images/testData6.JPG");
-        rundkaktus.setCategory(category7); // Sonstiges
-        rundkaktus.setCareTip(careTip2); // Kaktus
+        rundkaktus.setCategory(category7);
+        rundkaktus.setCareTip(careTip2);
         rundkaktus.setPotIncluded(true);
         rundkaktus.setSeed(true);
         rundkaktus.setLifespan("Mehrjährig");
@@ -745,8 +745,8 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         narzisse.setDescription("Für den Frühling perfekt eine Narzisse mit leuchtend gelben Blüten, die jeden Garten verschönern.");
         narzisse.setSeller(andrea);
         narzisse.setImagePath("/plant-images/testData7.JPG");
-        narzisse.setCategory(category2); // Blume
-        narzisse.setCareTip(careTip11); // Tulpe
+        narzisse.setCategory(category2);
+        narzisse.setCareTip(careTip11);
         narzisse.setPotIncluded(true);
         narzisse.setSeed(true);
         narzisse.setLifespan("Einjährig");
@@ -768,8 +768,8 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         grasstrauch.setDescription("Der Grasstrauch ist eine robuste Pflanze mit feinen, grasartigen Blättern, die perfekt für Gärten und Terrassen geeignet ist. Sie steht jetzt zum verkauf für deinen Garten.");
         grasstrauch.setSeller(sena);
         grasstrauch.setImagePath("/plant-images/Graspflanze.jpeg");
-        grasstrauch.setCategory(category4); // Gräser
-        grasstrauch.setCareTip(careTip20); // Schilfgras
+        grasstrauch.setCategory(category4);
+        grasstrauch.setCareTip(careTip20);
         grasstrauch.setPotIncluded(true);
         grasstrauch.setSeed(true);
         grasstrauch.setLifespan("Mehrjährig");
@@ -791,8 +791,8 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         wasserrose.setDescription("Wer hat einen See und möchte ihn schmücken? Ich verkaufe eine Wasserrose, die wunderschön blüht.");
         wasserrose.setSeller(natti);
         wasserrose.setImagePath("/plant-images/testData9.JPG");
-        wasserrose.setCategory(category2); // Blume
-        wasserrose.setCareTip(careTip20); // Schilfgras
+        wasserrose.setCategory(category2);
+        wasserrose.setCareTip(careTip20);
         wasserrose.setPotIncluded(false);
         wasserrose.setSeed(true);
         wasserrose.setLifespan("Mehrjährig");
@@ -814,8 +814,8 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         flora.setDescription("Flora ist eine prächtige Zierpflanze, die durch ihre auffälligen Blüten und ihr dichtes Laub besticht. Sie eignet sich hervorragend für große Räume und Gartenanlagen.");
         flora.setSeller(sharon);
         flora.setImagePath("/plant-images/testData10.JPG");
-        flora.setCategory(category7); // Blume
-        flora.setCareTip(careTip16); // Orchidee
+        flora.setCategory(category7);
+        flora.setCareTip(careTip16);
         flora.setPotIncluded(true);
         flora.setSeed(false);
         flora.setLifespan("Mehrjährig");
@@ -837,8 +837,8 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         kaktussammlung.setDescription("Eine vielfältige Sammlung von verschiedenen Kakteen, die jedem Raum ein exotisches Flair verleihen und sehr pflegeleicht sind.");
         kaktussammlung.setSeller(andrea);
         kaktussammlung.setImagePath("/plant-images/testData11.JPG");
-        kaktussammlung.setCategory(category7); // Sonstiges
-        kaktussammlung.setCareTip(careTip2); // Kaktus
+        kaktussammlung.setCategory(category7);
+        kaktussammlung.setCareTip(careTip2);
         kaktussammlung.setPotIncluded(true);
         kaktussammlung.setSeed(true);
         kaktussammlung.setLifespan("Mehrjährig");
@@ -860,8 +860,8 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         gummibaum.setDescription("Verkaufe einen Gummibaum. Der ist eine beliebte Zimmerpflanze mit großen, glänzenden Blättern, die wenig Pflege benötigt und für ein angenehmes Raumklima sorgt.");
         gummibaum.setSeller(natti);
         gummibaum.setImagePath("/plant-images/testData12.JPG");
-        gummibaum.setCategory(category1); // Sonstiges
-        gummibaum.setCareTip(careTip24); // Ahornbaum
+        gummibaum.setCategory(category1);
+        gummibaum.setCareTip(careTip24);
         gummibaum.setPotIncluded(true);
         gummibaum.setSeed(false);
         gummibaum.setLifespan("Mehrjährig");
@@ -970,6 +970,5 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         message10.setMessageContent("Hallo Andrea, aus welchen Kakteen besteht denn die Sammlung?");
         message10.setSentAt(anInstant6);
         messageService.saveMessage(message10);
-
     }
 }

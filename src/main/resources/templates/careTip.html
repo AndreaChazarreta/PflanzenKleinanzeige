@@ -15,13 +15,11 @@
             padding: 20px;
             margin: 20px auto;
         }
-
         .plant-details img {
             border-radius: 8px;
             max-width: 100%;
             height: auto;
         }
-
         .additional-info {
             background-color: #ffffff;
             border-radius: 8px;
@@ -29,7 +27,6 @@
             padding: 20px;
             margin-top: 20px;
         }
-
         .btn-custom {
             display: flex;
             align-items: center;
@@ -45,21 +42,17 @@
             transition: background-color 0.3s ease;
             border-radius: 8px;
         }
-
         .btn-custom img, .btn-custom i {
             margin-right: 8px;
         }
-
         .btn-custom:hover {
             background-color: #f0f0f0;
         }
-
         .container-buttons {
             display: flex;
             justify-content: center;
             width: 100%;
         }
-
         @media (max-width: 768px) {
             .right-column {
                 margin-top: 20px;
@@ -98,28 +91,27 @@
             <div class="col-md-6 right-column d-flex flex-column justify-content-center">
                 <h1 th:text="${plant.name}">Pflanzenname</h1>
                 <div>
-
                     <b>Licht:</b>
-                    <p th:if="${careTip.getLightingConditions()} == Wenig"><i class="fa-regular fa-sun" style="color: #ffd43b;"></i> Die Pflanze kann im Schatten stehen</p>
-                    <p th:if="${careTip.getLightingConditions()} == Mittel"><i class="fa-regular fa-sun" style="color: #ffd43b;"></i> <i class="fa-regular fa-sun" style="color: #ffd43b;"></i> Die Pflanze sollte im Halbschatten stehen</p>
+                    <p th:if="${careTip.getLightingConditions()} == Wenig"><i class="fa-regular fa-sun" style="color: #ffd43b;"></i> Die Pflanze kann im Schatten stehen.</p>
+                    <p th:if="${careTip.getLightingConditions()} == Mittel"><i class="fa-regular fa-sun" style="color: #ffd43b;"></i> <i class="fa-regular fa-sun" style="color: #ffd43b;"></i> Die Pflanze sollte im Halbschatten stehen.</p>
                     <p th:if="${careTip.getLightingConditions()} == Viel"><i class="fa-regular fa-sun" style="color: #ffd43b;"></i> <i class="fa-regular fa-sun" style="color: #ffd43b;"></i> <i class="fa-regular fa-sun" style="color: #ffd43b;"></i>
-                        Die Pflanze braucht viel Sonne</p>
+                        Die Pflanze braucht viel Sonne.</p>
                 </div>
                 <div>
                     <b>Bewässerung:</b>
-                    <p th:if="${careTip.getIrrigation()} == Wenig"><i class="fa-solid fa-droplet" style="color: #74C0FC;"></i> Die Pflanze braucht wenig Wasser, ungefähr einmal im Monat gießen</p>
+                    <p th:if="${careTip.getIrrigation()} == Wenig"><i class="fa-solid fa-droplet" style="color: #74C0FC;"></i> Die Pflanze braucht wenig Wasser, ungefähr einmal im Monat gießen.</p>
                     <p th:if="${careTip.getIrrigation()} == Mittel"><i class="fa-solid fa-droplet" style="color: #74C0FC;"></i> <i class="fa-solid fa-droplet" style="color: #74C0FC;"></i>
-                        Die Pflanze sollte einmal die Woche gegoßen werden</p>
+                        Die Pflanze sollte einmal die Woche gegoßen werden.</p>
                     <p th:if="${careTip.getIrrigation()} == Viel"><i class="fa-solid fa-droplet" style="color: #74C0FC;"></i> <i class="fa-solid fa-droplet" style="color: #74C0FC;"></i> <i class="fa-solid fa-droplet" style="color: #74C0FC;"></i>
-                        Die Pflanze muss Täglich gegoßen werden</p>
+                        Die Pflanze muss täglich gegoßen werden.</p>
                 </div>
                 <div>
                     <b>Düngung:</b>
-                    <p th:if="${careTip.getFertilization()} == Wenig"><i class="fa-solid fa-plant-wilt" style="color: #618911;"></i> Die Pflanze brauch keinen Dünger</p>
+                    <p th:if="${careTip.getFertilization()} == Wenig"><i class="fa-solid fa-plant-wilt" style="color: #618911;"></i> Die Pflanze braucht keinen Dünger.</p>
                     <p th:if="${careTip.getFertilization()} == Mittel"><i class="fa-solid fa-plant-wilt" style="color: #618911;"></i> <i class="fa-solid fa-plant-wilt" style="color: #618911;"></i>
-                        Die Pflanze sollte einmal im Monat Dünger bekommen</p>
+                        Die Pflanze sollte einmal im Monat gedüngt werden.</p>
                     <p th:if="${careTip.getFertilization()} == Viel"><i class="fa-solid fa-plant-wilt" style="color: #618911;"></i> <i class="fa-solid fa-plant-wilt" style="color: #618911;"></i> <i class="fa-solid fa-plant-wilt" style="color: #618911;"></i>
-                        Die Pflanze sollte einmal die Woche gedüngt werden</p>
+                        Die Pflanze sollte einmal die Woche gedüngt werden.</p>
                 </div>
                 <p><b>Temperatur: </b><span th:text="${careTip.getTemperature()}">Temperatur: </span>°C</p>
                 <p><b>Umpflanzen: </b><span th:text="${careTip.getRepotting()}">Umpflanzen: </span></p>
@@ -131,7 +123,7 @@
             <div class="accordion-item">
                 <h2 class="accordion-header">
                     <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                        Weitere Tips
+                        <strong> Weitere Tipps </strong>
                     </button>
                 </h2>
                 <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">

@@ -34,7 +34,6 @@ public class StaticPagesController implements WebMvcConfigurer {
         return "aboutUs";
     }
 
-
     @GetMapping("/contact")
     public String getContact() {
         return "contact";

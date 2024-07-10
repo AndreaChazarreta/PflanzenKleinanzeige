@@ -28,12 +28,10 @@ public class Plant {
     @NotBlank(message = "Name cannot be blank")
     private String name;
 
-    // Price in Euro
     @DecimalMin(value = "0.0", message = "Der Preis muss größer gleich Null sein")
     @Digits(integer = 10, fraction = 2, message = "Preis muss ein gültiger Geldbetrag sein mit bis zu 2 Nachkommastellen")
     private BigDecimal price;
 
-    // Height in centimeters
     @DecimalMin(value = "0.0", message = "Die Höhe muss größer gleich Null sein")
     @Digits(integer = 10, fraction = 2, message = "Höhe muss eine gültige Zahl mit bis zu 2 Nachkommastellen")
     private BigDecimal height;
