@@ -604,7 +604,7 @@ public class TestDataLoader implements ApplicationListener<ContextRefreshedEvent
         kaktus2.setPrice(new BigDecimal("8.99"));
         kaktus2.setHeight(new BigDecimal("20.00"));
         kaktus2.setDescription("Ein pflegeleichter Kaktus steht zum verkauf.");
-        kaktus2.setSeller(sharon);
+        kaktus2.setSeller(andrea);
         kaktus2.setImagePath("/plant-images/testData1.JPG");
         kaktus2.setCategory(category7);
         kaktus2.setCareTip(careTip2);
